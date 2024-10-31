@@ -1,0 +1,105 @@
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+Start time: 14:20:16 on Oct 29,2024
+vcom -2008 -work internal/ModelSimContainer/work proj/src/MIPS_types.vhd internal/testpy/tb.vhd proj/src/MIPS_types.vhd proj/src/TopLevel/mem.vhd proj/src/TopLevel/MIPS_Processor.vhd proj/src/TopLevel/Control/control_unit.vhd proj/src/TopLevel/Sign-Extend/sign_extend.vhd proj/src/TopLevel/BarrelShifter/barrelShifter.vhd proj/src/TopLevel/ALU/ALU.vhd proj/src/TopLevel/Fetch/program_counter.vhd proj/src/TopLevel/Fetch/register_file.vhd proj/src/TopLevel/Fetch/program_counter_dff.vhd proj/src/LowLevel/fulladder.vhd proj/src/LowLevel/invg.vhd proj/src/LowLevel/andg2.vhd proj/src/LowLevel/mux2t1.vhd proj/src/LowLevel/dffg_tb.vhd proj/src/LowLevel/decoder_5t32.vhd proj/src/LowLevel/mux16t1.vhd proj/src/LowLevel/extender16t32.vhd proj/src/LowLevel/mux4t1_N.vhd proj/src/LowLevel/adderSubtractor.vhd proj/src/LowLevel/complementor1_N.vhd proj/src/LowLevel/org32.vhd proj/src/LowLevel/andg32.vhd proj/src/LowLevel/dffg_n.vhd proj/src/LowLevel/mux2t1_N.vhd proj/src/LowLevel/extender8t32.vhd proj/src/LowLevel/comp1_N.vhd proj/src/LowLevel/nandg32.vhd proj/src/LowLevel/org2.vhd proj/src/LowLevel/dffg.vhd proj/src/LowLevel/xorg2.vhd proj/src/LowLevel/norg32.vhd proj/src/LowLevel/mem.vhd proj/src/LowLevel/xorg32.vhd proj/src/LowLevel/mux4t1.vhd proj/src/LowLevel/mux32t1.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling package MIPS_types
+-- Compiling package body MIPS_types
+-- Loading package MIPS_types
+-- Loading package std_logic_textio
+-- Loading package ENV
+-- Compiling entity tb
+-- Compiling architecture mixed of tb
+** Warning: proj/src/MIPS_types.vhd(19): (vcom-1615) Existing package 'MIPS_types' at line 19 will be overwritten.
+-- Compiling package MIPS_types
+** Warning: proj/src/MIPS_types.vhd(33): (vcom-1615) Existing package body 'MIPS_types(body)' at line 33 will be overwritten.
+-- Compiling package body MIPS_types
+-- Loading package MIPS_types
+** Warning: proj/src/TopLevel/mem.vhd(17): (vcom-1615) Existing entity 'mem' at /home/connero/Documents/processsor-proj-1/proj/src/LowLevel/mem.vhd(16) will be overwritten.
+-- Compiling entity mem
+** Warning: proj/src/TopLevel/mem.vhd(36): (vcom-1615) Existing architecture 'mem(rtl)' at /home/connero/Documents/processsor-proj-1/proj/src/LowLevel/mem.vhd(31) will be overwritten.
+-- Compiling architecture rtl of mem
+-- Loading package MIPS_types
+-- Compiling entity MIPS_Processor
+-- Compiling architecture structure of MIPS_Processor
+-- Compiling entity control_unit
+-- Compiling architecture dataflow of control_unit
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity SignExtend
+-- Compiling architecture Behavioral of SignExtend
+** Warning: proj/src/TopLevel/Sign-Extend/sign_extend.vhd(26): (vcom-1514) Range choice direction (downto) does not determine aggregate index range direction (to).
+** Warning: proj/src/TopLevel/Sign-Extend/sign_extend.vhd(28): (vcom-1514) Range choice direction (downto) does not determine aggregate index range direction (to).
+-- Compiling entity barrelShifter
+-- Compiling architecture structure of barrelShifter
+-- Compiling entity alu
+-- Compiling architecture structural of alu
+-- Compiling entity program_counter
+-- Compiling architecture structural of program_counter
+-- Compiling entity register_file
+-- Compiling architecture structural of register_file
+-- Compiling entity program_counter_dff
+-- Compiling architecture mixed of program_counter_dff
+-- Compiling entity fulladder
+-- Compiling architecture structural of fulladder
+-- Compiling entity invg
+-- Compiling architecture dataflow of invg
+-- Compiling entity andg2
+-- Compiling architecture dataflow of andg2
+-- Compiling entity mux2t1
+-- Compiling architecture dataflow of mux2t1
+-- Compiling entity dffg_tb
+-- Compiling architecture behavior of dffg_tb
+-- Compiling entity decoder_2to4
+-- Compiling architecture structural of decoder_2to4
+-- Compiling entity decoder_3to8
+-- Compiling architecture structural of decoder_3to8
+-- Compiling entity decoder_5to32
+-- Compiling architecture structural of decoder_5to32
+** Warning: proj/src/LowLevel/decoder_5t32.vhd(112): (vcom-1128) Missing reserved word BEGIN in generate statement.
+-- Compiling entity mux16t1
+-- Compiling architecture behavior of mux16t1
+-- Compiling entity extender16t32
+-- Compiling architecture dataflow of extender16t32
+-- Compiling entity mux4t1_n
+-- Compiling architecture structural of mux4t1_n
+-- Compiling entity adderSubtractor
+-- Compiling architecture structural of adderSubtractor
+-- Compiling entity complementor1_N
+-- Compiling architecture structural of complementor1_N
+-- Compiling entity org32
+-- Compiling architecture dataflow of org32
+-- Compiling entity andg32
+-- Compiling architecture dataflow of andg32
+-- Compiling entity dffg_n
+-- Compiling architecture mixed of dffg_n
+-- Compiling entity mux2t1_N
+-- Compiling architecture structural of mux2t1_N
+-- Compiling entity extender8t32
+-- Compiling architecture dataflow of extender8t32
+-- Compiling entity comp1_N
+-- Compiling architecture structural of comp1_N
+-- Compiling entity nandg32
+-- Compiling architecture dataflow of nandg32
+-- Compiling entity org2
+-- Compiling architecture dataflow of org2
+-- Compiling entity dffg
+-- Compiling architecture mixed of dffg
+-- Compiling entity xorg2
+-- Compiling architecture dataflow of xorg2
+-- Compiling entity norg32
+-- Compiling architecture dataflow of norg32
+** Warning: proj/src/LowLevel/mem.vhd(16): (vcom-1615) Existing entity 'mem' at proj/src/TopLevel/mem.vhd(17) will be overwritten.
+-- Compiling entity mem
+** Warning: proj/src/LowLevel/mem.vhd(31): (vcom-1615) Existing architecture 'mem(rtl)' at proj/src/TopLevel/mem.vhd(36) will be overwritten.
+-- Compiling architecture rtl of mem
+-- Compiling entity xorg32
+-- Compiling architecture dataflow of xorg32
+-- Compiling entity mux4t1
+-- Compiling architecture structural of mux4t1
+-- Compiling entity mux32t1
+-- Compiling architecture behavior of mux32t1
+End time: 14:20:16 on Oct 29,2024, Elapsed time: 0:00:00
+Errors: 0, Warnings: 9
