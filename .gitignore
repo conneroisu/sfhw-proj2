@@ -1,0 +1,34 @@
+.doc#
+*.bak
+**.bak
+**/work/
+work/
+work
+.vscode
+.vscode/
+.vhdl_checker/
+.vhdl_checker
+.vhdl_checker/*
+.vhdl_checker/**/*
+/Xilinx\ ISE/**/*.*
+/Xilinx\ ISE/**/ise
+!/Xilinx\ ISE/**/*.xise
+!/Xilinx\ ISE/**/iseconfig/filter.filter
+/Xilinx\ Vivado/**/*.*
+!/Xilinx\ Vivado/**/*.xpr
+/QuestaSim/*
+/QuestaSim/**/*.*
+!/QuestaSim/*.cmd
+!/QuestaSim/*.log
+/ghdl/**/*.*
+!/ghdl/*.cmd
+!/ghdl/*.log
+!.publish
+!.git*
+ltex.dictionary.en-US.txt
+ltex.disabledRules.en-US.txt
+ltex.hiddenFalsePositives.en-US.txt
+transcript
+*/transcript
+*/*/transcript
+output/
