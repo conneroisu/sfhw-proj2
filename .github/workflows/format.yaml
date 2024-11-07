@@ -1,0 +1,42 @@
+name: Format
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - "main"
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    permissions:
+          contents: write
+          pull-requests: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Golang
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.23'
+      - name: Run Header Program
+        run: |
+          go run ./internal/headers/main.go
+      - name: Set up Emacs
+        uses: purcell/setup-emacs@master
+        with:
+          version: 24.5
+      - name: Install vhdl-mode and format all
+        run: |
+          mkdir -p ~/.emacs.d/lisp
+          echo "(require 'package)" >> ~/.emacs.d/init.el
+          echo "(add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t)" >> ~/.emacs.d/init.el
+          echo "(package-initialize)" >> ~/.emacs.d/init.el
+          echo "(unless (package-installed-p 'vhdl-mode)" >> ~/.emacs.d/init.el
+          echo "  (package-refresh-contents)" >> ~/.emacs.d/init.el
+          echo "  (package-install 'vhdl-mode))" >> ~/.emacs.d/init.el
+          emacs --batch -l ~/.emacs.d/init.el
+          bash ./internal/format.sh
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "Format and Header"
