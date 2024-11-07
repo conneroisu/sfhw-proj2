@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use iee.numeric_std.all;
 
-entity EX_MEM_STAGE is
+entity MEM_WB_STAGE is
     generic
         (
             DATA_WIDTH : natural := 32;
@@ -17,7 +17,6 @@ entity EX_MEM_STAGE is
                 i_mux       : in std_logic_vector((DATA_WIDTH -1) downto 0);
                 o_mux       : in std_logic_vector((DATA_WIDTH -1) downto 0);
                 
-                --THIS IS WRONG. FIX!
                 i_regWrite  : in std_logic;
                 i_memToReg  : in std_logic;
                 i_memRead   : in std_logic;
