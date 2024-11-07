@@ -1,8 +1,9 @@
+// Package main contains the main package of the header program.
 package main
 
 import (
-	"bufio"
 	"bytes"
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -11,12 +12,78 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"text/template"
 )
 
 var (
 	blacklist   = "github-actions[bot]"
 	emBlacklist = "noreply"
 )
+
+type (
+	// Commits is a slice of Commits.
+	Commits []Commit
+
+	// Commit is a struct for parsing the output of git log.
+	Commit struct {
+		Commit      string `json:"commit"`
+		AuthorName  string `json:"author_name"`
+		AuthorEmail string `json:"author_email"`
+		Date        string `json:"date"`
+		Timestamp   int64  `json:"timestamp"`
+		Message     string `json:"message"`
+		Repo        string `json:"repo"`
+	}
+)
+
+//go:embed file.tmpl
+var fileTemplate string
+
+var file = template.Must(template.New("file").Parse(fileTemplate))
+
+// FillTemplate fills the template with the given data
+func FillTemplate(
+	authors []string,
+	name string,
+	notes []string,
+	content string,
+) (string, error) {
+	type data struct {
+		Author  string
+		Name    string
+		Notes   []string
+		Content string
+	}
+	var builder strings.Builder
+	err := file.Execute(&builder, data{
+		Author:  strings.Join(authors, ", "),
+		Name:    name,
+		Notes:   notes,
+		Content: content,
+	})
+	if err != nil {
+		return "", err
+	}
+	return builder.String(), nil
+}
+
+// Authors returns a sorted list of authors from the given commits.
+func (cs Commits) Authors() []string {
+	var authors []string
+	for _, c := range cs {
+		authors = append(authors, c.AuthorName+" <"+c.AuthorEmail+">")
+	}
+	return authors
+}
+
+// Notes returns a sorted list of notes from the given commits.
+func (cs Commits) Notes() []string {
+	var notes []string
+	for _, c := range cs {
+		notes = append(notes, c.AuthorName+" "+c.Date+" "+c.Message)
+	}
+	return notes
+}
 
 var (
 	logger = slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
@@ -48,51 +115,53 @@ var (
 		}}))
 )
 
-// Header template for VHDL files
-const headerTemplate = `-- <header>
--- Author(s): %s
--- Name: %s
--- Notes:
-%s
--- </header>
-
-`
-
-// CommitInfo stores commit details for a contributor
-type CommitInfo struct {
-	AuthorName  string
-	AuthorEmail string
-	CommitMsg   string
+func main() {
+	if err := run(); err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		fmt.Fprintf(os.Stdout, "Error: %v\n", err)
+		os.Exit(1)
+	}
 }
 
-func main() {
-	// Define the file type that you want to add headers to
-	fileExtension := ".vhd"
-
-	// Get the list of all files with the given extension
-	files, err := findFilesWithExtension(fileExtension)
+// run is the main function that runs the program
+func run() error {
+	files, err := findFiles()
 	if err != nil {
 		log.Fatalf("Error finding VHDL files: %v", err)
 	}
 
 	// Add header to each VHDL file
 	for _, file := range files {
-		commitInfos, err := GetCommitHistory(file)
+		commits, err := GetCommitHistory(file)
 		if err != nil {
-			log.Printf("Error getting commit history for %s: %v", file, err)
-			continue
+			return err
 		}
-
-		// Generate header content based on commit information
-		headerContent := generateHeader(file, commitInfos)
-		if err := updateHeaderInFile(file, headerContent); err != nil {
-			log.Printf("Error updating header in file %s: %v", file, err)
+		oldContent, err := os.ReadFile(file)
+		if err != nil {
+			return err
+		}
+		headless := removeHeader(string(oldContent))
+		newContent, err := FillTemplate(
+			commits.Authors(),
+			file,
+			commits.Notes(),
+			headless,
+		)
+		if err != nil {
+			return err
+		}
+		if newContent != string(oldContent) {
+			if err := os.WriteFile(file, []byte(newContent), 0644); err != nil {
+				return err
+			}
 		}
 	}
+	return nil
 }
 
-// findFilesWithExtension finds all files with the given extension
-func findFilesWithExtension(extension string) ([]string, error) {
+// findFiles finds all files with the given extension, vhd.
+func findFiles() ([]string, error) {
+	extension := ".vhd"
 	var files []string
 	err := filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -103,43 +172,55 @@ func findFilesWithExtension(extension string) ([]string, error) {
 		}
 		return nil
 	})
-
 	if err != nil {
 		return nil, err
 	}
 	return files, nil
 }
 
-// Commit is a struct for parsing the output of git log.
-type Commit struct {
-	Commit      string `json:"commit"`
-	AuthorName  string `json:"author_name"`
-	AuthorEmail string `json:"author_email"`
-	Date        string `json:"date"`
-	Timestamp   int64  `json:"timestamp"`
-	Message     string `json:"message"`
-	Repo        string `json:"repo"`
+func removeHeader(content string) string {
+	lines := strings.Split(content, "\n")
+	var start bool
+	var done bool
+	newLines := []string{}
+	empties := []int{}
+	for _, line := range lines {
+		if strings.HasPrefix(line, "-- <header>") {
+			start = true
+			continue
+		}
+		if strings.HasPrefix(line, "-- </header>") {
+			done = true
+			continue
+		}
+		if start && done {
+			newLines = append(newLines, line)
+		}
+		if line == "" {
+			empties = append(empties, len(newLines))
+		}
+		if line != "" {
+			empties = []int{}
+		}
+	}
+	content = strings.Join(newLines[:empties[0]], "\n")
+	return content
 }
 
 // GetCommitHistory gets the commit history for a given file
-func GetCommitHistory(filename string) ([]Commit, error) {
+func GetCommitHistory(path string) (Commits, error) {
 	cmd := exec.Command("git", "log",
 		"--date=iso8601-strict",
 		"--all",
 		"--pretty=format:{%n  \"commit\": \"%H\",%n  \"author_name\": \"%aN\", \"author_email\": \"<%aE>\",%n  \"date\": \"%ad\",%n  \"timestamp\": %at,%n  \"message\": \"%f\",%n  \"repo\": \"$repository\"%n},",
-		filename)
-
+		path)
 	var gitLogBuffer bytes.Buffer
 	cmd.Stdout = &gitLogBuffer
-
 	err := cmd.Run()
 	if err != nil {
-		log.Fatalf("Failed to run git log command: %v", err)
+		return nil, err
 	}
-
 	output := gitLogBuffer.String()
-
-	// Split the output by lines and process each commit
 	commits := []Commit{}
 	entries := strings.Split(output, "},")
 	for _, entry := range entries {
@@ -148,42 +229,16 @@ func GetCommitHistory(filename string) ([]Commit, error) {
 		if len(entry) == 0 {
 			continue
 		}
-
 		// Clean up the JSON string and unmarshal it into the Commit struct
 		entry = entry + "}" // Add closing brace back
 		var commit Commit
 		err = json.Unmarshal([]byte(entry), &commit)
 		if err != nil {
-			log.Printf("Error unmarshalling commit entry: %v", err)
-			continue
+			return nil, err
 		}
 		commits = append(commits, commit)
 	}
 	return commits, err
-}
-
-// generateHeader generates the header content for a VHDL file
-func generateHeader(filename string, commitInfos []Commit) string {
-	var notes strings.Builder
-	authors := []string{}
-	for i, commit := range commitInfos {
-		if commit.AuthorName == blacklist {
-			logger.Debug("Blacklisted author", slog.String("author", commit.AuthorName))
-			continue
-		}
-		if strings.Contains(commit.AuthorEmail, emBlacklist) {
-			logger.Debug("Blacklisted email", slog.String("email", commit.AuthorEmail))
-			continue
-		}
-		if !contains(authors, commit.AuthorName) {
-			authors = append(authors, commit.AuthorName)
-		}
-		notes.WriteString(fmt.Sprintf("--	%s  %s %s", commit.AuthorName, commit.AuthorEmail, commit.Message))
-		if i < len(commitInfos)-1 {
-			notes.WriteString("\n")
-		}
-	}
-	return fmt.Sprintf(headerTemplate, strings.Join(authors, ", "), filename, notes.String())
 }
 func contains(s []string, e string) bool {
 	for _, a := range s {
@@ -192,63 +247,4 @@ func contains(s []string, e string) bool {
 		}
 	}
 	return false
-}
-
-// updateHeaderInFile updates the header in the VHDL file if the content has changed
-func updateHeaderInFile(filename, headerContent string) error {
-	// Read the original content of the file
-	file, err := os.Open(filename)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	var originalContent strings.Builder
-	scanner := bufio.NewScanner(file)
-	insideHeader := false
-	for scanner.Scan() {
-		line := scanner.Text()
-		if strings.Contains(line, "-- <header>") {
-			insideHeader = true
-		}
-		if insideHeader && strings.Contains(line, "-- </header>") {
-			insideHeader = false
-			continue
-		}
-		if !insideHeader {
-			originalContent.WriteString(line + "\n")
-		}
-	}
-
-	if err := scanner.Err(); err != nil {
-		return err
-	}
-
-	ogCnt := ""
-	done := false
-	for _, line := range strings.Split(originalContent.String(), "\n") {
-		if !done && line == "" {
-			continue
-		}
-		if strings.Contains(line, "library ie") {
-			done = true
-		}
-		ogCnt += line + "\n"
-	}
-	// Combine the new header with the original content
-	newContent := headerContent + ogCnt
-
-	// Check if the new content is different from the current content
-	currentContent, err := os.ReadFile(filename)
-	if err != nil {
-		return err
-	}
-
-	if newContent == string(currentContent) {
-		// No changes needed
-		return nil
-	}
-
-	// Write the updated content to the file
-	return os.WriteFile(filename, []byte(newContent), 0644)
 }

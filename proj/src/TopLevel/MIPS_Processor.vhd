@@ -1,13 +1,9 @@
+
 -- <header>
--- Author(s): conneroisu, Conner Ohnesorge
--- Name: internal/boilerplate_src/TopLevel/MIPS_Processor.vhd
+-- Author(s): Conner Ohnesorge <<connero@iastate.edu>>
+-- Name: proj/src/TopLevel/MIPS_Processor.vhd
 -- Notes:
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      Conner Ohnesorge  <connero@iastate.edu> add-better-commit-message-to-workflow-for-format-and-header-and-remove
---      Conner Ohnesorge  <connero@iastate.edu> add-better-commit-message-to-workflow-for-format-and-header-and-remove
---      Conner Ohnesorge  <connero@iastate.edu> added-toolflow
+-- 	Conner Ohnesorge 2024-10-31T09:22:46-05:00 added-initial-new-from-toolflow
 -- </header>
 
 library IEEE;
@@ -78,3 +74,4 @@ begin
 -- TODO: Ensure that s_Ovfl is connected to the overflow output of your ALU
 -- TODO: Implement the rest of your processor below this comment! 
 end structure;
+

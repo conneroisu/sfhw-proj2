@@ -1,11 +1,9 @@
+
 -- <header>
--- Author(s): conneroisu, Conner Ohnesorge
+-- Author(s): Conner Ohnesorge <<connero@iastate.edu>>
 -- Name: internal/testpy/tb.vhd
 -- Notes:
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      Conner Ohnesorge  <connero@iastate.edu> added-toolflow
+-- 	Conner Ohnesorge 2024-10-31T09:22:17-05:00 Added-init-files
 -- </header>
 
 -------------------------------------------------------------------------
@@ -138,3 +136,4 @@ begin
         end if;
     end process;
 end mixed;
+

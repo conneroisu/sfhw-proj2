@@ -1,0 +1,11 @@
+{{ define "file" }}
+{{ template "header" . }}
+{{ .Content }}
+{{ end }}
+
+{{ define "header" }}-- <header>
+-- Author(s): {{.Author}}
+-- Name: {{.Name}}
+-- Notes: {{- range .Notes }}
+-- 	{{.}}{{- end }}
+-- </header>{{ end }}
