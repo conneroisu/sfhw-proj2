@@ -36,8 +36,8 @@ func TestFile(t *testing.T) {
 	if output != golden {
 		differences := diff.Diff(golden, output)
 		t.Logf("Differences: \n%s", differences)
-		// write the output to a file for debugging
 	}
+	// write the output to a file for debugging
 	err = os.WriteFile("output.vhd", []byte(output), 0644)
 	if err != nil {
 		t.Errorf("Error: %v", err)

@@ -238,6 +238,7 @@ func reduceContent(ctx context.Context, content string) string {
 		for _, line := range newEndLines {
 			if endFound {
 				revLines = append(revLines, line)
+				continue
 			}
 			if len(line) > 0 {
 				endFound = true
