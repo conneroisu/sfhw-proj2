@@ -50,6 +50,9 @@ entity stage_idex is
         o_RegWrite : out std_logic;
         o_MemToReg : out std_logic;
         -- Stage Passthrough Signals [begin]
+        --= Forwarding Signals [begin]
+        i_WriteData : in  std_logic_vector(N-1 downto 0); -- Data from the end of writeback stage's mux
+        i_DMem1     : in  std_logic_vector(N-1 downto 0); -- Data from the first input to the DMem
         --= Register File Signals [begin]
         i_Read1    : in  std_logic_vector(N-1 downto 0);
         i_Read2    : in  std_logic_vector(N-1 downto 0);
@@ -78,6 +81,10 @@ architecture structure of stage_idex is
 
     signal s_ALUOp  : std_logic_vector(1 downto 0);
     signal s_ALUSrc : std_logic_vector(1 downto 0);
+
+    signal s_ForwardA : std_logic_vector(1 downto 0);
+    signal s_ForwardB : std_logic_vector(1 downto 0);
+    -- see: https://private-user-images.githubusercontent.com/88785126/384987984-b31df788-32cf-48a5-a3ac-c44345cac682.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEzNDEzNDgsIm5iZiI6MTczMTM0MTA0OCwicGF0aCI6Ii84ODc4NTEyNi8zODQ5ODc5ODQtYjMxZGY3ODgtMzJjZi00OGE1LWEzYWMtYzQ0MzQ1Y2FjNjgyLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMTElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTExVDE2MDQwOFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTlmZTY4MmI0ZDYzNmE1Mzg4YTlkMTgyODNkY2Y4ZWM0ZDhjYmJjYWU2ZTkwMjAyN2RmMDk2YTk4NzdiMjg3YjMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.HlxyYpdSHKRrAJxoadF1q2Tf_ajySP-e8BSQ0sB0L2A
 
 begin
 
