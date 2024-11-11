@@ -73,6 +73,7 @@ var (
 const (
 	blacklist   = "github-actions[bot]"
 	emBlacklist = "noreply"
+	igCommit    = "Format-and-Header"
 )
 
 // FillTemplate fills the template with the given data
@@ -123,6 +124,9 @@ func (cs Commits) Authors() []string {
 func (cs Commits) Notes() []string {
 	var notes []string
 	for _, c := range cs {
+		if c.Commit == igCommit {
+			continue
+		}
 		notes = append(notes, c.AuthorName+" "+c.Date+" "+c.Message)
 	}
 	return notes
