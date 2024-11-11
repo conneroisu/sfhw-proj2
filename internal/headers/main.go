@@ -105,6 +105,9 @@ func FillTemplate(
 func (cs Commits) Authors() []string {
 	var authors []string
 	for _, c := range cs {
+		if contains(authors, c.AuthorName) {
+			continue
+		}
 		if strings.Contains(c.AuthorEmail, emBlacklist) {
 			continue
 		}
@@ -210,7 +213,6 @@ func findFiles(ctx context.Context) ([]string, error) {
 
 const (
 	rmTill = "library ieee"
-	rmFrom = "end architecture"
 )
 
 func reduceContent(ctx context.Context, content string) string {
@@ -236,7 +238,7 @@ func reduceContent(ctx context.Context, content string) string {
 			if endFound {
 				revLines = append(revLines, line)
 			}
-			if strings.Contains(strings.ToLower(line), rmFrom) {
+			if len(line) > 0 {
 				endFound = true
 				revLines = append(revLines, line)
 			}
@@ -296,4 +298,13 @@ func GetCommitHistory(ctx context.Context, path string) (Commits, error) {
 	case <-ctx.Done():
 		return nil, ctx.Err()
 	}
+}
+
+func contains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
 }

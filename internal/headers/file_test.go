@@ -37,13 +37,13 @@ func TestFile(t *testing.T) {
 		differences := diff.Diff(golden, output)
 		t.Logf("Differences: \n%s", differences)
 		// write the output to a file for debugging
-		err = os.WriteFile("output.vhd", []byte(output), 0644)
-		if err != nil {
-			t.Errorf("Error: %v", err)
-		}
-		err = os.WriteFile("golden.vhd", []byte(golden), 0644)
-		if err != nil {
-			t.Errorf("Error: %v", err)
-		}
+	}
+	err = os.WriteFile("output.vhd", []byte(output), 0644)
+	if err != nil {
+		t.Errorf("Error: %v", err)
+	}
+	err = os.WriteFile("golden.vhd", []byte(golden), 0644)
+	if err != nil {
+		t.Errorf("Error: %v", err)
 	}
 }
