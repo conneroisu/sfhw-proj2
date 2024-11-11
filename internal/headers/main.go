@@ -223,6 +223,7 @@ func reduceContent(ctx context.Context, content string) string {
 		for _, line := range strings.Split(content, "\n") {
 			if found {
 				newLines = append(newLines, line)
+				continue
 			}
 			if strings.Contains(strings.ToLower(line), rmTill) {
 				found = true
