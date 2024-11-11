@@ -10,6 +10,10 @@ work
 .vhdl_checker
 .vhdl_checker/*
 .vhdl_checker/**/*
+.hdl_checker/
+.hdl_checker
+.hdl_checker/*
+.hdl_checker/**/*
 /Xilinx\ ISE/**/*.*
 /Xilinx\ ISE/**/ise
 !/Xilinx\ ISE/**/*.xise
