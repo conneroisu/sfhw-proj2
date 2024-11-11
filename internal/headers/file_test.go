@@ -4,7 +4,6 @@ import (
 	"context"
 	_ "embed"
 	"encoding/json"
-	"os"
 	"testing"
 
 	"github.com/kylelemons/godebug/diff"
@@ -36,14 +35,5 @@ func TestFile(t *testing.T) {
 	if output != golden {
 		differences := diff.Diff(golden, output)
 		t.Logf("Differences: \n%s", differences)
-	}
-	// write the output to a file for debugging
-	err = os.WriteFile("output.vhd", []byte(output), 0644)
-	if err != nil {
-		t.Errorf("Error: %v", err)
-	}
-	err = os.WriteFile("golden.vhd", []byte(golden), 0644)
-	if err != nil {
-		t.Errorf("Error: %v", err)
 	}
 }
