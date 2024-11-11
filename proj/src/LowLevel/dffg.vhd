@@ -1,13 +1,10 @@
 -- <header>
--- Author(s): Conner Ohnesorge, conneroisu
+-- Author(s): Conner Ohnesorge, aidanfoss
 -- Name: proj/src/LowLevel/dffg.vhd
 -- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> fix-all-low-level-components-not-including-all-packages
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> remove-unneeded-comments
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      conneroisu  <conneroisu@outlook.com> add-lowlevel-components-and-testbenches
+--      conneroisu 2024-11-11T15:42:29Z Format-and-Header
+--      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
+--      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
 -- </header>
 
 library IEEE;
@@ -45,3 +42,4 @@ begin
         end if;
     end process;
 end mixed;
+
