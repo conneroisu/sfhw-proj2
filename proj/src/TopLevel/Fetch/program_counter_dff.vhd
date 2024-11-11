@@ -1,12 +1,9 @@
 -- <header>
--- Author(s): conneroisu
+-- Author(s): Conner Ohnesorge
 -- Name: proj/src/TopLevel/Fetch/program_counter_dff.vhd
 -- Notes:
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      conneroisu  <conneroisu@outlook.com> add-starting-place-for-program-counter
---      conneroisu  <conneroisu@outlook.com> add-starting-place-for-program-counter
+--      conneroisu 2024-11-11T15:42:29Z Format-and-Header
+--      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
 -- </header>
 
 library IEEE;
@@ -38,3 +35,4 @@ begin
         end if;
     end process;
 end mixed;
+

@@ -1,10 +1,10 @@
 -- <header>
--- Author(s): Conner Ohnesorge, conneroisu
+-- Author(s): Conner Ohnesorge, aidanfoss
 -- Name: proj/src/LowLevel/invg.vhd
 -- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> fix-all-low-level-components-not-including-all-packages
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> added-bit-inverter-not-gate-and-one-bit-complementor-that-is
+--      conneroisu 2024-11-11T15:42:29Z Format-and-Header
+--      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
+--      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
 -- </header>
 
 library IEEE;
@@ -21,3 +21,4 @@ architecture dataflow of invg is
 begin
     o_F <= not i_A;                     -- Output is the inverse of the input
 end dataflow;
+
