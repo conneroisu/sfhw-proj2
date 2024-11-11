@@ -2,45 +2,71 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+-- Stage 3
 entity stage_idex is
     generic(N : integer := 32);
     port (
-        i_CLK : in std_logic;
-        i_RST : in std_logic;
-        i_WE  : in std_logic;
-        -- Execute Stage Control Signals
-        i_ALUSrc   : in  std_logic_vector(1 downto 0);
-        i_ALUOp    : in  std_logic_vector(1 downto 0);
-        i_RegDst   : in  std_logic_vector(4 downto 0);
-        -- Execute -> Memory Stage Control Signals
+        -- Common Stage Signals [begin]
+        i_CLK     : in  std_logic;
+        i_RST     : in  std_logic;
+        i_WE      : in  std_logic;
+        i_PC      : in  std_logic_vector(N-1 downto 0);
+        o_PC      : out std_logic_vector(N-1 downto 0);
+        i_Inst    : in  std_logic_vector(N-1 downto 0);
+        i_PCplus4 : in  std_logic_vector(N-1 downto 0);
+        o_PCplus4 : out std_logic_vector(N-1 downto 0);
+        -- Common Stage Signals [end]
+
+        -- Control Signals [begin]
+        --= Stage Specific Signals [begin]
+        -- ex:     RegDst  ALUOp  ALUSrc
+        -- R-Type:   1      10      00
+        -- lw    :   0      00      01
+        -- sw    :   x      00      01
+        -- beq   :   x      01      00
+        i_RegDst : in std_logic_vector(4 downto 0);
+        i_ALUOp  : in std_logic_vector(1 downto 0);
+        i_ALUSrc : in std_logic_vector(1 downto 0);
+        --= Stage Specific Signals [end]
+
+        -- Future Stage Signals [begin]
+        -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEzMzIyOTUsIm5iZiI6MTczMTMzMTk5NSwicGF0aCI6Ii84ODc4NTEyNi8zODQwMjg4NjYtOGU4ZDVlODQtY2EyMi00NjJlLThiODUtZWExYzAwYzQzZThmLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMTElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTExVDEzMzMxNVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTMzNzM4ZjA4NDAxYjVhM2ZhMzQyNzIxNTJjYTBlNTc3ZjRiY2NlZWUwZTFhOWZkMGNhNzliMDVkMDM5MTgyMDUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.XG3ua9fePqVvlV9ENBneOm_dfjEvY2qnAtWhg7wU6xU
+        --== Memory Stage Control Signals [begin]
         i_MemRead  : in  std_logic;
-        i_MemWrite : in  std_logic;
-        i_PCSrc    : in  std_logic_vector(1 downto 0);
         o_MemRead  : out std_logic;
+        i_MemWrite : in  std_logic;
         o_MemWrite : out std_logic;
-        o_PCSouce  : out std_logic_vector(1 downto 0);
-        -- Execute -> Memory -> Write Back Stage Control Signals
+        i_PCSrc    : in  std_logic_vector(1 downto 0);
+        o_PCSrc    : out std_logic_vector(1 downto 0);
+        -- Memory Stage Control Signals [end]
+        --== Write Back Stage Control Signals [begin]
         i_RegWrite : in  std_logic;
         i_MemToReg : in  std_logic;
-        -- Control signals in
-        i_Ctrl : in  std_logic_vector(20 downto 0);
-        o_Ctrl : out std_logic_vector(20 downto 0);
-        --the registers in
-        i_Read1 : in  std_logic_vector(N-1 downto 0);
-        i_Read2 : in  std_logic_vector(N-1 downto 0);
-        --the registers out
-        o_Read1 : out std_logic_vector(N-1 downto 0);
-        o_Read2 : out std_logic_vector(N-1 downto 0);
-        -- the PC and instruction in
-        i_PC       : in  std_logic_vector(N-1 downto 0);
-        i_Inst     : in  std_logic_vector(N-1 downto 0);
-        i_PCplus4  :     std_logic_vector(N-1 downto 0);
-        i_extended : in  std_logic_vector(N-1 downto 0);
-        -- the PC and instruction out
-        o_PC       : out std_logic_vector(N-1 downto 0);
-        o_Inst     : out std_logic_vector(N-1 downto 0);
-        o_PCplus4  :     std_logic_vector(N-1 downto 0);
-        o_extended : out std_logic_vector(N-1 downto 0)
+        o_RegWrite : out std_logic;
+        o_MemToReg : out std_logic;
+        -- Write Back Stage Control Signals [end]
+        --= Future Stage Signals [end]
+        -- Control Signals [end]
+
+        -- Stage Passthrough Signals [begin]
+        --= Register File Signals [begin]
+        i_Read1    : in  std_logic_vector(N-1 downto 0);
+        i_Read2    : in  std_logic_vector(N-1 downto 0);
+        o_Read1    : out std_logic_vector(N-1 downto 0);
+        o_Read2    : out std_logic_vector(N-1 downto 0);
+        --= Register File Signals [end]
+        --= Sign Extend Signals [begin]
+        i_Extended : in  std_logic_vector(N-1 downto 0);
+        o_Extended : out std_logic_vector(N-1 downto 0);
+        --= Sign Extend Signals [end]
+        --= Instruction Memory Signals [begin]
+        i_Rd       : in  std_logic_vector(4 downto 0);  -- I-bits[11-15] into RegDstMux bits[4-0]
+        i_Rt       : in  std_logic_vector(4 downto 0);  -- I-bits[16-20] into RegDstMux and Register (bits[4-0])
+        --= Instruction Memory Signals [end]
+        i_Ctrl     : in  std_logic_vector(20 downto 0);
+        o_Ctrl     : out std_logic_vector(20 downto 0);
+        o_Inst     : out std_logic_vector(N-1 downto 0)
+         --= Stage Passthrough Signals [end]
         );
 
 end entity;
@@ -52,6 +78,15 @@ architecture structure of stage_idex is
         port(i_CLK : in  std_logic;
              i_RST : in  std_logic;
              i_WrE : in  std_logic;
+             i_D   : in  std_logic_vector(N-1 downto 0);
+             o_Q   : out std_logic_vector(N-1 downto 0));
+    end component;
+
+    component dffg_n is  -- dffg for designated N sized signals to be forwarded
+        generic(N : integer := 32);
+        port(i_CLK : in  std_logic;
+             i_RST : in  std_logic;
+             i_WE  : in  std_logic;
              i_D   : in  std_logic_vector(N-1 downto 0);
              o_Q   : out std_logic_vector(N-1 downto 0));
     end component;

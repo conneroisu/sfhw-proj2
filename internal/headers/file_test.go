@@ -1,16 +1,47 @@
 package main
 
-import "testing"
+import (
+	_ "embed"
+	"encoding/json"
+	"os"
+	"testing"
+
+	"github.com/kylelemons/godebug/diff"
+)
+
+//go:embed testdata/basic_input.json
+var input string
+
+//go:embed testdata/golden_basic.vhd
+var golden string
+
+//go:embed testdata/basic.vhd
+var content string
 
 func TestFile(t *testing.T) {
-	content := "hello world"
-	authors := []string{"conneroisu", "Conner Ohnesorge"}
-	notes := []string{"note1", "note2"}
-	name := "test.vhd"
-
-	output, err := FillTemplate(authors, name, notes, content)
+	var commits Commits
+	err := json.Unmarshal([]byte(input), &commits)
 	if err != nil {
 		t.Errorf("Error: %v", err)
 	}
-	t.Log(output)
+
+	file := "internal/headers/testdata/golden_basic.vhd"
+	headless := removeHeader(string(content))
+	output, err := FillTemplate(commits.Authors(), file, commits.Notes(), headless)
+	if err != nil {
+		t.Errorf("Error: %v", err)
+	}
+	if output != golden {
+		differences := diff.Diff(golden, output)
+		t.Errorf(differences)
+		// write the output to a file for debugging
+		err = os.WriteFile("output.vhd", []byte(output), 0644)
+		if err != nil {
+			t.Errorf("Error: %v", err)
+		}
+		err = os.WriteFile("golden.vhd", []byte(golden), 0644)
+		if err != nil {
+			t.Errorf("Error: %v", err)
+		}
+	}
 }
