@@ -2,7 +2,6 @@
 -- Author(s): Conner Ohnesorge, conneroisu
 -- Name: proj/src/LowLevel/complementor1_N.vhd
 -- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> remove-mips_types-from-low-level-components
 --      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> fix-all-low-level-components-not-including-all-packages
 --      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
 --      conneroisu  <conneroisu@outlook.com> renamed-proj-src-LowLevel-1Comp_N.vhd-proj-src-LowLevel-complementor1_N.vhd

@@ -2,7 +2,6 @@
 -- Author(s): Conner Ohnesorge, conneroisu
 -- Name: proj/src/LowLevel/dffg.vhd
 -- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> remove-mips_types-from-low-level-components
 --      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> fix-all-low-level-components-not-including-all-packages
 --      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> remove-unneeded-comments
 --      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
@@ -14,6 +13,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+
 entity dffg is
     port (
         i_CLK : in  std_logic;          -- Clock input

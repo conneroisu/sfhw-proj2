@@ -7,17 +7,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"log/slog"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"slices"
 	"strings"
 	"text/template"
-)
-
-var (
-	blacklist   = "github-actions[bot]"
-	emBlacklist = "noreply"
 )
 
 type (
@@ -36,10 +31,17 @@ type (
 	}
 )
 
-//go:embed file.tmpl
-var fileTemplate string
+var (
+	//go:embed file.tmpl
+	fileTemplate string
 
-var file = template.Must(template.New("file").Parse(fileTemplate))
+	file = template.Must(template.New("file").Parse(fileTemplate))
+)
+
+const (
+	blacklist   = "github-actions[bot]"
+	emBlacklist = "noreply"
+)
 
 // FillTemplate fills the template with the given data
 func FillTemplate(
@@ -71,7 +73,13 @@ func FillTemplate(
 func (cs Commits) Authors() []string {
 	var authors []string
 	for _, c := range cs {
-		authors = append(authors, c.AuthorName+" <"+c.AuthorEmail+">")
+		if strings.Contains(c.AuthorEmail, emBlacklist) {
+			continue
+		}
+		if strings.Contains(c.AuthorName, blacklist) {
+			continue
+		}
+		authors = append(authors, c.AuthorName)
 	}
 	return authors
 }
@@ -84,36 +92,6 @@ func (cs Commits) Notes() []string {
 	}
 	return notes
 }
-
-var (
-	logger = slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-		AddSource: true,
-		Level:     slog.LevelDebug,
-		ReplaceAttr: func(groups []string, a slog.Attr) slog.Attr {
-			if a.Key == "time" {
-				return slog.Attr{}
-			}
-			if a.Key == "level" {
-				return slog.Attr{}
-			}
-			if a.Key == slog.SourceKey {
-				str := a.Value.String()
-				split := strings.Split(str, "/")
-				if len(split) > 2 {
-					a.Value = slog.StringValue(strings.Join(split[len(split)-2:], "/"))
-					a.Value = slog.StringValue(strings.Replace(a.Value.String(), "}", "", -1))
-				}
-				a.Key = a.Value.String()
-				a.Value = slog.IntValue(0)
-			}
-			if a.Key == "body" {
-				a.Value = slog.StringValue(strings.Replace(a.Value.String(), "/", "", -1))
-				a.Value = slog.StringValue(strings.Replace(a.Value.String(), "\n", "", -1))
-				a.Value = slog.StringValue(strings.Replace(a.Value.String(), "\"", "", -1))
-			}
-			return a
-		}}))
-)
 
 func main() {
 	if err := run(); err != nil {
@@ -178,33 +156,43 @@ func findFiles() ([]string, error) {
 	return files, nil
 }
 
+const (
+	rmTill = "library ieee"
+	rmFrom = "end architecture"
+)
+
 func removeHeader(content string) string {
-	lines := strings.Split(content, "\n")
-	var start bool
-	var done bool
+	found := false
 	newLines := []string{}
-	empties := []int{}
-	for _, line := range lines {
-		if strings.HasPrefix(line, "-- <header>") {
-			start = true
-			continue
-		}
-		if strings.HasPrefix(line, "-- </header>") {
-			done = true
-			continue
-		}
-		if start && done {
+	for _, line := range strings.Split(content, "\n") {
+		if found {
 			newLines = append(newLines, line)
 		}
-		if line == "" {
-			empties = append(empties, len(newLines))
-		}
-		if line != "" {
-			empties = []int{}
+		if strings.Contains(strings.ToLower(line), rmTill) {
+			found = true
+			newLines = append(newLines, line)
 		}
 	}
-	content = strings.Join(newLines[:empties[0]], "\n")
-	return content
+	newEndLines := []string{}
+	// copy the new lines to the end lines
+	newEndLines = append(newEndLines, newLines...)
+	slices.Reverse(newEndLines)
+	// remove until the rmFrom
+	revLines := []string{}
+	endFound := false
+	for _, line := range newEndLines {
+		if endFound {
+			revLines = append(revLines, line)
+		}
+		if strings.Contains(strings.ToLower(line), rmFrom) {
+			endFound = true
+			revLines = append(revLines, line)
+		}
+	}
+	// reverse the lines
+	slices.Reverse(revLines)
+	// join the lines
+	return strings.Join(revLines, "\n")
 }
 
 // GetCommitHistory gets the commit history for a given file

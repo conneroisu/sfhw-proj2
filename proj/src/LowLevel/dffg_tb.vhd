@@ -102,8 +102,3 @@ begin
     end process p_tb;
 
 end architecture behavior;
-
-
-
-
-
