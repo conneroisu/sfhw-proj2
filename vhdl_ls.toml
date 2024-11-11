@@ -1,0 +1,16 @@
+[libraries]
+
+lib.files = [
+"proj/src/*.vhd",
+"proj/src/**/*.vhd",
+"proj/test/*.vhd",
+"proj/test/**/*.vhd",
+"proj/src/**/**/*.vhd",
+"proj/test/**/**/*.vhd",
+"proj/src/**/**/**/*.vhd",
+"proj/test/**/**/**/*.vhd",
+"proj/src/**/**/**/**/*.vhd",
+"proj/test/**/**/**/**/*.vhd",
+"proj/src/**/**/**/**/**/*.vhd",
+"proj/test/**/**/**/**/**/*.vhd",
+]
