@@ -1,3 +1,12 @@
+-- <header>
+-- Author(s): Conner Ohnesorge, aidanfoss
+-- Name: proj/src/LowLevel/adderSubtractor.vhd
+-- Notes:
+--      conneroisu 2024-11-11T15:18:36Z Format-and-Header
+--      connero 2024-11-11T09:11:16-06:00 Merge-branch-main-into-component-forward-unit
+--      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
+--      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+-- </header>
 
 library IEEE;
 use IEEE.std_logic_1164.all;
@@ -80,7 +89,7 @@ begin
             o_O  => s1
             );
 
-    addsubctrl1 : component mux2t1_N  
+    addsubctrl1 : component mux2t1_N
         port map(
             i_s  => nadd_sub,
             i_d0 => i_b,
@@ -104,7 +113,7 @@ begin
             i_d1 => s3,
             o_o  => s4
             );
-    c(0) <= nadd_sub;      --does 2s complement for signed subtraction only
+    c(0) <= nadd_sub;    --does 2s complement for signed subtraction only
     g_fulladder : for i in 0 to N - 1 generate  -- create 32 full adders in parallel
         fulladderlist : component fulladder
             port map(
@@ -124,3 +133,4 @@ begin
             o_f => o_overflow
             );
 end architecture structural;
+

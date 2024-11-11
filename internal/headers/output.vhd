@@ -1,10 +1,11 @@
 -- <header>
--- Author(s): Conner Ohnesorge, John Doe
--- Name: internal/headers/testdata/golden_basic.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: internal/headers/output.vhd
 -- Notes:
---	Conner Ohnesorge 2022-10-31T09:22:17-05:00 added-initial-new-from-toolflow
---	John Doe 2022-10-31T09:22:17-05:00 new-commit
+--      conneroisu 2024-11-11T15:18:36Z Format-and-Header
+--      Conner Ohnesorge 2024-11-11T08:29:19-06:00 final-version-of-the-header-program-with-tests-and-worked-on-the-stage_idex.vhd-file
 -- </header>
+
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -45,3 +46,4 @@ begin
     end process;
 
 end architecture mixed;
+
