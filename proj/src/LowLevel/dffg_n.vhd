@@ -1,51 +1,42 @@
--- <header>
--- Author(s): Conner Ohnesorge, conneroisu
--- Name: proj/src/LowLevel/dffg_n.vhd
--- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> fix-all-low-level-components-not-including-all-packages
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      conneroisu  <conneroisu@outlook.com> add-lowlevel-components-and-testbenches
--- </header>
-
-library ieee;
-use ieee.std_logic_1164.all;
+library IEEE;
+use IEEE.std_logic_1164.all;
 
 entity dffg_n is
-    generic (
-        n : integer := 32
+    generic(N : integer := 32);
+    port(
+        i_CLK : in  std_logic;                       -- Clock input
+        i_RST : in  std_logic;                       -- Reset input
+        i_WrE : in  std_logic;                       -- Write enable input
+        i_D   : in  std_logic_vector(N-1 downto 0);  -- Data input
+        o_Q   : out std_logic_vector(N-1 downto 0)   -- Data output
         );
-    port (
-        i_clk : in  std_logic;                         -- Clock Input
-        i_rst : in  std_logic;                         -- Reset Input
-        i_we  : in  std_logic;                         -- Write Enable Input
-        i_d   : in  std_logic_vector(n - 1 downto 0);  -- Data Value input
-        o_q   : out std_logic_vector(n - 1 downto 0)   -- Data Value output
-        );
-end entity dffg_n;
 
-architecture mixed of dffg_n is
-    signal s_d : std_logic_vector(n - 1 downto 0);  -- Multiplexed input to the FF
-    signal s_q : std_logic_vector(n - 1 downto 0);  -- Output of the FF
+end dffg_n;
+
+architecture structural of dffg_n is
+
+    --Original edge-triggered flip-flop
+    component dffg is
+        port(
+            i_CLK : in  std_logic;      -- Clock input
+            i_RST : in  std_logic;      -- Reset input
+            i_WE  : in  std_logic;      -- Write enable input
+            i_D   : in  std_logic;      -- Data input
+            o_Q   : out std_logic       -- Data output
+            );
+    end component;
+
 begin
-    -- The output of the FF is fixed to s_Q
-    o_q <= s_q;
 
-    -- The input to the FF is selected based on the write enable
-    with i_WE select s_d <=
-        i_D when '1',
-        s_q when others;
-
-    process (i_clk, i_rst) is
+    G1 : for i in 0 to N-1 generate
     begin
+        flipflop : dffg
+            port map(i_CLK => i_CLK,    -- Clock input
+                     i_RST => i_RST,    -- Reset input
+                     i_WE  => i_WrE,    -- Write enable input
+                     i_D   => i_D(i),   -- Data input
+                     o_Q   => o_Q(i)    -- Data output
+                     );
+    end generate;
 
-        if (i_rst = '1') then            -- if reset is active
-            s_q <= (others => '0');      -- reset the output
-        elsif (rising_edge(i_clk)) then  -- if clock is rising edge
-            s_q <= s_d;                  -- update the output
-        end if;
-
-    end process;
-
-end architecture mixed;
+end structural;
