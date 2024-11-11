@@ -6,7 +6,6 @@ import (
 	"context"
 	_ "embed"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"log"
 	"log/slog"
@@ -152,7 +151,7 @@ func run(ctx context.Context) error {
 	// Add header to each VHDL file
 	for _, file := range files {
 		logger.Debug("Processing file", "file", file)
-		commits, err := GetCommitHistory(file)
+		commits, err := GetCommitHistory(ctx, file)
 		if err != nil {
 			return err
 		}
@@ -254,7 +253,7 @@ func reduceContent(ctx context.Context, content string) string {
 }
 
 // GetCommitHistory gets the commit history for a given file
-func GetCommitHistory(path string) (Commits, error) {
+func GetCommitHistory(ctx context.Context, path string) (Commits, error) {
 	cmd := exec.Command("git", "log",
 		"--date=iso8601-strict",
 		"--all",
@@ -294,7 +293,7 @@ func GetCommitHistory(path string) (Commits, error) {
 		return commits, nil
 	case err := <-errCh:
 		return nil, err
-	default:
-		return nil, errors.New("no commits found: WTF")
+	case <-ctx.Done():
+		return nil, ctx.Err()
 	}
 }
