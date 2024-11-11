@@ -51,7 +51,3 @@ begin
 
     end generate g_nbit_mux;
 end architecture structural;
-
-
-
-

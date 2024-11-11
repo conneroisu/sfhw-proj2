@@ -13,17 +13,6 @@
 --      conneroisu  <conneroisu@outlook.com> update-do-files-and-add-tests-for-lowlevel-components
 -- </header>
 
--------------------------------------------------------------------------
--- author: Conner Ohnesorge
--- DEPARTMENT OF ELECTRICAL ENGINEERING
--- IOWA STATE UNIVERSITY
--------------------------------------------------------------------------
--- name: decoder5t32.vhd
--------------------------------------------------------------------------
--- DESCRIPTION: This file contains an implementation of an edge-triggered
--- flip-flop with parallel access and reset.
--------------------------------------------------------------------------
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;

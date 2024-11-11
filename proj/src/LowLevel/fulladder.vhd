@@ -5,10 +5,6 @@
 --      aidanfoss  <quantumaidan@gmail.com> removing-unnessecary-extra-lowlevel-files-adding-requred-ones-to-lowlevel-location
 -- </header>
 
--------------------------------------------------------------------------
--- Description: This is a structural description of a full adder. It is
--- made up of 2 xor gates, 2 and gates, and 1 or gate.
--------------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -99,5 +95,3 @@ begin
     -- end generate G_OnesComp;
 
 end architecture structural;
-
-

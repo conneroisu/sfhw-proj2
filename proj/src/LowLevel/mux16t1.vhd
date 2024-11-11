@@ -1,9 +1,4 @@
--- <header>
--- Author(s): aidanfoss
--- Name: proj/src/LowLevel/mux16t1.vhd
--- Notes:
---      aidanfoss  <quantumaidan@gmail.com> removing-unnessecary-extra-lowlevel-files-adding-requred-ones-to-lowlevel-location
--- </header>
+
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -46,7 +41,3 @@ begin
         "00000000000000000000000000000000" when others;
 
 end architecture behavior;
-
-
-
-

@@ -5,16 +5,6 @@
 --      aidanfoss  <quantumaidan@gmail.com> removing-unnessecary-extra-lowlevel-files-adding-requred-ones-to-lowlevel-location
 -- </header>
 
--------------------------------------------------------------------------
--- Conner Ohnesorge
--- Department of Electrical and Computer Engineering
--- Iowa State University
--------------------------------------------------------------------------
--- mux4t1.vhd
--------------------------------------------------------------------------
--- DESCRIPTION: This file contains an implementation of an N-bit wide 2:1
--- mux using structural VHDL, generics, and generate statements.
--------------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -71,7 +61,3 @@ begin
             );
 
 end architecture structural;
-
-
-
-
