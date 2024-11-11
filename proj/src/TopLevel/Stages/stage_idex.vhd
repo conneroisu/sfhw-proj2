@@ -36,7 +36,7 @@ entity stage_idex is
         i_ALUOp    : in  std_logic_vector(1 downto 0);
         i_ALUSrc   : in  std_logic_vector(1 downto 0);
         -- Future Stage Signals [begin]
-        -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEzMzIyOTUsIm5iZiI6MTczMTMzMTk5NSwicGF0aCI6Ii84ODc4NTEyNi8zODQwMjg4NjYtOGU4ZDVlODQtY2EyMi00NjJlLThiODUtZWExYzAwYzQzZThmLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMTElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTExVDEzMzMxNVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTMzNzM4ZjA4NDAxYjVhM2ZhMzQyNzIxNTJjYTBlNTc3ZjRiY2NlZWUwZTFhOWZkMGNhNzliMDVkMDM5MTgyMDUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.XG3ua9fePqVvlV9ENBneOm_dfjEvY2qnAtWhg7wU6xU
+        -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png
         --== Memory Stage Control Signals [begin]
         i_MemRead  : in  std_logic;
         o_MemRead  : out std_logic;
@@ -50,6 +50,9 @@ entity stage_idex is
         o_RegWrite : out std_logic;
         o_MemToReg : out std_logic;
         -- Stage Passthrough Signals [begin]
+        --= Forwarding Signals [begin]
+        i_WriteData : in  std_logic_vector(N-1 downto 0); -- Data from the end of writeback stage's mux
+        i_DMem1     : in  std_logic_vector(N-1 downto 0); -- Data from the first input to the DMem
         --= Register File Signals [begin]
         i_Read1    : in  std_logic_vector(N-1 downto 0);
         i_Read2    : in  std_logic_vector(N-1 downto 0);
@@ -79,6 +82,9 @@ architecture structure of stage_idex is
     signal s_ALUOp  : std_logic_vector(1 downto 0);
     signal s_ALUSrc : std_logic_vector(1 downto 0);
 
+    signal s_ForwardA : std_logic_vector(1 downto 0);
+    signal s_ForwardB : std_logic_vector(1 downto 0);
+    -- see: https://github.com/user-attachments/assets/b31df788-32cf-48a5-a3ac-c44345cac682
 begin
 
     -- Common Stage Signals [begin]
