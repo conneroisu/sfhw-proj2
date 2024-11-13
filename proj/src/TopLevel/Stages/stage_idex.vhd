@@ -37,26 +37,12 @@ entity stage_idex is
 
         -- Future Stage Signals [begin]
         -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png
-        --== Memory Stage Control Signals [begin]
-        i_MemRead  : in  std_logic;
-        i_MemWrite : in  std_logic;
-        i_PCSrc    : in  std_logic_vector(1 downto 0);
-        o_MemRead  : out std_logic;
-        o_MemWrite : out std_logic;
-        o_PCSrc    : out std_logic_vector(1 downto 0);
-        --== Memory Stage Signals [begin]
         o_ALU      : out std_logic_vector(N-1 downto 0);
-        --== Write Back Stage Control Signals [begin]
-        i_RegWrite : in  std_logic;
-        i_MemToReg : in  std_logic;
-        o_RegWrite : out std_logic;
-        o_MemToReg : out std_logic;
-        -- Stage Passthrough Signals [begin]
+
+        -- Input Signals [begin]
         --= Sign Extend Signals [begin]
         i_Extended : in  std_logic_vector(N-1 downto 0);
         o_BranchAddr : out std_logic_vector(N-1 downto 0);
-
-        -- Input Signals [begin]
         --= Register File Signals [begin]
         i_Read1 : in  std_logic_vector(N-1 downto 0);
         i_Read2 : in  std_logic_vector(N-1 downto 0);
@@ -272,8 +258,6 @@ begin
             o_Overflow => s_Overflow,
             o_Zero     => s_Zero
             );
-
-
 
     -- Add 2x shifted extended value to PCplus4
     o_BranchAddr <= std_logic_vector(
