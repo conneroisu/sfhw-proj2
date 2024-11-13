@@ -17,38 +17,32 @@ use ieee.numeric_std.all;
 entity stage_idex is
     generic(N : integer := 32);
     port (
-
         -- Common Stage Signals [begin]
-        i_CLK      : in  std_logic;
-        i_RST      : in  std_logic;
-        i_WE       : in  std_logic;
-        i_PC       : in  std_logic_vector(N-1 downto 0);
-        o_PC       : out std_logic_vector(N-1 downto 0);
-        i_PCplus4  : in  std_logic_vector(N-1 downto 0);
-        o_PCplus4  : out std_logic_vector(N-1 downto 0);
-        -- Control Signals [begin]
+        i_CLK     : in std_logic;
+        i_RST     : in std_logic;
+        i_WE      : in std_logic;
+        i_PC      : in std_logic_vector(N-1 downto 0);
+        i_PCplus4 : in std_logic_vector(N-1 downto 0);
+
+        -- Control Signals (From Control Unit) [begin]
         --= Stage Specific Signals [begin]
-        -- ex:     RegDst  ALUOp  ALUSrc
+        --         RegDst  ALUOp  ALUSrc
         -- R-Type:   1      10      00
         -- lw    :   0      00      01
         -- sw    :   x      00      01
         -- beq   :   x      01      00
-        i_RegDst   : in  std_logic_vector(4 downto 0);
-        i_ALUOp    : in  std_logic_vector(1 downto 0);
-        i_ALUSrc   : in  std_logic_vector(1 downto 0);
-        --= Register File Signals [begin]
-        i_Read1    : in  std_logic_vector(N-1 downto 0);
-        i_Read2    : in  std_logic_vector(N-1 downto 0);
-        o_Read1    : out std_logic_vector(N-1 downto 0);
-        o_Read2    : out std_logic_vector(N-1 downto 0);
+        i_RegDst   : in  std_logic_vector(4 downto 0);  -- Destination register from control unit.
+        i_ALUOp    : in  std_logic_vector(1 downto 0);  -- ALU operation from control unit.
+        i_ALUSrc   : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
+
         -- Future Stage Signals [begin]
         -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png
         --== Memory Stage Control Signals [begin]
         i_MemRead  : in  std_logic;
-        o_MemRead  : out std_logic;
         i_MemWrite : in  std_logic;
-        o_MemWrite : out std_logic;
         i_PCSrc    : in  std_logic_vector(1 downto 0);
+        o_MemRead  : out std_logic;
+        o_MemWrite : out std_logic;
         o_PCSrc    : out std_logic_vector(1 downto 0);
         --== Memory Stage Signals [begin]
         o_ALU      : out std_logic_vector(N-1 downto 0);
@@ -60,7 +54,14 @@ entity stage_idex is
         -- Stage Passthrough Signals [begin]
         --= Sign Extend Signals [begin]
         i_Extended : in  std_logic_vector(N-1 downto 0);
-        o_Extended : out std_logic_vector(N-1 downto 0);
+        o_BranchAddr : out std_logic_vector(N-1 downto 0);
+
+        -- Input Signals [begin]
+        --= Register File Signals [begin]
+        i_Read1 : in  std_logic_vector(N-1 downto 0);
+        i_Read2 : in  std_logic_vector(N-1 downto 0);
+        o_Read1 : out std_logic_vector(N-1 downto 0);
+        o_Read2 : out std_logic_vector(N-1 downto 0);
 
         -- Forward Unit Signals [begin]
         --= Forwarded Signals (received from Forward Unit) [begin]
@@ -118,14 +119,17 @@ architecture structure of stage_idex is
             );
     end component;
 
+    -- see: https://github.com/user-attachments/assets/b31df788-32cf-48a5-a3ac-c44345cac682
     signal s_ALUOp    : std_logic_vector(1 downto 0);
     signal s_ALUSrc   : std_logic_vector(1 downto 0);
     signal s_Overflow : std_logic;
     signal s_Zero     : std_logic;
     signal s_Rd       : std_logic_vector(4 downto 0);
--- see: https://github.com/user-attachments/assets/b31df788-32cf-48a5-a3ac-c44345cac682
+    signal s_PC       : std_logic_vector(31 downto 0);
+    signal s_PCplus4  : std_logic_vector(31 downto 0);
 begin
 
+    ----------------------------------------------------------------------state
     -- Common Stage Signals [begin]
     PC : dffg_n
         generic map (N => 32)
@@ -134,7 +138,7 @@ begin
             i_RST => i_RST,             -- Reset input
             i_WrE => i_WE,              -- Write enable input
             i_D   => i_PC,              -- Data value input
-            o_Q   => o_PC               -- Data value output
+            o_Q   => s_PC               -- Data value output
             );
 
     PCplus4 : dffg_n
@@ -144,7 +148,7 @@ begin
             i_RST => i_RST,
             i_WrE => i_WE,
             i_D   => i_PCplus4,
-            o_Q   => o_PCplus4
+            o_Q   => s_PCplus4
             );
 
     WrAddr : dffg_n  -- Destination write address for register file (rd)
@@ -175,16 +179,6 @@ begin
             i_WrE => i_WE,
             i_D   => i_Read2,
             o_Q   => o_Read2
-            );
-
-    Extended : dffg_n                   -- extended immediate
-        generic map (N => 32)
-        port map(
-            i_CLK => i_CLK,
-            i_RST => i_RST,
-            i_WrE => i_WE,
-            i_D   => i_Extended,  -- Data value input (extended immediate)
-            o_Q   => o_Extended   -- Data value output (extended immediate)
             );
 
     ALUOperation : dffg_n
@@ -219,7 +213,7 @@ begin
 
 
 
-    ----------------------------------------------------------------------------
+    ----------------------------------------------------------------------logic
 
 
     -- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
@@ -254,6 +248,19 @@ begin
             Data_out => s_ALUSrc
             );
 
+    -- RT & RD mux w/ i_RegDst selector
+    IDEX_RegisterRd : mux_NtM
+        generic map (
+            N         => 2,
+            M         => 5,
+            Sel_width => 5
+            )
+        port map (
+            Data_in  => i_Read1 & i_Read2 & i_WriteData & i_DMem1,
+            Sel      => i_RegDst,
+            Data_out => s_Rd
+            );
+
     instALU : alu
         port map (
             CLK        => i_CLK,
@@ -266,5 +273,11 @@ begin
             o_Zero     => s_Zero
             );
 
+
+
+    -- Add 2x shifted extended value to PCplus4
+    o_BranchAddr <= std_logic_vector(
+        unsigned(std_logic_vector(shift_left(unsigned(i_Extended), 2))) + unsigned(i_PCplus4)
+    );
 
 end structure;
