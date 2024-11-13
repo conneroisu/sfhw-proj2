@@ -124,7 +124,7 @@ func (cs Commits) Authors() []string {
 func (cs Commits) Notes() []string {
 	var notes []string
 	for _, c := range cs {
-		if c.Commit == igCommit {
+		if strings.Contains(c.Commit, igCommit) {
 			continue
 		}
 		notes = append(notes, c.AuthorName+" "+c.Date+" "+c.Message)
