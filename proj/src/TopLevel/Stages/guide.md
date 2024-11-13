@@ -17,6 +17,10 @@ See: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e
 
 Basically, add the inputs to the stage from the outputs of components from diatgrams of the previous stage.
 
-5. Add outputs to components of the next stage (changes per stage)
+5. Add inputs from the forwarding unit (changes per stage)
 
-6. Add "caching" of stage specific signals (changes per stage)
+6. Add outputs to components of the next stage (changes per stage)
+
+7. Add "caching" of stage specific signals (changes per stage)
+
+8. Add components contained/operating until the next stage (changes per stage)
