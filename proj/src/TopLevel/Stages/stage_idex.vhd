@@ -2,7 +2,13 @@
 -- Author(s): Conner Ohnesorge
 -- Name: proj/src/TopLevel/Stages/stage_idex.vhd
 -- Notes:
---      conneroisu 2024-11-11T15:42:29Z Format-and-Header
+--      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      Conner Ohnesorge 2024-11-13T12:27:08-06:00 removed-unused-vhdl_ls.toml-put-it-in-HOME-and-further-simplified-the-stage_idex.vhd-file-by-removing-the-unnecessary-signals-and-signals-that-were-not-being-used-specifically-the-signals-that-were-being-used-in-the-future-stages
+--      Conner Ohnesorge 2024-11-13T12:20:08-06:00 updated-configurations-for-lsp-and-firther-simplified-stage_idex
+--      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
+--      Conner Ohnesorge 2024-11-11T14:08:03-06:00 added-generic-mux-muxNtM
+--      Conner Ohnesorge 2024-11-11T10:14:52-06:00 added-forwarding-signals-to-stage_idex
+--      conneroisu 2024-11-11T15:44:17Z Format-and-Header
 --      Conner Ohnesorge 2024-11-11T09:04:24-06:00 remove-extraneous-semicolons-in-initial-declaration
 --      Conner Ohnesorge 2024-11-11T09:03:17-06:00 added-stage-guide-and-finished-stage_idex-without-component-instantiations
 --      Conner Ohnesorge 2024-11-11T08:29:19-06:00 final-version-of-the-header-program-with-tests-and-worked-on-the-stage_idex.vhd-file
@@ -31,23 +37,23 @@ entity stage_idex is
         -- lw    :   0      00      01
         -- sw    :   x      00      01
         -- beq   :   x      01      00
-        i_RegDst   : in  std_logic_vector(4 downto 0);  -- Destination register from control unit.
-        i_ALUOp    : in  std_logic_vector(1 downto 0);  -- ALU operation from control unit.
-        i_ALUSrc   : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
+        i_RegDst : in std_logic_vector(4 downto 0);  -- Destination register from control unit.
+        i_ALUOp  : in std_logic_vector(1 downto 0);  -- ALU operation from control unit.
+        i_ALUSrc : in std_logic_vector(1 downto 0);  -- ALU source from control unit.
 
         -- Future Stage Signals [begin]
         -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png
-        o_ALU      : out std_logic_vector(N-1 downto 0);
+        o_ALU : out std_logic_vector(N-1 downto 0);
 
         -- Input Signals [begin]
         --= Sign Extend Signals [begin]
-        i_Extended : in  std_logic_vector(N-1 downto 0);
+        i_Extended   : in  std_logic_vector(N-1 downto 0);
         o_BranchAddr : out std_logic_vector(N-1 downto 0);
         --= Register File Signals [begin]
-        i_Read1 : in  std_logic_vector(N-1 downto 0);
-        i_Read2 : in  std_logic_vector(N-1 downto 0);
-        o_Read1 : out std_logic_vector(N-1 downto 0);
-        o_Read2 : out std_logic_vector(N-1 downto 0);
+        i_Read1      : in  std_logic_vector(N-1 downto 0);
+        i_Read2      : in  std_logic_vector(N-1 downto 0);
+        o_Read1      : out std_logic_vector(N-1 downto 0);
+        o_Read2      : out std_logic_vector(N-1 downto 0);
 
         -- Forward Unit Signals [begin]
         --= Forwarded Signals (received from Forward Unit) [begin]
@@ -262,6 +268,7 @@ begin
     -- Add 2x shifted extended value to PCplus4
     o_BranchAddr <= std_logic_vector(
         unsigned(std_logic_vector(shift_left(unsigned(i_Extended), 2))) + unsigned(i_PCplus4)
-    );
+        );
 
 end structure;
+

@@ -1,6 +1,15 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: proj/src/LowLevel/muxNtM.vhd
+-- Notes:
+--      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
+--      Conner Ohnesorge 2024-11-11T14:08:03-06:00 added-generic-mux-muxNtM
+-- </header>
+
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.NUMERIC_STD.all;
 
 -- Generic N-to-M Multiplexer Component with std_logic_vector Sel signal
 -- This component selects one of N input buses, each M bits wide,
@@ -8,15 +17,15 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity N_to_M_Mux is
     generic (
-        N         : integer := 2;  -- Number of input buses
-        M         : integer := 8;  -- Width of each input bus
-        Sel_width : integer := 1   -- Width of Sel signal
-    );
+        N         : integer := 2;       -- Number of input buses
+        M         : integer := 8;       -- Width of each input bus
+        Sel_width : integer := 1        -- Width of Sel signal
+        );
     port (
-        Data_in  : in  std_logic_vector((N*M)-1 downto 0); -- Concatenated input buses
+        Data_in  : in  std_logic_vector((N*M)-1 downto 0);  -- Concatenated input buses
         Sel      : in  std_logic_vector(Sel_width - 1 downto 0);  -- Selection signal
-        Data_out : out std_logic_vector(M - 1 downto 0)    -- Output bus
-    );
+        Data_out : out std_logic_vector(M - 1 downto 0)     -- Output bus
+        );
 end entity N_to_M_Mux;
 
 architecture Behavioral of N_to_M_Mux is
@@ -43,3 +52,4 @@ begin
         end if;
     end process;
 end architecture Behavioral;
+

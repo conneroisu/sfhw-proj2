@@ -1,43 +1,51 @@
+-- <header>
+-- Author(s): dmvp01
+-- Name: proj/src/TopLevel/Stages/EX_MEM.vhd
+-- Notes:
+--      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      dmvp01 2024-11-13T16:31:57-06:00 adding-pipeline-Reg-Ex-Mem-implementation-as-well-as-test-bench
+-- </header>
+
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_ARITH.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.STD_LOGIC_ARITH.all;
+use IEEE.STD_LOGIC_UNSIGNED.all;
 
 entity EX_MEM is
-    Port (
-        clk          : in  STD_LOGIC;
-        reset        : in  STD_LOGIC;
-        WriteEn      : in  STD_LOGIC;                      -- Write enable signal
-        
+    port (
+        clk     : in std_logic;
+        reset   : in std_logic;
+        WriteEn : in std_logic;         -- Write enable signal
+
         -- Inputs from EX stage
-        ALU_result_in : in  STD_LOGIC_VECTOR(31 downto 0);  -- ALU result
-        Read_data2_in : in  STD_LOGIC_VECTOR(31 downto 0);  -- Value for store instructions
-        RegDst_in     : in  STD_LOGIC_VECTOR(4 downto 0);   -- Destination register number
-        MemRead_in    : in  STD_LOGIC;                      -- Control signal for memory read
-        MemWrite_in   : in  STD_LOGIC;                      -- Control signal for memory write
-        RegWrite_in   : in  STD_LOGIC;                      -- Control signal for register write-back
-        MemToReg_in   : in  STD_LOGIC;                      -- Control signal for memory-to-register selection
-        
+        ALU_result_in : in std_logic_vector(31 downto 0);  -- ALU result
+        Read_data2_in : in std_logic_vector(31 downto 0);  -- Value for store instructions
+        RegDst_in     : in std_logic_vector(4 downto 0);  -- Destination register number
+        MemRead_in    : in std_logic;   -- Control signal for memory read
+        MemWrite_in   : in std_logic;   -- Control signal for memory write
+        RegWrite_in   : in std_logic;  -- Control signal for register write-back
+        MemToReg_in   : in std_logic;  -- Control signal for memory-to-register selection
+
         -- Outputs to MEM stage
-        ALU_result_out : out STD_LOGIC_VECTOR(31 downto 0); -- ALU result to MEM
-        Read_data2_out : out STD_LOGIC_VECTOR(31 downto 0); -- Data to be written to memory
-        RegDst_out     : out STD_LOGIC_VECTOR(4 downto 0);  -- Destination register number to MEM/WB
-        MemRead_out    : out STD_LOGIC;                     -- Control signal to MEM
-        MemWrite_out   : out STD_LOGIC;                     -- Control signal to MEM
-        RegWrite_out   : out STD_LOGIC;                     -- Control signal to MEM/WB
-        MemToReg_out   : out STD_LOGIC                      -- Control signal to MEM/WB
-    );
+        ALU_result_out : out std_logic_vector(31 downto 0);  -- ALU result to MEM
+        Read_data2_out : out std_logic_vector(31 downto 0);  -- Data to be written to memory
+        RegDst_out     : out std_logic_vector(4 downto 0);  -- Destination register number to MEM/WB
+        MemRead_out    : out std_logic;  -- Control signal to MEM
+        MemWrite_out   : out std_logic;  -- Control signal to MEM
+        RegWrite_out   : out std_logic;  -- Control signal to MEM/WB
+        MemToReg_out   : out std_logic  -- Control signal to MEM/WB
+        );
 end EX_MEM;
 
 architecture Behavioral of EX_MEM is
     -- Internal signals to hold values between clock cycles
-    signal ALU_result_reg : STD_LOGIC_VECTOR(31 downto 0);
-    signal Read_data2_reg : STD_LOGIC_VECTOR(31 downto 0);
-    signal RegDst_reg     : STD_LOGIC_VECTOR(4 downto 0);
-    signal MemRead_reg    : STD_LOGIC;
-    signal MemWrite_reg   : STD_LOGIC;
-    signal RegWrite_reg   : STD_LOGIC;
-    signal MemToReg_reg   : STD_LOGIC;
+    signal ALU_result_reg : std_logic_vector(31 downto 0);
+    signal Read_data2_reg : std_logic_vector(31 downto 0);
+    signal RegDst_reg     : std_logic_vector(4 downto 0);
+    signal MemRead_reg    : std_logic;
+    signal MemWrite_reg   : std_logic;
+    signal RegWrite_reg   : std_logic;
+    signal MemToReg_reg   : std_logic;
 begin
 
     -- Process to update pipeline register values on rising clock edge with WriteEn control
@@ -76,3 +84,4 @@ begin
     MemToReg_out   <= MemToReg_reg;
 
 end Behavioral;
+
