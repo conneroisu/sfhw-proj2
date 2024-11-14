@@ -1,3 +1,11 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: proj/src/TopLevel/RegisterFile.vhd
+-- Notes:
+--      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
+-- </header>
+
 library ieee;
 use ieee.std_logic_1164.all;
 use work.mips_types.all;
@@ -118,3 +126,4 @@ begin
             );
 
 end architecture structural;
+

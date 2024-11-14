@@ -1,6 +1,15 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: proj/test/tb_muxNtM.vhd
+-- Notes:
+--      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
+--      Conner Ohnesorge 2024-11-11T10:14:37-06:00 added-generic-mux-muxNtM
+-- </header>
+
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.NUMERIC_STD.all;
 
 -- Test Bench for N_to_M_Mux with std_logic_vector Sel
 -- This test bench exhaustively tests all possible combinations of Data_in and Sel.
@@ -15,17 +24,17 @@ architecture Behavioral of N_to_M_Mux_tb is
             N         : integer := 2;
             M         : integer := 2;
             Sel_width : integer := 1
-        );
+            );
         port (
             Data_in  : in  std_logic_vector((N*M)-1 downto 0);
             Sel      : in  std_logic_vector(Sel_width - 1 downto 0);
             Data_out : out std_logic_vector(M - 1 downto 0)
-        );
+            );
     end component;
 
     -- Constants for test bench
-    constant N_c : integer := 2;  -- Number of input buses
-    constant M_c : integer := 2;  -- Width of each input bus
+    constant N_c : integer := 2;        -- Number of input buses
+    constant M_c : integer := 2;        -- Width of each input bus
 
     -- Function to compute Sel_width
     function get_sel_width(N : integer) return integer is
@@ -53,28 +62,28 @@ architecture Behavioral of N_to_M_Mux_tb is
         variable idx    : integer := 1;
     begin
         for i in slv'range loop
-            result(idx) := std_ulogic'IMAGE(slv(i))(2);
-            idx := idx + 1;
+            result(idx) := std_ulogic'image(slv(i))(2);
+            idx         := idx + 1;
         end loop;
         return result;
     end function;
 
 begin
     -- Instantiate the Unit Under Test (UUT)
-    uut: N_to_M_Mux
+    uut : N_to_M_Mux
         generic map (
             N         => N_c,
             M         => M_c,
             Sel_width => Sel_width_c
-        )
+            )
         port map (
             Data_in  => Data_in,
             Sel      => Sel,
             Data_out => Data_out
-        );
+            );
 
     -- Stimulus process
-    stim_proc: process
+    stim_proc : process
         variable Data_in_v    : std_logic_vector((N_c*M_c)-1 downto 0);
         variable Sel_v        : std_logic_vector(Sel_width_c - 1 downto 0);
         variable Sel_int      : integer range 0 to 2**Sel_width_c - 1;
@@ -83,11 +92,11 @@ begin
         -- Generate all combinations of Data_in
         for Data_in_int in 0 to 2**(N_c*M_c)-1 loop
             Data_in_v := std_logic_vector(to_unsigned(Data_in_int, Data_in'length));
-            Data_in <= Data_in_v;
+            Data_in   <= Data_in_v;
             -- Generate all possible Sel values
             for Sel_int in 0 to 2**Sel_width_c - 1 loop
                 Sel_v := std_logic_vector(to_unsigned(Sel_int, Sel_width_c));
-                Sel <= Sel_v;
+                Sel   <= Sel_v;
                 wait for 10 ns;
                 if Sel_int < N_c then
                     -- Compute expected output
@@ -98,13 +107,14 @@ begin
                 end if;
                 -- Check correctness
                 assert Data_out = Expected_out
-                report "Mismatch at Data_in=" & std_logic_vector_to_string(Data_in_v) &
-                       ", Sel=" & std_logic_vector_to_string(Sel_v) &
-                       " (" & integer'image(Sel_int) & ")" &
-                       ", Expected=" & std_logic_vector_to_string(Expected_out) &
-                       ", Got=" & std_logic_vector_to_string(Data_out)
-                severity error;
+                    report "Mismatch at Data_in=" & std_logic_vector_to_string(Data_in_v) &
+                    ", Sel=" & std_logic_vector_to_string(Sel_v) &
+                    " (" & integer'image(Sel_int) & ")" &
+                    ", Expected=" & std_logic_vector_to_string(Expected_out) &
+                    ", Got=" & std_logic_vector_to_string(Data_out)
+                    severity error;
             end loop;
         end loop;
         wait;
     end proc
+

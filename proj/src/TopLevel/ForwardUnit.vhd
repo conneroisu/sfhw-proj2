@@ -1,3 +1,11 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: proj/src/TopLevel/ForwardUnit.vhd
+-- Notes:
+--      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      Conner Ohnesorge 2024-11-13T13:00:43-06:00 made-initial-structure-and-basic-logic-for-forward-unit
+-- </header>
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
@@ -24,15 +32,15 @@ end ForwardUnit;
 
 
 architecture Behavioral of ForwardUnit is
-    signal memRegWrite: std_logic;
+    signal memRegWrite : std_logic;
 begin
 
     process(i_exRs, i_exRt, i_memRd, i_wbRd, i_memMemRead, i_memMemWrite, i_memPCSrc, i_wbRegWrite, forward)
-        variable exRs      : unsigned(4 downto 0);
-        variable exRt      : unsigned(4 downto 0);
-        variable memRd     : unsigned(4 downto 0);
-        variable wbRd      : unsigned(4 downto 0);
-        variable memPCSrc  : std_logic_vector(1 downto 0);
+        variable exRs     : unsigned(4 downto 0);
+        variable exRt     : unsigned(4 downto 0);
+        variable memRd    : unsigned(4 downto 0);
+        variable wbRd     : unsigned(4 downto 0);
+        variable memPCSrc : std_logic_vector(1 downto 0);
     begin
         exRs     := unsigned(i_exRs);
         exRt     := unsigned(i_exRt);
@@ -73,3 +81,4 @@ begin
     end process;
 
 end Behavioral;
+
