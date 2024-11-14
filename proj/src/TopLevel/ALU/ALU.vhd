@@ -1,10 +1,9 @@
 -- <header>
--- Author(s): dmvp01
+-- Author(s): Conner Ohnesorge
 -- Name: proj/src/TopLevel/ALU/ALU.vhd
 -- Notes:
---      dmvp01  <dmvp01@linuxvdi-13.ece.iastate.edu> modified-ALU-working-fine-now
---      dmvp01  <dmvp01@linuxvdi-11.ece.iastate.edu> adding-fixes-for-ALU-and-other-low-level-components
---      dmvp01  <dmvp01@linuxvdi-33.ece.iastate.edu> addind-ALU-and-required-files
+--      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
 -- </header>
 
 library IEEE;
@@ -180,3 +179,4 @@ begin
             o_O     => o_F              -- ALU final output
             );
 end structural;
+
