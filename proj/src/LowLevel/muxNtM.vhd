@@ -1,7 +1,17 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: proj/src/LowLevel/muxNtM.vhd
+-- Notes:
+--      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
+--      Conner Ohnesorge 2024-11-11T14:08:03-06:00 added-generic-mux-muxNtM
+-- </header>
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 use work.MIPS_types.all;
+
 
 entity muxNtM is
     generic (

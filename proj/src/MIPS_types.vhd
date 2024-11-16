@@ -1,15 +1,13 @@
--------------------------------------------------------------------------
--- author(s): Conner Ohnesorge & Levi Wenck
--- Department of Electrical and Computer Engineering
--- Iowa State University
--------------------------------------------------------------------------
--- MIPS_Processor.vhd
--------------------------------------------------------------------------
--- DESCRIPTION: This file contains types that we use in our MIPS 
--- processor -- This file is guarenteed to compile first, so if any 
--- types, constants, functions, etc., etc., are wanted, students should 
--- declare them here.
--------------------------------------------------------------------------
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: proj/src/MIPS_types.vhd
+-- Notes:
+--      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      Conner Ohnesorge 2024-11-14T08:10:37-06:00 update-MIPS_types.vhd
+--      conneroisu 2024-11-11T15:44:17Z Format-and-Header
+--      Conner Ohnesorge 2024-11-07T08:35:18-06:00 run-manual-update-to-header-program-and-run-it
+--      Conner Ohnesorge 2024-10-31T09:22:46-05:00 added-initial-new-from-toolflow
+-- </header>
 
 library IEEE;
 use IEEE.std_logic_1164.all;
@@ -40,17 +38,17 @@ package MIPS_types is
 end package MIPS_types;
 
 package body MIPS_types is
-  -- Probably won't need anything here... function bodies, etc.
+    -- Probably won't need anything here... function bodies, etc.
 
-  -- bit_reverse is a function that reverses the bits of a std_logic_vector
-  function bit_reverse(s1 : std_logic_vector) return std_logic_vector is
-    variable rr : std_logic_vector(s1'high downto s1'low);
-  begin
-    for ii in s1'high downto s1'low loop
-      rr(ii) := s1(s1'high-ii);
-    end loop;
-    return rr;
-  end bit_reverse;
+
+    function bit_reverse(s1 : std_logic_vector) return std_logic_vector is
+        variable rr : std_logic_vector(s1'high downto s1'low);
+    begin
+        for ii in s1'high downto s1'low loop
+            rr(ii) := s1(s1'high-ii);
+        end loop;
+        return rr;
+    end bit_reverse;
 
   -- clog2 is a function that returns the ceiling of the log base 2 of a number
   function clog2(n : integer) return integer is
@@ -64,3 +62,4 @@ package body MIPS_types is
     return res;
   end function;
 end package body MIPS_types;
+

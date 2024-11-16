@@ -1,3 +1,12 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: proj/test/tb_stage_idex.vhd
+-- Notes:
+--      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      Conner Ohnesorge 2024-11-14T07:46:05-06:00 add-control-signals-summary-and-update-test-bench-ports
+--      Conner Ohnesorge 2024-11-11T14:46:34-06:00 added-do-file-examples-and-start-of-testbench-for-stage_idex
+-- </header>
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
@@ -63,3 +72,4 @@ begin
 
 
 end architecture Behavioral;
+

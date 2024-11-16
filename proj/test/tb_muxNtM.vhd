@@ -1,3 +1,12 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: proj/test/tb_muxNtM.vhd
+-- Notes:
+--      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
+--      Conner Ohnesorge 2024-11-11T10:14:37-06:00 added-generic-mux-muxNtM
+-- </header>
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -121,6 +130,7 @@ begin
                     report "Mismatch in multiplexer " & integer'image(idx) &
                            " at select " & integer'image(s) & ". Expected: " &
                            Y_expected'instance_name & ", Got: " & Y_signals(idx)'instance_name
+
                     severity error;
             end loop;
         end loop;
