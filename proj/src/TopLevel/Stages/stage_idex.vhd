@@ -16,9 +16,9 @@
 -- </header>
 
 library ieee;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.MATH_REAL.ALL;
-use IEEE.NUMERIC_STD.ALL;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.MATH_REAL.all;
+use IEEE.NUMERIC_STD.all;
 
 -- Stage 3
 entity stage_idex is
@@ -88,13 +88,13 @@ architecture structure of stage_idex is
 
     component mux_NtM is
         generic (
-            INPUT_COUNT         : integer := 2;   -- Number of input buses
-            DATA_WIDTH         : integer := 8   -- Width of each input bus
+            INPUT_COUNT : integer := 2;  -- Number of input buses
+            DATA_WIDTH  : integer := 8  -- Width of each input bus
             );
         port (
             inputs : in  std_logic_vector((INPUT_COUNT*DATA_WIDTH)-1 downto 0);  -- Concatenated input buses
             sel    : in  std_logic_vector(integer(ceil(log2(real(INPUT_COUNT)))) - 1 downto 0);  -- Selection signal
-            output : out std_logic_vector(DATA_WIDTH - 1 downto 0)     -- Output bus
+            output : out std_logic_vector(DATA_WIDTH - 1 downto 0)  -- Output bus
             );
     end component;
 
@@ -154,7 +154,7 @@ begin
             o_Q   => s_Rd
             );
 
-    Reg1_reg : dffg_n                       -- output of register file, output 1
+    Reg1_reg : dffg_n                   -- output of register file, output 1
         generic map (N => 32)
         port map(
             i_CLK => i_CLK,
@@ -164,7 +164,7 @@ begin
             o_Q   => o_Read1
             );
 
-    Reg2_reg : dffg_n                       -- output of register file, output 2
+    Reg2_reg : dffg_n                   -- output of register file, output 2
         generic map (N => 32)
         port map(
             i_CLK => i_CLK,
@@ -227,35 +227,35 @@ begin
     -- ForwardB=01  -> MEM/WB   -> operand is forwarded from dmem or earlier alu result
     ALU1Mux : mux_NtM
         generic map (
-            INPUT_COUNT         => 3,
-            DATA_WIDTH         => 32
+            INPUT_COUNT => 3,
+            DATA_WIDTH  => 32
             )
         port map (
-            inputs  => i_Read1 & i_WriteData & i_DMem1,
-            Sel      => i_ForwardA,
+            inputs => i_Read1 & i_WriteData & i_DMem1,
+            Sel    => i_ForwardA,
             output => s_ALUOp
             );
 
     ALU2Mux : mux_NtM
         generic map (
-            INPUT_COUNT         => 3,
-            DATA_WIDTH         => 32
+            INPUT_COUNT => 3,
+            DATA_WIDTH  => 32
             )
         port map (
-            inputs  => i_Read2 & i_WriteData & i_DMem1,
-            Sel      => i_ForwardB,
+            inputs => i_Read2 & i_WriteData & i_DMem1,
+            Sel    => i_ForwardB,
             output => s_ALUSrc
             );
 
     -- RT & RD mux w/ i_RegDst selector
     IDEX_RegisterRd : mux_NtM
         generic map (
-            INPUT_COUNT         => 2,
-            DATA_WIDTH         => 5
+            INPUT_COUNT => 2,
+            DATA_WIDTH  => 5
             )
         port map (
-            inputs  => i_Read1 & i_Read2 & i_WriteData & i_DMem1,
-            Sel(0)      => i_RegDst,
+            inputs => i_Read1 & i_Read2 & i_WriteData & i_DMem1,
+            Sel(0) => i_RegDst,
             output => s_Rd
             );
 
@@ -277,4 +277,3 @@ begin
         );
 
 end structure;
-
