@@ -43,10 +43,10 @@ begin
         -- Test case array with various scenarios
         constant test_cases : test_case_array_t := (
             -- Test 1: Basic selection test with single '1' in each position
-            (create_input_vector(0, X"AA"), "00", X"AA", "Basic selection test - Input 0           "),
-            (create_input_vector(1, X"BB"), "01", X"BB", "Basic selection test - Input 1           "),
-            (create_input_vector(2, X"CC"), "10", X"CC", "Basic selection test - Input 2           "),
-            (create_input_vector(3, X"DD"), "11", X"DD", "Basic selection test - Input 3           "),
+            (create_input_vector(0, X"AA"), "00", X"AA", "Basic selection test - Input 0          "),
+            (create_input_vector(1, X"BB"), "01", X"BB", "Basic selection test - Input 1          "),
+            (create_input_vector(2, X"CC"), "10", X"CC", "Basic selection test - Input 2          "),
+            (create_input_vector(3, X"DD"), "11", X"DD", "Basic selection test - Input 3          "),
             
             -- Test 2: All inputs active, testing each selection
             (X"AABBCCDD", "00", X"AA", "All inputs active - Select input 0      "),
