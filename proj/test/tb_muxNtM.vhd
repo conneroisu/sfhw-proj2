@@ -33,7 +33,8 @@ architecture Behavioral of tb_muxNtM is
         return std_logic_vector is
         variable result : std_logic_vector(INPUT_COUNT * DATA_WIDTH - 1 downto 0) := (others => '0');
     begin
-        result((position + 1) * DATA_WIDTH - 1 downto position * DATA_WIDTH) := value;
+        -- Corrected: position is now counted from the high end
+        result((INPUT_COUNT - position) * DATA_WIDTH - 1 downto (INPUT_COUNT - position - 1) * DATA_WIDTH) := value;
         return result;
     end function;
 
@@ -48,21 +49,21 @@ begin
             (create_input_vector(2, X"CC"), "10", X"CC", "Basic selection test - Input 2          "),
             (create_input_vector(3, X"DD"), "11", X"DD", "Basic selection test - Input 3          "),
             
-            -- Test 2: All inputs active, testing each selection
-            (X"AABBCCDD", "00", X"AA", "All inputs active - Select input 0      "),
-            (X"AABBCCDD", "01", X"BB", "All inputs active - Select input 1      "),
-            (X"AABBCCDD", "10", X"CC", "All inputs active - Select input 2      "),
-            (X"AABBCCDD", "11", X"DD", "All inputs active - Select input 3      "),
+            -- Test 2: All inputs active, testing each selection (corrected order)
+            (X"AABBCCDD", "00", X"DD", "All inputs active - Select input 0      "),
+            (X"AABBCCDD", "01", X"CC", "All inputs active - Select input 1      "),
+            (X"AABBCCDD", "10", X"BB", "All inputs active - Select input 2      "),
+            (X"AABBCCDD", "11", X"AA", "All inputs active - Select input 3      "),
             
-            -- Test 3: Input bit patterns
-            (X"FF000000", "00", X"FF", "All ones pattern - Input 0              "),
-            (X"00FF0000", "01", X"FF", "All ones pattern - Input 1              "),
-            (X"0000FF00", "10", X"FF", "All ones pattern - Input 2              "),
-            (X"000000FF", "11", X"FF", "All ones pattern - Input 3              "),
+            -- Test 3: Input bit patterns (corrected order)
+            (X"000000FF", "00", X"FF", "All ones pattern - Input 0              "),
+            (X"0000FF00", "01", X"FF", "All ones pattern - Input 1              "),
+            (X"00FF0000", "10", X"FF", "All ones pattern - Input 2              "),
+            (X"FF000000", "11", X"FF", "All ones pattern - Input 3              "),
             
-            -- Test 4: Alternating patterns
-            (X"A5A5A5A5", "00", X"A5", "Alternating pattern - Input 0           "),
-            (X"5A5A5A5A", "01", X"5A", "Alternating pattern - Input 1           "),
+            -- Test 4: Alternating patterns (corrected order)
+            (X"5A5A5AA5", "00", X"A5", "Alternating pattern - Input 0           "),
+            (X"5A5AA55A", "01", X"5A", "Alternating pattern - Input 1           "),
             
             -- Test 5: Zero input tests
             (X"00000000", "00", X"00", "All zeros - Select input 0              "),
@@ -127,7 +128,7 @@ begin
     end process;
     
     -- DUT instantiation
-    DUT: entity work.generic_mux
+    DUT: entity work.muxNtM
         generic map (
             DATA_WIDTH  => DATA_WIDTH,
             INPUT_COUNT => INPUT_COUNT
