@@ -16,8 +16,9 @@
 -- </header>
 
 library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.MATH_REAL.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Stage 3
 entity stage_idex is
@@ -37,7 +38,7 @@ entity stage_idex is
         -- lw    :   0      00      01
         -- sw    :   x      00      01
         -- beq   :   x      01      00
-        i_RegDst : in std_logic_vector(4 downto 0);  -- Destination register from control unit.
+        i_RegDst : in std_logic;  -- Destination register from control unit.
         i_ALUOp  : in std_logic_vector(1 downto 0);  -- ALU operation from control unit.
         i_ALUSrc : in std_logic_vector(1 downto 0);  -- ALU source from control unit.
 
@@ -87,14 +88,13 @@ architecture structure of stage_idex is
 
     component mux_NtM is
         generic (
-            N         : integer := 2;   -- Number of input buses
-            M         : integer := 8;   -- Width of each input bus
-            Sel_width : integer := 1    -- Width of Sel signal
+            INPUT_COUNT         : integer := 2;   -- Number of input buses
+            DATA_WIDTH         : integer := 8   -- Width of each input bus
             );
         port (
-            Data_in  : in  std_logic_vector((N*M)-1 downto 0);  -- Concatenated input buses
-            Sel      : in  std_logic_vector(Sel_width - 1 downto 0);  -- Selection signal
-            Data_out : out std_logic_vector(M - 1 downto 0)     -- Output bus
+            inputs : in  std_logic_vector((INPUT_COUNT*DATA_WIDTH)-1 downto 0);  -- Concatenated input buses
+            sel    : in  std_logic_vector(integer(ceil(log2(real(INPUT_COUNT)))) - 1 downto 0);  -- Selection signal
+            output : out std_logic_vector(DATA_WIDTH - 1 downto 0)     -- Output bus
             );
     end component;
 
@@ -119,11 +119,12 @@ architecture structure of stage_idex is
     signal s_Rd       : std_logic_vector(4 downto 0);
     signal s_PC       : std_logic_vector(31 downto 0);
     signal s_PCplus4  : std_logic_vector(31 downto 0);
+    signal s_Extended : std_logic_vector(31 downto 0);
 begin
 
     ----------------------------------------------------------------------state
     -- Common Stage Signals [begin]
-    PC : dffg_n
+    PC_reg : dffg_n
         generic map (N => 32)
         port map(
             i_CLK => i_CLK,             -- Clock input
@@ -133,7 +134,7 @@ begin
             o_Q   => s_PC               -- Data value output
             );
 
-    PCplus4 : dffg_n
+    PCplus4_reg : dffg_n
         generic map (N => 32)
         port map(
             i_CLK => i_CLK,
@@ -143,7 +144,7 @@ begin
             o_Q   => s_PCplus4
             );
 
-    WrAddr : dffg_n  -- Destination write address for register file (rd)
+    WrAddr_reg : dffg_n  -- Destination write address for register file (rd)
         generic map (N => 5)
         port map(
             i_CLK => i_CLK,
@@ -153,7 +154,7 @@ begin
             o_Q   => s_Rd
             );
 
-    Reg1 : dffg_n                       -- output of register file, output 1
+    Reg1_reg : dffg_n                       -- output of register file, output 1
         generic map (N => 32)
         port map(
             i_CLK => i_CLK,
@@ -163,7 +164,7 @@ begin
             o_Q   => o_Read1
             );
 
-    Reg2 : dffg_n                       -- output of register file, output 2
+    Reg2_reg : dffg_n                       -- output of register file, output 2
         generic map (N => 32)
         port map(
             i_CLK => i_CLK,
@@ -173,7 +174,7 @@ begin
             o_Q   => o_Read2
             );
 
-    ALUOperation : dffg_n
+    ALUOperation_reg : dffg_n
         generic map (N => 2)
         port map(
             i_CLK => i_CLK,
@@ -183,7 +184,7 @@ begin
             o_Q   => s_ALUOp
             );
 
-    ALUSrc : dffg_n
+    ALUSrc_reg : dffg_n
         generic map (N => 2)
         port map(
             i_CLK => i_CLK,             -- Clock input
@@ -203,6 +204,14 @@ begin
             o_Q   => o_ALU
             );
 
+    SignExtend_Reg : dffg_n
+        generic map (N => 32)
+        port map(
+            i_CLK => i_CLK,
+            i_RST => i_RST,
+            i_WrE => i_WE,
+            i_D   => i_Extended,
+            o_Q   => s_Extended);
 
 
     ----------------------------------------------------------------------logic
@@ -218,39 +227,36 @@ begin
     -- ForwardB=01  -> MEM/WB   -> operand is forwarded from dmem or earlier alu result
     ALU1Mux : mux_NtM
         generic map (
-            N         => 3,             -- Number of input buses
-            M         => 32,            -- Width of each input bus
-            Sel_width => 2              -- Width of Sel signal
+            INPUT_COUNT         => 3,
+            DATA_WIDTH         => 32
             )
         port map (
-            Data_in  => i_Read1 & i_WriteData & i_DMem1,
+            inputs  => i_Read1 & i_WriteData & i_DMem1,
             Sel      => i_ForwardA,
-            Data_out => s_ALUOp
+            output => s_ALUOp
             );
 
     ALU2Mux : mux_NtM
         generic map (
-            N         => 3,
-            M         => 32,
-            Sel_width => 2
+            INPUT_COUNT         => 3,
+            DATA_WIDTH         => 32
             )
         port map (
-            Data_in  => i_Read2 & i_WriteData & i_DMem1,
+            inputs  => i_Read2 & i_WriteData & i_DMem1,
             Sel      => i_ForwardB,
-            Data_out => s_ALUSrc
+            output => s_ALUSrc
             );
 
     -- RT & RD mux w/ i_RegDst selector
     IDEX_RegisterRd : mux_NtM
         generic map (
-            N         => 2,
-            M         => 5,
-            Sel_width => 5
+            INPUT_COUNT         => 2,
+            DATA_WIDTH         => 5
             )
         port map (
-            Data_in  => i_Read1 & i_Read2 & i_WriteData & i_DMem1,
-            Sel      => i_RegDst,
-            Data_out => s_Rd
+            inputs  => i_Read1 & i_Read2 & i_WriteData & i_DMem1,
+            Sel(0)      => i_RegDst,
+            output => s_Rd
             );
 
     instALU : alu
