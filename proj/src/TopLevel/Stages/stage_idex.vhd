@@ -31,23 +31,23 @@ entity stage_idex is
         -- lw    :   0      00      01
         -- sw    :   x      00      01
         -- beq   :   x      01      00
-        i_RegDst   : in  std_logic_vector(4 downto 0);  -- Destination register from control unit.
-        i_ALUOp    : in  std_logic_vector(1 downto 0);  -- ALU operation from control unit.
-        i_ALUSrc   : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
+        i_RegDst : in std_logic_vector(4 downto 0);  -- Destination register from control unit.
+        i_ALUOp  : in std_logic_vector(1 downto 0);  -- ALU operation from control unit.
+        i_ALUSrc : in std_logic_vector(1 downto 0);  -- ALU source from control unit.
 
         -- Future Stage Signals [begin]
         -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png
-        o_ALU      : out std_logic_vector(N-1 downto 0);
+        o_ALU : out std_logic_vector(N-1 downto 0);
 
         -- Input Signals [begin]
         --= Sign Extend Signals [begin]
-        i_Extended : in  std_logic_vector(N-1 downto 0);
+        i_Extended   : in  std_logic_vector(N-1 downto 0);
         o_BranchAddr : out std_logic_vector(N-1 downto 0);
         --= Register File Signals [begin]
-        i_Read1 : in  std_logic_vector(N-1 downto 0);
-        i_Read2 : in  std_logic_vector(N-1 downto 0);
-        o_Read1 : out std_logic_vector(N-1 downto 0);
-        o_Read2 : out std_logic_vector(N-1 downto 0);
+        i_Read1      : in  std_logic_vector(N-1 downto 0);
+        i_Read2      : in  std_logic_vector(N-1 downto 0);
+        o_Read1      : out std_logic_vector(N-1 downto 0);
+        o_Read2      : out std_logic_vector(N-1 downto 0);
 
         -- Forward Unit Signals [begin]
         --= Forwarded Signals (received from Forward Unit) [begin]
@@ -147,7 +147,7 @@ begin
             o_Q   => s_Rd
             );
 
-    Reg1 : dffg_n                       -- output of register file, output 1
+    Reg1 : dffg_n                       -- "cached" output of register file, output 1
         generic map (N => 32)
         port map(
             i_CLK => i_CLK,
@@ -157,7 +157,7 @@ begin
             o_Q   => o_Read1
             );
 
-    Reg2 : dffg_n                       -- output of register file, output 2
+    Reg2 : dffg_n                       -- "cached" output of register file, output 2
         generic map (N => 32)
         port map(
             i_CLK => i_CLK,
@@ -262,6 +262,6 @@ begin
     -- Add 2x shifted extended value to PCplus4
     o_BranchAddr <= std_logic_vector(
         unsigned(std_logic_vector(shift_left(unsigned(i_Extended), 2))) + unsigned(i_PCplus4)
-    );
+        );
 
 end structure;

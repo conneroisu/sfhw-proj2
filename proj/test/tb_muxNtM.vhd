@@ -1,110 +1,133 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
+use work.MIPS_types.all;
 
--- Test Bench for N_to_M_Mux with std_logic_vector Sel
--- This test bench exhaustively tests all possible combinations of Data_in and Sel.
+-- Multiplexer Entity and Architecture
+entity muxNtM is
+    generic (
+        DATA_WIDTH : integer := 8;  -- Width of each input
+        NUM_INPUTS : integer := 4   -- Number of inputs
+    );
+    port (
+        I : in  std_logic_vector(NUM_INPUTS * DATA_WIDTH - 1 downto 0);  -- Concatenated inputs
+        S : in  std_logic_vector(clog2(NUM_INPUTS) - 1 downto 0);        -- Select signal
+        Y : out std_logic_vector(DATA_WIDTH - 1 downto 0)                -- Output
+    );
+end entity muxNtM;
 
-entity N_to_M_Mux_tb is
-end entity N_to_M_Mux_tb;
+architecture behavioral of muxNtM is
+begin
+    -- Select the appropriate input based on the select signal
+    Y <= I((to_integer(unsigned(S)) + 1) * DATA_WIDTH - 1 downto to_integer(unsigned(S)) * DATA_WIDTH);
+end architecture behavioral;
 
-architecture Behavioral of N_to_M_Mux_tb is
-    -- Component declaration
-    component N_to_M_Mux
-        generic (
-            N         : integer := 2;
-            M         : integer := 2;
-            Sel_width : integer := 1
-        );
-        port (
-            Data_in  : in  std_logic_vector((N*M)-1 downto 0);
-            Sel      : in  std_logic_vector(Sel_width - 1 downto 0);
-            Data_out : out std_logic_vector(M - 1 downto 0)
-        );
-    end component;
+-- Testbench for the multiplexer
+entity muxNtM_tb is
+end entity muxNtM_tb;
 
-    -- Constants for test bench
-    constant N_c : integer := 2;  -- Number of input buses
-    constant M_c : integer := 2;  -- Width of each input bus
+architecture testbench of muxNtM_tb is
 
-    -- Function to compute Sel_width
-    function get_sel_width(N : integer) return integer is
-        variable width : integer := 0;
-        variable tempN : integer := N - 1;
-    begin
-        while tempN > 0 loop
-            tempN := tempN / 2;
-            width := width + 1;
-        end loop;
-        return width;
-    end function;
+    -- Constants for test cases
+    constant DATA_WIDTHS : integer_vector := (8, 16, 4);
+    constant NUM_INPUTS_LIST : integer_vector := (4, 8, 2);
+    constant NUM_TESTS : integer := DATA_WIDTHS'length;
 
-    -- Constants
-    constant Sel_width_c : integer := get_sel_width(N_c);
+    -- Generate arrays for signals
+    type std_logic_vector_array is array (natural range <>) of std_logic_vector;
 
-    -- Signal declarations
-    signal Data_in  : std_logic_vector((N_c*M_c)-1 downto 0);
-    signal Sel      : std_logic_vector(Sel_width_c - 1 downto 0);
-    signal Data_out : std_logic_vector(M_c - 1 downto 0);
+    -- Signals for each instance
+    signal I_signals : std_logic_vector_array(1 to NUM_TESTS);
+    signal S_signals : std_logic_vector_array(1 to NUM_TESTS);
+    signal Y_signals : std_logic_vector_array(1 to NUM_TESTS);
 
-    -- Helper function to convert std_logic_vector to string
-    function std_logic_vector_to_string(slv : std_logic_vector) return string is
-        variable result : string(1 to slv'length);
-        variable idx    : integer := 1;
-    begin
-        for i in slv'range loop
-            result(idx) := std_ulogic'IMAGE(slv(i))(2);
-            idx := idx + 1;
-        end loop;
-        return result;
-    end function;
+    -- Helper types
+    subtype data_width_range is integer range 1 to NUM_TESTS;
+    type integer_array is array (data_width_range) of integer;
+
+    -- Arrays to hold data widths and number of inputs
+    constant DATA_WIDTH_ARRAY : integer_array := DATA_WIDTHS;
+    constant NUM_INPUTS_ARRAY : integer_array := NUM_INPUTS_LIST;
 
 begin
-    -- Instantiate the Unit Under Test (UUT)
-    uut: N_to_M_Mux
-        generic map (
-            N         => N_c,
-            M         => M_c,
-            Sel_width => Sel_width_c
-        )
-        port map (
-            Data_in  => Data_in,
-            Sel      => Sel,
-            Data_out => Data_out
-        );
 
-    -- Stimulus process
-    stim_proc: process
-        variable Data_in_v    : std_logic_vector((N_c*M_c)-1 downto 0);
-        variable Sel_v        : std_logic_vector(Sel_width_c - 1 downto 0);
-        variable Sel_int      : integer range 0 to 2**Sel_width_c - 1;
-        variable Expected_out : std_logic_vector(M_c - 1 downto 0);
+    -- Generate multiplexer instances
+    gen_multiplexers : for idx in data_width_range generate
+
+        -- Constants for this instance
+        constant DATA_WIDTH : integer := DATA_WIDTH_ARRAY(idx);
+        constant NUM_INPUTS : integer := NUM_INPUTS_ARRAY(idx);
+        constant SELECT_WIDTH : integer := clog2(NUM_INPUTS);
+
+        -- Signals for this instance
+        signal I : std_logic_vector(NUM_INPUTS * DATA_WIDTH - 1 downto 0);
+        signal S : std_logic_vector(SELECT_WIDTH - 1 downto 0);
+        signal Y : std_logic_vector(DATA_WIDTH - 1 downto 0);
+
+        -- Assign signals to arrays
+        I_signals(idx) <= I;
+        S_signals(idx) <= S;
+        Y_signals(idx) <= Y;
+
+        -- Instantiate the multiplexer
+        mux_inst : entity work.muxNtM
+            generic map (
+                DATA_WIDTH => DATA_WIDTH,
+                NUM_INPUTS => NUM_INPUTS
+            )
+            port map (
+                I => I,
+                S => S,
+                Y => Y
+            );
+
+    end generate;
+
+    -- Test process
+    test_process : process
     begin
-        -- Generate all combinations of Data_in
-        for Data_in_int in 0 to 2**(N_c*M_c)-1 loop
-            Data_in_v := std_logic_vector(to_unsigned(Data_in_int, Data_in'length));
-            Data_in <= Data_in_v;
-            -- Generate all possible Sel values
-            for Sel_int in 0 to 2**Sel_width_c - 1 loop
-                Sel_v := std_logic_vector(to_unsigned(Sel_int, Sel_width_c));
-                Sel <= Sel_v;
+        -- Iterate over each test case
+        for idx in data_width_range loop
+            -- Retrieve constants for this test
+            variable DATA_WIDTH : integer := DATA_WIDTH_ARRAY(idx);
+            variable NUM_INPUTS : integer := NUM_INPUTS_ARRAY(idx);
+            variable SELECT_WIDTH : integer := clog2(NUM_INPUTS);
+
+            -- Signals for this test
+            variable I_var : std_logic_vector(NUM_INPUTS * DATA_WIDTH - 1 downto 0);
+            variable S_var : std_logic_vector(SELECT_WIDTH - 1 downto 0);
+            variable Y_expected : std_logic_vector(DATA_WIDTH - 1 downto 0);
+
+            -- Initialize inputs with incremental values
+            for i in 0 to NUM_INPUTS - 1 loop
+                I_var((i + 1) * DATA_WIDTH - 1 downto i * DATA_WIDTH) := std_logic_vector(to_unsigned(i, DATA_WIDTH));
+            end loop;
+
+            -- Assign inputs to the multiplexer
+            I_signals(idx) <= I_var;
+
+            -- Test all possible select values
+            for s in 0 to NUM_INPUTS - 1 loop
+                -- Set select signal
+                S_var := std_logic_vector(to_unsigned(s, SELECT_WIDTH));
+                S_signals(idx) <= S_var;
                 wait for 10 ns;
-                if Sel_int < N_c then
-                    -- Compute expected output
-                    Expected_out := Data_in_v((Sel_int+1)*M_c -1 downto Sel_int*M_c);
-                else
-                    -- For out-of-range Sel, expect Data_out to be zeros
-                    Expected_out := (others => '0');
-                end if;
-                -- Check correctness
-                assert Data_out = Expected_out
-                report "Mismatch at Data_in=" & std_logic_vector_to_string(Data_in_v) &
-                       ", Sel=" & std_logic_vector_to_string(Sel_v) &
-                       " (" & integer'image(Sel_int) & ")" &
-                       ", Expected=" & std_logic_vector_to_string(Expected_out) &
-                       ", Got=" & std_logic_vector_to_string(Data_out)
-                severity error;
+
+                -- Expected output
+                Y_expected := std_logic_vector(to_unsigned(s, DATA_WIDTH));
+
+                -- Check the output
+                assert Y_signals(idx) = Y_expected
+                    report "Mismatch in multiplexer " & integer'image(idx) &
+                           " at select " & integer'image(s) & ". Expected: " &
+                           Y_expected'instance_name & ", Got: " & Y_signals(idx)'instance_name
+                    severity error;
             end loop;
         end loop;
+
+        -- Indicate successful completion
+        report "Testbench completed successfully." severity note;
         wait;
-    end proc
+    end process;
+
+end architecture testbench;
