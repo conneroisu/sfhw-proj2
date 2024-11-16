@@ -144,7 +144,7 @@ begin
     end process;
     
     -- DUT instantiation with maximum configuration
-    DUT: entity work.generic_mux
+    DUT: entity work.muxNtM
         generic map (
             DATA_WIDTH  => MAX_DATA_WIDTH,
             INPUT_COUNT => MAX_INPUT_COUNT
