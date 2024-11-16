@@ -10,133 +10,149 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
-use work.MIPS_types.all;
+use IEEE.MATH_REAL.ALL;
 
--- Multiplexer Entity and Architecture
-entity muxNtM is
-    generic (
-        DATA_WIDTH : integer := 8;  -- Width of each input
-        NUM_INPUTS : integer := 4   -- Number of inputs
+entity tb_muxNtM is
+end tb_muxNtM;
+
+architecture Behavioral of tb_muxNtM is
+    -- Test configuration type and array
+    type test_config is record
+        data_width  : positive;
+        input_count : positive;
+    end record;
+    
+    type test_configs_array is array (natural range <>) of test_config;
+    
+    -- Define different configurations to test
+    constant TEST_CONFIGS : test_configs_array := (
+        (data_width => 8,  input_count => 4),   -- Common configuration
+        (data_width => 1,  input_count => 2),   -- Minimum configuration
+        (data_width => 32, input_count => 8),   -- Wide data
+        (data_width => 4,  input_count => 16)   -- Many inputs
     );
-    port (
-        I : in  std_logic_vector(NUM_INPUTS * DATA_WIDTH - 1 downto 0);  -- Concatenated inputs
-        S : in  std_logic_vector(clog2(NUM_INPUTS) - 1 downto 0);        -- Select signal
-        Y : out std_logic_vector(DATA_WIDTH - 1 downto 0)                -- Output
-    );
-end entity muxNtM;
-
-architecture behavioral of muxNtM is
-begin
-    -- Select the appropriate input based on the select signal
-    Y <= I((to_integer(unsigned(S)) + 1) * DATA_WIDTH - 1 downto to_integer(unsigned(S)) * DATA_WIDTH);
-end architecture behavioral;
-
--- Testbench for the multiplexer
-entity muxNtM_tb is
-end entity muxNtM_tb;
-
-architecture testbench of muxNtM_tb is
-
-    -- Constants for test cases
-    constant DATA_WIDTHS : integer_vector := (8, 16, 4);
-    constant NUM_INPUTS_LIST : integer_vector := (4, 8, 2);
-    constant NUM_TESTS : integer := DATA_WIDTHS'length;
-
-    -- Generate arrays for signals
-    type std_logic_vector_array is array (natural range <>) of std_logic_vector;
-
-    -- Signals for each instance
-    signal I_signals : std_logic_vector_array(1 to NUM_TESTS);
-    signal S_signals : std_logic_vector_array(1 to NUM_TESTS);
-    signal Y_signals : std_logic_vector_array(1 to NUM_TESTS);
-
-    -- Helper types
-    subtype data_width_range is integer range 1 to NUM_TESTS;
-    type integer_array is array (data_width_range) of integer;
-
-    -- Arrays to hold data widths and number of inputs
-    constant DATA_WIDTH_ARRAY : integer_array := DATA_WIDTHS;
-    constant NUM_INPUTS_ARRAY : integer_array := NUM_INPUTS_LIST;
-
-begin
-
-    -- Generate multiplexer instances
-    gen_multiplexers : for idx in data_width_range generate
-
-        -- Constants for this instance
-        constant DATA_WIDTH : integer := DATA_WIDTH_ARRAY(idx);
-        constant NUM_INPUTS : integer := NUM_INPUTS_ARRAY(idx);
-        constant SELECT_WIDTH : integer := clog2(NUM_INPUTS);
-
-        -- Signals for this instance
-        signal I : std_logic_vector(NUM_INPUTS * DATA_WIDTH - 1 downto 0);
-        signal S : std_logic_vector(SELECT_WIDTH - 1 downto 0);
-        signal Y : std_logic_vector(DATA_WIDTH - 1 downto 0);
-
-        -- Assign signals to arrays
-        I_signals(idx) <= I;
-        S_signals(idx) <= S;
-        Y_signals(idx) <= Y;
-
-        -- Instantiate the multiplexer
-        mux_inst : entity work.muxNtM
-            generic map (
-                DATA_WIDTH => DATA_WIDTH,
-                NUM_INPUTS => NUM_INPUTS
-            )
-            port map (
-                I => I,
-                S => S,
-                Y => Y
-            );
-
-    end generate;
-
-    -- Test process
-    test_process : process
+    
+    -- Maximum values for array sizing
+    constant MAX_DATA_WIDTH  : positive := 32;
+    constant MAX_INPUT_COUNT : positive := 16;
+    
+    -- Component signals
+    signal inputs : std_logic_vector(MAX_INPUT_COUNT * MAX_DATA_WIDTH - 1 downto 0);
+    signal sel    : std_logic_vector(integer(ceil(log2(real(MAX_INPUT_COUNT)))) - 1 downto 0);
+    signal output : std_logic_vector(MAX_DATA_WIDTH - 1 downto 0);
+    
+    -- Test control signals
+    signal test_done : boolean := false;
+    
+    -- Function to create test pattern for inputs
+    function create_test_pattern(data_width : positive; input_count : positive) 
+        return std_logic_vector is
+        variable result : std_logic_vector(input_count * data_width - 1 downto 0);
     begin
-        -- Iterate over each test case
-        for idx in data_width_range loop
-            -- Retrieve constants for this test
-            variable DATA_WIDTH : integer := DATA_WIDTH_ARRAY(idx);
-            variable NUM_INPUTS : integer := NUM_INPUTS_ARRAY(idx);
-            variable SELECT_WIDTH : integer := clog2(NUM_INPUTS);
-
-            -- Signals for this test
-            variable I_var : std_logic_vector(NUM_INPUTS * DATA_WIDTH - 1 downto 0);
-            variable S_var : std_logic_vector(SELECT_WIDTH - 1 downto 0);
-            variable Y_expected : std_logic_vector(DATA_WIDTH - 1 downto 0);
-
-            -- Initialize inputs with incremental values
-            for i in 0 to NUM_INPUTS - 1 loop
-                I_var((i + 1) * DATA_WIDTH - 1 downto i * DATA_WIDTH) := std_logic_vector(to_unsigned(i, DATA_WIDTH));
-            end loop;
-
-            -- Assign inputs to the multiplexer
-            I_signals(idx) <= I_var;
-
-            -- Test all possible select values
-            for s in 0 to NUM_INPUTS - 1 loop
-                -- Set select signal
-                S_var := std_logic_vector(to_unsigned(s, SELECT_WIDTH));
-                S_signals(idx) <= S_var;
-                wait for 10 ns;
-
-                -- Expected output
-                Y_expected := std_logic_vector(to_unsigned(s, DATA_WIDTH));
-
-                -- Check the output
-                assert Y_signals(idx) = Y_expected
-                    report "Mismatch in multiplexer " & integer'image(idx) &
-                           " at select " & integer'image(s) & ". Expected: " &
-                           Y_expected'instance_name & ", Got: " & Y_signals(idx)'instance_name
-                    severity error;
+        for i in 0 to input_count - 1 loop
+            for j in 0 to data_width - 1 loop
+                -- Create unique pattern for each input
+                result(i * data_width + j) := '1' when (i + j) mod 2 = 0 else '0';
             end loop;
         end loop;
+        return result;
+    end function;
+    
+    -- Procedure to check expected output
+    procedure check_output(
+        data_width  : in positive;
+        input_count : in positive;
+        test_inputs : in std_logic_vector;
+        sel_value   : in std_logic_vector;
+        actual_out  : in std_logic_vector;
+        test_name   : in string) is
+        
+        variable expected : std_logic_vector(data_width - 1 downto 0);
+        variable sel_int  : integer;
+    begin
+        sel_int := to_integer(unsigned(sel_value));
+        
+        if sel_int < input_count then
+            expected := test_inputs((sel_int + 1) * data_width - 1 downto sel_int * data_width);
+            
+            assert actual_out(data_width - 1 downto 0) = expected
+                report "Test '" & test_name & "' failed!" & 
+                      " Expected: " & to_string(expected) &
+                      " Got: " & to_string(actual_out(data_width - 1 downto 0))
+                severity error;
+        else
+            -- Check if output is zero for invalid selection
+            assert actual_out(data_width - 1 downto 0) = (data_width - 1 downto 0 => '0')
+                report "Test '" & test_name & "' failed! Expected all zeros for invalid selection"
+                severity error;
+        end if;
+    end procedure;
 
-        -- Indicate successful completion
-        report "Testbench completed successfully." severity note;
+begin
+    -- Test process
+    process
+        variable test_inputs_temp : std_logic_vector(MAX_INPUT_COUNT * MAX_DATA_WIDTH - 1 downto 0);
+    begin
+        -- Run tests for each configuration
+        for config_idx in TEST_CONFIGS'range loop
+            report "Testing configuration: " &
+                  "Data Width = " & integer'image(TEST_CONFIGS(config_idx).data_width) &
+                  ", Input Count = " & integer'image(TEST_CONFIGS(config_idx).input_count);
+            
+            -- Create test pattern for current configuration
+            test_inputs_temp := (others => '0');
+            test_inputs_temp(TEST_CONFIGS(config_idx).input_count * 
+                           TEST_CONFIGS(config_idx).data_width - 1 downto 0) := 
+                create_test_pattern(TEST_CONFIGS(config_idx).data_width,
+                                  TEST_CONFIGS(config_idx).input_count);
+            inputs <= test_inputs_temp;
+            
+            -- Test all valid select values
+            for i in 0 to TEST_CONFIGS(config_idx).input_count - 1 loop
+                sel <= std_logic_vector(to_unsigned(i, sel'length));
+                wait for 10 ns;
+                
+                check_output(
+                    TEST_CONFIGS(config_idx).data_width,
+                    TEST_CONFIGS(config_idx).input_count,
+                    test_inputs_temp,
+                    sel,
+                    output,
+                    "Config " & integer'image(config_idx) & " Select " & integer'image(i)
+                );
+            end loop;
+            
+            -- Test invalid select value
+            sel <= std_logic_vector(to_unsigned(TEST_CONFIGS(config_idx).input_count, sel'length));
+            wait for 10 ns;
+            check_output(
+                TEST_CONFIGS(config_idx).data_width,
+                TEST_CONFIGS(config_idx).input_count,
+                test_inputs_temp,
+                sel,
+                output,
+                "Config " & integer'image(config_idx) & " Invalid Select"
+            );
+            
+            -- Add spacing between configurations
+            wait for 20 ns;
+        end loop;
+        
+        report "All tests completed!";
+        test_done <= true;
         wait;
     end process;
+    
+    -- DUT instantiation with maximum configuration
+    DUT: entity work.generic_mux
+        generic map (
+            DATA_WIDTH  => MAX_DATA_WIDTH,
+            INPUT_COUNT => MAX_INPUT_COUNT
+        )
+        port map (
+            inputs => inputs,
+            sel    => sel,
+            output => output
+        );
 
-end architecture testbench;
+end Behavioral;
