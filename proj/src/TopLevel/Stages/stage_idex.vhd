@@ -39,7 +39,7 @@ entity stage_idex is
         -- sw    :   x      00      01
         -- beq   :   x      01      00
         i_RegDst : in std_logic;  -- Destination register from control unit.
-        i_ALUOp  : in std_logic_vector(1 downto 0);  -- ALU operation from control unit.
+        i_ALUOp  : in std_logic_vector(3 downto 0);  -- ALU operation from control unit.
         i_ALUSrc : in std_logic_vector(1 downto 0);  -- ALU source from control unit.
 
         -- Future Stage Signals [begin]
@@ -55,6 +55,8 @@ entity stage_idex is
         i_Read2      : in  std_logic_vector(N-1 downto 0);
         o_Read1      : out std_logic_vector(N-1 downto 0);
         o_Read2      : out std_logic_vector(N-1 downto 0);
+        --= Instruction Signals [begin]
+        i_shamt      : in  std_logic_vector(4 downto 0);  -- 5-bit shift amount from instruction[10-6]
 
         -- Forward Unit Signals [begin]
         --= Forwarded Signals (received from Forward Unit) [begin]
@@ -112,14 +114,17 @@ architecture structure of stage_idex is
     end component;
 
     -- see: https://github.com/user-attachments/assets/b31df788-32cf-48a5-a3ac-c44345cac682
-    signal s_ALUOp    : std_logic_vector(1 downto 0);
-    signal s_ALUSrc   : std_logic_vector(1 downto 0);
-    signal s_Overflow : std_logic;
-    signal s_Zero     : std_logic;
-    signal s_Rd       : std_logic_vector(4 downto 0);
-    signal s_PC       : std_logic_vector(31 downto 0);
-    signal s_PCplus4  : std_logic_vector(31 downto 0);
-    signal s_Extended : std_logic_vector(31 downto 0);
+    signal s_ALUOp       : std_logic_vector(3 downto 0);
+    signal s_ALUOperand1 : std_logic_vector(31 downto 0);
+    signal s_ALUOperand2 : std_logic_vector(31 downto 0);
+    signal s_ALUSrc      : std_logic_vector(1 downto 0);
+    signal s_Overflow    : std_logic;
+    signal s_Zero        : std_logic;
+    signal s_Rd          : std_logic_vector(4 downto 0);
+    signal s_PC          : std_logic_vector(31 downto 0);
+    signal s_PCplus4     : std_logic_vector(31 downto 0);
+    signal s_Extended    : std_logic_vector(31 downto 0);
+    signal s_shamt       : std_logic_vector(4 downto 0);
 begin
 
     ----------------------------------------------------------------------state
@@ -175,7 +180,7 @@ begin
             );
 
     ALUOperation_reg : dffg_n
-        generic map (N => 2)
+        generic map (N => 4)
         port map(
             i_CLK => i_CLK,
             i_RST => i_RST,
@@ -213,6 +218,15 @@ begin
             i_D   => i_Extended,
             o_Q   => s_Extended);
 
+    shamt_reg : dffg_n
+        generic map (N => 5)
+        port map(
+            i_CLK => i_CLK,
+            i_RST => i_RST,
+            i_WrE => i_WE,
+            i_D   => i_shamt,
+            o_Q   => s_shamt
+            );
 
     ----------------------------------------------------------------------logic
 
@@ -233,7 +247,7 @@ begin
         port map (
             inputs => i_Read1 & i_WriteData & i_DMem1,
             Sel    => i_ForwardA,
-            output => s_ALUOp
+            output => s_ALUOperand1
             );
 
     ALU2Mux : mux_NtM
@@ -244,7 +258,7 @@ begin
         port map (
             inputs => i_Read2 & i_WriteData & i_DMem1,
             Sel    => i_ForwardB,
-            output => s_ALUSrc
+            output => s_ALUOperand2
             );
 
     -- RT & RD mux w/ i_RegDst selector
@@ -254,7 +268,8 @@ begin
             DATA_WIDTH  => 5
             )
         port map (
-            inputs => i_Read1 & i_Read2 & i_WriteData & i_DMem1,
+            -- inputs => i_Read1 & i_Read2 & i_WriteData & i_DMem1,
+            inputs => i_Read1(20 downto 16) & i_Read1(15 downto 11),
             Sel(0) => i_RegDst,
             output => s_Rd
             );
@@ -262,9 +277,9 @@ begin
     instALU : alu
         port map (
             CLK        => i_CLK,
-            i_Data1    => i_ALUOp,
-            i_Data2    => i_ALUSrc,
-            i_shamt    => i_ALUSrc,
+            i_Data1    => s_ALUOperand1,
+            i_Data2    => s_ALUOperand2,
+            i_shamt    => s_shamt,
             i_aluOp    => s_ALUOp,
             o_F        => o_ALU,
             o_Overflow => s_Overflow,
