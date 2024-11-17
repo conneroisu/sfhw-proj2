@@ -9,11 +9,19 @@
             <mxPoint x="200" y="259.75862068965523" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="SFYjbuADIcv64YCign_3-1" value="Instruction&lt;br&gt;Memory" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
-          <mxGeometry x="80" y="240" width="80" height="80" as="geometry" />
+        <UserObject label="Instruction&lt;br&gt;Memory" link="https://github.com/conneroisu/sfhw-proj2/blob/a3777bc8b465f98794112a421d8f031997d186cb/proj/src/TopLevel/MIPS_Processor.vhd#L57" linkTarget="_blank" id="SFYjbuADIcv64YCign_3-1">
+          <mxCell style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+            <mxGeometry x="80" y="240" width="80" height="80" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="SFYjbuADIcv64YCign_3-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="SFYjbuADIcv64YCign_3-5" target="SFYjbuADIcv64YCign_3-1">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SFYjbuADIcv64YCign_3-5" value="PC" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
           <mxGeometry x="80" y="120" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SFYjbuADIcv64YCign_3-7" value="&lt;div&gt;Mux&lt;/div&gt;" style="shadow=0;dashed=0;align=center;html=1;strokeWidth=1;shape=mxgraph.electrical.abstract.mux2;operation=demux;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="170" y="40" width="60" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
