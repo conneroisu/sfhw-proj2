@@ -13,7 +13,7 @@ entity ForwardUnit is
     port (
         i_CLK         : in  std_logic;
         i_RST         : in  std_logic;
-        forward       : in  std_logic;
+        i_forwarding  : in  std_logic;
         i_exRs        : in  std_logic_vector (4 downto 0);
         i_exRt        : in  std_logic_vector (4 downto 0);
         i_memRd       : in  std_logic_vector (4 downto 0);
@@ -28,13 +28,11 @@ entity ForwardUnit is
         );
 end ForwardUnit;
 
-
-
 architecture Behavioral of ForwardUnit is
     signal memRegWrite : std_logic;
 begin
 
-    process(i_exRs, i_exRt, i_memRd, i_wbRd, i_memMemRead, i_memMemWrite, i_memPCSrc, i_wbRegWrite, forward)
+    process(i_exRs, i_exRt, i_memRd, i_wbRd, i_memMemRead, i_memMemWrite, i_memPCSrc, i_wbRegWrite, i_forwarding)
         variable exRs     : unsigned(4 downto 0);
         variable exRt     : unsigned(4 downto 0);
         variable memRd    : unsigned(4 downto 0);
@@ -58,7 +56,7 @@ begin
             memRegWrite <= '0';
         end if;
 
-        if (forward = '1') then
+        if (i_forwarding = '1') then
             -- Forward from MEM stage
             if (memRegWrite = '1') and (memRd /= to_unsigned(0, 5)) and (memRd = exRs) then
                 o_exForwardA <= "10";
@@ -80,4 +78,3 @@ begin
     end process;
 
 end Behavioral;
-
