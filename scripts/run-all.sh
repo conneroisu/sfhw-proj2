@@ -15,12 +15,10 @@ if [ ! -d "$directory" ]; then
     exit 1
 fi
 
-cd "$directory"
-pwd
+# list all files that will be executed
+ls "$directory/"*.sh
 # Find all .sh files and execute them
-# first print all files that match *.sh
-find . -name "*.sh"
-for script in "*.sh"; do
+for script in "$directory"/*.sh; do
     if [ -f "$script" ]; then
         echo "Starting: $script"
         # ensure the script is executable
