@@ -2,7 +2,6 @@
 -- Author(s): dmvp01
 -- Name: proj/src/TopLevel/Stages/EX_MEM.vhd
 -- Notes:
---      conneroisu 2024-11-14T14:56:19Z Format-and-Header
 --      dmvp01 2024-11-13T16:31:57-06:00 adding-pipeline-Reg-Ex-Mem-implementation-as-well-as-test-bench
 -- </header>
 

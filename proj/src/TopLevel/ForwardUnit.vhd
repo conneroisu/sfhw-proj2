@@ -2,7 +2,6 @@
 -- Author(s): Conner Ohnesorge
 -- Name: proj/src/TopLevel/ForwardUnit.vhd
 -- Notes:
---      conneroisu 2024-11-14T14:56:19Z Format-and-Header
 --      Conner Ohnesorge 2024-11-13T13:00:43-06:00 made-initial-structure-and-basic-logic-for-forward-unit
 -- </header>
 

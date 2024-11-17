@@ -2,8 +2,6 @@
 -- Author(s): aidanfoss
 -- Name: proj/src/LowLevel/nandg32.vhd
 -- Notes:
---      conneroisu 2024-11-14T14:56:19Z Format-and-Header
---      conneroisu 2024-11-11T15:44:17Z Format-and-Header
 --      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
 -- </header>
 

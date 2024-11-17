@@ -2,13 +2,17 @@
 -- Author(s): Conner Ohnesorge
 -- Name: proj/src/TopLevel/Stages/stage_idex.vhd
 -- Notes:
---      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      Conner Ohnesorge 2024-11-16T18:27:04-06:00 fix-port-widths-and-stage-register-names
+--      Conner Ohnesorge 2024-11-16T18:23:26-06:00 fix-new-control-signal-width-for-aluOp
+--      Conner Ohnesorge 2024-11-16T17:56:46-06:00 format-stage_idex.vhd-after-adding-generic-mux
+--      Conner Ohnesorge 2024-11-16T17:56:24-06:00 update-the-stage_idex.vhd-to-use-the-new-muxNtM-component-structure
+--      connero 2024-11-16T17:22:38-06:00 Merge-branch-main-into-component-forward-unit
+--      Conner Ohnesorge 2024-11-16T17:13:40-06:00 update-to-latest-implementation-of-muxNtM
 --      Conner Ohnesorge 2024-11-13T12:27:08-06:00 removed-unused-vhdl_ls.toml-put-it-in-HOME-and-further-simplified-the-stage_idex.vhd-file-by-removing-the-unnecessary-signals-and-signals-that-were-not-being-used-specifically-the-signals-that-were-being-used-in-the-future-stages
 --      Conner Ohnesorge 2024-11-13T12:20:08-06:00 updated-configurations-for-lsp-and-firther-simplified-stage_idex
 --      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
 --      Conner Ohnesorge 2024-11-11T14:08:03-06:00 added-generic-mux-muxNtM
 --      Conner Ohnesorge 2024-11-11T10:14:52-06:00 added-forwarding-signals-to-stage_idex
---      conneroisu 2024-11-11T15:44:17Z Format-and-Header
 --      Conner Ohnesorge 2024-11-11T09:04:24-06:00 remove-extraneous-semicolons-in-initial-declaration
 --      Conner Ohnesorge 2024-11-11T09:03:17-06:00 added-stage-guide-and-finished-stage_idex-without-component-instantiations
 --      Conner Ohnesorge 2024-11-11T08:29:19-06:00 final-version-of-the-header-program-with-tests-and-worked-on-the-stage_idex.vhd-file
@@ -292,3 +296,4 @@ begin
         );
 
 end structure;
+
