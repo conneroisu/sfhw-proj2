@@ -2,6 +2,7 @@
 -- Author(s): Conner Ohnesorge
 -- Name: proj/src/TopLevel/Stages/stage_idex.vhd
 -- Notes:
+--      Conner Ohnesorge 2024-11-16T21:01:26-06:00 fix-run-all.sh-script-to-cd-into-the-directory-first
 --      Conner Ohnesorge 2024-11-16T18:27:04-06:00 fix-port-widths-and-stage-register-names
 --      Conner Ohnesorge 2024-11-16T18:23:26-06:00 fix-new-control-signal-width-for-aluOp
 --      Conner Ohnesorge 2024-11-16T17:56:46-06:00 format-stage_idex.vhd-after-adding-generic-mux
@@ -295,3 +296,4 @@ begin
         );
 
 end structure;
+
