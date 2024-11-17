@@ -199,7 +199,7 @@ begin
             o_Q   => s_ALUSrc           -- Data value output
             );
 
-    ALUResult : dffg_n
+    ALUResult_reg : dffg_n
         generic map (N => 32)
         port map(
             i_CLK => i_CLK,
@@ -209,7 +209,7 @@ begin
             o_Q   => o_ALU
             );
 
-    SignExtend_Reg : dffg_n
+    SignExtend_reg : dffg_n
         generic map (N => 32)
         port map(
             i_CLK => i_CLK,
@@ -218,7 +218,7 @@ begin
             i_D   => i_Extended,
             o_Q   => s_Extended);
 
-    shamt_reg : dffg_n
+    Shamt_reg : dffg_n
         generic map (N => 5)
         port map(
             i_CLK => i_CLK,
