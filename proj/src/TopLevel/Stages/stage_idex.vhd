@@ -25,6 +25,29 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.MATH_REAL.all;
 use IEEE.NUMERIC_STD.all;
 
+-- <entity>
+-- inputs:
+--      i_CLK
+--      i_RST
+--      i_WE
+--      i_PC
+--      i_PCplus4
+--      i_PCplus4
+--      i_Extended
+--      i_RegDst
+--      i_ALUOp
+--      i_ALUSrc
+--      i_Shamt
+--      i_ForwardA
+--      i_ForwardB
+--      i_WriteData
+--      i_DMem1
+-- outputs:
+--      o_ALU
+--      o_Read1
+--      o_Read2
+--      o_BranchAddr
+-- </entity>
 entity stage_idex is
     generic(N : integer := 32);
     port (
@@ -60,7 +83,7 @@ entity stage_idex is
         o_Read1      : out std_logic_vector(N-1 downto 0);
         o_Read2      : out std_logic_vector(N-1 downto 0);
         --= Instruction Signals [begin]
-        i_shamt      : in  std_logic_vector(4 downto 0);  -- 5-bit shift amount from instruction[10-6]
+        i_Shamt      : in  std_logic_vector(4 downto 0);  -- 5-bit shift amount from instruction[10-6]
 
         -- Forward Unit Signals [begin]
         --= Forwarded Signals (received from Forward Unit) [begin]
@@ -228,7 +251,7 @@ begin
             i_CLK => i_CLK,
             i_RST => i_RST,
             i_WrE => i_WE,
-            i_D   => i_shamt,
+            i_D   => i_Shamt,
             o_Q   => s_shamt
             );
 
@@ -296,4 +319,3 @@ begin
         );
 
 end structure;
-
