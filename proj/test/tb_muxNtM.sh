@@ -1,4 +1,5 @@
 #!/bin/bash
+target=tb_muxNtM
 # make sure parent folder is `test`
 parent_path=$( cd "$(dirname "$0")" ; pwd -P )
 echo "parent_path: $parent_path"
@@ -12,4 +13,4 @@ fi
 
 export PATH=$PATH:/usr/local/mentor/questasim/bin
 export SALT_LICENSE_SERVER=$SALT_LICENSE_SERVER:1717@io.ece.iastate.edu
-/usr/local/mentor/questasim/bin/vsim -do 'do ./tb_muxNtM.do'
+/usr/local/mentor/questasim/bin/vsim -do "do ./$target.do"
