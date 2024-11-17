@@ -12,10 +12,10 @@ import (
 //go:embed testdata/basic_input.json
 var input string
 
-//go:embed testdata/golden_basic.vhd
+//go:embed testdata/basic_golden.vhd.t
 var golden string
 
-//go:embed testdata/basic.vhd
+//go:embed testdata/basic.vhd.t
 var content string
 
 func TestFile(t *testing.T) {
@@ -35,5 +35,7 @@ func TestFile(t *testing.T) {
 	if output != golden {
 		differences := diff.Diff(golden, output)
 		t.Logf("Differences: \n%s", differences)
+		t.Fail()
 	}
+
 }
