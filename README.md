@@ -46,20 +46,73 @@ endsolid
 ```
 
 ```mermaid
-
-
-graph TD
-    A[Start] --> B[Process 1]
-    B --> C{Decision?}
-    C -->|Yes| D[Process 2]
-    C -->|No| E[End]
-    A --> F[Additional Info]
+graph LR
+    %% IF Stage
+    PC[Program Counter] --> IM[Instruction Memory]
+    PC --> ADD_IF[Add]
+    ADD_IF --> MUX_IF[MUX]
+    MUX_IF --> PC
     
-    click A "https://example.com/start" "Go to the Start"
-    click B "https://example.com/process1" "Details about Process 1"
-    click C "https://example.com/decision" "Decision Point Details"
-    click D "https://example.com/process2" "Details about Process 2"
-    click E "https://example.com/end" "Learn more about the End"
-    click F "https://example.com/info" "Additional information"
+    %% ID Stage
+    IM --> REG_READ1[Read register 1]
+    IM --> REG_READ2[Read register 2]
+    IM --> REG_WRITE[Write register]
+    IM --> SIGN_EXT[Sign-extend]
+    
+    %% EX Stage
+    REG_READ1 --> ALU
+    REG_READ2 --> MUX_ALU[ALU MUX]
+    MUX_ALU --> ALU
+    SIGN_EXT --> MUX_ALU
+    SIGN_EXT --> SHIFT_LEFT[Shift left 2]
+    SHIFT_LEFT --> ADD_EX[Add]
+    
+    %% MEM Stage
+    ALU --> DATA_MEM[Data Memory]
+    
+    %% WB Stage
+    DATA_MEM --> WB_MUX[Write Back MUX]
+    WB_MUX --> REG_WRITE
+    
+    %% Stage Labels
+    subgraph IF[IF: Instruction Fetch]
+        PC
+        IM
+        ADD_IF
+        MUX_IF
+    end
+    
+    subgraph ID[ID: Instruction Decode]
+        REG_READ1
+        REG_READ2
+        REG_WRITE
+        SIGN_EXT
+    end
+    
+    subgraph EX[EX: Execute]
+        ALU
+        MUX_ALU
+        SHIFT_LEFT
+        ADD_EX
+    end
+    
+    subgraph MEM[MEM: Memory Access]
+        DATA_MEM
+    end
+    
+    subgraph WB[WB: Write Back]
+        WB_MUX
+    end
+    
+    %% Enforce stage ordering
+    IF --> ID --> EX --> MEM --> WB
+    
+    %% Styling
+    classDef stageStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    class IF,ID,EX,MEM,WB stageStyle
+    
+    %% Direction
+    direction LR
 
+    click PC "https://github.com/conneroisu/sfhw-proj2/blob/main/proj/src/TopLevel/Fetch/program_counter.vhd" "Program Counter"
 ```
