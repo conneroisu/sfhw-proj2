@@ -24,7 +24,6 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.MATH_REAL.all;
 use IEEE.NUMERIC_STD.all;
 
--- Stage 3
 entity stage_idex is
     generic(N : integer := 32);
     port (
@@ -94,13 +93,13 @@ architecture structure of stage_idex is
 
     component mux_NtM is
         generic (
-            INPUT_COUNT : integer := 2;  -- Number of input buses
-            DATA_WIDTH  : integer := 8  -- Width of each input bus
+            INPUT_COUNT : integer := 2;
+            DATA_WIDTH  : integer := 8
             );
         port (
             inputs : in  std_logic_vector((INPUT_COUNT*DATA_WIDTH)-1 downto 0);  -- Concatenated input buses
-            sel    : in  std_logic_vector(integer(ceil(log2(real(INPUT_COUNT)))) - 1 downto 0);  -- Selection signal
-            output : out std_logic_vector(DATA_WIDTH - 1 downto 0)  -- Output bus
+            sel    : in  std_logic_vector(integer(ceil(log2(real(INPUT_COUNT)))) - 1 downto 0);
+            output : out std_logic_vector(DATA_WIDTH - 1 downto 0)
             );
     end component;
 
@@ -296,4 +295,3 @@ begin
         );
 
 end structure;
-

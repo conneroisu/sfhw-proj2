@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 # Check if directory is provided
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <directory_path>"
@@ -14,11 +15,15 @@ if [ ! -d "$directory" ]; then
     exit 1
 fi
 
+cd "$directory"
 # Find all .sh files and execute them
-for script in "$directory"/*.sh; do
+for script in "./*.sh"; do
     if [ -f "$script" ]; then
         echo "Starting: $script"
-        sh "$script" &
+        # ensure the script is executable
+        chmod +x "$script"
+        # run the script in background  
+        ./"$script" &
         # Store the PID
         echo "Process ID: $!"
     fi
