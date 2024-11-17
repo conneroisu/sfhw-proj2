@@ -2,26 +2,31 @@
 -- Author(s): Conner Ohnesorge
 -- Name: proj/src/LowLevel/muxNtM.vhd
 -- Notes:
---      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      Conner Ohnesorge 2024-11-16T17:36:04-06:00 finish-setup-of-muxNtM-and-test-bench
+--      Conner Ohnesorge 2024-11-16T17:33:34-06:00 set-up-muxNtM-component-and-testbench
+--      Conner Ohnesorge 2024-11-16T17:31:19-06:00 test-new-metavalue-detection-in-muxNtM
+--      Conner Ohnesorge 2024-11-16T17:28:51-06:00 update-muxNtM-and-test-bench
+--      connero 2024-11-16T17:22:38-06:00 Merge-branch-main-into-component-forward-unit
+--      Conner Ohnesorge 2024-11-16T17:13:40-06:00 update-to-latest-implementation-of-muxNtM
 --      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
 --      Conner Ohnesorge 2024-11-11T14:08:03-06:00 added-generic-mux-muxNtM
 -- </header>
 
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.MATH_REAL.ALL;
-use IEEE.NUMERIC_STD.ALL;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.MATH_REAL.all;
+use IEEE.NUMERIC_STD.all;
 
 entity muxNtM is
     generic (
         DATA_WIDTH  : positive := 8;    -- Width of each input/output
         INPUT_COUNT : positive := 4     -- Number of inputs
-    );
+        );
     port (
-        inputs : in std_logic_vector(INPUT_COUNT * DATA_WIDTH - 1 downto 0);
-        sel    : in std_logic_vector(integer(ceil(log2(real(INPUT_COUNT)))) - 1 downto 0);
+        inputs : in  std_logic_vector(INPUT_COUNT * DATA_WIDTH - 1 downto 0);
+        sel    : in  std_logic_vector(integer(ceil(log2(real(INPUT_COUNT)))) - 1 downto 0);
         output : out std_logic_vector(DATA_WIDTH - 1 downto 0)
-    );
+        );
 end muxNtM;
 
 architecture Behavioral of muxNtM is
@@ -48,7 +53,7 @@ begin
         else
             -- Convert select lines to integer
             sel_int := to_integer(unsigned(sel));
-            
+
             -- Check if selection is valid
             if sel_int < INPUT_COUNT then
                 -- Extract the selected input from the input array
@@ -60,3 +65,4 @@ begin
         end if;
     end process;
 end Behavioral;
+

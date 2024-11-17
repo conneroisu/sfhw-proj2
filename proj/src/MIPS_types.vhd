@@ -2,9 +2,9 @@
 -- Author(s): Conner Ohnesorge
 -- Name: proj/src/MIPS_types.vhd
 -- Notes:
---      conneroisu 2024-11-14T14:56:19Z Format-and-Header
+--      connero 2024-11-16T17:22:38-06:00 Merge-branch-main-into-component-forward-unit
+--      Conner Ohnesorge 2024-11-16T17:13:40-06:00 update-to-latest-implementation-of-muxNtM
 --      Conner Ohnesorge 2024-11-14T08:10:37-06:00 update-MIPS_types.vhd
---      conneroisu 2024-11-11T15:44:17Z Format-and-Header
 --      Conner Ohnesorge 2024-11-07T08:35:18-06:00 run-manual-update-to-header-program-and-run-it
 --      Conner Ohnesorge 2024-10-31T09:22:46-05:00 added-initial-new-from-toolflow
 -- </header>

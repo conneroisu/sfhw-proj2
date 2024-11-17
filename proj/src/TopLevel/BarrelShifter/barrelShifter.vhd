@@ -2,7 +2,6 @@
 -- Author(s): Conner Ohnesorge
 -- Name: proj/src/TopLevel/BarrelShifter/barrelShifter.vhd
 -- Notes:
---      conneroisu 2024-11-14T14:56:19Z Format-and-Header
 --      Conner Ohnesorge 2024-11-14T08:12:11-06:00 add-barrelshifter-from-proj-1
 -- </header>
 
