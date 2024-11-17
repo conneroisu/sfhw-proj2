@@ -2,6 +2,7 @@
 -- Author(s): Conner Ohnesorge
 -- Name: proj/src/TopLevel/ForwardUnit.vhd
 -- Notes:
+--      Conner Ohnesorge 2024-11-17T00:16:33-06:00 more-documented-and-cleaned-up-the-forwarding-unit-to-match-with-other-implementations-in-repo
 --      Conner Ohnesorge 2024-11-13T13:00:43-06:00 made-initial-structure-and-basic-logic-for-forward-unit
 -- </header>
 
@@ -78,3 +79,4 @@ begin
     end process;
 
 end Behavioral;
+
