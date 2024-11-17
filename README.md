@@ -44,3 +44,22 @@ solid cube_corner
   endfacet
 endsolid
 ```
+
+```mermaid
+
+
+graph TD
+    A[Start] --> B[Process 1]
+    B --> C{Decision?}
+    C -->|Yes| D[Process 2]
+    C -->|No| E[End]
+    A --> F[Additional Info]
+    
+    click A "https://example.com/start" "Go to the Start"
+    click B "https://example.com/process1" "Details about Process 1"
+    click C "https://example.com/decision" "Decision Point Details"
+    click D "https://example.com/process2" "Details about Process 2"
+    click E "https://example.com/end" "Learn more about the End"
+    click F "https://example.com/info" "Additional information"
+
+```
