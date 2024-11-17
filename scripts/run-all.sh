@@ -18,7 +18,7 @@ fi
 cd "$directory"
 pwd
 # Find all .sh files and execute them
-for script in "./*.sh"; do
+for script in "*.sh"; do
     if [ -f "$script" ]; then
         echo "Starting: $script"
         # ensure the script is executable
