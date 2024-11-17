@@ -18,6 +18,8 @@ fi
 cd "$directory"
 pwd
 # Find all .sh files and execute them
+# first print all files that match *.sh
+find . -name "*.sh"
 for script in "*.sh"; do
     if [ -f "$script" ]; then
         echo "Starting: $script"
