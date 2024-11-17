@@ -39,16 +39,16 @@ launch_in_terminal() {
     
     case $TERMINAL in
         "gnome-terminal")
-            gnome-terminal --title="$title" -- bash -c "echo 'Running: $script'; $script; echo 'Press Enter to close'; read"
+            gnome-terminal --title="$title" -- bash -c "echo 'Running: $script'; $script; echo 'Press Enter to close'; cd $directory; read"
             ;;
         "konsole")
-            konsole --new-tab --title "$title" -e bash -c "$script; echo 'Press Enter to close'; read"
+            konsole --new-tab --title "$title" -e bash -c "$script; echo 'Press Enter to close'; cd $directory; read"
             ;;
         "xterm")
-            xterm -T "$title" -e bash -c "$script; echo 'Press Enter to close'; read" &
+            xterm -T "$title" -e bash -c "$script; echo 'Press Enter to close'; cd $directory; read" &
             ;;
         "terminator")
-            terminator --new-tab -x bash -c "$script; echo 'Press Enter to close'; read"
+            terminator --new-tab -x bash -c "$script; echo 'Press Enter to close'; cd $directory; read"
             ;;
         *)
             echo "No supported terminal emulator found"

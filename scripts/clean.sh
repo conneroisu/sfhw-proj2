@@ -1,3 +1,3 @@
 #!/bin/bash
 
-vdel -all -lib work
+questasim -do "vdel -all -lib work"
