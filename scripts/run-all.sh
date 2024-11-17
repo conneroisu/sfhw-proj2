@@ -18,10 +18,7 @@ fi
 for script in "$directory"/*.sh; do
     if [ -f "$script" ]; then
         echo "Starting: $script"
-        # Make sure the script is executable
-        chmod +x "$script"
-        # Run the script in background
-        "$script" &
+        sh "$script" &
         # Store the PID
         echo "Process ID: $!"
     fi
