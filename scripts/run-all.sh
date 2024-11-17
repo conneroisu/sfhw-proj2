@@ -6,8 +6,7 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-# Convert to absolute path
-directory=$(realpath "$1")
+directory="$1"
 
 # Check if directory exists
 if [ ! -d "$directory" ]; then
@@ -37,26 +36,19 @@ TERMINAL=$(detect_terminal)
 launch_in_terminal() {
     local script="$1"
     local title=$(basename "$script")
-    local script_path=$(realpath "$script")
-    
-    # Create a command that:
-    # 1. Changes to the directory
-    # 2. Runs the script
-    # 3. Keeps the terminal open for viewing
-    local cmd="cd '$directory' && echo 'Current directory: \$(pwd)' && echo 'Running: $script_path' && '$script_path'; echo $'\nScript finished. Press Enter to close.'; read"
     
     case $TERMINAL in
         "gnome-terminal")
-            gnome-terminal --title="$title" -- bash -c "$cmd"
+            gnome-terminal --title="$title" -- bash -c "echo 'Running: $script'; $script; echo 'Press Enter to close'; read"
             ;;
         "konsole")
-            konsole --new-tab --title "$title" -e bash -c "$cmd"
+            konsole --new-tab --title "$title" -e bash -c "$script; echo 'Press Enter to close'; read"
             ;;
         "xterm")
-            xterm -T "$title" -e bash -c "$cmd" &
+            xterm -T "$title" -e bash -c "$script; echo 'Press Enter to close'; read" &
             ;;
         "terminator")
-            terminator --new-tab -x bash -c "$cmd"
+            terminator --new-tab -x bash -c "$script; echo 'Press Enter to close'; read"
             ;;
         *)
             echo "No supported terminal emulator found"
@@ -65,7 +57,7 @@ launch_in_terminal() {
     esac
 }
 
-# Counter for terminal positions
+# Counter for terminal positions (for staggered positioning)
 count=0
 
 # Find and execute all .sh files
