@@ -8,6 +8,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use work.MIPS_types.all;
+
 entity barrelShifter is
     generic
         (N : integer := 32);
@@ -163,4 +164,3 @@ begin
             o_O  => o_O                 --final output
             );
 end structure;
-
