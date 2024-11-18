@@ -147,7 +147,7 @@ begin
 
     ----------------------------------------------------------------------state
 
-    process(s_opcode)
+    InstProc : process(s_opcode, i_Read1, s_Rt, s_Rs, s_Rd, s_Shamt, s_Funct, s_Imm)
     begin
         s_opcode <= i_Read1(31 downto 26);
         case s_opcode is
