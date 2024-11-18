@@ -7,3 +7,11 @@
 # sfhw-proj2
 
 ![diagram](./README.png)
+
+## Repository Planning
+
+- [ ] TODO: Rename this repo to MIPS-Processors
+- [ ] TODO: Restructure each project into a directory
+- [ ] TODO: Add a README.md file to each project
+- [ ] TODO: Add a LICENSE file to each project
+- [ ] TODO: Add a .gitignore file to each project
