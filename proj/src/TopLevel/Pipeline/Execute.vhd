@@ -26,16 +26,16 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.MATH_REAL.all;
 use IEEE.NUMERIC_STD.all;
 
-entity stage_idex is
+entity Execute is
     generic(N : integer := 32);
+
     port (
         -- Common Stage Signals [begin]
-        i_CLK     : in std_logic;
-        i_RST     : in std_logic;
-        i_WE      : in std_logic;
-        i_PC      : in std_logic_vector(N-1 downto 0);
-        i_PCplus4 : in std_logic_vector(N-1 downto 0);
-
+        i_CLK        : in  std_logic;
+        i_RST        : in  std_logic;
+        i_WE         : in  std_logic;
+        i_PC         : in  std_logic_vector(N-1 downto 0);
+        i_PCplus4    : in  std_logic_vector(N-1 downto 0);
         -- Control Signals (From Control Unit) [begin]
         --= Stage Specific Signals [begin]
         --         RegDst  ALUOp  ALUSrc
@@ -43,15 +43,23 @@ entity stage_idex is
         -- lw    :   0      00      01
         -- sw    :   x      00      01
         -- beq   :   x      01      00
-        i_RegDst : in std_logic;        -- Control Unit Destination Register
-        i_ALUOp  : in std_logic_vector(3 downto 0);  -- ALU operation from control unit.
-        i_ALUSrc : in std_logic_vector(1 downto 0);  -- ALU source from control unit.
-
+        i_RegDst     : in  std_logic;   -- Control Unit Destination Register
+        i_ALUOp      : in  std_logic_vector(3 downto 0);  -- ALU operation from control unit.
+        i_ALUSrc     : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
+        i_MemRead    : in  std_logic;   -- Memory Read control
+        i_MemWrite   : in  std_logic;   -- Memory Write control
+        i_MemtoReg   : in  std_logic;   -- Memory to Register control
+        i_RegWrite   : in  std_logic;   -- Register Write control
+        i_Branch     : in  std_logic;   -- Branch control
         -- Future Stage Signals [begin]
         -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png
-        o_ALU    : out std_logic_vector(N-1 downto 0);
-        o_ALUSrc : out std_logic_vector(1 downto 0);
-
+        o_ALU        : out std_logic_vector(N-1 downto 0);
+        o_ALUSrc     : out std_logic_vector(1 downto 0);
+        o_MemRead    : out std_logic;
+        o_MemWrite   : out std_logic;
+        o_MemtoReg   : out std_logic;
+        o_RegWrite   : out std_logic;
+        o_Branch     : out std_logic;
         -- Input Signals [begin]
         --= Sign Extend Signals [begin]
         i_Extended   : in  std_logic_vector(N-1 downto 0);
@@ -61,7 +69,6 @@ entity stage_idex is
         i_Read2      : in  std_logic_vector(N-1 downto 0);
         o_Read1      : out std_logic_vector(N-1 downto 0);
         o_Read2      : out std_logic_vector(N-1 downto 0);
-
         -- Forward Unit Signals [begin]
         --= Forwarded Signals (received from Forward Unit) [begin]
         -- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
@@ -72,19 +79,19 @@ entity stage_idex is
         -- ForwardB=00  -> ID/EX    -> operand from registerfile
         -- ForwardB=10  -> EX/MEM   -> operand forwarded from prior alu result
         -- ForwardB=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
-        i_ForwardA  : in  std_logic_vector(1 downto 0);
-        i_ForwardB  : in  std_logic_vector(1 downto 0);
+        i_ForwardA   : in  std_logic_vector(1 downto 0);
+        i_ForwardB   : in  std_logic_vector(1 downto 0);
         --= Forwarding Signals (sent to Forward Unit) [begin]
-        i_WriteData : in  std_logic_vector(N-1 downto 0);  -- Data from the end of writeback stage's mux
-        i_DMem1     : in  std_logic_vector(N-1 downto 0);  -- Data from the first input to the DMem output of ex/mem
+        i_WriteData  : in  std_logic_vector(N-1 downto 0);  -- Data from the end of writeback stage's mux
+        i_DMem1      : in  std_logic_vector(N-1 downto 0);  -- Data from the first input to the DMem output of ex/mem
         -- Halt signals
-        i_Halt      : in  std_logic_vector(0 downto 0);
-        o_Halt      : out std_logic_vector(0 downto 0)
+        i_Halt       : in  std_logic_vector(0 downto 0);
+        o_Halt       : out std_logic_vector(0 downto 0)
         );
 
 end entity;
 
-architecture structure of stage_idex is
+architecture structure of Execute is
 
     component dffg_n is
         generic(N : integer := 32);
@@ -191,7 +198,7 @@ begin
 
     Rs_reg : dffg_n  ----- Instruction Register Source Address Buffer (rs)
         generic map (5)
-        port map(i_CLK, i_RST, i_WE, si_Rd, s_Rs);
+        port map(i_CLK, i_RST, i_WE, si_Rs, s_Rs);
 
     Rt_reg : dffg_n  ----- Instruction Register Target Address Buffer (rt)
         generic map (5)
@@ -202,12 +209,47 @@ begin
         port map(i_CLK, i_RST, i_WE, si_Shamt, s_Shamt);
 
     Funct_reg : dffg_n  -- Instruction Function Code Buffer (funct)
-        generic map (7)
+        generic map (6)
         port map(i_CLK, i_RST, i_WE, si_Funct, s_Funct);
 
     Imm_reg : dffg_n  ---- Instruction Immediate Value Buffer (immediate)
         generic map (16)
         port map(i_CLK, i_RST, i_WE, si_Imm, s_Imm);
+
+    MemRead_reg : dffg_n
+        generic map (1)
+        port map(i_CLK, i_RST, i_WE,
+                 i_D(0) => i_MemRead,
+                 o_Q(0) => o_MemRead
+                 );
+
+    MemWrite_reg : dffg_n
+        generic map (1)
+        port map(i_CLK, i_RST, i_WE,
+                 i_D(0) => i_MemWrite,
+                 o_Q(0) => o_MemWrite
+                 );
+
+    MemtoReg_reg : dffg_n
+        generic map (1)
+        port map(i_CLK, i_RST, i_WE,
+                 i_D(0) => i_MemtoReg,
+                 o_Q(0) => o_MemtoReg
+                 );
+
+    RegWrite_reg : dffg_n
+        generic map (1)
+        port map(i_CLK, i_RST, i_WE,
+                 i_D(0) => i_RegWrite,
+                 o_Q(0) => o_RegWrite
+                 );
+
+    Branch_reg : dffg_n
+        generic map (1)
+        port map(i_CLK, i_RST, i_WE,
+                 i_D(0) => i_Branch,
+                 o_Q(0) => o_Branch
+                 );
 
     ----------------------------------------------------------------------logic
 
@@ -271,7 +313,7 @@ begin
             DATA_WIDTH  => 32
             )
         port map (
-            inputs => i_Read1 & i_WriteData & i_DMem1,
+            inputs => i_Read1 & i_DMem1 & i_WriteData,
             Sel    => i_ForwardA,
             output => s_ALUOperand1
             );
@@ -282,7 +324,7 @@ begin
             DATA_WIDTH  => 32
             )
         port map (
-            inputs => i_Read2 & i_WriteData & i_DMem1,
+            inputs => i_Read2 & i_DMem1 & i_WriteData,
             Sel    => i_ForwardB,
             output => s_ALUOperand2
             );
@@ -295,7 +337,7 @@ begin
             )
         port map (
             -- inputs => i_Read1 & i_Read2 & i_WriteData & i_DMem1,
-            inputs => i_Read1(20 downto 16) & i_Read1(15 downto 11),
+            inputs => s_Rt & s_Rd,
             Sel(0) => i_RegDst,
             output => s_Rd
             );

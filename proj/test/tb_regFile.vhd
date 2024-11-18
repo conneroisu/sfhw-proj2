@@ -11,8 +11,7 @@ use ieee.numeric_std.all;
 
 
 entity tb_register_file is
-    generic
-        (
+    generic (
             gclk_hper : time := 50 ns
             );
 end entity tb_register_file;
@@ -79,12 +78,10 @@ begin
 
     p_clk : process is
     begin
-
         s_clk <= '0';
         wait for gclk_hper;
         s_clk <= '1';
         wait for gclk_hper;
-
     end process p_clk;
 
     -- Testbench Process
