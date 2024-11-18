@@ -67,11 +67,11 @@ entity stage_idex is
         -- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
         -- MuxInputs    -> {Source} -> {Explanation}
         -- ForwardA=00  -> ID/EX    -> operand from registerfile
-        -- ForwardA=10  -> EX/MEM   -> operand is forwarded from prior alu result
-        -- ForwardA=01  -> MEM/WB   -> operand is forwarded from dmem or earlier alu result
+        -- ForwardA=10  -> EX/MEM   -> operand forwarded from prior alu result
+        -- ForwardA=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
         -- ForwardB=00  -> ID/EX    -> operand from registerfile
-        -- ForwardB=10  -> EX/MEM   -> operand is forwarded from prior alu result
-        -- ForwardB=01  -> MEM/WB   -> operand is forwarded from dmem or earlier alu result
+        -- ForwardB=10  -> EX/MEM   -> operand forwarded from prior alu result
+        -- ForwardB=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
         i_ForwardA  : in  std_logic_vector(1 downto 0);
         i_ForwardB  : in  std_logic_vector(1 downto 0);
         --= Forwarding Signals (sent to Forward Unit) [begin]
@@ -88,11 +88,13 @@ architecture structure of stage_idex is
 
     component dffg_n is
         generic(N : integer := 32);
-        port(i_CLK : in  std_logic;
-             i_RST : in  std_logic;
-             i_WrE : in  std_logic;
-             i_D   : in  std_logic_vector(N-1 downto 0);
-             o_Q   : out std_logic_vector(N-1 downto 0));
+        port(
+            i_CLK : in  std_logic;
+            i_RST : in  std_logic;
+            i_WrE : in  std_logic;
+            i_D   : in  std_logic_vector(N-1 downto 0);
+            o_Q   : out std_logic_vector(N-1 downto 0)
+            );
     end component;
 
     component mux_NtM is
@@ -109,14 +111,14 @@ architecture structure of stage_idex is
 
     component alu is
         port (
-            CLK        : in  std_logic;                     -- Clock signal
+            CLK        : in  std_logic;
             i_Data1    : in  std_logic_vector(31 downto 0);  -- 32-bit input data 1
             i_Data2    : in  std_logic_vector(31 downto 0);  -- 32-bit input data 2
-            i_shamt    : in  std_logic_vector(4 downto 0);  -- 5-bit shift amount
-            i_aluOp    : in  std_logic_vector(3 downto 0);  -- 4-bit ALU operation code
+            i_shamt    : in  std_logic_vector(4 downto 0);  --- 5-bit shift amount
+            i_aluOp    : in  std_logic_vector(3 downto 0);  --- 4-bit ALU operation code
             o_F        : out std_logic_vector(31 downto 0);  -- 32-bit ALU result
-            o_Overflow : out std_logic;                     -- Overflow flag
-            o_Zero     : out std_logic  -- Zero flag
+            o_Overflow : out std_logic;
+            o_Zero     : out std_logic
             );
     end component;
 
@@ -146,6 +148,68 @@ architecture structure of stage_idex is
 begin
 
     ----------------------------------------------------------------------state
+
+    -- Common Stage Signal Registers
+
+    PC_reg : dffg_n                     -- place of program counter
+        generic map (32)
+        port map(i_CLK, i_RST, i_WE, i_PC, s_PC);
+
+    PCP4_reg : dffg_n                   -- output of adder, output pc+4
+        generic map (32)
+        port map(i_CLK, i_RST, i_WE, i_PCplus4, s_PCplus4);
+
+    Reg1_reg : dffg_n                   -- output of register file, output 1
+        generic map (32)
+        port map(i_CLK, i_RST, i_WE, i_Read1, o_Read1);
+
+    Reg2_reg : dffg_n                   -- output of register file, output 2
+        generic map (32)
+        port map(i_CLK, i_RST, i_WE, i_Read2, o_Read2);
+
+    ALUOperation_reg : dffg_n
+        generic map (4)
+        port map(i_CLK, i_RST, i_WE, i_ALUOp, s_ALUOp);
+
+    ALUSrc_reg : dffg_n
+        generic map (2)
+        port map(i_CLK, i_RST, i_WE, i_ALUSrc, o_ALUSrc);
+
+    Halt_reg : dffg_n
+        generic map (1)
+        port map(i_CLK, i_RST, i_WE, i_Halt, o_Halt);
+
+    SignExtend_reg : dffg_n
+        generic map (32)
+        port map(i_CLK, i_RST, i_WE, i_Extended, s_Extended);
+
+    -- "Instruction" registers
+
+    Rd_reg : dffg_n  ----- Destination write address for register file (rd)
+        generic map (5)
+        port map(i_CLK, i_RST, i_WE, si_Rd, s_Rd);
+
+    Rs_reg : dffg_n  ----- Instruction Register Source Address Buffer (rs)
+        generic map (5)
+        port map(i_CLK, i_RST, i_WE, si_Rd, s_Rs);
+
+    Rt_reg : dffg_n  ----- Instruction Register Target Address Buffer (rt)
+        generic map (5)
+        port map(i_CLK, i_RST, i_WE, si_Rt, s_Rt);
+
+    Shamt_reg : dffg_n  -- Instruction Shift Amount Register (shamt)
+        generic map (5)
+        port map(i_CLK, i_RST, i_WE, si_Shamt, s_Shamt);
+
+    Funct_reg : dffg_n  -- Instruction Function Code Buffer (funct)
+        generic map (7)
+        port map(i_CLK, i_RST, i_WE, si_Funct, s_Funct);
+
+    Imm_reg : dffg_n  ---- Instruction Immediate Value Buffer (immediate)
+        generic map (16)
+        port map(i_CLK, i_RST, i_WE, si_Imm, s_Imm);
+
+    ----------------------------------------------------------------------logic
 
     InstProc : process(s_opcode, i_Read1, s_Rt, s_Rs, s_Rd, s_Shamt, s_Funct, s_Imm)
     begin
@@ -192,78 +256,6 @@ begin
                 si_Imm   <= i_Read1(15 downto 0);
         end case;
     end process;
-
-    -- Common Stage Signal Registers [begin]
-    PC_reg : dffg_n                     -- place of program counter
-        generic map (32)
-        port map(i_CLK, i_RST, i_WE, i_PC, s_PC);
-
-    PCP4_reg : dffg_n                   -- output of adder, output pc+4
-        generic map (32)
-        port map(i_CLK, i_RST, i_WE, i_PCplus4, s_PCplus4);
-
-    Reg1_reg : dffg_n                   -- output of register file, output 1
-        generic map (32)
-        port map(i_CLK, i_RST, i_WE, i_Read1, o_Read1);
-
-    Reg2_reg : dffg_n                   -- output of register file, output 2
-        generic map (32)
-        port map(i_CLK, i_RST, i_WE, i_Read2, o_Read2);
-
-    ALUOperation_reg : dffg_n
-        generic map (4)
-        port map(i_CLK, i_RST, i_WE, i_ALUOp, s_ALUOp);
-
-    ALUSrc_reg : dffg_n
-        generic map (2)
-        port map(i_CLK, i_RST, i_WE, i_ALUSrc, o_ALUSrc);
-
-    ALUResult_reg : dffg_n
-        generic map (32)
-        port map(
-            i_CLK => i_CLK,
-            i_RST => i_RST,
-            i_WrE => i_WE,
-            i_D   => o_ALU,
-            o_Q   => o_ALU
-            );
-
-    Halt_reg : dffg_n
-        generic map (1)
-        port map(i_CLK, i_RST, i_WE, i_Halt, o_Halt);
-
-    SignExtend_reg : dffg_n
-        generic map (32)
-        port map(i_CLK, i_RST, i_WE, i_Extended, s_Extended);
-
-    -- "Instruction" registers
-
-    Rd_reg : dffg_n  ----- Destination write address for register file (rd)
-        generic map (5)
-        port map(i_CLK, i_RST, i_WE, si_Rd, s_Rd);
-
-    Rs_reg : dffg_n  ----- Instruction Register Source Address Buffer (rs)
-        generic map (5)
-        port map(i_CLK, i_RST, i_WE, si_Rd, s_Rs);
-
-    Rt_reg : dffg_n  ----- Instruction Register Target Address Buffer (rt)
-        generic map (5)
-        port map(i_CLK, i_RST, i_WE, si_Rt, s_Rt);
-
-    Shamt_reg : dffg_n  -- Instruction Shift Amount Register (shamt)
-        generic map (5)
-        port map(i_CLK, i_RST, i_WE, si_Shamt, s_Shamt);
-
-    Funct_reg : dffg_n  -- Instruction Function Code Buffer (funct)
-        generic map (7)
-        port map(i_CLK, i_RST, i_WE, si_Funct, s_Funct);
-
-    Imm_reg : dffg_n  ---- Instruction Immediate Value Buffer (immediate)
-        generic map (16)
-        port map(i_CLK, i_RST, i_WE, si_Imm, s_Imm);
-
-    ----------------------------------------------------------------------logic
-
 
     -- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
     -- MuxInputs    -> {Source} -> {Explanation}
