@@ -21,7 +21,7 @@
 --      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
 -- </header>
 
-library ieee;
+library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.MATH_REAL.all;
 use IEEE.NUMERIC_STD.all;
@@ -43,7 +43,7 @@ entity stage_idex is
         -- lw    :   0      00      01
         -- sw    :   x      00      01
         -- beq   :   x      01      00
-        i_RegDst : in std_logic;  -- Destination register from control unit.
+        i_RegDst : in std_logic;        -- Control Unit Destination Register
         i_ALUOp  : in std_logic_vector(3 downto 0);  -- ALU operation from control unit.
         i_ALUSrc : in std_logic_vector(1 downto 0);  -- ALU source from control unit.
 
