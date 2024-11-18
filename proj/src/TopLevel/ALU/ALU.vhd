@@ -13,16 +13,17 @@ use work.MIPS_Types.all;
 entity alu is
     port
         (
-            CLK        : in  std_logic;      -- Clock signal
+            CLK        : in  std_logic;                     -- Clock signal
             i_Data1    : in  std_logic_vector(31 downto 0);  -- 32-bit input data 1
             i_Data2    : in  std_logic_vector(31 downto 0);  -- 32-bit input data 2
             i_shamt    : in  std_logic_vector(4 downto 0);  -- 5-bit shift amount
             i_aluOp    : in  std_logic_vector(3 downto 0);  -- 4-bit ALU operation code
             o_F        : out std_logic_vector(31 downto 0);  -- 32-bit ALU result
-            o_Overflow : out std_logic;      -- Overflow flag
+            o_Overflow : out std_logic;                     -- Overflow flag
             o_Zero     : out std_logic  -- Zero flag
             );
 end alu;
+
 architecture structural of alu is
     component adderSubtractor is
         generic
