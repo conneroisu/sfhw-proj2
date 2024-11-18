@@ -212,23 +212,11 @@ begin
 
     ALUOperation_reg : dffg_n
         generic map (4)
-        port map(
-            i_CLK => i_CLK,
-            i_RST => i_RST,
-            i_WrE => i_WE,
-            i_D   => i_ALUOp,
-            o_Q   => s_ALUOp
-            );
+        port map(i_CLK, i_RST, i_WE, i_ALUOp, s_ALUOp);
 
     ALUSrc_reg : dffg_n
         generic map (2)
-        port map(
-            i_CLK => i_CLK,             -- Clock input
-            i_RST => i_RST,             -- Reset input
-            i_WrE => i_WE,              -- Write enable input
-            i_D   => i_ALUSrc,          -- Data value input
-            o_Q   => o_ALUSrc           -- Data value output
-            );
+        port map(i_CLK, i_RST, i_WE, i_ALUSrc, o_ALUSrc);
 
     ALUResult_reg : dffg_n
         generic map (32)
@@ -248,15 +236,11 @@ begin
         generic map (32)
         port map(i_CLK, i_RST, i_WE, i_Extended, s_Extended);
 
-    -- Instruction registers
+    -- "Instruction" registers
 
     Rd_reg : dffg_n  ----- Destination write address for register file (rd)
         generic map (5)
         port map(i_CLK, i_RST, i_WE, si_Rd, s_Rd);
-
-    Shamt_reg : dffg_n  -- Instruction Shift Amount Register (shamt)
-        generic map (5)
-        port map(i_CLK, i_RST, i_WE, si_Shamt, s_Shamt);
 
     Rs_reg : dffg_n  ----- Instruction Register Source Address Buffer (rs)
         generic map (5)
@@ -265,6 +249,10 @@ begin
     Rt_reg : dffg_n  ----- Instruction Register Target Address Buffer (rt)
         generic map (5)
         port map(i_CLK, i_RST, i_WE, si_Rt, s_Rt);
+
+    Shamt_reg : dffg_n  -- Instruction Shift Amount Register (shamt)
+        generic map (5)
+        port map(i_CLK, i_RST, i_WE, si_Shamt, s_Shamt);
 
     Funct_reg : dffg_n  -- Instruction Function Code Buffer (funct)
         generic map (7)
