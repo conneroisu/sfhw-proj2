@@ -15,3 +15,24 @@
 - [ ] TODO: Add a README.md file to each project
 - [ ] TODO: Add a LICENSE file to each project
 - [ ] TODO: Add a .gitignore file to each project
+
+## Structure
+
+```bash
+.
+├── LICENSE
+├── README.md
+├── README.png
+├── Single-Cycle-Processor
+│   ├── LICENSE
+│   ├── README.md
+│   ├── README.png
+├── Software-Scheduled-Processor
+│   ├── LICENSE
+│   ├── README.md
+│   ├── README.png
+└── Hardware-Scheduled-Processor
+    ├── LICENSE
+    ├── README.md
+    └── README.png
+```
