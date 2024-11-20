@@ -37,3 +37,5 @@ transcript
 */*/transcript
 output/
 etch*
+*.wlf
+et.log

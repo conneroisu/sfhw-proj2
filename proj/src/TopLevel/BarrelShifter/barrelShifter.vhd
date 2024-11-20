@@ -1,21 +1,14 @@
 -- <header>
--- Author(s): awfoss
+-- Author(s): Conner Ohnesorge
 -- Name: proj/src/TopLevel/BarrelShifter/barrelShifter.vhd
 -- Notes:
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> merge-damage-repair
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> merge-conflict-resolved
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> fixes
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> putting-barrel-shifter-into-its-own-toplevel-file
+--      Conner Ohnesorge 2024-11-14T08:12:11-06:00 add-barrelshifter-from-proj-1
 -- </header>
 
---Aidan Foss
---CPRE 381, Fall 2024
---ISU
---barrelShifter.vhd
---DESC: Barrel Shifter
 library IEEE;
 use IEEE.std_logic_1164.all;
 use work.MIPS_types.all;
+
 entity barrelShifter is
     generic
         (N : integer := 32);

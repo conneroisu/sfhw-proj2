@@ -1,10 +1,8 @@
 -- <header>
--- Author(s): dmvp01
+-- Author(s): Conner Ohnesorge
 -- Name: proj/src/TopLevel/ALU/ALU.vhd
 -- Notes:
---      dmvp01  <dmvp01@linuxvdi-13.ece.iastate.edu> modified-ALU-working-fine-now
---      dmvp01  <dmvp01@linuxvdi-11.ece.iastate.edu> adding-fixes-for-ALU-and-other-low-level-components
---      dmvp01  <dmvp01@linuxvdi-33.ece.iastate.edu> addind-ALU-and-required-files
+--      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
 -- </header>
 
 library IEEE;
@@ -15,16 +13,17 @@ use work.MIPS_Types.all;
 entity alu is
     port
         (
-            CLK        : in  std_logic;      -- Clock signal
+            CLK        : in  std_logic;                     -- Clock signal
             i_Data1    : in  std_logic_vector(31 downto 0);  -- 32-bit input data 1
             i_Data2    : in  std_logic_vector(31 downto 0);  -- 32-bit input data 2
             i_shamt    : in  std_logic_vector(4 downto 0);  -- 5-bit shift amount
             i_aluOp    : in  std_logic_vector(3 downto 0);  -- 4-bit ALU operation code
             o_F        : out std_logic_vector(31 downto 0);  -- 32-bit ALU result
-            o_Overflow : out std_logic;      -- Overflow flag
+            o_Overflow : out std_logic;                     -- Overflow flag
             o_Zero     : out std_logic  -- Zero flag
             );
 end alu;
+
 architecture structural of alu is
     component adderSubtractor is
         generic
@@ -180,3 +179,4 @@ begin
             o_O     => o_F              -- ALU final output
             );
 end structural;
+

@@ -2,7 +2,6 @@
 -- Author(s): Conner Ohnesorge
 -- Name: internal/headers/golden.vhd
 -- Notes:
---      conneroisu 2024-11-11T15:42:29Z Format-and-Header
 --      Conner Ohnesorge 2024-11-11T08:29:19-06:00 final-version-of-the-header-program-with-tests-and-worked-on-the-stage_idex.vhd-file
 -- </header>
 

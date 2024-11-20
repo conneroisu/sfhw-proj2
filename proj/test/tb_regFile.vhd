@@ -1,12 +1,17 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: proj/test/tb_regFile.vhd
+-- Notes:
+--      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
+-- </header>
 
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;  
+use ieee.numeric_std.all;
 
 
 entity tb_register_file is
-    generic
-        (
+    generic (
             gclk_hper : time := 50 ns
             );
 end entity tb_register_file;
@@ -73,12 +78,10 @@ begin
 
     p_clk : process is
     begin
-
         s_clk <= '0';
         wait for gclk_hper;
         s_clk <= '1';
         wait for gclk_hper;
-
     end process p_clk;
 
     -- Testbench Process
@@ -497,3 +500,4 @@ begin
     end process p_tb;
 
 end architecture behavior;
+

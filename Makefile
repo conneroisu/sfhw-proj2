@@ -1,7 +1,5 @@
-all: generate
 
-.PHONY: generate
-generate:
-	@echo "Launching questasim in test directory..."
-	cd proj/test; pwd; questasim .
-
+.PHONY: test-all
+test-all:
+	@echo "Launching all questasim tests in test directory..."
+	sh scripts/run-all.sh proj/test

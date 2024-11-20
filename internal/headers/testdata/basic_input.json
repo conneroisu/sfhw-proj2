@@ -16,5 +16,14 @@
     "timestamp": 1665732337,
     "message": "new-commit",
     "repo": "sfhw-proj2"
+  },
+  {
+    "commit": "b0f6f3a",
+    "author_name": "Conner Ohnesorge",
+    "author_email": "connero@iastate.edu",
+    "date": "2022-10-31T09:22:17-05:00",
+    "timestamp": 1665732337,
+    "message": "Format-and-Header",
+    "repo": "sfhw-proj2"
   }
 ]

@@ -1,18 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge, aidanfoss, awfoss
+-- Author(s): Conner Ohnesorge
 -- Name: proj/test/tb_barrelShifter.vhd
 -- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> added-new-adder-subtractor-and-test-bench
---      aidanfoss  <quantimaidan@gmail.com> small-edit
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> merge-damage-repair
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> merge-conflict-resolved
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> Merge-conflict-resolution-is-kicking-my-ass
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> resolving-merge-conflict-stop-updating-the-projReport-here
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> resolving-merge-conflict-stop-updating-the-projReport-here
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> fixes
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> barrelshifter-TB-changes-2
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> barrelshifter-TB-changes
---      awfoss  <awfoss@co2050-01.ece.iastate.edu> move-test-to-test-folder
+--      Conner Ohnesorge 2024-11-14T08:12:11-06:00 add-barrelshifter-from-proj-1
 -- </header>
 
 library IEEE;
@@ -217,3 +207,4 @@ begin
 
     end process;
 end behavior;
+

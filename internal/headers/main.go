@@ -89,11 +89,18 @@ func FillTemplate(
 		Notes   []string
 		Content string
 	}
+	rNotes := []string{}
+	for _, note := range notes {
+		if strings.Contains(note, igCommit) {
+			continue
+		}
+		rNotes = append(rNotes, note)
+	}
 	var builder strings.Builder
 	err := file.Execute(&builder, data{
 		Author:  strings.Join(authors, ", "),
 		Name:    name,
-		Notes:   notes,
+		Notes:   rNotes,
 		Content: content,
 	})
 	if err != nil {

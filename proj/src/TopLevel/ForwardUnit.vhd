@@ -1,3 +1,11 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: proj/src/TopLevel/ForwardUnit.vhd
+-- Notes:
+--      Conner Ohnesorge 2024-11-17T00:16:33-06:00 more-documented-and-cleaned-up-the-forwarding-unit-to-match-with-other-implementations-in-repo
+--      Conner Ohnesorge 2024-11-13T13:00:43-06:00 made-initial-structure-and-basic-logic-for-forward-unit
+-- </header>
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
@@ -6,7 +14,7 @@ entity ForwardUnit is
     port (
         i_CLK         : in  std_logic;
         i_RST         : in  std_logic;
-        forward       : in  std_logic;
+        i_forwarding  : in  std_logic;
         i_exRs        : in  std_logic_vector (4 downto 0);
         i_exRt        : in  std_logic_vector (4 downto 0);
         i_memRd       : in  std_logic_vector (4 downto 0);
@@ -21,18 +29,16 @@ entity ForwardUnit is
         );
 end ForwardUnit;
 
-
-
 architecture Behavioral of ForwardUnit is
-    signal memRegWrite: std_logic;
+    signal memRegWrite : std_logic;
 begin
 
-    process(i_exRs, i_exRt, i_memRd, i_wbRd, i_memMemRead, i_memMemWrite, i_memPCSrc, i_wbRegWrite, forward)
-        variable exRs      : unsigned(4 downto 0);
-        variable exRt      : unsigned(4 downto 0);
-        variable memRd     : unsigned(4 downto 0);
-        variable wbRd      : unsigned(4 downto 0);
-        variable memPCSrc  : std_logic_vector(1 downto 0);
+    process(i_exRs, i_exRt, i_memRd, i_wbRd, i_memMemRead, i_memMemWrite, i_memPCSrc, i_wbRegWrite, i_forwarding)
+        variable exRs     : unsigned(4 downto 0);
+        variable exRt     : unsigned(4 downto 0);
+        variable memRd    : unsigned(4 downto 0);
+        variable wbRd     : unsigned(4 downto 0);
+        variable memPCSrc : std_logic_vector(1 downto 0);
     begin
         exRs     := unsigned(i_exRs);
         exRt     := unsigned(i_exRt);
@@ -51,7 +57,7 @@ begin
             memRegWrite <= '0';
         end if;
 
-        if (forward = '1') then
+        if (i_forwarding = '1') then
             -- Forward from MEM stage
             if (memRegWrite = '1') and (memRd /= to_unsigned(0, 5)) and (memRd = exRs) then
                 o_exForwardA <= "10";
@@ -73,3 +79,4 @@ begin
     end process;
 
 end Behavioral;
+
