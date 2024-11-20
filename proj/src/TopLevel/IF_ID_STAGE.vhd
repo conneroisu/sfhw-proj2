@@ -4,11 +4,6 @@ use ieee.numeric_std.all;
 
 entity IF_ID_STAGE is
 
-    generic
-        (
-            DATA_WIDTH : natural := 32;
-            ADDR_WIDTH : natural := 32;
-        )
 	    port
         (
 		i_clk  : in std_logic;
@@ -16,22 +11,28 @@ entity IF_ID_STAGE is
 		i_flush: in std_logic;
 		i_stall: in std_logic;
 		i_sctrl: in std_logic; --sign control signal
-		i_addr : in std_logic_vector(ADDR_WIDTH downto 0);
-		i_instr: in std_logic_vector(DATA_WIDTH downto 0);
-		o_instr: out std_logic_vector(DATA_WIDTH downto 0);
-		o_addr : out std_logic_vector(ADDR_WIDTH downto 0);
-		o_d1   : out std_logic_vector(ADDR_WIDTH downto 0);
-		o_d2   : out std_logic_vector(ADDR_WIDTH downto 0);
-		--multiple outputs to make it easier to connect them to the next stage
-        )
+		i_regw : in std_logic; --register write signal
+		i_addr : in std_logic_vector(31 downto 0);
+		i_instr: in std_logic_vector(31 downto 0);
+		o_instr: out std_logic_vector(31 downto 0);
+		o_addr : out std_logic_vector(31 downto 0);
+		o_d1   : out std_logic_vector(31 downto 0);
+		o_d2   : out std_logic_vector(31 downto 0);
 
-architecture structural IF_ID_STAGE is
+
+		--multiple outputs to make it easier to connect them to the next stage
+		o_ctrl : out std_logic_vector(5 downto 0); -- bits that go to control 
+		o_ex1  : out std_logic_vector(4 downto 0); -- bits that go to ID/EX 20 downto 16
+		o_ex2  : out std_logic_vector(4 downto 0); -- bits that go to ID/EX  15 downto 11
+		o_sign : out std_logic_vector(31 downto 0));
+        
+end IF_ID_STAGE;
+architecture structure of IF_ID_STAGE is
 
 --signals
 signal s_instr: std_logic_vector(31 downto 0);
 signal s_addr: std_logic_vector(31 downto 0);
 signal s_d1, s_d2 : std_logic_vector(31 downto 0);
-signal s_addr: std_logic_vector(31 downto 0);
 
 component dffg_n is
     generic (
@@ -71,43 +72,50 @@ end component;
 begin
 
 CurrentInstruction: dffg_n 
-	generic map (DATA_WIDTH => 32)
 	port map(
 		i_clk => i_clk,
 		i_rst => i_rst,
 		i_we  => NOT i_stall,
-		i_d   => (others => '0') when i_flush = '1' else i_instr,
+		i_d   => (others => '0') when i_flush = '1' else i_instr;
 		o_q   => s_instr);
 
 NextInstruction: dffg_n 
-	generic map (DATA_WIDTH => 32)
 	port map(
 		i_clk => i_clk,
 		i_rst => i_rst,
 		i_we  => NOT i_stall,
-		i_d   => (others => '0') when i_flush = '1' else i_addr,
+		i_d   => (others => '0') when i_flush = '1' else i_addr;
 		o_q   => s_addr);
 
 RegFile0: register_file
 	port map(
 		clk   => i_clk,
 		reset => i_rst,
-		i_wC  => , -- Write enable input
+		i_wC  => i_regw, -- Write enable input
 		i_wA  => i_instr(15 downto 11), --write address
 		i_wD  => i_instr,
 		i_r1  => i_instr(25 downto 21),
 		i_r2  => i_instr(20 downto 16),
 		o_d1  => s_d1,
 		o_d2  => s_d1);
+
+
 SignExt0: extender16t32
 	port map(
 		i_I => i_instr(15 downto 0),
 		i_C => i_sctrl,
-		o_O => o_signoutput
+		o_O => o_sign
 	);
+
 
 o_d1 <= s_d1;
 o_d2 <= s_d2;
 o_instr <= s_instr;
 o_addr  <= s_addr;
-end structural;
+
+o_ctrl <= s_instr(31 downto 26);
+o_ex1  <= s_instr(20 downto 16);
+o_ex2  <= s_instr(15 downto 11);
+
+
+end structure;
