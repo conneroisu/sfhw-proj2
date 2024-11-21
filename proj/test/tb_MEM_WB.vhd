@@ -53,7 +53,7 @@ architecture Behavioral of TB_MEM_WB is
         );
 
     --clock gen
-        clk_process : process (all)
+        clk_process : process
         begin
             clk <= '0';
             wait for clk_period / 2;
@@ -61,7 +61,7 @@ architecture Behavioral of TB_MEM_WB is
             wait for clk_period / 2;
         end process;
 
-        stim_proc: process (all)
+        stim_proc: process
         begin
             --reset behavior
             reset <= '1';
