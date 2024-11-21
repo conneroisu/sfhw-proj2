@@ -1,3 +1,10 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: src_sw/proj/src/TopLevel/MIPS_Processor.vhd
+-- Notes:
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -516,3 +523,4 @@ begin
 
 
 end structure;
+

@@ -1,9 +1,8 @@
 -- <header>
 -- Author(s): Conner Ohnesorge
--- Name: internal/boilerplate_src/MIPS_types.vhd
+-- Name: src_sw/internal/boilerplate_src/MIPS_types.vhd
 -- Notes:
---      Conner Ohnesorge 2024-11-07T08:35:18-06:00 run-manual-update-to-header-program-and-run-it
---      Conner Ohnesorge 2024-10-31T09:22:17-05:00 Added-init-files
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library IEEE;

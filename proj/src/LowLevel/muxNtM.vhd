@@ -1,7 +1,10 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): Kariniux, aidanfoss, Conner Ohnesorge
 -- Name: proj/src/LowLevel/muxNtM.vhd
 -- Notes:
+--      Kariniux 2024-11-21T09:09:28-06:00 Merge-pull-request-63-from-conneroisu-New_IFIDSTAGE
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--      aidanfoss 2024-11-21T08:32:03-06:00 unused-declarations
 --      Conner Ohnesorge 2024-11-16T17:36:04-06:00 finish-setup-of-muxNtM-and-test-bench
 --      Conner Ohnesorge 2024-11-16T17:33:34-06:00 set-up-muxNtM-component-and-testbench
 --      Conner Ohnesorge 2024-11-16T17:31:19-06:00 test-new-metavalue-detection-in-muxNtM

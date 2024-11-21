@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): aidanfoss
+-- Author(s): Kariniux, aidanfoss
 -- Name: proj/src/LowLevel/invg.vhd
 -- Notes:
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
 --      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
 -- </header>
 

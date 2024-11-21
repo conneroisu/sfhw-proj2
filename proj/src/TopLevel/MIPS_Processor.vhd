@@ -1,7 +1,10 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): Kariniux, aidanfoss, Conner Ohnesorge
 -- Name: proj/src/TopLevel/MIPS_Processor.vhd
 -- Notes:
+--      Kariniux 2024-11-21T09:09:28-06:00 Merge-pull-request-63-from-conneroisu-New_IFIDSTAGE
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--      aidanfoss 2024-11-21T08:24:27-06:00 MEMWB-stage-work-added-fixed-mux-declaration
 --      Conner Ohnesorge 2024-11-07T08:35:18-06:00 run-manual-update-to-header-program-and-run-it
 --      Conner Ohnesorge 2024-10-31T09:22:46-05:00 added-initial-new-from-toolflow
 -- </header>
@@ -97,12 +100,12 @@ begin
                  data => s_DMemData,
                  we   => s_DMemWr,
                  q    => s_DMemOut);
-    --MemWB : MEM_WB --I think this entire block is instantiated wrong. Not sure entirely what this definition is doing here. Apologies
-    --    generic map(ADDR_WIDTH => ADDR_WIDTH,
-    --                DATA_WIDTH => N)
-    --    port map(clk => clk,
-    --             addr =>
-    --    )
+--MemWB : MEM_WB --I think this entire block is instantiated wrong. Not sure entirely what this definition is doing here. Apologies
+--    generic map(ADDR_WIDTH => ADDR_WIDTH,
+--                DATA_WIDTH => N)
+--    port map(clk => clk,
+--             addr =>
+--    )
 -- TODO: Ensure that s_Halt is connected to an output control signal produced from decoding the Halt instruction (Opcode: 01 0100)
 -- TODO: Ensure that s_Ovfl is connected to the overflow output of your ALU
 -- TODO: Implement the rest of your processor below this comment! 

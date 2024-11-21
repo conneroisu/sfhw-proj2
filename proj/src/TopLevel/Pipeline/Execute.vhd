@@ -1,24 +1,12 @@
 -- <header>
--- Author(s): Conner Ohnesorge
--- Name: proj/src/TopLevel/Stages/stage_idex.vhd
+-- Author(s): Kariniux, Conner Ohnesorge
+-- Name: proj/src/TopLevel/Pipeline/Execute.vhd
 -- Notes:
---      Conner Ohnesorge 2024-11-17T00:21:41-06:00 added-entity-input-output-comments-and-fixed-a-typo-in-name-for-shamt-input
---      Conner Ohnesorge 2024-11-16T21:01:26-06:00 fix-run-all.sh-script-to-cd-into-the-directory-first
---      Conner Ohnesorge 2024-11-16T18:27:04-06:00 fix-port-widths-and-stage-register-names
---      Conner Ohnesorge 2024-11-16T18:23:26-06:00 fix-new-control-signal-width-for-aluOp
---      Conner Ohnesorge 2024-11-16T17:56:46-06:00 format-stage_idex.vhd-after-adding-generic-mux
---      Conner Ohnesorge 2024-11-16T17:56:24-06:00 update-the-stage_idex.vhd-to-use-the-new-muxNtM-component-structure
---      connero 2024-11-16T17:22:38-06:00 Merge-branch-main-into-component-forward-unit
---      Conner Ohnesorge 2024-11-16T17:13:40-06:00 update-to-latest-implementation-of-muxNtM
---      Conner Ohnesorge 2024-11-13T12:27:08-06:00 removed-unused-vhdl_ls.toml-put-it-in-HOME-and-further-simplified-the-stage_idex.vhd-file-by-removing-the-unnecessary-signals-and-signals-that-were-not-being-used-specifically-the-signals-that-were-being-used-in-the-future-stages
---      Conner Ohnesorge 2024-11-13T12:20:08-06:00 updated-configurations-for-lsp-and-firther-simplified-stage_idex
---      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
---      Conner Ohnesorge 2024-11-11T14:08:03-06:00 added-generic-mux-muxNtM
---      Conner Ohnesorge 2024-11-11T10:14:52-06:00 added-forwarding-signals-to-stage_idex
---      Conner Ohnesorge 2024-11-11T09:04:24-06:00 remove-extraneous-semicolons-in-initial-declaration
---      Conner Ohnesorge 2024-11-11T09:03:17-06:00 added-stage-guide-and-finished-stage_idex-without-component-instantiations
---      Conner Ohnesorge 2024-11-11T08:29:19-06:00 final-version-of-the-header-program-with-tests-and-worked-on-the-stage_idex.vhd-file
---      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
+--      Kariniux 2024-11-21T09:09:28-06:00 Merge-pull-request-63-from-conneroisu-New_IFIDSTAGE
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--      Conner Ohnesorge 2024-11-21T08:20:09-06:00 remove-commented-out-input-for-idex_regRdmux
+--      Conner Ohnesorge 2024-11-21T08:17:52-06:00 Removed-instruction-slicing-from-the-id-ex-stage-of-the-pipeline
+--      Conner Ohnesorge 2024-11-18T14:18:35-06:00 renamed-the-tb_stage_idex-to-Execute-and-added-neccesssary-comments-to
 -- </header>
 
 library IEEE;
@@ -146,12 +134,12 @@ architecture structure of Execute is
     signal s_PCplus4     : std_logic_vector(31 downto 0);
     signal s_Extended    : std_logic_vector(31 downto 0);
 
-    signal s_Shamt  : std_logic_vector(4 downto 0);
-    signal s_Rs     : std_logic_vector(4 downto 0);
-    signal s_Rt     : std_logic_vector(4 downto 0);
-    signal s_Rd     : std_logic_vector(4 downto 0);
-    signal s_Imm    : std_logic_vector(15 downto 0);
-    signal s_Funct  : std_logic_vector(5 downto 0);
+    signal s_Shamt : std_logic_vector(4 downto 0);
+    signal s_Rs    : std_logic_vector(4 downto 0);
+    signal s_Rt    : std_logic_vector(4 downto 0);
+    signal s_Rd    : std_logic_vector(4 downto 0);
+    signal s_Imm   : std_logic_vector(15 downto 0);
+    signal s_Funct : std_logic_vector(5 downto 0);
 begin
 
     ----------------------------------------------------------------------state
@@ -313,3 +301,4 @@ begin
         );
 
 end structure;
+

@@ -1,7 +1,9 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): Kariniux, Conner Ohnesorge
 -- Name: proj/test/tb_regFile.vhd
 -- Notes:
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--      Conner Ohnesorge 2024-11-18T14:18:35-06:00 renamed-the-tb_stage_idex-to-Execute-and-added-neccesssary-comments-to
 --      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
 -- </header>
 
@@ -12,8 +14,8 @@ use ieee.numeric_std.all;
 
 entity tb_register_file is
     generic (
-            gclk_hper : time := 50 ns
-            );
+        gclk_hper : time := 50 ns
+        );
 end entity tb_register_file;
 
 -- Testbench Architecture

@@ -1,3 +1,10 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: src_sw/proj/src/TopLevel/Buffers/IF_ID_Reg.vhd
+-- Notes:
+--      Conner Ohnesorge 2024-11-21T09:20:04-06:00 added-buffers-for-sf-pipeline
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -28,3 +35,4 @@ begin
     Inst_reg : reg port map (i_CLK, i_RST, '1', i_Inst, o_Inst);
 
 end structural;
+

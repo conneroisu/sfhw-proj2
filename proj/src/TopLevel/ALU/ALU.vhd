@@ -1,8 +1,11 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): Conner Ohnesorge, Kariniux
 -- Name: proj/src/TopLevel/ALU/ALU.vhd
 -- Notes:
---      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
+--	Conner Ohnesorge 2024-11-21T10:25:45-06:00 remove-unused-declarations-from-the-ALU
+--	Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--	Conner Ohnesorge 2024-11-18T10:09:46-06:00 fix-spacing-in-alu.vhd
+--	Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
 -- </header>
 
 library IEEE;

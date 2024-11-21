@@ -1,8 +1,8 @@
 -- <header>
 -- Author(s): Conner Ohnesorge
--- Name: internal/headers/golden.vhd
+-- Name: src_sw/internal/headers/golden.vhd
 -- Notes:
---      Conner Ohnesorge 2024-11-11T08:29:19-06:00 final-version-of-the-header-program-with-tests-and-worked-on-the-stage_idex.vhd-file
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library ieee;
