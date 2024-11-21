@@ -56,11 +56,15 @@ begin
 
         if (i_forwarding = '1') then
             -- Forward from MEM stage
-            if (memRegWrite = '1') and (memRd /= to_unsigned(0, 5)) and (memRd = exRs) then
+            if (memRegWrite = '1')
+                and (memRd /= to_unsigned(0, 5))
+                and (memRd = exRs) then
                 o_exForwardA <= "10";
             end if;
 
-            if (memRegWrite = '1') and (memRd /= to_unsigned(0, 5)) and (memRd = exRt) then
+            if (memRegWrite = '1')
+                and (memRd /= to_unsigned(0, 5))
+                and (memRd = exRt) then
                 o_exForwardB <= "10";
             end if;
 

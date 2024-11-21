@@ -8,6 +8,6 @@ vcom -2008 -work work ../src/TopLevel/ALU/*.vhd
 
 vcom -2008 -work work $file
 
-vsim -voptargs=+acc $target
+vsim -voptargs=+acc -debugDB $target
 add wave -position insertpoint \ ../$target/*
 run 1120
