@@ -51,17 +51,6 @@ architecture structural of alu is
                 o_O           : out std_logic_vector(N - 1 downto 0)  -- shifted output
                 );
     end component;
-    component mux2t1_N is
-        generic
-            (N : integer := 16);
-        port
-            (
-                i_S  : in  std_logic;
-                i_D0 : in  std_logic_vector(31 downto 0);
-                i_D1 : in  std_logic_vector(31 downto 0);
-                o_O  : out std_logic_vector(31 downto 0)
-                );
-    end component;
     component andg32 is
         port
             (
