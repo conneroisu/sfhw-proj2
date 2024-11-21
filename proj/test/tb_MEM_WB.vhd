@@ -18,33 +18,31 @@ end TB_MEM_WB;
 
 architecture Behavioral of TB_MEM_WB is
     component MEM_WB
-        port (
-            clk   : in std_logic;
-            reset : in std_logic;
-
-            i_ALUResult : in std_logic_vector(31 downto 0);  -- ALU result to WB
-            i_DataMem   : in std_logic_vector(31 downto 0);
-            i_RegDst    : in std_logic_vector(4 downto 0);  -- Destination register number to Register File
-            i_RegWrite  : in std_logic;
-            i_MemToReg  : in std_logic;
-
-            o_regDst   : out std_logic_vector(4 downto 0);  -- Destination reguster number to register file
-            o_regWrite : out std_logic;
-            o_wbData   : out std_logic_vector(31 downto 0)
-            );
+    port (
+        clk        : in std_logic;
+        reset      : in std_logic;
+        i_ALUResult : in std_logic_vector(31 downto 0);  -- ALU result to WB
+        i_DataMem   : in std_logic_vector(31 downto 0);  -- Data from memory
+        i_RegDst    : in std_logic_vector(4 downto 0);   -- Destination register number
+        i_RegWrite  : in std_logic;
+        i_MemToReg  : in std_logic;                     -- MUX select signal
+        o_regDst    : out std_logic_vector(4 downto 0); -- Destination register output
+        o_regWrite  : out std_logic;                    -- Write enable output
+        o_wbData    : out std_logic_vector(31 downto 0) -- Data to write back
+    );
     end component;
     signal clk   : std_logic := '0';
     signal reset : std_logic := '0';
 
-    signal i_ALUResult : std_logic_vector(31 downto 0);  -- ALU result to WB
-    signal i_DataMem   : std_logic_vector(31 downto 0);
-    signal i_MemToReg  : std_logic;
-    signal i_RegDst    : std_logic_vector(4 downto 0);  -- Destination register number to Register File
-    signal i_RegWrite  : std_logic;
+    signal si_ALUResult : std_logic_vector(31 downto 0);  -- ALU result to WB
+    signal si_DataMem   : std_logic_vector(31 downto 0);
+    signal si_MemToReg  : std_logic;
+    signal si_RegDst    : std_logic_vector(4 downto 0);  -- Destination register number to Register File
+    signal si_RegWrite  : std_logic;
 
-    signal o_regDst   : std_logic_vector(4 downto 0);  -- Destination reguster number to register file
-    signal o_regWrite : std_logic;
-    signal o_wbData   : std_logic_vector(31 downto 0);
+    signal so_regDst   : std_logic_vector(4 downto 0);  -- Destination reguster number to register file
+    signal so_regWrite : std_logic;
+    signal so_wbData   : std_logic_vector(31 downto 0);
 
     constant clk_period : time := 50 ns;
 
@@ -52,14 +50,14 @@ begin
     uut : MEM_WB port map(
         clk         => clk,
         reset       => reset,
-        i_ALUResult => i_ALUResult,
-        i_DataMem   => i_DataMem,
-        i_RegDst    => i_RegDst,
-        i_RegWrite  => i_RegWrite,
-        i_MemToReg  => i_MemToReg,
-        o_regDst    => o_regDst,
-        o_regWrite  => o_regWrite,
-        o_wbData    => o_wbData
+        i_ALUResult => si_ALUResult,
+        i_DataMem   => si_DataMem,
+        i_RegDst    => si_RegDst,
+        i_RegWrite  => si_RegWrite,
+        i_MemToReg  => si_MemToReg,
+        o_regDst    => so_regDst,
+        o_regWrite  => so_regWrite,
+        o_wbData    => so_wbData
         );
 
     --clock gen
@@ -79,46 +77,49 @@ begin
         reset <= '0';
         wait for clk_period;
 
-        --apply null value to alu result and legitimate value from memory, and mux to grab the memory value
-        i_ALUResult <= X"AAAAAAAA";
-        i_DataMem   <= X"00000010";
-        i_MemToReg  <= '1';
-        i_RegDst    <= "00001";
-        i_RegWrite  <= '1';
+        --Test 1: Select Data Memory Value (i_MemToReg = 1)
+        si_ALUResult <= X"AAAAAAAA";
+        si_DataMem   <= X"00000010";
+        si_MemToReg  <= '1';
+        si_RegDst    <= "00001";
+        si_RegWrite  <= '1';
         wait for clk_period;
-
         --assert values
+        assert so_wbData = X"00000010" report "o_wbData    mismatch on test 1";
+        assert si_MemToReg = '1' report "i_MemToReg  mismatch on test 1";
+        assert si_RegDst = "00001" report "i_RegDst    mismatch on test 1";
+        assert si_RegWrite = '1' report "i_RegWrite  mismatch on test 1";
 
-        assert o_wbData = X"00000010" report "o_wbData    mismatch on test 1";
-        assert i_MemToReg = '1' report "i_MemToReg  mismatch on test 1";
-        assert i_RegDst = "00001" report "i_RegDst    mismatch on test 1";
-        assert i_RegWrite = '1' report "i_RegWrite  mismatch on test 1";
 
 
-        --apply null to mem and legitimate value from alu, mux to grab alu result
-        i_ALUResult <= X"00000010";
-        i_DataMem   <= X"AAAAAAAA";
-        i_MemToReg  <= '0';
-        i_RegDst    <= "00010";
-        i_RegWrite  <= '1';
+        --Test 2: Select Data Memory Value (i_MemToReg = 0)
+        si_ALUResult <= X"00000010";
+        si_DataMem   <= X"AAAAAAAA";
+        si_MemToReg  <= '0';
+        si_RegDst    <= "00010";
+        si_RegWrite  <= '1';
         wait for clk_period;
-
         --assert values
-        assert o_wbData = X"00000010" report "o_wbData    mismatch on test 2";
-        assert i_MemToReg = '1' report "i_MemToReg  mismatch on test 2";
-        assert i_RegDst = "00010" report "i_RegDst    mismatch on test 2";
-        assert i_RegWrite = '1' report "i_RegWrite  mismatch on test 2";
+        assert so_wbData = X"00000010" report "o_wbData    mismatch on test 2";
+        assert si_MemToReg = '0' report "i_MemToReg  mismatch on test 2";
+        assert si_RegDst = "00010" report "i_RegDst    mismatch on test 2";
+        assert si_RegWrite = '1' report "i_RegWrite  mismatch on test 2";
 
-        --check to see if regwrite and regdst are properly passed
-        i_ALUResult <= X"00000000";
-        i_DataMem   <= X"00000000";
-        i_RegDst    <= "00011";
-        i_RegWrite  <= '0';
+
+
+        --Test 3: Final Test Passthrough Values (i_RegWrite = 0)
+        si_ALUResult <= X"00000000";
+        si_DataMem   <= X"00000000";
+        si_RegDst    <= "00011";
+        si_RegWrite  <= '0';
         wait for clk_period;
-
         --assert values
-        assert i_RegDst = "00011" report "i_RegDst    mismatch on test 3";
-        assert i_RegWrite = '0' report "i_RegWrite  mismatch on test 3";
+        assert si_RegDst = "00011" report "i_RegDst    mismatch on test 3";
+        assert si_RegWrite = '0' report "i_RegWrite  mismatch on test 3";
+	
+
+	--end test
+	wait;
     end process;
 end Behavioral;
 
