@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): Kariniux, Conner Ohnesorge
 -- Name: proj/src/TopLevel/RegisterFile.vhd
 -- Notes:
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
 --      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
 -- </header>
 

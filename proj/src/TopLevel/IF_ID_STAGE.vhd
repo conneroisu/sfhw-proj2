@@ -2,6 +2,9 @@
 -- Author(s): Kariniux
 -- Name: proj/src/TopLevel/IF_ID_STAGE.vhd
 -- Notes:
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--      Kariniux 2024-11-19T18:52:49-06:00 Merge-branch-main-into-New_IFIDSTAGE
+--      Kariniux 2024-11-19T18:51:24-06:00 Updates-to-IF-ID
 --      Kariniux 2024-11-14T09:50:52-06:00 Merge-branch-main-into-IF-ID
 --      Kariniux 2024-11-14T09:46:15-06:00 updates-to-the-IF-ID-stage.-still-not-complete
 --      Kariniux 2024-11-14T08:17:43-06:00 IF_ID-stage
@@ -13,7 +16,7 @@ use ieee.numeric_std.all;
 
 entity IF_ID_STAGE is
 
-	    port
+    port
         (
 		i_clk  : in std_logic;
 		i_rst  : in std_logic;
@@ -66,13 +69,41 @@ component register_file is
             );
 end component;
 
-component extender16t32 is
-    port(
-        i_I : in  std_logic_vector(15 downto 0);      -- 16 bit immediate
-        i_C : in  std_logic;            -- signed extender or unsigned
-        o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended immediate
-        );
-end component;
+
+    component dffg_n is
+        generic (
+            n : integer := 32
+            );
+        port (
+            i_clk : in  std_logic;      -- Clock Input
+            i_rst : in  std_logic;      -- Reset Input
+            i_we  : in  std_logic;      -- Write Enable Input
+            i_d   : in  std_logic_vector(n - 1 downto 0);  -- Data Value input
+            o_q   : out std_logic_vector(n - 1 downto 0)   -- Data Value output
+            );
+    end component;
+
+    component register_file is
+        port
+            (clk   : in  std_logic;     -- Clock input
+             i_wA  : in  std_logic_vector(4 downto 0);  -- Write address input
+             i_wD  : in  std_logic_vector(31 downto 0);  -- Write data input
+             i_wC  : in  std_logic;     -- Write enable input
+             i_r1  : in  std_logic_vector(4 downto 0);  -- Read address 1 input
+             i_r2  : in  std_logic_vector(4 downto 0);  -- Read address 2 input
+             reset : in  std_logic;     -- Reset input
+             o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
+             o_d2  : out std_logic_vector(31 downto 0)  -- Read data 2 output
+             );
+    end component;
+
+    component extender16t32 is
+        port(
+            i_I : in  std_logic_vector(15 downto 0);  -- 16 bit immediate
+            i_C : in  std_logic;        -- signed extender or unsigned
+            o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended immediate
+            );
+    end component;
 
 
 --signals
@@ -99,9 +130,10 @@ end component;
 begin
 
 
-	    ----------------------------------------------------------------------logic
+    ----------------------------------------------------------------------logic
 
 		InstProc : process(s_opcode, i_instr, s_Rt, s_Rs, s_Rd, s_Shamt, s_Funct, s_Imm)
+
     begin
         s_opcode <= i_instr(31 downto 26);
         case s_opcode is
@@ -194,9 +226,11 @@ o_d2 <= s_d2;
 --o_instr <= s_instr;
 --o_addr  <= s_addr;
 
+
 --o_ctrl <= s_instr(31 downto 26);
 --o_ex1  <= s_instr(20 downto 16);
 --o_ex2  <= s_instr(15 downto 11);
 
 
 end structure;
+

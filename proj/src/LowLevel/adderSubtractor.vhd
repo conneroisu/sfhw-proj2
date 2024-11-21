@@ -1,7 +1,10 @@
 -- <header>
--- Author(s): Conner Ohnesorge, aidanfoss
+-- Author(s): Kariniux, aidanfoss, Conner Ohnesorge
 -- Name: proj/src/LowLevel/adderSubtractor.vhd
 -- Notes:
+--      Kariniux 2024-11-21T09:09:28-06:00 Merge-pull-request-63-from-conneroisu-New_IFIDSTAGE
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--      aidanfoss 2024-11-21T08:32:03-06:00 unused-declarations
 --      connero 2024-11-11T09:11:16-06:00 Merge-branch-main-into-component-forward-unit
 --      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
 --      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
@@ -57,26 +60,26 @@ architecture structural of adderSubtractor is
     -- Two negative numbers are added and an answer comes positive or 
     -- Two positive numbers are added and an answer comes as negative. 
 -- used for overflow detection (if carry value into MSB doesn't match the carry out value, then overflow occured)
-    component xorg2 is
-        port (i_a : in  std_logic;
-              i_b : in  std_logic;
-              o_f : out std_logic
-              );
-    end component;
+    --component xorg2 is
+    --    port (i_a : in  std_logic;
+    --          i_b : in  std_logic;
+    --          o_f : out std_logic
+    --          );
+    --end component;
     component andg2 is
         port (i_a : in  std_logic;
               i_b : in  std_logic;
               o_f : out std_logic
               );
     end component;
-    component mux2t1 is
-        port (
-            i_s  : in  std_logic;       -- selector
-            i_d0 : in  std_logic;       -- data inputs
-            i_d1 : in  std_logic;       -- data inputs
-            o_o  : out std_logic        -- output
-            );
-    end component;
+    --component mux2t1 is
+    --    port (
+    --        i_s  : in  std_logic;       -- selector
+    --        i_d0 : in  std_logic;       -- data inputs
+    --        i_d1 : in  std_logic;       -- data inputs
+    --        o_o  : out std_logic        -- output
+    --        );
+    --end component;
     signal s_overflow     : std_logic;
     signal c              : std_logic_vector(n downto 0);      -- Carry
     signal s1, s2, s3, s4 : std_logic_vector(n - 1 downto 0);  -- Signals for the 2nd input and the output of the 2nd input.

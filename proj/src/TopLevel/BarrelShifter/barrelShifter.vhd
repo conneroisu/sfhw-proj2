@@ -1,7 +1,9 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): Kariniux, Conner Ohnesorge
 -- Name: proj/src/TopLevel/BarrelShifter/barrelShifter.vhd
 -- Notes:
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--      Conner Ohnesorge 2024-11-18T10:07:32-06:00 rename-stages-to-pipeline-remove-back-up-file-and-add-space-for
 --      Conner Ohnesorge 2024-11-14T08:12:11-06:00 add-barrelshifter-from-proj-1
 -- </header>
 
@@ -164,3 +166,4 @@ begin
             o_O  => o_O                 --final output
             );
 end structure;
+

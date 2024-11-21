@@ -1,7 +1,11 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): Conner Ohnesorge, Kariniux
 -- Name: proj/src/TopLevel/ForwardUnit.vhd
 -- Notes:
+--      Conner Ohnesorge 2024-11-21T10:20:49-06:00 added-HazardUnit-and-Updated-testbench-for-the-Units-Execute
+--      Conner Ohnesorge 2024-11-21T09:23:44-06:00 remove-unused-signals-from-forwardunit-and-formatted-better
+--      Conner Ohnesorge 2024-11-21T09:20:04-06:00 added-buffers-for-sf-pipeline
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
 --      Conner Ohnesorge 2024-11-17T00:16:33-06:00 more-documented-and-cleaned-up-the-forwarding-unit-to-match-with-other-implementations-in-repo
 --      Conner Ohnesorge 2024-11-13T13:00:43-06:00 made-initial-structure-and-basic-logic-for-forward-unit
 -- </header>
@@ -12,8 +16,6 @@ use IEEE.NUMERIC_STD.all;
 
 entity ForwardUnit is
     port (
-        i_CLK         : in  std_logic;
-        i_RST         : in  std_logic;
         i_forwarding  : in  std_logic;
         i_exRs        : in  std_logic_vector (4 downto 0);
         i_exRt        : in  std_logic_vector (4 downto 0);
@@ -23,7 +25,6 @@ entity ForwardUnit is
         i_memMemWrite : in  std_logic_vector (4 downto 0);
         i_memPCSrc    : in  std_logic_vector (1 downto 0);
         i_wbRegWrite  : in  std_logic_vector (4 downto 0);
-        i_wbMemToReg  : in  std_logic_vector (4 downto 0);
         o_exForwardA  : out std_logic_vector (1 downto 0);  -- forwarding 1st mux signal to EX stage
         o_exForwardB  : out std_logic_vector (1 downto 0)  -- forwarding 2nd mux signal to EX stage
         );
@@ -59,20 +60,34 @@ begin
 
         if (i_forwarding = '1') then
             -- Forward from MEM stage
-            if (memRegWrite = '1') and (memRd /= to_unsigned(0, 5)) and (memRd = exRs) then
+            if (memRegWrite = '1')
+                and (memRd /= to_unsigned(0, 5))
+                and (memRd = exRs) then
                 o_exForwardA <= "10";
             end if;
 
-            if (memRegWrite = '1') and (memRd /= to_unsigned(0, 5)) and (memRd = exRt) then
+            if (memRegWrite = '1')
+                and (memRd /= to_unsigned(0, 5))
+                and (memRd = exRt) then
                 o_exForwardB <= "10";
             end if;
 
             -- Forward from WB stage
-            if (i_wbRegWrite = "1") and (wbRd /= to_unsigned(0, 5)) and not ((memRegWrite = '1') and (memRd /= to_unsigned(0, 5)) and (memRd = exRs)) and (wbRd = exRs) then
+            if (i_wbRegWrite = "1")
+                and (wbRd /= to_unsigned(0, 5))
+                and not ((memRegWrite = '1')
+                         and (memRd /= to_unsigned(0, 5))
+                         and (memRd = exRs))
+                and (wbRd = exRs) then
                 o_exForwardA <= "01";
             end if;
 
-            if (i_wbRegWrite = "1") and (wbRd /= to_unsigned(0, 5)) and not ((memRegWrite = '1') and (memRd /= to_unsigned(0, 5)) and (memRd = exRt)) and (wbRd = exRt) then
+            if (i_wbRegWrite = "1")
+                and (wbRd /= to_unsigned(0, 5))
+                and not ((memRegWrite = '1')
+                         and (memRd /= to_unsigned(0, 5))
+                         and (memRd = exRt))
+                and (wbRd = exRt) then
                 o_exForwardB <= "01";
             end if;
         end if;
