@@ -35,7 +35,7 @@ architecture behavioral of MEM_WB is
     signal RegWrite_reg  : std_logic;     
     signal MemToReg_reg  : std_logic;
 begin
-    process(clk, reset)
+    process(all)
     begin
         if reset = '1' then
             --reset all registers to 0 if reset is high
@@ -49,7 +49,11 @@ begin
             DataMemReg  <= i_DataMem;
             RegDstReg   <= i_RegDst;
             RegWrite_reg <= i_RegWrite;
-            --MemToReg_reg <= i_MemToReg; this should be the muxed value
+            MemToReg_reg <= i_MemToReg; --this should be the muxed value
+
+            -- Update output signals
+            o_regDst <= RegDstReg;
+            o_regWrite <= RegWrite_reg;
         end if;
     end process;
 

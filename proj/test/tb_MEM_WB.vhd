@@ -89,23 +89,25 @@ architecture Behavioral of TB_MEM_WB is
             i_ALUResult <= X"00000010";
             i_DataMem   <= X"AAAAAAAA";
             i_MemToReg  <= '0';
-            i_RegDst    <= "00001";
+            i_RegDst    <= "00010";
             i_RegWrite  <= '1';
             wait for clk_period;
 
             --assert values
             assert o_wbData = X"00000010"       report "o_wbData    mismatch on test 2";       
             assert i_MemToReg  = '1'            report "i_MemToReg  mismatch on test 2";
-            assert i_RegDst    = "00001"        report "i_RegDst    mismatch on test 2";
+            assert i_RegDst    = "00010"        report "i_RegDst    mismatch on test 2";
             assert i_RegWrite  = '1'            report "i_RegWrite  mismatch on test 2";
 
             --check to see if regwrite and regdst are properly passed
-            i_RegDst    <= "00100";
+            i_ALUResult <= X"00000000";
+            i_DataMem   <= X"00000000";
+            i_RegDst    <= "00011";
             i_RegWrite  <= '0';
             wait for clk_period;
         
             --assert values
-            assert i_RegDst    = "00100"        report "i_RegDst    mismatch on test 3";
+            assert i_RegDst    = "00011"        report "i_RegDst    mismatch on test 3";
             assert i_RegWrite  = '0'            report "i_RegWrite  mismatch on test 3";
         end process;
 end Behavioral;
