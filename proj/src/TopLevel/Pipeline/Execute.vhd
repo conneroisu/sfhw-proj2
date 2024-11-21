@@ -290,7 +290,6 @@ begin
             DATA_WIDTH  => 5
             )
         port map (
-            -- inputs => i_Read1 & i_Read2 & i_WriteData & i_DMem1,
             inputs => s_Rt & s_Rd,
             Sel(0) => i_RegDst,
             output => s_Rd
