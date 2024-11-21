@@ -20,6 +20,7 @@ package MIPS_types is
     -- 2D array type. 
     type twodarray is array (31 downto 0) of std_logic_vector(31 downto 0);
     type array_16x32 is array (15 downto 0) of std_logic_vector(31 downto 0);
+    type bus_array is array (natural range <>) of std_logic_vector;
     function bit_reverse(s1 : std_logic_vector) return std_logic_vector;
 end package MIPS_types;
 package body MIPS_types is

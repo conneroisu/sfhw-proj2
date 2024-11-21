@@ -29,7 +29,7 @@ package MIPS_types is
     end record control_t;
 
     -- 2D array type. 
-    type twodarray is array (31 downto 0) of std_logic_vector(31 downto 0);  --TODO rename this to array_32x32
+    type twodarray is array (31 downto 0) of std_logic_vector(31 downto 0);  
 
     type array_16x32 is array (15 downto 0) of std_logic_vector(31 downto 0);
 
