@@ -20,7 +20,7 @@ end extender8t32;
 
 architecture dataflow of extender8t32 is
     signal ext_bit  : std_logic;                      -- sign extension bit
-    signal extended : std_logic_vector(31 downto 0);  -- extended immediate
+    --signal extended : std_logic_vector(31 downto 0);  -- extended immediate
 begin
 
     o_O(7 downto 0) <= i_I(7 downto 0);  --copy bits we already have

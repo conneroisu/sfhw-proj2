@@ -30,7 +30,7 @@ entity muxNtM is
 end muxNtM;
 
 architecture Behavioral of muxNtM is
-    constant SEL_WIDTH : integer := integer(ceil(log2(real(INPUT_COUNT))));
+    --constant SEL_WIDTH : integer := integer(ceil(log2(real(INPUT_COUNT))));
 
     -- Function to check if vector contains any metavalues
     function has_metavalue(vec : std_logic_vector) return boolean is

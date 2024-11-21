@@ -18,7 +18,7 @@ entity extender16t32 is
 end extender16t32;
 architecture dataflow of extender16t32 is
     signal ext_bit  : std_logic;        -- sign extension bit
-    signal extended : std_logic_vector(31 downto 0);  -- extended immediate
+    --signal extended : std_logic_vector(31 downto 0);  -- extended immediate
 begin
     o_O(15 downto 0) <= i_I(15 downto 0);        --copy bits we already have
     with i_C select  --determined if signed extension or unsigned

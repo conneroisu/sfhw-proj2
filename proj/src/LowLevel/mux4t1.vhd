@@ -32,7 +32,7 @@ architecture structural of mux4t1 is
             );
     end component;
 
-    signal temp_o : std_logic;
+    --signal temp_o : std_logic;
     signal s_1    : std_logic;
     signal s_2    : std_logic;
 
