@@ -29,6 +29,8 @@ package MIPS_types is
     type twodarray is array (31 downto 0) of std_logic_vector(31 downto 0);  --TODO rename this to array_32x32
 
     type array_16x32 is array (15 downto 0) of std_logic_vector(31 downto 0);
+    
+    type bus_array is array (natural range <>) of std_logic_vector;
 
     function bit_reverse(s1 : std_logic_vector) return std_logic_vector;
     --It reverses the bits of std_logic_vector
@@ -50,4 +52,3 @@ package body MIPS_types is
     end bit_reverse;
 
 end package body MIPS_types;
-
