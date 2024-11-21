@@ -84,6 +84,13 @@ entity Execute is
         --= Forwarding Signals (sent to Forward Unit) [begin]
         i_WriteData  : in  std_logic_vector(N-1 downto 0);  -- Data from the end of writeback stage's mux
         i_DMem1      : in  std_logic_vector(N-1 downto 0);  -- Data from the first input to the DMem output of ex/mem
+        --= Instruction Signals [begin]
+        i_Rs         : in  std_logic_vector(4 downto 0);
+        i_Rt         : in  std_logic_vector(4 downto 0);
+        i_Rd         : in  std_logic_vector(4 downto 0);
+        i_Shamt      : in  std_logic_vector(4 downto 0);
+        i_Funct      : in  std_logic_vector(5 downto 0);
+        i_Imm        : in  std_logic_vector(15 downto 0);
         -- Halt signals
         i_Halt       : in  std_logic_vector(0 downto 0);
         o_Halt       : out std_logic_vector(0 downto 0)
@@ -139,19 +146,12 @@ architecture structure of Execute is
     signal s_PCplus4     : std_logic_vector(31 downto 0);
     signal s_Extended    : std_logic_vector(31 downto 0);
 
-    signal s_opcode : std_logic_vector(5 downto 0);
     signal s_Shamt  : std_logic_vector(4 downto 0);
-    signal si_Shamt : std_logic_vector(4 downto 0);
     signal s_Rs     : std_logic_vector(4 downto 0);
-    signal si_Rs    : std_logic_vector(4 downto 0);
     signal s_Rt     : std_logic_vector(4 downto 0);
-    signal si_Rt    : std_logic_vector(4 downto 0);
     signal s_Rd     : std_logic_vector(4 downto 0);
-    signal si_Rd    : std_logic_vector(4 downto 0);
     signal s_Imm    : std_logic_vector(15 downto 0);
-    signal si_Imm   : std_logic_vector(15 downto 0);
     signal s_Funct  : std_logic_vector(5 downto 0);
-    signal si_Funct : std_logic_vector(5 downto 0);
 begin
 
     ----------------------------------------------------------------------state
@@ -194,27 +194,27 @@ begin
 
     Rd_reg : dffg_n  ----- Destination write address for register file (rd)
         generic map (5)
-        port map(i_CLK, i_RST, i_WE, si_Rd, s_Rd);
+        port map(i_CLK, i_RST, i_WE, i_Rd, s_Rd);
 
     Rs_reg : dffg_n  ----- Instruction Register Source Address Buffer (rs)
         generic map (5)
-        port map(i_CLK, i_RST, i_WE, si_Rs, s_Rs);
+        port map(i_CLK, i_RST, i_WE, i_Rs, s_Rs);
 
     Rt_reg : dffg_n  ----- Instruction Register Target Address Buffer (rt)
         generic map (5)
-        port map(i_CLK, i_RST, i_WE, si_Rt, s_Rt);
+        port map(i_CLK, i_RST, i_WE, i_Rt, s_Rt);
 
     Shamt_reg : dffg_n  -- Instruction Shift Amount Register (shamt)
         generic map (5)
-        port map(i_CLK, i_RST, i_WE, si_Shamt, s_Shamt);
+        port map(i_CLK, i_RST, i_WE, i_Shamt, s_Shamt);
 
     Funct_reg : dffg_n  -- Instruction Function Code Buffer (funct)
         generic map (6)
-        port map(i_CLK, i_RST, i_WE, si_Funct, s_Funct);
+        port map(i_CLK, i_RST, i_WE, i_Funct, s_Funct);
 
     Imm_reg : dffg_n  ---- Instruction Immediate Value Buffer (immediate)
         generic map (16)
-        port map(i_CLK, i_RST, i_WE, si_Imm, s_Imm);
+        port map(i_CLK, i_RST, i_WE, i_Imm, s_Imm);
 
     MemRead_reg : dffg_n
         generic map (1)
@@ -252,52 +252,6 @@ begin
                  );
 
     ----------------------------------------------------------------------logic
-
-    InstProc : process(s_opcode, i_Read1, s_Rt, s_Rs, s_Rd, s_Shamt, s_Funct, s_Imm)
-    begin
-        s_opcode <= i_Read1(31 downto 26);
-        case s_opcode is
-            --      R-format instructions (opcode = 000000)
-            -- |31    26|25  21|20  16|15  11|10    6|5     0|
-            -- |---------------------------------------------|
-            -- | opcode |  rs  |  rt  |  rd  | shamt | funct |
-            -- |---------------------------------------------|
-            -- |6 bits  |5 bits|5 bits|5 bits|5 bits |6 bits |
-            when "000000" =>
-                si_Rs    <= i_Read1(25 downto 21);
-                si_Rt    <= i_Read1(20 downto 16);
-                si_Rd    <= i_Read1(15 downto 11);
-                si_Shamt <= i_Read1(10 downto 6);
-                si_Funct <= i_Read1(5 downto 0);
-                si_Imm   <= (others => '0');
-            --      J-format instructions (opcode = 000010 or 000011)
-            -- |31    26|25                                 0|
-            -- |---------------------------------------------|
-            -- | opcode |         address                    |
-            -- |---------------------------------------------|
-            -- |6 bits  |        26 bits                     |
-            when "000010" | "000011" =>
-                si_Rs    <= (others => '0');
-                si_Rt    <= (others => '0');
-                si_Rd    <= (others => '0');
-                si_Shamt <= (others => '0');
-                si_Funct <= (others => '0');
-                si_Imm   <= (others => '0');
-            --      I-format instructions (all other opcodes)
-            -- |31    26|25  21|20  16|15                   0|
-            -- |---------------------------------------------|
-            -- | opcode |  rs  |  rt  |       immediate      |
-            -- |---------------------------------------------|
-            -- |6 bits  |5 bits|5 bits|       16 bits        |
-            when others =>
-                si_Rs    <= i_Read1(25 downto 21);
-                si_Rt    <= i_Read1(20 downto 16);
-                si_Rd    <= (others => '0');
-                si_Shamt <= (others => '0');
-                si_Funct <= (others => '0');
-                si_Imm   <= i_Read1(15 downto 0);
-        end case;
-    end process;
 
     -- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
     -- MuxInputs    -> {Source} -> {Explanation}
