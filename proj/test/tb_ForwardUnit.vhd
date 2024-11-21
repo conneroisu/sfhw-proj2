@@ -34,6 +34,7 @@ architecture Behavioral of ForwardUnit is
     signal i_wbRegWrite  : std_logic_vector (4 downto 0);
     signal o_exForwardA  : std_logic_vector (1 downto 0);
     signal o_exForwardB  : std_logic_vector (1 downto 0);
+    constant clk_period : time := 50 ns;
 
     begin
         uut: ForwardUnit port map(
@@ -50,13 +51,13 @@ architecture Behavioral of ForwardUnit is
             o_exForwardB  => o_exForwardB  
         );
 
-        clk_process : process (all)
-        begin
-            clk <= '0';
-            wait for clk_period / 2;
-            clk <= '1';
-            wait for clk_period / 2;
-        end process;
+--       clk_process : process (all)
+--        begin
+--            clk <= '0';
+--            wait for clk_period / 2;
+--            clk <= '1';
+--            wait for clk_period / 2;
+--        end process;
 
         stim_proc: process (all)
         begin
