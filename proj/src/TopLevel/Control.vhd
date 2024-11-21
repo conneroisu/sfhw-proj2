@@ -56,6 +56,7 @@ begin
                 -- |6 bits  |5 bits|5 bits|5 bits|5 bits |6 bits |
                 when "000000" =>
                     o_RegDst <= "01";
+
                 --      J-format instructions (opcode = 000010 or 000011)
                 -- |31    26|25                                 0|
                 -- |---------------------------------------------|
