@@ -1,8 +1,8 @@
 -- <header>
--- Author(s): aidanfoss
--- Name: proj/src/LowLevel/org32.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/LowLevel/org32.vhd
 -- Notes:
---      aidanfoss  <quantumaidan@gmail.com> removing-unnessecary-extra-lowlevel-files-adding-requred-ones-to-lowlevel-location
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
@@ -19,3 +19,4 @@ begin
         o_F(i) <= i_A(i) or i_B(i);
     end generate;
 end dataflow;
+

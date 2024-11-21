@@ -1,14 +1,10 @@
 -- <header>
--- Author(s): aidanfoss
--- Name: proj/src/LowLevel/fulladder.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/LowLevel/fulladder.vhd
 -- Notes:
---      aidanfoss  <quantumaidan@gmail.com> removing-unnessecary-extra-lowlevel-files-adding-requred-ones-to-lowlevel-location
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
--------------------------------------------------------------------------
--- Description: This is a structural description of a full adder. It is
--- made up of 2 xor gates, 2 and gates, and 1 or gate.
--------------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -99,5 +95,4 @@ begin
     -- end generate G_OnesComp;
 
 end architecture structural;
-
 

@@ -1,12 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge, conneroisu
--- Name: proj/src/LowLevel/extender16t32.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/LowLevel/extender16t32.vhd
 -- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> fix-all-low-level-components-not-including-all-packages
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      Conner Ohnesorge  <connero@iastate.edu> disable-formatter-and-add-extender16t32
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
@@ -32,3 +28,4 @@ begin
         o_O(i) <= ext_bit;
     end generate;
 end dataflow;
+

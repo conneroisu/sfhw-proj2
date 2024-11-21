@@ -1,10 +1,8 @@
 -- <header>
--- Author(s): conneroisu, Conner Ohnesorge
--- Name: proj/src/TopLevel/Control/control_unit.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/TopLevel/Control/control_unit.vhd
 -- Notes:
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> fix-do-files-duplciated-comments-for-test-benches
---      Conner Ohnesorge  <connero@iastate.edu> added-starting-control-unit
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
@@ -81,3 +79,4 @@ begin
         "000000000110100110100" when "101011",  -- sltu
         "000000000000000000000" when others;    -- R-TYPE and others
 end dataflow;
+

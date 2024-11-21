@@ -1,17 +1,8 @@
 -- <header>
--- Author(s): conneroisu, Conner Ohnesorge
--- Name: proj/src/TopLevel/Fetch/program_counter.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/TopLevel/Fetch/program_counter.vhd
 -- Notes:
---      conneroisu  <conneroisu@outlook.com> rename-generated-dffg-with-n-copies-for-clarity
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      Conner Ohnesorge  <connero@iastate.edu> fix-generic-width-instantiation-of-the-program-counter
---      Conner Ohnesorge  <connero@iastate.edu> fix-component-name-instantiation-of-the-program_counter_dff-in
---      conneroisu  <conneroisu@outlook.com> add-starting-place-for-program-counter
---      Conner Ohnesorge  <connero@iastate.edu> fix-generic-width-instantiation-of-the-program-counter
---      Conner Ohnesorge  <connero@iastate.edu> fix-component-name-instantiation-of-the-program_counter_dff-in
---      conneroisu  <conneroisu@outlook.com> add-starting-place-for-program-counter
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
@@ -47,3 +38,4 @@ begin
             o_Q        => o_Q(i));      -- N bit long dff reg output
     end generate NDFFGS;
 end structural;
+

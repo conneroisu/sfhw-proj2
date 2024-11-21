@@ -1,11 +1,8 @@
 -- <header>
--- Author(s): conneroisu
--- Name: proj/test/tb_mux2t1_N.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/test/tb_mux2t1_N.vhd
 -- Notes:
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      conneroisu  <conneroisu@outlook.com> add-lowlevel-components-and-testbenches
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
@@ -135,3 +132,4 @@ begin
         wait;
     end process stim_proc;
 end behavioral;
+

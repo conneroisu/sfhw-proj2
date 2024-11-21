@@ -1,3 +1,10 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/TopLevel/MIPS_Processor.vhd
+-- Notes:
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 library work;
@@ -13,10 +20,10 @@ entity MIPS_Processor is
 end MIPS_Processor;
 architecture structure of MIPS_Processor is
     -- Required data memory signals
-    signal s_DMemWr       : std_logic;  
-    signal s_DMemAddr     : std_logic_vector(N-1 downto 0);  
-    signal s_DMemData     : std_logic_vector(N-1 downto 0);  
-    signal s_DMemOut      : std_logic_vector(N-1 downto 0);  
+    signal s_DMemWr       : std_logic;
+    signal s_DMemAddr     : std_logic_vector(N-1 downto 0);
+    signal s_DMemData     : std_logic_vector(N-1 downto 0);
+    signal s_DMemOut      : std_logic_vector(N-1 downto 0);
     -- Required register file signals 
     signal s_RegWr        : std_logic;  -- TODO: use this signal as the final active high write enable input to the register file
     signal s_RegWrAddr    : std_logic_vector(4 downto 0);  -- TODO: use this signal as the final destination register address input
@@ -220,15 +227,15 @@ begin
     -- registers is a register file
     registers : register_file
         port map(
-            clk   => iCLK,         
-            i_wA  => s_RegWrAddr,   
-            i_wD  => s_RegWrData,    
-            i_wC  => s_RegWr,         
-            i_r1  => s_RegInReadData1, 
-            i_r2  => s_RegInReadData2,  
-            reset => iRST,              
-            o_d1  => s_RegOutReadData1,  
-            o_d2  => s_DMemData         
+            clk   => iCLK,
+            i_wA  => s_RegWrAddr,
+            i_wD  => s_RegWrData,
+            i_wC  => s_RegWr,
+            i_r1  => s_RegInReadData1,
+            i_r2  => s_RegInReadData2,
+            reset => iRST,
+            o_d1  => s_RegOutReadData1,
+            o_d2  => s_DMemData
             );
     control : control_unit  -- grabs the fields from the instruction after decoding that translate to control signals
         port map(
@@ -408,7 +415,7 @@ begin
             );
     oALUOut <= s_DMemAddr;              -- oALU is for synthesis
     -- arithmeticLogicUnit does all the arithmetic operations and interfaces with memory
-    arithmeticLogicUnit : alu  
+    arithmeticLogicUnit : alu
         port map(
             CLK        => iCLK,
             i_Data1    => s_RegOutReadData1,
@@ -461,3 +468,4 @@ begin
         s_imm32x4(31 downto 2)      <= s_imm32(29 downto 0);  -- imm32 bits[29-0] into bits[31-2] of jumpAddr
     end process;
 end structure;
+

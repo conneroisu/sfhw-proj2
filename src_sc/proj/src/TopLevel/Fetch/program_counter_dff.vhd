@@ -1,12 +1,8 @@
 -- <header>
--- Author(s): conneroisu
--- Name: proj/src/TopLevel/Fetch/program_counter_dff.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/TopLevel/Fetch/program_counter_dff.vhd
 -- Notes:
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      conneroisu  <conneroisu@outlook.com> add-starting-place-for-program-counter
---      conneroisu  <conneroisu@outlook.com> add-starting-place-for-program-counter
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
@@ -38,3 +34,4 @@ begin
         end if;
     end process;
 end mixed;
+

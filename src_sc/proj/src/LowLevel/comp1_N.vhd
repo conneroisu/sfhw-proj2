@@ -1,14 +1,10 @@
 -- <header>
--- Author(s): aidanfoss
--- Name: proj/src/LowLevel/comp1_N.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/LowLevel/comp1_N.vhd
 -- Notes:
---      aidanfoss  <quantumaidan@gmail.com> removing-unnessecary-extra-lowlevel-files-adding-requred-ones-to-lowlevel-location
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
--- comp1_N.vhd
--------------------------------------------------------------------------
--- DESCRIPTION: This file contains an implementation of an N-bit 1s complementor
--- using structural VHDL, generics, and generate statements.
 library IEEE;
 use IEEE.std_logic_1164.all;
 entity comp1_N is
@@ -37,3 +33,4 @@ begin
             );
     end generate G_NBit_Comp1;
 end structural;
+

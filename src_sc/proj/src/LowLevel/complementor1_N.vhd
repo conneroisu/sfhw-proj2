@@ -1,11 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge, conneroisu
--- Name: proj/src/LowLevel/complementor1_N.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/LowLevel/complementor1_N.vhd
 -- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> fix-all-low-level-components-not-including-all-packages
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> renamed-proj-src-LowLevel-1Comp_N.vhd-proj-src-LowLevel-complementor1_N.vhd
---      conneroisu  <conneroisu@outlook.com> renamed-file-name-and-component-for-nbit1scomplementor
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
@@ -36,3 +33,4 @@ begin
             );
     end generate G_NBit_Comp1;
 end structural;
+

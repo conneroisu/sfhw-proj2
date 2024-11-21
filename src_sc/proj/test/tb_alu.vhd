@@ -1,13 +1,10 @@
 -- <header>
--- Author(s): dmvp01
--- Name: proj/test/tb_alu.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/test/tb_alu.vhd
 -- Notes:
---      dmvp01  <dmvp01@linuxvdi-13.ece.iastate.edu> modified-ALU-working-fine-now
---      dmvp01  <dmvp01@linuxvdi-23.ece.iastate.edu> Tests-moved-to-Tests-folder
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
--- tb_alu.vhd
--- Testbench for ALU
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -127,3 +124,4 @@ begin
         wait;
     end process;
 end test;
+
