@@ -1,0 +1,260 @@
+/home/awfoss/processsor-proj-1/proj/src/LowLevel/xorg32.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/xorg32.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity xorg32
+-- Compiling architecture dataflow of xorg32
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/org32.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/org32.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity org32
+-- Compiling architecture dataflow of org32
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/mux16t1.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/mux16t1.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity mux16t1
+-- Compiling architecture behavior of mux16t1
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/mux2t1_N.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/mux2t1_N.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity mux2t1_N
+-- Compiling architecture structural of mux2t1_N
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/mem.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/mem.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity mem
+-- Compiling architecture rtl of mem
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/andg32.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/andg32.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity andg32
+-- Compiling architecture dataflow of andg32
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/mux4t1_N.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/mux4t1_N.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity mux4t1_n
+-- Compiling architecture structural of mux4t1_n
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/adderSubtractor.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/adderSubtractor.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity adderSubtractor
+-- Compiling architecture structural of adderSubtractor
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/TopLevel/Control/control_unit.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/TopLevel/Control/control_unit.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity control_unit
+-- Compiling architecture dataflow of control_unit
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/norg32.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/norg32.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity norg32
+-- Compiling architecture dataflow of norg32
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/decoder5t32.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/decoder5t32.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package std_logic_arith
+-- Compiling entity decoder5t32
+-- Compiling architecture mixed of decoder5t32
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/comp1_N.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/comp1_N.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity comp1_N
+-- Compiling architecture structural of comp1_N
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/nandg32.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/nandg32.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity nandg32
+-- Compiling architecture dataflow of nandg32
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/dffg.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/dffg.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity dffg
+-- Compiling architecture mixed of dffg
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/extender16t32.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/extender16t32.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity extender16t32
+-- Compiling architecture dataflow of extender16t32
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/extender8t32.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/extender8t32.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity extender8t32
+-- Compiling architecture dataflow of extender8t32
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/mux2t1.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/mux2t1.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity mux2t1
+-- Compiling architecture dataflow of mux2t1
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/org2.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/org2.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity org2
+-- Compiling architecture dataflow of org2
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/xorg2.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/xorg2.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity xorg2
+-- Compiling architecture dataflow of xorg2
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/complementor1_N.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/complementor1_N.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity complementor1_N
+-- Compiling architecture structural of complementor1_N
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/fulladder.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/fulladder.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity fulladder
+-- Compiling architecture structural of fulladder
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/mux4t1.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/mux4t1.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity mux4t1
+-- Compiling architecture structural of mux4t1
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/MIPS_types.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/MIPS_types.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling package MIPS_types
+-- Compiling package body MIPS_types
+-- Loading package MIPS_types
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/andg2.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/andg2.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity andg2
+-- Compiling architecture dataflow of andg2
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/dffg_n.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/dffg_n.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity dffg_n
+-- Compiling architecture structural of dffg_n
+-- Loading entity dffg
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/dffg_tb.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/dffg_tb.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity dffg_tb
+-- Compiling architecture behavior of dffg_tb
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/invg.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/invg.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity invg
+-- Compiling architecture dataflow of invg
+
+} {} {}} /home/awfoss/processsor-proj-1/proj/src/LowLevel/mux32t1.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/awfoss/processsor-proj-1/proj/src/LowLevel/mux32t1.vhd
+QuestaSim-64 vcom 2024.2 Compiler 2024.05 May 20 2024
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package MIPS_types
+-- Compiling entity mux32t1
+-- Compiling architecture behavior of mux32t1
+
+} {} {}}
