@@ -30,18 +30,14 @@ entity IF_ID_STAGE is
 
 
 		--multiple outputs to make it easier to connect them to the next stage
-		o_ctrl : out std_logic_vector(5 downto 0); -- bits that go to control 
-		o_ex1  : out std_logic_vector(4 downto 0); -- bits that go to ID/EX 20 downto 16
-		o_ex2  : out std_logic_vector(4 downto 0); -- bits that go to ID/EX  15 downto 11
+--		o_ctrl : out std_logic_vector(5 downto 0); -- bits that go to control 
+--		o_ex1  : out std_logic_vector(4 downto 0); -- bits that go to ID/EX 20 downto 16
+--		o_ex2  : out std_logic_vector(4 downto 0); -- bits that go to ID/EX  15 downto 11
 		o_sign : out std_logic_vector(31 downto 0));
         
 end IF_ID_STAGE;
 architecture structure of IF_ID_STAGE is
 
---signals
-signal s_instr: std_logic_vector(31 downto 0);
-signal s_addr: std_logic_vector(31 downto 0);
-signal s_d1, s_d2 : std_logic_vector(31 downto 0);
 
 component dffg_n is
     generic (
@@ -79,15 +75,12 @@ component extender16t32 is
 end component;
 
 
-    signal s_ALUOp       : std_logic_vector(3 downto 0);
-    signal s_ALUOperand1 : std_logic_vector(31 downto 0);
-    signal s_ALUOperand2 : std_logic_vector(31 downto 0);
-    signal s_Overflow    : std_logic;
-    signal s_Zero        : std_logic;
-    signal s_PC          : std_logic_vector(31 downto 0);
-    signal s_PCplus4     : std_logic_vector(31 downto 0);
-    signal s_Extended    : std_logic_vector(31 downto 0);
-
+--signals
+    signal s_instr: std_logic_vector(31 downto 0);
+    signal s_addr: std_logic_vector(31 downto 0);
+    signal s_addrFlush, s_instrFlush : std_logic_vector(31 downto 0);
+    signal s_d1, s_d2 : std_logic_vector(31 downto 0);
+    signal s_stall : std_logic;
     signal s_Shamt  : std_logic_vector(4 downto 0);
     signal s_Rs     : std_logic_vector(4 downto 0);
     signal s_Rt     : std_logic_vector(4 downto 0);
@@ -95,21 +88,22 @@ end component;
     signal s_Imm    : std_logic_vector(15 downto 0);
     signal s_Funct  : std_logic_vector(5 downto 0);
 
-    signal si_Rs    <= std_logic_vector(4 downto 0);
-    signal si_Rt    <= std_logic_vector(4 downto 0);
-    signal si_Rd    <= std_logic_vector(4 downto 0);
-    signal si_Shamt <= std_logic_vector(4 downto 0);
-    signal si_Funct <= std_logic_vector(5 downto 0);
-    signal si_Imm   <= std_logic_vector(15 downto 0);
+    signal s_opcode : std_logic_vector(5 downto 0);
+    signal si_Rs    : std_logic_vector(4 downto 0);
+    signal si_Rt    : std_logic_vector(4 downto 0);
+    signal si_Rd    : std_logic_vector(4 downto 0);
+    signal si_Shamt : std_logic_vector(4 downto 0);
+    signal si_Funct : std_logic_vector(5 downto 0);
+    signal si_Imm   : std_logic_vector(15 downto 0);
 
 begin
 
 
 	    ----------------------------------------------------------------------logic
 
-		InstProc : process(s_opcode, i_Read1, s_Rt, s_Rs, s_Rd, s_Shamt, s_Funct, s_Imm)
+		InstProc : process(s_opcode, i_instr, s_Rt, s_Rs, s_Rd, s_Shamt, s_Funct, s_Imm)
     begin
-        s_opcode <= i_Read1(31 downto 26);
+        s_opcode <= i_instr(31 downto 26);
         case s_opcode is
             --      R-format instructions (opcode = 000000)
             -- |31    26|25  21|20  16|15  11|10    6|5     0|
@@ -118,11 +112,11 @@ begin
             -- |---------------------------------------------|
             -- |6 bits  |5 bits|5 bits|5 bits|5 bits |6 bits |
             when "000000" =>
-                si_Rs    <= i_Read1(25 downto 21);
-                si_Rt    <= i_Read1(20 downto 16);
-                si_Rd    <= i_Read1(15 downto 11);
-                si_Shamt <= i_Read1(10 downto 6);
-                si_Funct <= i_Read1(5 downto 0);
+                si_Rs    <= i_instr(25 downto 21);
+                si_Rt    <= i_instr(20 downto 16);
+                si_Rd    <= i_instr(15 downto 11);
+                si_Shamt <= i_instr(10 downto 6);
+                si_Funct <= i_instr(5 downto 0);
                 si_Imm   <= (others => '0');
             --      J-format instructions (opcode = 000010 or 000011)
             -- |31    26|25                                 0|
@@ -144,31 +138,35 @@ begin
             -- |---------------------------------------------|
             -- |6 bits  |5 bits|5 bits|       16 bits        |
             when others =>
-                si_Rs    <= i_Read1(25 downto 21);
-                si_Rt    <= i_Read1(20 downto 16);
+                si_Rs    <= i_instr(25 downto 21);
+                si_Rt    <= i_instr(20 downto 16);
                 si_Rd    <= (others => '0');
                 si_Shamt <= (others => '0');
                 si_Funct <= (others => '0');
-                si_Imm   <= i_Read1(15 downto 0);
+                si_Imm   <= i_instr(15 downto 0);
         end case;
     end process;
 
-
+s_addrFlush <= (others => '0') when i_flush = '1' else i_addr;
+s_instrFlush <= (others => '0') when i_flush = '1' else i_instr;
+s_stall <= '0' when i_stall = '1' else i_regw;
 CurrentInstruction: dffg_n 
 	port map(
-		i_clk => i_clk,
+		i_clk => i_clk, -- rising edge?
 		i_rst => i_rst,
-		i_we  => NOT i_stall,
-		i_d   => (others => '0') when i_flush = '1' else i_instr;
-		o_q   => s_instr);
+		i_we  => s_stall,
+		--i_d   => (others => '0') when i_flush = '1' else s_instr;
+		i_d   => s_instrFlush,
+		o_q   => o_instr);
 
 NextInstruction: dffg_n 
 	port map(
 		i_clk => i_clk,
 		i_rst => i_rst,
-		i_we  => NOT i_stall,
-		i_d   => (others => '0') when i_flush = '1' else i_addr;
-		o_q   => s_addr);
+		i_we  => s_stall,
+		--i_d   => (others => '0') when i_flush = '1' else s_addr;
+		i_d   => s_addrFlush,
+		o_q   => o_addr);
 
 RegFile0: register_file
 	port map(
@@ -193,8 +191,8 @@ SignExt0: extender16t32
 
 o_d1 <= s_d1;
 o_d2 <= s_d2;
-o_instr <= s_instr;
-o_addr  <= s_addr;
+--o_instr <= s_instr;
+--o_addr  <= s_addr;
 
 --o_ctrl <= s_instr(31 downto 26);
 --o_ex1  <= s_instr(20 downto 16);
