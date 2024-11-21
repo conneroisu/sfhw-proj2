@@ -1,4 +1,4 @@
 #!/bin/bash
 
-mv -r ../internal/ ./
-mv -r ../proj/ ./
+mv ../internal/ ./
+mv ../proj/ ./
