@@ -1,4 +1,3 @@
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
@@ -191,139 +190,147 @@ begin
     p_tb : process is
     -- Variables for expected results
     begin
+        -- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
+        -- MuxInputs    -> {Source} -> {Explanation}
+        -- ForwardA=00  -> ID/EX    -> operand from registerfile
+        -- ForwardA=10  -> EX/MEM   -> operand is forwarded from prior alu result
+        -- ForwardA=01  -> MEM/WB   -> operand is forwarded from dmem or earlier alu result
+        -- ForwardB=00  -> ID/EX    -> operand from registerfile
+        -- ForwardB=10  -> EX/MEM   -> operand is forwarded from prior alu result
+        -- ForwardB=01  -> MEM/WB   -> operand is forwarded from dmem or earlier alu result
 
         -- Initialize all inputs
-        i_RST <= '1';
-        i_WE <= '0';
-        i_PC <= x"00000000";
-        i_PCplus4 <= x"00000004";
-        i_RegDst <= '0';
-        i_ALUOp <= "0000";
-        i_ALUSrc <= "00";
-        i_MemRead <= '0';
-        i_MemWrite <= '0';
-        i_MemtoReg <= '0';
-        i_RegWrite <= '0';
-        i_Branch <= '0';
-        i_Extended <= x"00000000";
-        i_Read1 <= x"00000000";
-        i_Read2 <= x"00000000";
-        i_ForwardA <= "00";
-        i_ForwardB <= "00";
+        i_RST       <= '1';
+        i_WE        <= '0';
+        i_PC        <= x"00000000";
+        i_PCplus4   <= x"00000004";
+        i_RegDst    <= '0';
+        i_ALUOp     <= "0000";
+        i_ALUSrc    <= "00";
+        i_MemRead   <= '0';
+        i_MemWrite  <= '0';
+        i_MemtoReg  <= '0';
+        i_RegWrite  <= '0';
+        i_Branch    <= '0';
+        i_Extended  <= x"00000000";
+        i_Read1     <= x"00000000";
+        i_Read2     <= x"00000000";
+        i_ForwardA  <= "00";
+        i_ForwardB  <= "00";
         i_WriteData <= x"00000000";
-        i_DMem1 <= x"00000000";
-        i_Halt <= "0";
+        i_DMem1     <= x"00000000";
+        i_Halt      <= "0";
 
         -- Initialize expected signals
-        s_expected_alu <= x"00000000";
-        s_expected_alusrc <= "00";
-        s_expected_memread <= '0';
-        s_expected_memwrite <= '0';
-        s_expected_memtoreg <= '0';
-        s_expected_regwrite <= '0';
-        s_expected_branch <= '0';
+        s_expected_alu        <= x"00000000";
+        s_expected_alusrc     <= "00";
+        s_expected_memread    <= '0';
+        s_expected_memwrite   <= '0';
+        s_expected_memtoreg   <= '0';
+        s_expected_regwrite   <= '0';
+        s_expected_branch     <= '0';
         s_expected_branchaddr <= x"00000000";
-        s_expected_read1 <= x"00000000";
-        s_expected_read2 <= x"00000000";
-        
+        s_expected_read1      <= x"00000000";
+        s_expected_read2      <= x"00000000";
+
         wait for cclk_per;
-        
+
         -- Test 1: Basic ALU Add operation (R-type)
-        i_RST <= '0';
-        i_WE <= '1';
-        i_RegDst <= '1';  -- R-type instruction
-        i_ALUOp <= "0010";  -- ADD operation
-        i_Read1 <= x"00000005";  -- First operand = 5
-        i_Read2 <= x"00000003";  -- Second operand = 3
-        i_ForwardA <= "00";  -- No forwarding
-        i_ForwardB <= "00";  -- No forwarding
-        
-        s_expected_alu <= x"00000008";  -- Expected sum: 5 + 3 = 8
-        s_expected_alusrc <= "00";
-        s_expected_memread <= '0';
-        s_expected_memwrite <= '0';
-        s_expected_memtoreg <= '0';
-        s_expected_regwrite <= '1';
-        s_expected_branch <= '0';
+        i_RST      <= '0';
+        i_WE       <= '1';
+        i_RegDst   <= '1';              -- R-type instruction
+        i_ALUOp    <= "0010";           -- ADD operation
+        i_Read1    <= x"00000005";      -- First operand = 5
+        i_Read2    <= x"00000003";      -- Second operand = 3
+        i_ForwardA <= "00";             -- No forwarding
+        i_ForwardB <= "00";             -- No forwarding
+
+        s_expected_alu        <= x"00000008";  -- Expected sum: 5 + 3 = 8
+        s_expected_alusrc     <= "00";
+        s_expected_memread    <= '0';
+        s_expected_memwrite   <= '0';
+        s_expected_memtoreg   <= '0';
+        s_expected_regwrite   <= '1';
+        s_expected_branch     <= '0';
         s_expected_branchaddr <= x"00000004";
-        s_expected_read1 <= x"00000005";
-        s_expected_read2 <= x"00000003";
-        
+        s_expected_read1      <= x"00000005";
+        s_expected_read2      <= x"00000003";
+
         wait for cclk_per;
         check_outputs;
-                     
+
         -- Test 2: Forwarding from EX/MEM stage
-        i_ForwardA <= "10";  -- Forward from EX/MEM
-        i_DMem1 <= x"0000000A";  -- Forward value = 10
-        i_Read2 <= x"00000002";  -- Second operand = 2
-        
-        s_expected_alu <= x"0000000C";  -- Expected: 10 + 2 = 12
+        i_ForwardA <= "10";             -- Forward from EX/MEM
+        i_DMem1    <= x"0000000A";      -- Forward value = 10
+        i_Read2    <= x"00000002";      -- Second operand = 2
+
+        s_expected_alu   <= x"0000000C";  -- Expected: 10 + 2 = 12
         s_expected_read2 <= x"00000002";
-        
+
         wait for cclk_per;
         check_outputs;
-                     
+
         -- Test 3: Test branch address calculation
-        i_Branch <= '1';
-        i_Extended <= x"00000010";  -- Offset of 16
-        i_PCplus4 <= x"00000100";   -- PC+4 = 256
-        
-        s_expected_branch <= '1';
+        i_Branch   <= '1';
+        i_Extended <= x"00000010";      -- Offset of 16
+        i_PCplus4  <= x"00000100";      -- PC+4 = 256
+
+        s_expected_branch     <= '1';
         s_expected_branchaddr <= x"00000140";  -- Expected: 256 + (16 << 2) = 256 + 64 = 320
-        
+
         wait for cclk_per;
         check_outputs;
-                     
+
         -- Test 4: Load word operation
-        i_RegDst <= '0';  -- I-type instruction
-        i_ALUOp <= "0000";  -- Load operation
-        i_ALUSrc <= "01";  -- Use immediate
-        i_MemRead <= '1';
+        i_RegDst   <= '0';              -- I-type instruction
+        i_ALUOp    <= "0000";           -- Load operation
+        i_ALUSrc   <= "01";             -- Use immediate
+        i_MemRead  <= '1';
         i_MemtoReg <= '1';
-        i_Branch <= '0';
-        i_Extended <= x"00000004";  -- Offset of 4
-        i_Read1 <= x"00000100";  -- Base address
-        
-        s_expected_alu <= x"00000104";  -- Expected: base + offset = 256 + 4 = 260
-        s_expected_alusrc <= "01";
-        s_expected_memread <= '1';
+        i_Branch   <= '0';
+        i_Extended <= x"00000004";      -- Offset of 4
+        i_Read1    <= x"00000100";      -- Base address
+
+        s_expected_alu      <= x"00000104";  -- Expected: base + offset = 256 + 4 = 260
+        s_expected_alusrc   <= "01";
+        s_expected_memread  <= '1';
         s_expected_memtoreg <= '1';
-        s_expected_branch <= '0';
-        s_expected_read1 <= x"00000100";
-        
+        s_expected_branch   <= '0';
+        s_expected_read1    <= x"00000100";
+
         wait for cclk_per;
         check_outputs;
 
         -- Test 5: Store word operation
-        i_MemRead <= '0';
+        i_MemRead  <= '0';
         i_MemWrite <= '1';
         i_MemtoReg <= '0';
         i_RegWrite <= '0';
-        i_Read2 <= x"DEADBEEF";  -- Data to store
-        
-        s_expected_memread <= '0';
+        i_Read2    <= x"DEADBEEF";      -- Data to store
+
+        s_expected_memread  <= '0';
         s_expected_memwrite <= '1';
         s_expected_memtoreg <= '0';
         s_expected_regwrite <= '0';
-        s_expected_read2 <= x"DEADBEEF";
-        
+        s_expected_read2    <= x"DEADBEEF";
+
         wait for cclk_per;
         check_outputs;
 
         -- Test 6: Reset behavior
         i_RST <= '1';
-        
-        s_expected_alu <= x"00000000";
-        s_expected_alusrc <= "00";
-        s_expected_memread <= '0';
-        s_expected_memwrite <= '0';
-        s_expected_memtoreg <= '0';
-        s_expected_regwrite <= '0';
-        s_expected_branch <= '0';
+
+        s_expected_alu        <= x"00000000";
+        s_expected_alusrc     <= "00";
+        s_expected_memread    <= '0';
+        s_expected_memwrite   <= '0';
+        s_expected_memtoreg   <= '0';
+        s_expected_regwrite   <= '0';
+        s_expected_branch     <= '0';
         s_expected_branchaddr <= x"00000000";
-        s_expected_read1 <= x"00000000";
-        s_expected_read2 <= x"00000000";
-        
+        s_expected_read1      <= x"00000000";
+        s_expected_read2      <= x"00000000";
+
         wait for cclk_per;
         check_outputs;
 
