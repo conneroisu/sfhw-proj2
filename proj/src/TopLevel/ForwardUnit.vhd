@@ -68,15 +68,24 @@ begin
             end if;
 
             -- Forward from WB stage
-            if (i_wbRegWrite = "1") and (wbRd /= to_unsigned(0, 5)) and not ((memRegWrite = '1') and (memRd /= to_unsigned(0, 5)) and (memRd = exRs)) and (wbRd = exRs) then
+            if (i_wbRegWrite = "1")
+                and (wbRd /= to_unsigned(0, 5))
+                and not ((memRegWrite = '1')
+                         and (memRd /= to_unsigned(0, 5))
+                         and (memRd = exRs))
+                and (wbRd = exRs) then
                 o_exForwardA <= "01";
             end if;
 
-            if (i_wbRegWrite = "1") and (wbRd /= to_unsigned(0, 5)) and not ((memRegWrite = '1') and (memRd /= to_unsigned(0, 5)) and (memRd = exRt)) and (wbRd = exRt) then
+            if (i_wbRegWrite = "1")
+                and (wbRd /= to_unsigned(0, 5))
+                and not ((memRegWrite = '1')
+                         and (memRd /= to_unsigned(0, 5))
+                         and (memRd = exRt))
+                and (wbRd = exRt) then
                 o_exForwardB <= "01";
             end if;
         end if;
     end process;
 
 end Behavioral;
-
