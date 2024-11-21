@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): Kariniux, Conner Ohnesorge
 -- Name: proj/src/TopLevel/Fetch/register_file.vhd
 -- Notes:
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
 --      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
 -- </header>
 

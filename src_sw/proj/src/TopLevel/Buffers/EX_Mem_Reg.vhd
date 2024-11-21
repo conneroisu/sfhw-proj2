@@ -1,3 +1,10 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: src_sw/proj/src/TopLevel/Buffers/EX_Mem_Reg.vhd
+-- Notes:
+--      Conner Ohnesorge 2024-11-21T09:20:04-06:00 added-buffers-for-sf-pipeline
+-- </header>
+
 library ieee;
 use IEEE.std_logic_1164.all;
 
@@ -70,3 +77,4 @@ begin
     Inst_rt_reg    : reg generic map (5) port map (i_CLK, i_RST, '1', i_Inst_rt, o_Inst_rt);
     Inst_rd_reg    : reg generic map (5) port map (i_CLK, i_RST, '1', i_Inst_rd, o_Inst_rd);
 end structural;
+

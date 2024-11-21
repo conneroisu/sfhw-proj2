@@ -1,3 +1,10 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: proj/src/TopLevel/HazardUnit.vhd
+-- Notes:
+--      Conner Ohnesorge 2024-11-21T10:20:49-06:00 added-HazardUnit-and-Updated-testbench-for-the-Units-Execute
+-- </header>
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
@@ -45,3 +52,4 @@ begin
     o_IDEX_squash  <= o_IFID_squash;
     o_EXMEM_squash <= o_IFID_squash;
 end architecture;
+

@@ -1,8 +1,8 @@
 -- <header>
--- Author(s): aidanfoss
--- Name: proj/src/LowLevel/mux2t1_N.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sw/proj/src/LowLevel/mux2t1_N.vhd
 -- Notes:
---      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library IEEE;

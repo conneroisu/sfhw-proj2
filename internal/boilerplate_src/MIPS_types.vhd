@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): Kariniux, Conner Ohnesorge
 -- Name: internal/boilerplate_src/MIPS_types.vhd
 -- Notes:
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
 --      Conner Ohnesorge 2024-11-07T08:35:18-06:00 run-manual-update-to-header-program-and-run-it
 --      Conner Ohnesorge 2024-10-31T09:22:17-05:00 Added-init-files
 -- </header>

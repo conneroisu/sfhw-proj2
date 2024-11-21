@@ -1,7 +1,11 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): Conner Ohnesorge, Kariniux
 -- Name: proj/src/TopLevel/ForwardUnit.vhd
 -- Notes:
+--      Conner Ohnesorge 2024-11-21T10:20:49-06:00 added-HazardUnit-and-Updated-testbench-for-the-Units-Execute
+--      Conner Ohnesorge 2024-11-21T09:23:44-06:00 remove-unused-signals-from-forwardunit-and-formatted-better
+--      Conner Ohnesorge 2024-11-21T09:20:04-06:00 added-buffers-for-sf-pipeline
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
 --      Conner Ohnesorge 2024-11-17T00:16:33-06:00 more-documented-and-cleaned-up-the-forwarding-unit-to-match-with-other-implementations-in-repo
 --      Conner Ohnesorge 2024-11-13T13:00:43-06:00 made-initial-structure-and-basic-logic-for-forward-unit
 -- </header>
@@ -90,3 +94,4 @@ begin
     end process;
 
 end Behavioral;
+

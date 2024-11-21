@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge, aidanfoss
+-- Author(s): aidanfoss, Conner Ohnesorge
 -- Name: proj/src/LowLevel/mux4t1.vhd
 -- Notes:
+--      aidanfoss 2024-11-21T08:32:03-06:00 unused-declarations
 --      connero 2024-11-11T09:11:16-06:00 Merge-branch-main-into-component-forward-unit
 --      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
 --      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
@@ -33,8 +34,8 @@ architecture structural of mux4t1 is
     end component;
 
     --signal temp_o : std_logic;
-    signal s_1    : std_logic;
-    signal s_2    : std_logic;
+    signal s_1 : std_logic;
+    signal s_2 : std_logic;
 
 begin
     -- Instantiate a single mux2t1 for the entire data width.

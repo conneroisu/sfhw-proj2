@@ -1,8 +1,8 @@
 -- <header>
 -- Author(s): Conner Ohnesorge
--- Name: proj/src/TopLevel/BarrelShifter/barrelShifter.vhd
+-- Name: src_sw/proj/src/TopLevel/BarrelShifter/barrelShifter.vhd
 -- Notes:
---      Conner Ohnesorge 2024-11-14T08:12:11-06:00 add-barrelshifter-from-proj-1
+--      Conner Ohnesorge 2024-11-21T10:30:54-06:00 added-alu-barrel-shifter-and-fetch-modules-to-the-top-level-of-the
 -- </header>
 
 library IEEE;
@@ -164,3 +164,4 @@ begin
             o_O  => o_O                 --final output
             );
 end structure;
+

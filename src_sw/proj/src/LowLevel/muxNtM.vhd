@@ -1,15 +1,8 @@
 -- <header>
 -- Author(s): Conner Ohnesorge
--- Name: proj/src/LowLevel/muxNtM.vhd
+-- Name: src_sw/proj/src/LowLevel/muxNtM.vhd
 -- Notes:
---      Conner Ohnesorge 2024-11-16T17:36:04-06:00 finish-setup-of-muxNtM-and-test-bench
---      Conner Ohnesorge 2024-11-16T17:33:34-06:00 set-up-muxNtM-component-and-testbench
---      Conner Ohnesorge 2024-11-16T17:31:19-06:00 test-new-metavalue-detection-in-muxNtM
---      Conner Ohnesorge 2024-11-16T17:28:51-06:00 update-muxNtM-and-test-bench
---      connero 2024-11-16T17:22:38-06:00 Merge-branch-main-into-component-forward-unit
---      Conner Ohnesorge 2024-11-16T17:13:40-06:00 update-to-latest-implementation-of-muxNtM
---      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
---      Conner Ohnesorge 2024-11-11T14:08:03-06:00 added-generic-mux-muxNtM
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library IEEE;

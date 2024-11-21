@@ -1,10 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge, aidanfoss
--- Name: proj/src/LowLevel/xorg2.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sw/proj/src/LowLevel/xorg2.vhd
 -- Notes:
---      connero 2024-11-11T09:11:16-06:00 Merge-branch-main-into-component-forward-unit
---      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
---      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library IEEE;
