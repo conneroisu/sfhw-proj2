@@ -12,8 +12,6 @@ use IEEE.NUMERIC_STD.all;
 
 entity ForwardUnit is
     port (
-        i_CLK         : in  std_logic;
-        i_RST         : in  std_logic;
         i_forwarding  : in  std_logic;
         i_exRs        : in  std_logic_vector (4 downto 0);
         i_exRt        : in  std_logic_vector (4 downto 0);
@@ -23,7 +21,6 @@ entity ForwardUnit is
         i_memMemWrite : in  std_logic_vector (4 downto 0);
         i_memPCSrc    : in  std_logic_vector (1 downto 0);
         i_wbRegWrite  : in  std_logic_vector (4 downto 0);
-        i_wbMemToReg  : in  std_logic_vector (4 downto 0);
         o_exForwardA  : out std_logic_vector (1 downto 0);  -- forwarding 1st mux signal to EX stage
         o_exForwardB  : out std_logic_vector (1 downto 0)  -- forwarding 2nd mux signal to EX stage
         );
