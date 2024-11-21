@@ -1,18 +1,10 @@
 -- <header>
--- Author(s): awfoss
--- Name: proj/src/TopLevel/BarrelShifter/barrelShifter.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/TopLevel/BarrelShifter/barrelShifter.vhd
 -- Notes:
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> merge-damage-repair
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> merge-conflict-resolved
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> fixes
---      awfoss  <awfoss@linuxvdi-27.ece.iastate.edu> putting-barrel-shifter-into-its-own-toplevel-file
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
---Aidan Foss
---CPRE 381, Fall 2024
---ISU
---barrelShifter.vhd
---DESC: Barrel Shifter
 library IEEE;
 use IEEE.std_logic_1164.all;
 use work.MIPS_types.all;
@@ -171,3 +163,4 @@ begin
             o_O  => o_O                 --final output
             );
 end structure;
+

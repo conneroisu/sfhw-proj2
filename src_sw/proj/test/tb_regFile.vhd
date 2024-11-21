@@ -1,10 +1,8 @@
 -- <header>
--- Author(s): Kariniux, Conner Ohnesorge
--- Name: proj/test/tb_regFile.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sw/proj/test/tb_regFile.vhd
 -- Notes:
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      Conner Ohnesorge 2024-11-18T14:18:35-06:00 renamed-the-tb_stage_idex-to-Execute-and-added-neccesssary-comments-to
---      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
+--      Conner Ohnesorge 2024-11-21T10:43:43-06:00 added-do-file-and-sh-file-for-forward-unit-test-and-added-regfile-test
 -- </header>
 
 library ieee;

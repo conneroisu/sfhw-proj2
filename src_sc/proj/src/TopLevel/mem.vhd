@@ -1,15 +1,10 @@
 -- <header>
--- Author(s): conneroisu
--- Name: proj/src/TopLevel/mem.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/TopLevel/mem.vhd
 -- Notes:
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      conneroisu  <conneroisu@outlook.com> added-toolflow-generated-project-layout
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
--- Quartus Prime VHDL Template
--- Single-port RAM with single read/write address
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -57,19 +52,4 @@ begin
     q <= ram(to_integer(unsigned(addr)));
 
 end rtl;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

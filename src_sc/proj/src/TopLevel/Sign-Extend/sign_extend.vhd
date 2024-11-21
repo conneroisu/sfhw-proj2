@@ -1,11 +1,8 @@
 -- <header>
--- Author(s): conneroisu, Conner Ohnesorge
--- Name: proj/src/TopLevel/Sign-Extend/sign_extend.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/TopLevel/Sign-Extend/sign_extend.vhd
 -- Notes:
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      Conner Ohnesorge  <connero@iastate.edu> add-sign-extender-from-daniels-work
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
@@ -29,3 +26,4 @@ begin
         end if;
     end process;
 end Behavioral;
+

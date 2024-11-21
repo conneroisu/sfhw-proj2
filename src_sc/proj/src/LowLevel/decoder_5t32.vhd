@@ -1,28 +1,9 @@
 -- <header>
--- Author(s): Conner Ohnesorge, conneroisu
--- Name: proj/src/LowLevel/decoder_5t32.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/LowLevel/decoder_5t32.vhd
 -- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> fix-packages-issues-from-ieee
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> fix-all-low-level-components-not-including-all-packages
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> make-sure-fix-decoder_5t32
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> start-separate-instruction-fetch-from-processor-and-hopefully-fix-the-decoder_5t32-import-bug
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      conneroisu  <conneroisu@outlook.com> update-do-files-and-add-tests-for-lowlevel-components
---      conneroisu  <conneroisu@outlook.com> update-do-files-and-add-tests-for-lowlevel-components
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
-
--------------------------------------------------------------------------
--- author: Conner Ohnesorge
--- DEPARTMENT OF ELECTRICAL ENGINEERING
--- IOWA STATE UNIVERSITY
--------------------------------------------------------------------------
--- name: decoder5t32.vhd
--------------------------------------------------------------------------
--- DESCRIPTION: This file contains an implementation of an edge-triggered
--- flip-flop with parallel access and reset.
--------------------------------------------------------------------------
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -75,3 +56,4 @@ begin
         "00000000000000000000000000000000" when others;
 
 end architecture mixed;
+

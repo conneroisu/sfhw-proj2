@@ -1,16 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge, conneroisu, awfoss
--- Name: proj/src/MIPS_types.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/MIPS_types.vhd
 -- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> fix-not-using-the-numeric_std-lib-from-ieee
---      conneroisu  <conneroisu@outlook.com> remove-space-at-end-of-file
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      awfoss  <awfoss@co2050-01.ece.iastate.edu> debugged-had-to-do-some-weird-declarations-to-avoid-a-static-error-I-think-not-sure-why-I-had-to-make-so-many-signals.-Could-use-some-work-to-improve-perhaps
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      Conner Ohnesorge  <connero@iastate.edu> update-MIPS_types-in-context-of-the-register_file
---      Conner Ohnesorge  <connero@iastate.edu> update-MIPS_types-in-context-of-the-register_file
---      conneroisu  <conneroisu@outlook.com> added-toolflow-generated-project-layout
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
@@ -41,3 +33,4 @@ package body MIPS_types is
         return rr;
     end bit_reverse;
 end package body MIPS_types;
+

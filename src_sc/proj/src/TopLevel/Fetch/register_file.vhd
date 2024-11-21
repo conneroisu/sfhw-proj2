@@ -1,19 +1,8 @@
 -- <header>
--- Author(s): conneroisu, Conner Ohnesorge
--- Name: proj/src/TopLevel/Fetch/register_file.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/TopLevel/Fetch/register_file.vhd
 -- Notes:
---      conneroisu  <conneroisu@outlook.com> remove-space-at-end-of-file
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      Conner Ohnesorge  <connero@iastate.edu> more-relevant-comment-and-cleaner-formatting-in-register_file-before
---      conneroisu  <conneroisu@outlook.com> fix-name-of-nbitregister-component-in-register_file
---      conneroisu  <conneroisu@outlook.com> update-do-files-and-add-tests-for-lowlevel-components
---      conneroisu  <conneroisu@outlook.com> added-register-file-starting-point
---      Conner Ohnesorge  <connero@iastate.edu> more-relevant-comment-and-cleaner-formatting-in-register_file-before
---      conneroisu  <conneroisu@outlook.com> fix-name-of-nbitregister-component-in-register_file
---      conneroisu  <conneroisu@outlook.com> update-do-files-and-add-tests-for-lowlevel-components
---      conneroisu  <conneroisu@outlook.com> added-register-file-starting-point
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library ieee;
@@ -132,5 +121,4 @@ begin
             );
 
 end architecture structural;
-
 

@@ -1,15 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge, conneroisu
--- Name: proj/test/tb_register_file.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/test/tb_register_file.vhd
 -- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> added-new-adder-subtractor-and-test-bench
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      Conner Ohnesorge  <connero@iastate.edu> add-mux32t1-and-fix-testbench-for-register_file
---      conneroisu  <conneroisu@outlook.com> update-do-files-and-add-tests-for-lowlevel-components
---      Conner Ohnesorge  <connero@iastate.edu> add-mux32t1-and-fix-testbench-for-register_file
---      conneroisu  <conneroisu@outlook.com> update-do-files-and-add-tests-for-lowlevel-components
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library ieee;
@@ -509,19 +502,4 @@ begin
     end process p_tb;
 
 end architecture behavior;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

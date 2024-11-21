@@ -1,8 +1,8 @@
 -- <header>
 -- Author(s): Conner Ohnesorge
--- Name: proj/test/tb_adder_subtractor.vhd
+-- Name: src_sc/proj/test/tb_adder_subtractor.vhd
 -- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> added-new-adder-subtractor-and-test-bench
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
@@ -72,3 +72,4 @@ begin
         wait for gCLK_HPER * 2;
     end process;
 end arch;
+

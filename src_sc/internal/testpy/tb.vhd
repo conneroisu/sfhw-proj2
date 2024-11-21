@@ -1,27 +1,10 @@
 -- <header>
--- Author(s): conneroisu, Conner Ohnesorge
--- Name: internal/testpy/tb.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/internal/testpy/tb.vhd
 -- Notes:
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      Conner Ohnesorge  <connero@iastate.edu> added-toolflow
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
--------------------------------------------------------------------------
--- Henry Duwe
--- Department of Electrical and Computer Engineering
--- Iowa State University
--------------------------------------------------------------------------
--- tb.vhd
--------------------------------------------------------------------------
--- DESCRIPTION: This file contains a testbench for the 381 MIPS Processor
--- that prints an ordered trace of all writes to architectural registers
--- or the data memory.
--- 02/26/2018 by H3::Design created.
--- 08/06/2021 by H3::Removed unused TODOs.
--- 08/25/2022 by BG::Better python integration
--------------------------------------------------------------------------
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.std_logic_textio.all;          -- For logic types I/O
@@ -138,3 +121,4 @@ begin
         end if;
     end process;
 end mixed;
+

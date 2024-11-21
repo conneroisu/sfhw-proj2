@@ -1,13 +1,8 @@
 -- <header>
--- Author(s): conneroisu, Conner Ohnesorge
--- Name: internal/boilerplate_src/TopLevel/mem.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/internal/boilerplate_src/TopLevel/mem.vhd
 -- Notes:
---      conneroisu  <conneroisu@outlook.com> manually-ran-the-header-update-script
---      conneroisu  <conneroisu@outlook.com> even-better-file-header-program
---      conneroisu  <conneroisu@outlook.com> fixed-and-added-back-the-git-cdocumentor-for-the-vhdl-files-to-have
---      Conner Ohnesorge  <connero@iastate.edu> remove-the-header-comment-from-mem.vhd-so-header-tool-can-work
---      Conner Ohnesorge  <connero@iastate.edu> remove-the-header-comment-from-mem.vhd-so-header-tool-can-work
---      Conner Ohnesorge  <connero@iastate.edu> added-toolflow
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library ieee;
@@ -57,19 +52,4 @@ begin
     q <= ram(to_integer(unsigned(addr)));
 
 end rtl;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

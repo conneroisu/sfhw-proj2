@@ -1,12 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge, conneroisu
--- Name: proj/src/LowLevel/adderSubtractor.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/src/LowLevel/adderSubtractor.vhd
 -- Notes:
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> fix-all-low-level-components-not-including-all-packages
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> added-new-ports-to-adderSubtractor
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> fixed-naming-of-signals-to-adderSubtractors
---      Conner Ohnesorge  <connerohnesorge@localhost.localdomain> added-new-adder-subtractor-and-test-bench
---      conneroisu  <conneroisu@outlook.com> added-adder-subtractor-and-instantiated-the-program-counter-and-others
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
@@ -89,7 +85,7 @@ begin
             i_D0 => i_b,
             o_O  => s1
             );
-    addsubctrl1 : component mux2t1_N  
+    addsubctrl1 : component mux2t1_N
         port map(
             i_s  => nadd_sub,
             i_d0 => i_b,
@@ -133,3 +129,4 @@ begin
             o_f => o_overflow
             );
 end architecture structural;
+
