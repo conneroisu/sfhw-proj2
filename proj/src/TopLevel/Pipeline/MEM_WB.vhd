@@ -9,21 +9,21 @@ entity MEM_WB is
     port (
         clk     : in std_logic;
         reset   : in std_logic;
-        WriteEn : in std_logic;         -- Write enable signal
+        --WriteEn : in std_logic;         -- Write enable signal
 
 
-        ALU_result_in : in std_logic_vector(31 downto 0);  -- ALU result to WB
-        DataMem_in    : in std_logic_vector(31 downto 0);
-        RegDst_in     : in std_logic_vector(4 downto 0);  -- Destination register number to Register File
-        RegWrite_in   : in std_logic;
-        MemToReg_in   : in std_logic;
+        i_ALUResult : in std_logic_vector(31 downto 0);  -- ALU result to WB
+        i_DataMem    : in std_logic_vector(31 downto 0);
+        i_RegDst     : in std_logic_vector(4 downto 0);  -- Destination register number to Register File
+        i_RegWrite   : in std_logic;
+        i_MemToReg   : in std_logic;
 
         -- Outputs to WB stage
-        ALU_result_out: out std_logic_vector(31 downto 0);  -- ALU result to WB
-        DataMem_out   : out std_logic_vector(31 downto 0);
-        RegDst_out    : out std_logic_vector(4 downto 0); -- Destination reguster number to register file
-        RegWrite_out  : out std_logic;
-        MemToReg_out  : out std_logic
+        --ALU_result_out: out std_logic_vector(31 downto 0);  -- ALU result to WB
+        --DataMem_out   : out std_logic_vector(31 downto 0);
+        o_regDst    : out std_logic_vector(4 downto 0); -- Destination reguster number to register file
+        o_regWrite  : out std_logic;
+        o_wbData      : out std_logic_vector(31 downto 0)
     );
 end MEM_WB;
 
@@ -45,19 +45,41 @@ begin
             RegWrite_reg <= '0';
             MemToReg_reg <= '0';
         elsif rising_edge(clk) then
-            ALUreg <= ALU_result_in;
-            DataMemReg  <= DataMem_in;
-            RegDstReg   <= RegDst_in;
-            RegWrite_reg <= RegWrite_in;
-            MemToReg_reg <= MemToReg_in;
+            ALUreg <= i_ALUResult;
+            DataMemReg  <= i_DataMem;
+            RegDstReg   <= i_RegDst;
+            RegWrite_reg <= i_RegWrite;
+            --MemToReg_reg <= i_MemToReg; this should be the muxed value
         end if;
     end process;
 
-    ALU_result_out <= ALUreg;
-    DataMem_out   <= DataMemReg;
-    RegDst_out    <= RegDstReg;
-    RegWrite_out  <= RegWrite_reg;
-    MemToReg_out  <= MemToReg_reg;
+    --ALU_result_out <= ALUreg;
+    --DataMem_out   <= DataMemReg;
+    o_regDst    <= RegDstReg;
+    o_regWrite  <= RegWrite_reg;
+    --o_wbData  <= MemToReg_reg;
 
 end behavioral;
+
+architecture structural of MEM_WB is
+
+    component mux2t1_N is
+        port(
+        i_S  : in  std_logic;           -- Select input.
+        i_D0 : in  std_logic_vector(N - 1 downto 0);  -- Input data width is N.
+        i_D1 : in  std_logic_vector(N - 1 downto 0);  -- Input data width is N.
+        o_O  : out std_logic_vector(N - 1 downto 0)  -- Output data width is N.
+        );
+    end component;
+    
+begin
+    MemToRegMux : mux2t1_N
+        port map (
+            i_d0 => i_ALUResult,
+            i_d1 => i_DataMem,
+            i_S => i_MemToReg,
+            o_O => o_wbData
+            );       
+    
+end structural;
             

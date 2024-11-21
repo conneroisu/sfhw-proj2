@@ -10,6 +10,8 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 library work;
 use work.MIPS_types.all;
+
+
 entity MIPS_Processor is
     generic(N : integer := DATA_WIDTH);
     port(iCLK      : in  std_logic;
@@ -19,6 +21,7 @@ entity MIPS_Processor is
          iInstExt  : in  std_logic_vector(N-1 downto 0);
          oALUOut   : out std_logic_vector(N-1 downto 0));  -- TODO: Hook this up to the output of the ALU. It is important for synthesis that you have this output that can effectively be impacted by all other components so they are not optimized away.
 end MIPS_Processor;
+
 architecture structure of MIPS_Processor is
     -- Required data memory signals
     signal s_DMemWr       : std_logic;  -- TODO: use this signal as the final active high data memory write enable signal
@@ -47,6 +50,30 @@ architecture structure of MIPS_Processor is
             we   : in  std_logic := '1';
             q    : out std_logic_vector((DATA_WIDTH -1) downto 0));
     end component;
+
+--    component MEM_WB is
+--        generic(ADDR_WIDTH : integer;
+--                DATA_WIDTH : integer);
+--        port (
+--            clk     : in std_logic;
+--            reset   : in std_logic;
+--            WriteEn : in std_logic;         -- Write enable signal
+--    
+--    
+--            ALU_result_in : in std_logic_vector(31 downto 0);  -- ALU result to WB
+--            DataMem_in    : in std_logic_vector(31 downto 0);
+--            RegDst_in     : in std_logic_vector(4 downto 0);  -- Destination register number to Register File
+--            RegWrite_in   : in std_logic;
+--            MemToReg_in   : in std_logic;
+--    
+--            -- Outputs to WB stage
+--            ALU_result_out: out std_logic_vector(31 downto 0);  -- ALU result to WB
+--            DataMem_out   : out std_logic_vector(31 downto 0);
+--            RegDst_out    : out std_logic_vector(4 downto 0); -- Destination reguster number to register file
+--            RegWrite_out  : out std_logic;
+--            MemToReg_out  : out std_logic
+--        );
+--    end component;
 -- TODO: You may add any additional signals or components your implementation 
 --       requires below this comment
 begin
@@ -70,6 +97,12 @@ begin
                  data => s_DMemData,
                  we   => s_DMemWr,
                  q    => s_DMemOut);
+    --MemWB : MEM_WB --I think this entire block is instantiated wrong. Not sure entirely what this definition is doing here. Apologies
+    --    generic map(ADDR_WIDTH => ADDR_WIDTH,
+    --                DATA_WIDTH => N)
+    --    port map(clk => clk,
+    --             addr =>
+    --    )
 -- TODO: Ensure that s_Halt is connected to an output control signal produced from decoding the Halt instruction (Opcode: 01 0100)
 -- TODO: Ensure that s_Ovfl is connected to the overflow output of your ALU
 -- TODO: Implement the rest of your processor below this comment! 
