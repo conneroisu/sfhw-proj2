@@ -15,15 +15,15 @@
 ├── LICENSE
 ├── README.md
 ├── README.png
-├── Single-Cycle-Processor
+├── src_sc
 │   ├── LICENSE
 │   ├── README.md
 │   ├── README.png
-├── Software-Scheduled-Processor
+├── src_sf
 │   ├── LICENSE
 │   ├── README.md
 │   ├── README.png
-└── Hardware-Scheduled-Processor
+└── src_hw
     ├── LICENSE
     ├── README.md
     └── README.png
