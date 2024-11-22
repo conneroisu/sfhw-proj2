@@ -108,6 +108,21 @@ begin
 
 
 
+        --Test 1 (again): Select Data Memory Value (i_MemToReg = 1)
+        si_ALUResult <= X"AAAAAAAA";
+        si_DataMem   <= X"BBBBBBBB";
+        si_MemToReg  <= '1';
+        si_RegDst    <= "00001";
+        si_RegWrite  <= '1';
+        wait for clk_period;
+        --assert values
+        assert so_wbData = X"BBBBBBBB" report "o_wbData    mismatch on test 3";
+        assert si_MemToReg = '1' report "i_MemToReg  mismatch on test 3";
+        assert si_RegDst = "00001" report "i_RegDst    mismatch on test 3";
+        assert si_RegWrite = '1' report "i_RegWrite  mismatch on test 3";
+
+
+
         --Test 3: Final Test Passthrough Values (i_RegWrite = 0)
         si_ALUResult <= X"00000000";
         si_DataMem   <= X"00000000";
@@ -115,8 +130,8 @@ begin
         si_RegWrite  <= '0';
         wait for clk_period;
         --assert values
-        assert si_RegDst = "00011" report "i_RegDst    mismatch on test 3";
-        assert si_RegWrite = '0' report "i_RegWrite  mismatch on test 3";
+        assert si_RegDst = "00011" report "i_RegDst    mismatch on test 4";
+        assert si_RegWrite = '0' report "i_RegWrite  mismatch on test 4";
 	
 
 	--end test

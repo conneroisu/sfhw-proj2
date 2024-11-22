@@ -50,7 +50,9 @@ begin
             RegWrite_reg <= '0';
             MemToReg_reg <= '0';
         elsif rising_edge(clk) then
-            -- Latch input signals
+            -- Latch input signals, this looks like d flip flops inside the schematic
+            -- Need to pipe the values regardless, as this is creating a 1 clock cycle delay, which I don't want.
+            -- How could I make this store values with DFF's, but also pass along to avoid the delay? is the delay intrinsic to DFF's?
             ALUreg       <= i_ALUResult;
             DataMemReg   <= i_DataMem;
             RegDstReg    <= i_RegDst;
