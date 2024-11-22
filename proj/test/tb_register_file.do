@@ -9,6 +9,6 @@ vcom -2008 -work work ../src/TopLevel/BarrelShifter/*.vhd
 vcom -2008 -work work ../src/TopLevel/ALU/*.vhd
 vcom -2008 -work work $file
 
-vsim -voptargs=+acc $target
+vsim -debugDB -voptargs=+acc $target
 add wave -position insertpoint \ ../$target/*
 run 1120
