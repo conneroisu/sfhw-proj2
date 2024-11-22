@@ -26,8 +26,7 @@ entity register_file is
 end entity register_file;
 
 architecture structural of register_file is
-    -- Component Declarations
-    -- 32:1 Mux
+
     component mux32t1 is
         port
             (
@@ -37,7 +36,6 @@ architecture structural of register_file is
                 );
     end component;
 
-    -- 5:32 Decoder
     component decoder5t32 is
         port
             (
@@ -46,8 +44,7 @@ architecture structural of register_file is
                 );
     end component;
 
-    -- N-bit Register
-    component nbitregister is
+    component dffg_n is
         port
             (
                 i_clk : in  std_logic;  -- Clock input
@@ -58,7 +55,6 @@ architecture structural of register_file is
                 );
     end component;
 
-    -- Signal Declarations
     signal s1, s3 : std_logic_vector(31 downto 0);  -- 2 32-bit signals
     signal s2     : TwoDArray;          -- 2d std_logic_vector signal
 
@@ -72,7 +68,7 @@ begin
             );
 
     -- Set register $0 to 0
-    reg0 : component nbitregister
+    reg0 : component dffg_n
         port
         map(
             i_clk => clk,               -- clock
@@ -82,11 +78,11 @@ begin
             o_q   => s2(0)              -- 2d array
             );
 
-    -- AND gate to enable write
+    -- AND gate to enable write using decoder output
     andgate : process (s1, i_wC) is
     begin
         for i in 1 to 31 loop
-            s3(i) <= s1(i) and i_wC;  -- AND the write enable signal with the decoder output
+            s3(i) <= s1(i) and i_wC;
         end loop;
 
     end process andgate;
@@ -95,7 +91,7 @@ begin
 
     registerlist : for i in 1 to 31 generate
 
-        regi : component nbitregister
+        regi : component dffg_n
             port
             map(
                 i_clk => clk,           -- clock
