@@ -40,15 +40,13 @@ architecture structure of IF_ID_STAGE is
 
 
 component dffg_n is
-    generic (
-        n : integer := 32
-        );
-    port (
-        i_clk : in  std_logic;                         -- Clock Input
-        i_rst : in  std_logic;                         -- Reset Input
-        i_we  : in  std_logic;                         -- Write Enable Input
-        i_d   : in  std_logic_vector(n - 1 downto 0);  -- Data Value input
-        o_q   : out std_logic_vector(n - 1 downto 0)   -- Data Value output
+    generic(N : integer := 32);
+    port(
+        i_CLK : in  std_logic;                       -- Clock input
+        i_RST : in  std_logic;                       -- Reset input
+        i_WrE : in  std_logic;                       -- Write enable input
+        i_D   : in  std_logic_vector(N-1 downto 0);  -- Data input
+        o_Q   : out std_logic_vector(N-1 downto 0)   -- Data output
         );
 end component;
 
@@ -152,21 +150,21 @@ s_instrFlush <= (others => '0') when i_flush = '1' else i_instr;
 s_stall <= '0' when i_stall = '1' else i_regw;
 CurrentInstruction: dffg_n 
 	port map(
-		i_clk => i_clk, -- rising edge?
-		i_rst => i_rst,
-		i_we  => s_stall,
+		i_CLK => i_clk, -- rising edge?
+		i_RST => i_rst,
+		i_WrE  => s_stall,
 		--i_d   => (others => '0') when i_flush = '1' else s_instr;
-		i_d   => s_instrFlush,
-		o_q   => o_instr);
+		i_D   => s_instrFlush,
+		o_Q   => o_instr);
 
 NextInstruction: dffg_n 
 	port map(
-		i_clk => i_clk,
-		i_rst => i_rst,
-		i_we  => s_stall,
+		i_CLK => i_clk,
+		i_RST => i_rst,
+		i_WrE  => s_stall,
 		--i_d   => (others => '0') when i_flush = '1' else s_addr;
-		i_d   => s_addrFlush,
-		o_q   => o_addr);
+		i_D   => s_addrFlush,
+		o_Q   => o_addr);
 
 RegFile0: register_file
 	port map(
