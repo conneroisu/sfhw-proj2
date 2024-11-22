@@ -10,12 +10,13 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-
+use IEEE.std_logic_textio.all;
 
 entity tb_register_file is
-    generic (
-        gclk_hper : time := 50 ns
-        );
+    generic
+        (
+            gclk_hper : time := 50 ns
+            );
 end entity tb_register_file;
 
 -- Testbench Architecture
@@ -80,13 +81,14 @@ begin
 
     p_clk : process is
     begin
+
         s_clk <= '0';
         wait for gclk_hper;
         s_clk <= '1';
         wait for gclk_hper;
+
     end process p_clk;
 
-    -- Testbench Process
     p_tb : process is
     begin
 
@@ -109,10 +111,10 @@ begin
         s_wa        <= "00001";
         s_r1        <= "00001";
         s_r2        <= "00000";
-        s_wd        <= x"00001d1E";
-        -- Expect d1 to read $1 (0x0001d1E) and
+        s_wd        <= x"00001BC0";
+        -- Expect d1 to read $1 (0x0001BCO) and
         -- d2 to read the zero register (0x00000000)
-        expected_d1 <= x"00001d1E";
+        expected_d1 <= x"00001BC0";
         expected_d2 <= x"00000000";
         assert s_d1 = expected_d1 and s_d2 = expected_d2 report "Test 2 Failed" severity failure;
         report "Test 2 Passed" severity note;
@@ -123,9 +125,9 @@ begin
         s_r1        <= "00001";
         s_r2        <= "00010";
         s_wd        <= x"000BA5ED";
-        -- Expect d1 to read $1 (0x1d1E) and
+        -- Expect d1 to read $1 (0x1BCO) and
         -- d2 to read $2 (0xBA5ED)
-        expected_d1 <= x"00001d1E";
+        expected_d1 <= x"00001BC0";
         expected_d2 <= x"000BA5ED";
         assert s_d1 = expected_d1 and s_d2 = expected_d2 report "Test 3 Failed" severity failure;
         report "Test 3 Passed" severity note;
@@ -137,9 +139,9 @@ begin
         s_r2        <= "00011";
         s_wd        <= x"00FAC000";
         -- Expect No Write to Occur
-        -- d1 to read $1 (0x1d1E) and
+        -- d1 to read $1 (0x1BCO) and
         -- d2 to read register 3 (0x00000000) still null, no write
-        expected_d1 <= x"00001d1E";
+        expected_d1 <= x"00001BC0";
         expected_d2 <= x"00000000";
         assert s_d1 = expected_d1 and s_d2 = expected_d2 report "Test 4 Failed" severity failure;
         report "Test 4 Passed" severity note;
@@ -150,7 +152,7 @@ begin
         s_r1        <= "00100";
         s_r2        <= "00010";
         s_wd        <= x"44444444";
-        -- Expect d1 to read $4 (0x44444444) and
+        -- Expect d1 to read $4 (0x00000000) and
         -- d2 to read $2 should still be (0xBA5ED)
         expected_d1 <= x"00000000";
         expected_d2 <= x"000BA5ED";
@@ -227,10 +229,10 @@ begin
         s_wa        <= "00000";         -- Attempt to write to register 0
         s_r1        <= "00000";         -- Read from register 0
         s_r2        <= "00001";         -- Read from register 1 for comparison
-        s_wd        <= x"DEADBEEF";  -- Data attempted to write to zero register
+        s_wd        <= x"D0C550C5";  -- Data attempted to write to zero register
         -- Expected: zero register remains zero, register 1 unchanged
         expected_d1 <= x"00000000";     -- Zero register should still be 0
-        expected_d2 <= x"00001d1E";     -- Previous value, assuming no change
+        expected_d2 <= x"00001BC0";     -- Previous value, assuming no change
         assert s_d1 = expected_d1 and s_d2 = expected_d2 report "Test 11 Failed" severity failure;
         report "Test 11 Passed" severity note;
         wait for cclk_per;
@@ -241,7 +243,7 @@ begin
         s_r2        <= "00001";      -- Check another register for comparison
         -- Expected: zero register should still be zero, regardless of operations performed
         expected_d1 <= x"00000000";     -- Confirm zero register is indeed zero
-        expected_d2 <= x"00001d1E";  -- Assuming value for comparison, unchanged
+        expected_d2 <= x"00001BC0";  -- Assuming value for comparison, unchanged
         assert s_d1 = expected_d1 and s_d2 = expected_d2 report "Test 13 Failed" severity failure;
         report "Test 13 Passed" severity note;
         wait for cclk_per;
@@ -502,4 +504,19 @@ begin
     end process p_tb;
 
 end architecture behavior;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

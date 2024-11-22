@@ -1,4 +1,4 @@
-set target "tb_regFile"
+set target "tb_register_file"
 set file "${target}.vhd"
 
 vcom -2008 -work work ../src/MIPS_types.vhd
