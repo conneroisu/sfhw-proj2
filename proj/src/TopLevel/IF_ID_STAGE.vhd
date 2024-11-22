@@ -20,7 +20,7 @@ entity IF_ID_STAGE is
 		i_flush: in std_logic;
 		i_stall: in std_logic;
 		i_sctrl: in std_logic; --sign control signal
-		i_regw : in std_logic; --register write signal
+		o_regw : out std_logic; --register write signal
 		i_addr : in std_logic_vector(31 downto 0);
 		i_instr: in std_logic_vector(31 downto 0);
 		o_instr: out std_logic_vector(31 downto 0);
@@ -77,8 +77,7 @@ end component;
     signal s_instr: std_logic_vector(31 downto 0);
     signal s_addr: std_logic_vector(31 downto 0);
     signal s_addrFlush, s_instrFlush : std_logic_vector(31 downto 0);
-    signal s_d1, s_d2 : std_logic_vector(31 downto 0);
-    signal s_stall : std_logic;
+    signal s_regw   : std_logic;
     signal s_Shamt  : std_logic_vector(4 downto 0);
     signal s_Rs     : std_logic_vector(4 downto 0);
     signal s_Rt     : std_logic_vector(4 downto 0);
@@ -147,12 +146,12 @@ begin
 
 s_addrFlush <= (others => '0') when i_flush = '1' else i_addr;
 s_instrFlush <= (others => '0') when i_flush = '1' else i_instr;
-s_stall <= '0' when i_stall = '1' else i_regw;
+s_regw <= '0' when i_stall = '1' else s_regw;
 CurrentInstruction: dffg_n 
 	port map(
 		i_CLK => i_clk, -- rising edge?
 		i_RST => i_rst,
-		i_WrE  => s_stall,
+		i_WrE  => s_regw,
 		--i_d   => (others => '0') when i_flush = '1' else s_instr;
 		i_D   => s_instrFlush,
 		o_Q   => o_instr);
@@ -161,7 +160,7 @@ NextInstruction: dffg_n
 	port map(
 		i_CLK => i_clk,
 		i_RST => i_rst,
-		i_WrE  => s_stall,
+		i_WrE  => s_regw,
 		--i_d   => (others => '0') when i_flush = '1' else s_addr;
 		i_D   => s_addrFlush,
 		o_Q   => o_addr);
@@ -170,13 +169,13 @@ RegFile0: register_file
 	port map(
 		clk   => i_clk,
 		reset => i_rst,
-		i_wC  => i_regw, -- Write enable input
+		i_wC  => s_regw, -- Write enable input
 		i_wA  => i_instr(15 downto 11), --write address
 		i_wD  => i_instr,
 		i_r1  => i_instr(25 downto 21),
 		i_r2  => i_instr(20 downto 16),
-		o_d1  => s_d1,
-		o_d2  => s_d1);
+		o_d1  => o_d1,
+		o_d2  => o_d2);
 
 
 SignExt0: extender16t32
@@ -186,15 +185,7 @@ SignExt0: extender16t32
 		o_O => o_sign
 	);
 
-
-o_d1 <= s_d1;
-o_d2 <= s_d2;
---o_instr <= s_instr;
---o_addr  <= s_addr;
-
---o_ctrl <= s_instr(31 downto 26);
---o_ex1  <= s_instr(20 downto 16);
---o_ex2  <= s_instr(15 downto 11);
+o_regw <= s_regw;
 
 
 end structure;

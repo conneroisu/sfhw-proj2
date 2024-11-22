@@ -13,7 +13,7 @@ component IF_ID_STAGE is
 		i_flush: in std_logic;
 		i_stall: in std_logic;
 		i_sctrl: in std_logic; --sign control signal
-		i_regw : in std_logic; --register write signal
+		o_regw : out std_logic; --register write signal
 		i_instr: in std_logic_vector(31 downto 0);
 		i_addr : in std_logic_vector(31 downto 0);
 		o_instr: out std_logic_vector(31 downto 0);
@@ -49,7 +49,7 @@ port map(i_clk => s_clk,
 	i_flush=> s_flush,
 	i_stall=> s_stall,
 	i_sctrl=> s_sctrl,
-	i_regw => s_regw, 
+	o_regw => s_regw, 
 	i_instr=> s_instr,
 	i_addr => s_addr,
 	o_instr=> s_oinstr,
@@ -70,8 +70,9 @@ begin
 	
 	s_stall <= '0';
 	s_flush <= '0';
-	s_instr <= x"0000000A";
+	s_instr <= x"012A4020";
 	s_addr <= x"00000001";
+
 
 	wait for 10 ns;
 	s_clk <= '1';
@@ -81,7 +82,7 @@ begin
 
 	s_stall <= '1';
 	s_flush <= '1';
-	s_instr <= x"0000000A";
+	s_instr <= x"02528022";
 	s_addr <= x"00000001";
 	
 
