@@ -44,60 +44,29 @@ end IF_ID_STAGE;
 architecture structure of IF_ID_STAGE is
 
 
-    component dffg_n is
-        generic (
-            n : integer := 32
-            );
-        port (
-            i_clk : in  std_logic;      -- Clock Input
-            i_rst : in  std_logic;      -- Reset Input
-            i_we  : in  std_logic;      -- Write Enable Input
-            i_d   : in  std_logic_vector(n - 1 downto 0);  -- Data Value input
-            o_q   : out std_logic_vector(n - 1 downto 0)   -- Data Value output
-            );
-    end component;
 
-    component register_file is
-        port
-            (clk   : in  std_logic;     -- Clock input
-             i_wA  : in  std_logic_vector(4 downto 0);  -- Write address input
-             i_wD  : in  std_logic_vector(31 downto 0);  -- Write data input
-             i_wC  : in  std_logic;     -- Write enable input
-             i_r1  : in  std_logic_vector(4 downto 0);  -- Read address 1 input
-             i_r2  : in  std_logic_vector(4 downto 0);  -- Read address 2 input
-             reset : in  std_logic;     -- Reset input
-             o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
-             o_d2  : out std_logic_vector(31 downto 0)  -- Read data 2 output
-             );
-    end component;
+component dffg_n is
+    generic(N : integer := 32);
+    port(
+        i_CLK : in  std_logic;                       -- Clock input
+        i_RST : in  std_logic;                       -- Reset input
+        i_WrE : in  std_logic;                       -- Write enable input
+        i_D   : in  std_logic_vector(N-1 downto 0);  -- Data input
+        o_Q   : out std_logic_vector(N-1 downto 0)   -- Data output
+        );
+end component;
 
-
-    component dffg_n is
-        generic (
-            n : integer := 32
-            );
-        port (
-            i_clk : in  std_logic;      -- Clock Input
-            i_rst : in  std_logic;      -- Reset Input
-            i_we  : in  std_logic;      -- Write Enable Input
-            i_d   : in  std_logic_vector(n - 1 downto 0);  -- Data Value input
-            o_q   : out std_logic_vector(n - 1 downto 0)   -- Data Value output
-            );
-    end component;
-
-    component register_file is
-        port
-            (clk   : in  std_logic;     -- Clock input
-             i_wA  : in  std_logic_vector(4 downto 0);  -- Write address input
-             i_wD  : in  std_logic_vector(31 downto 0);  -- Write data input
-             i_wC  : in  std_logic;     -- Write enable input
-             i_r1  : in  std_logic_vector(4 downto 0);  -- Read address 1 input
-             i_r2  : in  std_logic_vector(4 downto 0);  -- Read address 2 input
-             reset : in  std_logic;     -- Reset input
-             o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
-             o_d2  : out std_logic_vector(31 downto 0)  -- Read data 2 output
-             );
-    end component;
+component register_file is
+    port
+        (   clk   : in  std_logic;                      -- Clock input
+            i_wA  : in  std_logic_vector(4 downto 0);   -- Write address input
+            i_wD  : in  std_logic_vector(31 downto 0);  -- Write data input
+            i_wC  : in  std_logic;                      -- Write enable input
+            i_r1  : in  std_logic_vector(4 downto 0);   -- Read address 1 input
+            i_r2  : in  std_logic_vector(4 downto 0);   -- Read address 2 input
+            reset : in  std_logic;                      -- Reset input
+            o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
+            o_d2  : out std_logic_vector(31 downto 0)   -- Read data 2 output
 
     component extender16t32 is
         port(
@@ -181,58 +150,52 @@ begin
         end case;
     end process;
 
-    s_addrFlush  <= (others => '0') when i_flush = '1' else i_addr;
-    s_instrFlush <= (others => '0') when i_flush = '1' else i_instr;
-    s_stall      <= '0'             when i_stall = '1' else i_regw;
-    CurrentInstruction : dffg_n
-        port map(
-            i_clk => i_clk,             -- rising edge?
-            i_rst => i_rst,
-            i_we  => s_stall,
-            --i_d   => (others => '0') when i_flush = '1' else s_instr;
-            i_d   => s_instrFlush,
-            o_q   => o_instr);
 
-    NextInstruction : dffg_n
-        port map(
-            i_clk => i_clk,
-            i_rst => i_rst,
-            i_we  => s_stall,
-            --i_d   => (others => '0') when i_flush = '1' else s_addr;
-            i_d   => s_addrFlush,
-            o_q   => o_addr);
+s_addrFlush <= (others => '0') when i_flush = '1' else i_addr;
+s_instrFlush <= (others => '0') when i_flush = '1' else i_instr;
+s_stall <= '0' when i_stall = '1' else i_regw;
+         
+CurrentInstruction: dffg_n 
+	port map(
+		i_CLK => i_clk, -- rising edge?
+		i_RST => i_rst,
+		i_WrE  => s_stall,
+		--i_d   => (others => '0') when i_flush = '1' else s_instr;
+		i_D   => s_instrFlush,
+		o_Q   => o_instr);
 
-    RegFile0 : register_file
-        port map(
-            clk   => i_clk,
-            reset => i_rst,
-            i_wC  => i_regw,                 -- Write enable input
-            i_wA  => i_instr(15 downto 11),  --write address
-            i_wD  => i_instr,
-            i_r1  => i_instr(25 downto 21),
-            i_r2  => i_instr(20 downto 16),
-            o_d1  => s_d1,
-            o_d2  => s_d1);
+NextInstruction: dffg_n 
+	port map(
+		i_CLK => i_clk,
+		i_RST => i_rst,
+		i_WrE  => s_stall,
+		--i_d   => (others => '0') when i_flush = '1' else s_addr;
+		i_D   => s_addrFlush,
+		o_Q   => o_addr);
 
-
-    SignExt0 : extender16t32
-        port map(
-            i_I => i_instr(15 downto 0),
-            i_C => i_sctrl,
-            o_O => o_sign
-            );
+RegFile0: register_file
+	port map(
+		clk   => i_clk,
+		reset => i_rst,
+		i_wC  => i_regw, -- Write enable input
+		i_wA  => i_instr(15 downto 11), --write address
+		i_wD  => i_instr,
+		i_r1  => i_instr(25 downto 21),
+		i_r2  => i_instr(20 downto 16),
+		o_d1  => s_d1,
+		o_d2  => s_d1);
 
 
-    o_d1 <= s_d1;
-    o_d2 <= s_d2;
---o_instr <= s_instr;
---o_addr  <= s_addr;
+SignExt0: extender16t32
+	port map(
+		i_I => i_instr(15 downto 0),
+		i_C => i_sctrl,
+		o_O => o_sign
+	);
 
 
---o_ctrl <= s_instr(31 downto 26);
---o_ex1  <= s_instr(20 downto 16);
---o_ex2  <= s_instr(15 downto 11);
-
+o_d1 <= s_d1;
+o_d2 <= s_d2;
 
 end structure;
 
