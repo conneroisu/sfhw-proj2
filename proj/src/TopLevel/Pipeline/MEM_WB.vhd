@@ -43,7 +43,7 @@ begin
     process(clk, reset)
     begin
         if reset = '1' then
-            -- Reset all registers
+            -- Reset all registers to 0
             ALUreg       <= (others => '0');
             DataMemReg   <= (others => '0');
             RegDstReg    <= (others => '0');
@@ -51,25 +51,23 @@ begin
             MemToReg_reg <= '0';
         elsif rising_edge(clk) then
             -- Latch input signals, this looks like d flip flops inside the schematic
-            -- Need to pipe the values regardless, as this is creating a 1 clock cycle delay, which I don't want.
-            -- How could I make this store values with DFF's, but also pass along to avoid the delay? is the delay intrinsic to DFF's?
             ALUreg       <= i_ALUResult;
             DataMemReg   <= i_DataMem;
             RegDstReg    <= i_RegDst;
             RegWrite_reg <= i_RegWrite;
             MemToReg_reg <= i_MemToReg;
+            --o_wbData <= (others => '0'); This line doesnt do what I want it to. When the clock rises, i want output port o_wbData to be set to XXXXXXXX.
         end if;
 
         -- Output assignments
         o_regDst   <= RegDstReg;
         o_regWrite <= RegWrite_reg;
-        o_wbData <= ALUreg; -- For testing purposes
     end process;
 
 
 
     -- MUX instantiation to generate o_wbData
-    MemToRegMux : mux2t1_N
+    MemToRegMux : mux2t1_N --Muxed value is outputted after 1/2 clock cycle, to be used at next rising edge.
         port map (
             i_S  => MemToReg_reg,   -- Select signal from pipeline register
             i_D0 => ALUreg,         -- ALU result from pipeline register
