@@ -39,3 +39,6 @@ output/
 etch*
 *.wlf
 et.log
+*.dbg
+._*
+*.mti

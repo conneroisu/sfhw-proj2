@@ -1,0 +1,22 @@
+# https://taskfile.dev
+---
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+    silent: true
+  sc-test:
+    cmds:
+      - cd ./src_sc/ && ./381_tf.sh test ./proj/mips/*.s
+  hw-test:
+    cmds:
+      - cd ./src_hw/ && ./381_tf.sh test ./proj/mips/*.s
+  sf-test:
+    cmds:
+      - cd ./src_sw/ && ./381_tf.sh test ./proj/mips/*.s

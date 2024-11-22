@@ -1,7 +1,12 @@
 -- <header>
--- Author(s): Kariniux
+-- Author(s): Karina Hernandez Balboa, Kariniux
 -- Name: proj/src/TopLevel/IF_ID_STAGE.vhd
 -- Notes:
+--      connero 2024-11-21T10:53:07-06:00 Merge-branch-main-into-New_IFIDSTAGE
+--      Karina Hernandez Balboa 2024-11-21T10:44:36-06:00 changes-made-to-IFID-stage-file
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--      Kariniux 2024-11-19T18:52:49-06:00 Merge-branch-main-into-New_IFIDSTAGE
+--      Kariniux 2024-11-19T18:51:24-06:00 Updates-to-IF-ID
 --      Kariniux 2024-11-14T09:50:52-06:00 Merge-branch-main-into-IF-ID
 --      Kariniux 2024-11-14T09:46:15-06:00 updates-to-the-IF-ID-stage.-still-not-complete
 --      Kariniux 2024-11-14T08:17:43-06:00 IF_ID-stage
@@ -13,30 +18,31 @@ use ieee.numeric_std.all;
 
 entity IF_ID_STAGE is
 
-	    port
+    port
         (
-		i_clk  : in std_logic;
-		i_rst  : in std_logic;
-		i_flush: in std_logic;
-		i_stall: in std_logic;
-		i_sctrl: in std_logic; --sign control signal
-		i_regw : in std_logic; --register write signal
-		i_addr : in std_logic_vector(31 downto 0);
-		i_instr: in std_logic_vector(31 downto 0);
-		o_instr: out std_logic_vector(31 downto 0);
-		o_addr : out std_logic_vector(31 downto 0);
-		o_d1   : out std_logic_vector(31 downto 0);
-		o_d2   : out std_logic_vector(31 downto 0);
+            i_clk   : in  std_logic;
+            i_rst   : in  std_logic;
+            i_flush : in  std_logic;
+            i_stall : in  std_logic;
+            i_sctrl : in  std_logic;    --sign control signal
+            i_regw  : in  std_logic;    --register write signal
+            i_addr  : in  std_logic_vector(31 downto 0);
+            i_instr : in  std_logic_vector(31 downto 0);
+            o_instr : out std_logic_vector(31 downto 0);
+            o_addr  : out std_logic_vector(31 downto 0);
+            o_d1    : out std_logic_vector(31 downto 0);
+            o_d2    : out std_logic_vector(31 downto 0);
 
 
-		--multiple outputs to make it easier to connect them to the next stage
---		o_ctrl : out std_logic_vector(5 downto 0); -- bits that go to control 
---		o_ex1  : out std_logic_vector(4 downto 0); -- bits that go to ID/EX 20 downto 16
---		o_ex2  : out std_logic_vector(4 downto 0); -- bits that go to ID/EX  15 downto 11
-		o_sign : out std_logic_vector(31 downto 0));
-        
+            --multiple outputs to make it easier to connect them to the next stage
+--              o_ctrl : out std_logic_vector(5 downto 0); -- bits that go to control 
+--              o_ex1  : out std_logic_vector(4 downto 0); -- bits that go to ID/EX 20 downto 16
+--              o_ex2  : out std_logic_vector(4 downto 0); -- bits that go to ID/EX  15 downto 11
+            o_sign : out std_logic_vector(31 downto 0));
+
 end IF_ID_STAGE;
 architecture structure of IF_ID_STAGE is
+
 
 
 component dffg_n is
@@ -61,30 +67,28 @@ component register_file is
             reset : in  std_logic;                      -- Reset input
             o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
             o_d2  : out std_logic_vector(31 downto 0)   -- Read data 2 output
-            );
-end component;
 
-component extender16t32 is
-    port(
-        i_I : in  std_logic_vector(15 downto 0);      -- 16 bit immediate
-        i_C : in  std_logic;            -- signed extender or unsigned
-        o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended immediate
-        );
-end component;
+    component extender16t32 is
+        port(
+            i_I : in  std_logic_vector(15 downto 0);  -- 16 bit immediate
+            i_C : in  std_logic;        -- signed extender or unsigned
+            o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended immediate
+            );
+    end component;
 
 
 --signals
-    signal s_instr: std_logic_vector(31 downto 0);
-    signal s_addr: std_logic_vector(31 downto 0);
+    signal s_instr                   : std_logic_vector(31 downto 0);
+    signal s_addr                    : std_logic_vector(31 downto 0);
     signal s_addrFlush, s_instrFlush : std_logic_vector(31 downto 0);
-    signal s_d1, s_d2 : std_logic_vector(31 downto 0);
-    signal s_stall : std_logic;
-    signal s_Shamt  : std_logic_vector(4 downto 0);
-    signal s_Rs     : std_logic_vector(4 downto 0);
-    signal s_Rt     : std_logic_vector(4 downto 0);
-    signal s_Rd     : std_logic_vector(4 downto 0);
-    signal s_Imm    : std_logic_vector(15 downto 0);
-    signal s_Funct  : std_logic_vector(5 downto 0);
+    signal s_d1, s_d2                : std_logic_vector(31 downto 0);
+    signal s_stall                   : std_logic;
+    signal s_Shamt                   : std_logic_vector(4 downto 0);
+    signal s_Rs                      : std_logic_vector(4 downto 0);
+    signal s_Rt                      : std_logic_vector(4 downto 0);
+    signal s_Rd                      : std_logic_vector(4 downto 0);
+    signal s_Imm                     : std_logic_vector(15 downto 0);
+    signal s_Funct                   : std_logic_vector(5 downto 0);
 
     signal s_opcode : std_logic_vector(5 downto 0);
     signal si_Rs    : std_logic_vector(4 downto 0);
@@ -97,9 +101,10 @@ end component;
 begin
 
 
-	    ----------------------------------------------------------------------logic
+    ----------------------------------------------------------------------logic
 
-		InstProc : process(s_opcode, i_instr, s_Rt, s_Rs, s_Rd, s_Shamt, s_Funct, s_Imm)
+    InstProc : process(s_opcode, i_instr, s_Rt, s_Rs, s_Rd, s_Shamt, s_Funct, s_Imm)
+
     begin
         s_opcode <= i_instr(31 downto 26);
         case s_opcode is
@@ -145,9 +150,11 @@ begin
         end case;
     end process;
 
+
 s_addrFlush <= (others => '0') when i_flush = '1' else i_addr;
 s_instrFlush <= (others => '0') when i_flush = '1' else i_instr;
 s_stall <= '0' when i_stall = '1' else i_regw;
+         
 CurrentInstruction: dffg_n 
 	port map(
 		i_CLK => i_clk, -- rising edge?
@@ -189,12 +196,6 @@ SignExt0: extender16t32
 
 o_d1 <= s_d1;
 o_d2 <= s_d2;
---o_instr <= s_instr;
---o_addr  <= s_addr;
-
---o_ctrl <= s_instr(31 downto 26);
---o_ex1  <= s_instr(20 downto 16);
---o_ex2  <= s_instr(15 downto 11);
-
 
 end structure;
+

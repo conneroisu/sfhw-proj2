@@ -1,0 +1,75 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+entity instruction_fetch is
+    generic(N : integer := 32);
+    port(
+        i_CLK            : in  std_logic;                     -- Clock.
+        i_RST            : in  std_logic;                     -- Reset.
+        i_NextInstAddr   : in  std_logic_vector(N - 1 downto 0);  -- Next instruction address.
+        i_InstAddr       : in  std_logic_vector(N - 1 downto 0);  -- Instruction address.
+        i_InstExt        : in  std_logic_vector(N - 1 downto 0);  -- Instruction data.
+        i_Inst           : in  std_logic_vector(N - 1 downto 0);  -- Instruction.
+        i_inputPC        : in  std_logic_vector(N - 1 downto 0);  -- wire from the jump mux
+        o_imm16          : out std_logic_vector(15 downto 0);  -- Instruction bits[15-0] into Sign Extender
+        o_funcCode       : out std_logic_vector(5 downto 0);  -- Instruction bits[5-0] into ALU Control 
+        o_shamt          : out std_logic_vector(4 downto 0);  -- Instruction bits[1--6] into ALU (for Barrel Shifter) 
+        o_regD           : out std_logic_vector(4 downto 0);  -- Instruction bits[11-15] into RegDstMux bits[4-0]
+        o_RegInReadData2 : out std_logic_vector(4 downto 0);  -- Instruction bits[16-20] into RegDstMux and Register (bits[4-0])
+        o_RegInReadData1 : out std_logic_vector(4 downto 0);  -- Instruction bits[25-21] into Register (bits[4-0])
+        o_opCode         : out std_logic_vector(5 downto 0);  -- Instruction bits[26-31] into Control Brick (bits[5-0)
+        o_jumpAddress    : out std_logic_vector(31 downto 0);  -- Instruction bits[25-0] into bits[27-2] of jumpAddr
+        );
+end instruction_fetch;
+architecture structural of instruction_fetch is
+    component program_counter is
+        port (
+            i_CLK : in  std_logic;      ------------------------ Clock.
+            i_RST : in  std_logic;      ------------------------ Reset.
+            i_D   : in  std_logic_vector(31 downto 0);        -- Data.
+            o_Q   : out std_logic_vector(31 downto 0)         -- Output.
+            );
+    end component;
+    component adderSubtractor is
+        generic (N : integer := 32);
+        port (
+            nAdd_Sub : in  std_logic;  ------------------------- 0 for add, 1 for subtract
+            i_S      : in  std_logic;  ------------------------- signed or unsigned operations
+            i_A      : in  std_logic_vector(N - 1 downto 0);  -- input a
+            i_B      : in  std_logic_vector(N - 1 downto 0);  -- input b
+            o_Y      : out std_logic_vector(N - 1 downto 0);  -- output y
+            o_Cout   : out std_logic    ------------------------ carry out
+            );
+    end component;
+begin
+
+    programCounter : program_counter
+        port map(
+            i_CLK => i_CLK,             -- Clock.
+            i_RST => i_RST,             -- Reset.
+            i_D   => i_InputPC,         -- Data.
+            o_Q   => i_NextInstAddr     -- Output.
+            );
+    o_imm16          <= (others => '0');
+    o_funcCode       <= (others => '0');
+    o_shamt          <= (others => '0');
+    o_regD           <= (others => '0');
+    o_RegInReadData2 <= (others => '0');
+    o_RegInReadData1 <= (others => '0');
+    o_opCode         <= (others => '0');
+    o_jumpAddress    <= (others => '0');
+    -- instructionSlice snips the Instruction data into smaller parts
+    instructionSlice : process (i_Inst)  -- snip the Instruction data into smaller parts
+    begin
+        o_imm16(15 downto 0)         <= i_Inst(15 downto 0);  -- bits[15-0] into Sign Extender
+        o_funcCode(5 downto 0)       <= i_Inst(5 downto 0);  -- bits[5-0] into ALU Control 
+        o_shamt(4 downto 0)          <= i_Inst(10 downto 6);  -- bits[1--6] into ALU (for Barrel Shifter) 
+        o_regD(4 downto 0)           <= i_Inst(15 downto 11);  -- bits[11-15] into RegDstMux bits[4-0]
+        o_RegInReadData2(4 downto 0) <= i_Inst(20 downto 16);  -- bits[16-20] into RegDstMux and Register (bits[4-0])
+        o_RegInReadData1(4 downto 0) <= i_Inst(25 downto 21);  -- bits[25-21] into Register (bits[4-0])
+        o_opCode(5 downto 0)         <= i_Inst(31 downto 26);  -- bits[26-31] into Control Brick (bits[5-0)
+        o_jumpAddress(0)             <= '0';
+        o_jumpAddress(1)             <= '0';  -- Set first two bits to zero
+        o_jumpAddress(27 downto 2)   <= i_Inst(25 downto 0);  -- Instruction bits[25-0] into bits[27-2] of jumpAddr
+    end process;
+end structural;

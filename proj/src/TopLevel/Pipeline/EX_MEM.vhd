@@ -1,8 +1,9 @@
 -- <header>
--- Author(s): dmvp01
--- Name: proj/src/TopLevel/Stages/EX_MEM.vhd
+-- Author(s): Kariniux, Conner Ohnesorge
+-- Name: proj/src/TopLevel/Pipeline/EX_MEM.vhd
 -- Notes:
---      dmvp01 2024-11-13T16:31:57-06:00 adding-pipeline-Reg-Ex-Mem-implementation-as-well-as-test-bench
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--      Conner Ohnesorge 2024-11-18T10:07:32-06:00 rename-stages-to-pipeline-remove-back-up-file-and-add-space-for
 -- </header>
 
 library IEEE;
