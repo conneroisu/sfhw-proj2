@@ -1,7 +1,10 @@
 -- <header>
--- Author(s): Conner Ohnesorge, aidanfoss
+-- Author(s): Kariniux, aidanfoss, Conner Ohnesorge
 -- Name: proj/src/LowLevel/extender8t32.vhd
 -- Notes:
+--      Kariniux 2024-11-21T09:09:28-06:00 Merge-pull-request-63-from-conneroisu-New_IFIDSTAGE
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--      aidanfoss 2024-11-21T08:32:03-06:00 unused-declarations
 --      connero 2024-11-11T09:11:16-06:00 Merge-branch-main-into-component-forward-unit
 --      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
 --      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
@@ -19,8 +22,8 @@ entity extender8t32 is
 end extender8t32;
 
 architecture dataflow of extender8t32 is
-    signal ext_bit  : std_logic;                      -- sign extension bit
-    signal extended : std_logic_vector(31 downto 0);  -- extended immediate
+    signal ext_bit : std_logic;         -- sign extension bit
+--signal extended : std_logic_vector(31 downto 0);  -- extended immediate
 begin
 
     o_O(7 downto 0) <= i_I(7 downto 0);  --copy bits we already have

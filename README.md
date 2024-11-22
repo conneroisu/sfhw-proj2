@@ -8,14 +8,6 @@
 
 ![diagram](./README.png)
 
-## Repository Planning
-
-- [ ] TODO: Rename this repo to MIPS-Processors
-- [ ] TODO: Restructure each project into a directory
-- [ ] TODO: Add a README.md file to each project
-- [ ] TODO: Add a LICENSE file to each project
-- [ ] TODO: Add a .gitignore file to each project
-
 ## Structure
 
 ```bash
@@ -23,15 +15,15 @@
 ├── LICENSE
 ├── README.md
 ├── README.png
-├── Single-Cycle-Processor
+├── src_sc
 │   ├── LICENSE
 │   ├── README.md
 │   ├── README.png
-├── Software-Scheduled-Processor
+├── src_sf
 │   ├── LICENSE
 │   ├── README.md
 │   ├── README.png
-└── Hardware-Scheduled-Processor
+└── src_hw
     ├── LICENSE
     ├── README.md
     └── README.png

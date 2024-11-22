@@ -1,9 +1,16 @@
+-- <header>
+-- Author(s): Karina Hernandez
+-- Name: proj/test/tb_IFID.vhd
+-- Notes:
+--      Karina Hernandez 2024-11-21T10:51:06-06:00 new-IFID-testbench
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity tb_IFID is
 end tb_IFID;
-    
+
 architecture behavior of tb_IFID is
 component IF_ID_STAGE is
 	    port
@@ -39,10 +46,9 @@ signal s_od2    		: std_logic_vector(31 downto 0);
 signal s_osign    		: std_logic_vector(31 downto 0);
 
 
-
-
-
 begin
+  
+  
 DUT0: IF_ID_STAGE
 port map(i_clk => s_clk,
 	i_rst  => s_rst,
@@ -88,15 +94,9 @@ begin
 
 
 
+        wait;
 
 
-
-
-
-
-
-wait;
-
-
-end process;
+    end process;
 end behavior;
+

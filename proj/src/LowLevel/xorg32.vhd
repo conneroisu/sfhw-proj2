@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge, aidanfoss
+-- Author(s): Kariniux, Conner Ohnesorge, aidanfoss
 -- Name: proj/src/LowLevel/xorg32.vhd
 -- Notes:
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
 --      connero 2024-11-11T09:11:16-06:00 Merge-branch-main-into-component-forward-unit
 --      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
 --      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage

@@ -1,8 +1,11 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): Conner Ohnesorge, Kariniux
 -- Name: proj/src/TopLevel/ALU/ALU.vhd
 -- Notes:
---      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
+--	Conner Ohnesorge 2024-11-21T10:25:45-06:00 remove-unused-declarations-from-the-ALU
+--	Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--	Conner Ohnesorge 2024-11-18T10:09:46-06:00 fix-spacing-in-alu.vhd
+--	Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
 -- </header>
 
 library IEEE;
@@ -49,17 +52,6 @@ architecture structural of alu is
                 i_leftOrRight : in  std_logic;  -- 0=right, 1=left
                 i_shiftType   : in  std_logic;  -- 0 for logical shift, 1 for arithmetic shift
                 o_O           : out std_logic_vector(N - 1 downto 0)  -- shifted output
-                );
-    end component;
-    component mux2t1_N is
-        generic
-            (N : integer := 16);
-        port
-            (
-                i_S  : in  std_logic;
-                i_D0 : in  std_logic_vector(31 downto 0);
-                i_D1 : in  std_logic_vector(31 downto 0);
-                o_O  : out std_logic_vector(31 downto 0)
                 );
     end component;
     component andg32 is
