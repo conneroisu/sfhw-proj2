@@ -21,12 +21,11 @@ end MEM_WB;
 architecture structural of MEM_WB is
 
     -- Internal signals for the pipeline registers
-    signal ALUreg       : std_logic_vector(31 downto 0);
-    signal DataMemReg   : std_logic_vector(31 downto 0);
-    signal RegDstReg    : std_logic_vector(4 downto 0);
-    signal RegWrite_reg : std_logic;
-    signal MemToReg_reg : std_logic;
-    signal wbData_muxed : std_logic_vector(31 downto 0);
+    signal ALUreg       : std_logic_vector(31 downto 0) := (others => '0');
+    signal DataMemReg   : std_logic_vector(31 downto 0) := (others => '0');
+    signal RegDstReg    : std_logic_vector(4 downto 0) := (others => '0');
+    signal RegWrite_reg : std_logic := '0';
+    signal MemToReg_reg : std_logic := '0';
 
     -- MUX component declaration
     component mux2t1_N is
@@ -58,11 +57,14 @@ begin
             RegWrite_reg <= i_RegWrite;
             MemToReg_reg <= i_MemToReg;
         end if;
+
+        -- Output assignments
+        o_regDst   <= RegDstReg;
+        o_regWrite <= RegWrite_reg;
+        o_wbData <= ALUreg; -- For testing purposes
     end process;
 
-    -- Output assignments
-    o_regDst   <= RegDstReg;
-    o_regWrite <= RegWrite_reg;
+
 
     -- MUX instantiation to generate o_wbData
     MemToRegMux : mux2t1_N

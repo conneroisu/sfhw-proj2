@@ -76,16 +76,17 @@ begin
         wait for clk_period;
         reset <= '0';
         wait for clk_period;
+	wait for clk_period;
 
         --Test 1: Select Data Memory Value (i_MemToReg = 1)
         si_ALUResult <= X"AAAAAAAA";
-        si_DataMem   <= X"00000010";
+        si_DataMem   <= X"BBBBBBBB";
         si_MemToReg  <= '1';
         si_RegDst    <= "00001";
         si_RegWrite  <= '1';
         wait for clk_period;
         --assert values
-        assert so_wbData = X"00000010" report "o_wbData    mismatch on test 1";
+        assert so_wbData = X"BBBBBBBB" report "o_wbData    mismatch on test 1";
         assert si_MemToReg = '1' report "i_MemToReg  mismatch on test 1";
         assert si_RegDst = "00001" report "i_RegDst    mismatch on test 1";
         assert si_RegWrite = '1' report "i_RegWrite  mismatch on test 1";
@@ -93,14 +94,14 @@ begin
 
 
         --Test 2: Select Data Memory Value (i_MemToReg = 0)
-        si_ALUResult <= X"00000010";
-        si_DataMem   <= X"AAAAAAAA";
+        si_ALUResult <= X"CCCCCCCC";
+        si_DataMem   <= X"DDDDDDDD";
         si_MemToReg  <= '0';
         si_RegDst    <= "00010";
         si_RegWrite  <= '1';
         wait for clk_period;
         --assert values
-        assert so_wbData = X"00000010" report "o_wbData    mismatch on test 2";
+        assert so_wbData = X"CCCCCCCC" report "o_wbData    mismatch on test 2";
         assert si_MemToReg = '0' report "i_MemToReg  mismatch on test 2";
         assert si_RegDst = "00010" report "i_RegDst    mismatch on test 2";
         assert si_RegWrite = '1' report "i_RegWrite  mismatch on test 2";
