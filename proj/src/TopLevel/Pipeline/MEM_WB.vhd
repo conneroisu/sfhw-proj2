@@ -56,15 +56,14 @@ begin
             RegDstReg    <= i_RegDst;
             RegWrite_reg <= i_RegWrite;
             MemToReg_reg <= i_MemToReg;
-            --o_wbData <= (others => '0'); This line doesnt do what I want it to. When the clock rises, i want output port o_wbData to be set to XXXXXXXX.
+        --elsif falling_edge(clk) then --why doesnt this work? it seems like it creates a DFF, and the DFF always outputs a null value which overwrites the mux
+        --    o_wbData     <= (others => '0');
         end if;
 
         -- Output assignments
         o_regDst   <= RegDstReg;
         o_regWrite <= RegWrite_reg;
     end process;
-
-
 
     -- MUX instantiation to generate o_wbData
     MemToRegMux : mux2t1_N --Muxed value is outputted after 1/2 clock cycle, to be used at next rising edge.
