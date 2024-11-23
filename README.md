@@ -3,6 +3,8 @@
 > ### Spreadsheet: https://docs.google.com/spreadsheets/d/1RUNOOiJ3DZ2heZ5_la7ENw52pGrtweVW7ax-dkXzsRU/edit?usp=sharing
 >
 > ### WhenToMeet: https://www.when2meet.com/?27331718-g3Ah7
+>
+> ### Discord: https://discord.gg/JrZtEWpW
 
 # sfhw-proj2
 
