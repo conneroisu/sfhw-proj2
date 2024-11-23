@@ -42,3 +42,4 @@ et.log
 *.dbg
 ._*
 *.mti
+.nfs*
