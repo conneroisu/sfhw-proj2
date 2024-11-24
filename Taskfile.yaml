@@ -1,4 +1,5 @@
 # https://taskfile.dev
+# This is a os-agnostic makefile-like task/script runner.
 ---
 
 version: '3'
