@@ -146,10 +146,6 @@ begin
         generic map (32)
         port map(i_CLK, i_RST, i_WE, i_PC, s_PC);
 
-    PCP4_reg : dffg_n                   -- output of adder, output pc+4
-        generic map (32)
-        port map(i_CLK, i_RST, i_WE, i_PCplus4, s_PCplus4);
-
     Reg1_reg : dffg_n                   -- output of register file, output 1
         generic map (32)
         port map(i_CLK, i_RST, i_WE, i_Read1, o_Read1);
@@ -169,10 +165,6 @@ begin
     Halt_reg : dffg_n
         generic map (1)
         port map(i_CLK, i_RST, i_WE, i_Halt, o_Halt);
-
-    SignExtend_reg : dffg_n
-        generic map (32)
-        port map(i_CLK, i_RST, i_WE, i_Extended, s_Extended);
 
     -- "Instruction" registers
 
