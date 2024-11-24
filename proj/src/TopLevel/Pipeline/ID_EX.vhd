@@ -14,7 +14,7 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.MATH_REAL.all;
 use IEEE.NUMERIC_STD.all;
 
-entity Execute is
+entity IDEX is
     generic(N : integer := 32);
 
     port (
@@ -23,7 +23,6 @@ entity Execute is
         i_RST        : in  std_logic;
         i_WE         : in  std_logic;
         i_PC         : in  std_logic_vector(N-1 downto 0);
-        i_PCplus4    : in  std_logic_vector(N-1 downto 0);
         -- Control Signals (From Control Unit) [begin]
         --= Stage Specific Signals [begin]
         --         RegDst  ALUOp  ALUSrc
@@ -49,9 +48,6 @@ entity Execute is
         o_RegWrite   : out std_logic;
         o_Branch     : out std_logic;
         -- Input Signals [begin]
-        --= Sign Extend Signals [begin]
-        i_Extended   : in  std_logic_vector(N-1 downto 0);
-        o_BranchAddr : out std_logic_vector(N-1 downto 0);
         --= Register File Signals [begin]
         i_Read1      : in  std_logic_vector(N-1 downto 0);
         i_Read2      : in  std_logic_vector(N-1 downto 0);
@@ -86,7 +82,7 @@ entity Execute is
 
 end entity;
 
-architecture structure of Execute is
+architecture structure of IDEX is
 
     component dffg_n is
         generic(N : integer := 32);
@@ -294,11 +290,6 @@ begin
             o_Overflow => s_Overflow,
             o_Zero     => s_Zero
             );
-
-    -- Add 2x shifted extended value to PCplus4
-    o_BranchAddr <= std_logic_vector(
-        unsigned(std_logic_vector(shift_left(unsigned(i_Extended), 2))) + unsigned(i_PCplus4)
-        );
 
 end structure;
 
