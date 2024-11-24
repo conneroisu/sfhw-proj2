@@ -38,7 +38,8 @@ entity Control is
         o_ALUSrcA     : out std_logic_vector(1 downto 0);
         o_ALUSrcB     : out std_logic_vector(1 downto 0);
         o_RegWrite    : out std_logic;
-        o_Halt        : out std_logic
+        o_Halt        : out std_logic;
+        o_IFFlush     : out std_logic -- figure 4.9.4
         );
 
 end entity;

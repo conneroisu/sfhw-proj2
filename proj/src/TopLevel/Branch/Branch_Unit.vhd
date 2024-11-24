@@ -6,23 +6,24 @@ use work.MIPS_types.all;
 entity Branch_Unit is
 
     port (
-        i_clk          : in  std_logic;
-        i_rst          : in  std_logic;
+        i_Clk          : in  std_logic;
+        i_Reset          : in  std_logic;
         i_WriteEnable  : in  std_logic;
         i_Flush        : in  std_logic;
         i_Stall        : in  std_logic;
         i_Extended     : in  std_logic_vector(31 downto 0);
         i_PCplus4      : in  std_logic_vector(31 downto 0);
         i_sctrl        : in  std_logic;  --sign control signal
+        i_BranchTarget : in  std_logic_vector(31 downto 0);
         o_regw         : out std_logic;  --register write signal
         i_addr         : in  std_logic_vector(31 downto 0);
         o_addr         : out std_logic_vector(31 downto 0);
-        o_d1           : out std_logic_vector(31 downto 0);
-        o_d2           : out std_logic_vector(31 downto 0);
-        o_sign         : out std_logic_vector(31 downto 0);
-        o_branch_ctrl  : out std_logic_vector(5 downto 0);
+        o_D1           : out std_logic_vector(31 downto 0);
+        o_D2           : out std_logic_vector(31 downto 0);
+        o_Sign         : out std_logic_vector(31 downto 0);
+        o_BranchCtrl  : out std_logic_vector(5 downto 0);
         o_BranchAddr   : out std_logic_vector(31 downto 0);
-        o_branch_taken : out std_logic
+        o_BranchTaken : out std_logic
         );
 
 end entity Branch_Unit;
@@ -40,17 +41,23 @@ architecture structural of Branch_Unit is
             );
     end component;
 
-    signal s_PCplus4 : std_logic_vector(31 downto 0);
-    signal s_Extended : std_logic_vector(31 downto 0);
+    signal s_PCplus4          : std_logic_vector(31 downto 0);
+    signal s_Extended         : std_logic_vector(31 downto 0);
+    signal s_PredictionScheme : std_logic_vector(1 downto 0);
+    signal s_BranchTarget     : std_logic_vector(31 downto 0);
 begin
+
+    BranchTargetReg : dffg_n
+        generic map (2)
+        port map(i_Clk, i_Reset, i_WriteEnable, i_BranchTarget, s_BranchTarget);
 
     PCP4_reg : dffg_n                   -- output of adder, output pc+4
         generic map (32)
-        port map(i_CLK, i_RST, i_WriteEnable, i_PCplus4, s_PCplus4);
+        port map(i_Clk, i_Reset, i_WriteEnable, i_PCplus4, s_PCplus4);
 
     SignExtend_reg : dffg_n
         generic map (32)
-        port map(i_CLK, i_RST, i_WriteEnable, i_Extended, s_Extended);
+        port map(i_Clk, i_Reset, i_WriteEnable, i_Extended, s_Extended);
 
     -- Add 2x shifted extended value to PCplus4
     o_BranchAddr <= std_logic_vector(

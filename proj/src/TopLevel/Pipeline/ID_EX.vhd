@@ -14,7 +14,7 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.MATH_REAL.all;
 use IEEE.NUMERIC_STD.all;
 
-entity IDEX is
+entity ID_EX is
     generic(N : integer := 32);
 
     port (
@@ -82,7 +82,7 @@ entity IDEX is
 
 end entity;
 
-architecture structure of IDEX is
+architecture structure of ID_EX is
 
     component dffg_n is
         generic(N : integer := 32);
@@ -271,7 +271,7 @@ begin
             output => s_Rd
             );
 
-    instALU : alu
+    ALUinst : alu
         port map (
             CLK        => i_CLK,
             i_Data1    => s_ALUOperand1,
