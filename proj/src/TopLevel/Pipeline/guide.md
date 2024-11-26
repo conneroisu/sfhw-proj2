@@ -24,3 +24,5 @@ Basically, add the inputs to the stage from the outputs of components from diatg
 7. Add "caching" of stage specific signals (changes per stage)
 
 8. Add components contained/operating until the next stage (changes per stage)
+
+9. View the stage in the diagram
