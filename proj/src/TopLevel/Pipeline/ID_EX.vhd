@@ -101,7 +101,7 @@ architecture structure of ID_EX is
             DATA_WIDTH  : integer := 8
             );
         port (
-            inputs : in  std_logic_vector((INPUT_COUNT*DATA_WIDTH)-1 downto 0);  -- Concatenated input buses
+            inputs : in  std_logic_vector((INPUT_COUNT*DATA_WIDTH)-1 downto 0);  -- Concatenated (&) input buses
             sel    : in  std_logic_vector(integer(ceil(log2(real(INPUT_COUNT)))) - 1 downto 0);
             output : out std_logic_vector(DATA_WIDTH - 1 downto 0)
             );
