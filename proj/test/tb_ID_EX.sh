@@ -1,5 +1,5 @@
 #!/bin/bash
-target=tb_stage_idex
+target=tb_ID_EX
 # make sure parent folder is `test`
 parent_path=$( cd "$(dirname "$0")" ; pwd -P )
 echo "parent_path: $parent_path"

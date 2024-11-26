@@ -11,17 +11,17 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
 
-entity tb_Execute is
+entity tb_ID_EX is
     generic(
         gclk_hper : time := 50 ns
         );
-end entity tb_Execute;
+end entity tb_ID_EX;
 
-architecture Behavioral of tb_Execute is
+architecture Behavioral of tb_ID_EX is
 
     constant cclk_per : time := gclk_hper * 2;
 
-    component Execute is
+    component ID_EX is
         generic(N : integer := 32);
 
         port (
@@ -159,7 +159,7 @@ begin
         wait for gclk_hper;
     end process p_clk;
 
-    stage_idex_inst : Execute
+    stage_idex_inst : ID_EX
         generic map(32)
         port map(
             i_CLK        => s_clk,

@@ -1,4 +1,4 @@
-set target "tb_Execute"
+set target "tb_ID_EX"
 set file "${target}.vhd"
 
 vcom -2008 -work work ../src/MIPS_types.vhd
