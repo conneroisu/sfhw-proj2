@@ -77,8 +77,9 @@ architecture structure of MIPS_Processor is
 --            MemToReg_out  : out std_logic
 --        );
 --    end component;
--- TODO: You may add any additional signals or components your implementation 
---       requires below this comment
+
+    component ID_EX is
+    end component;
 begin
     -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
     with iInstLd select

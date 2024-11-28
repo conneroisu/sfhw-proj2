@@ -31,7 +31,7 @@ entity ID_EX is
         -- sw    :   x      00      01
         -- beq   :   x      01      00
         i_RegDst     : in  std_logic;   -- Control Unit Destination Register
-        i_ALUOp      : in  std_logic_vector(3 downto 0);  -- ALU operation from control unit.
+        i_ALUOp      : in  std_logic_vector(2 downto 0);  -- ALU operation from control unit.
         i_ALUSrc     : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
         i_MemRead    : in  std_logic;   -- Memory Read control
         i_MemWrite   : in  std_logic;   -- Memory Write control
@@ -123,6 +123,7 @@ architecture structure of ID_EX is
     -- see: https://github.com/user-attachments/assets/b31df788-32cf-48a5-a3ac-c44345cac682
     signal s_ALUOp       : std_logic_vector(3 downto 0);
     signal s_ALUOperand1 : std_logic_vector(31 downto 0);
+    signal s_PreALUOperand2 : std_logic_vector(31 downto 0);
     signal s_ALUOperand2 : std_logic_vector(31 downto 0);
     signal s_Overflow    : std_logic;
     signal s_Zero        : std_logic;
@@ -256,6 +257,17 @@ begin
         port map (
             inputs => i_Read2 & i_DMem1 & i_WriteData,
             Sel    => i_ForwardB,
+            output => s_PreALUOperand2
+            );
+
+    ALU22Mux : mux_NtM
+        generic map (
+            INPUT_COUNT => 2,
+            DATA_WIDTH  => 32
+            )
+        port map (
+            inputs => s_ALUOperand2 & s_Extended,
+            Sel    => o_ALUSrc,
             output => s_ALUOperand2
             );
 
