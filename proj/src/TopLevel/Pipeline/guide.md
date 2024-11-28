@@ -2,6 +2,8 @@
 
 This document is a guide for the design of the stages in the hardware pipelined MIPS processor.
 
+Diagram: https://app.eraser.io/workspace/ONdQZqJ8JixF0Aaz8n6M
+
 # Stage Guide
 
 1. Use the common signals for each stage (i.e. `i_CLK`, `i_RST`, `i_WE`, `i_PC`, `o_PC`, `i_PCplus4`, and `o_PCplus4`)
