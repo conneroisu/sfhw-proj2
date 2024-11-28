@@ -46,11 +46,6 @@ architecture Behavioral of muxNtM is
         return false;
     end function;
 begin
-
-    -- assert that input_count * data_width = inputs'length
-    
-    assert (INPUT_COUNT * DATA_WIDTH = inputs'length);
-    
     process(inputs, sel)
         variable sel_int : integer;
     begin

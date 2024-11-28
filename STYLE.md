@@ -17,8 +17,8 @@
 ### Constant Names
 
 - All constants should be named with the following format: `<constant_name>`
-- All constants should be uppercase
-- All constants should be in the `src/TopLevel` directory
+- All constants should be uppercase.
+- All constants should be in the `src/MIPS_types.vhd` directory.
 
 ### Port Names
 
