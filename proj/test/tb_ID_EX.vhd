@@ -343,9 +343,114 @@ begin
         wait for cclk_per;
         check_outputs;
 
+        -- Test 7: Subtraction operation
+        i_RST      <= '0';
+        i_WE       <= '1';
+        i_RegDst   <= '1';              -- R-type instruction
+        i_ALUOp    <= "0110";           -- SUB operation
+        i_Read1    <= x"0000000A";      -- First operand = 10
+        i_Read2    <= x"00000003";      -- Second operand = 3
+        i_ForwardA <= "00";             -- No forwarding
+        i_ForwardB <= "00";             -- No forwarding
+
+        s_expected_alu        <= x"00000007";  -- Expected difference: 10 - 3 = 7
+        s_expected_alusrc     <= "00";
+        s_expected_memread    <= '0';
+        s_expected_memwrite   <= '0';
+        s_expected_memtoreg   <= '0';
+        s_expected_regwrite   <= '1';
+        s_expected_branch     <= '0';
+        s_expected_branchaddr <= x"00000004";
+        s_expected_read1      <= x"0000000A";
+        s_expected_read2      <= x"00000003";
+
+        wait for cclk_per;
+        check_outputs;
+
+        -- Test 8: Multiplication operation
+        i_ALUOp    <= "1000";           -- MUL operation
+        i_Read1    <= x"00000004";      -- First operand = 4
+        i_Read2    <= x"00000002";      -- Second operand = 2
+
+        s_expected_alu        <= x"00000008";  -- Expected product: 4 * 2 = 8
+        s_expected_read1      <= x"00000004";
+        s_expected_read2      <= x"00000002";
+
+        wait for cclk_per;
+        check_outputs;
+
+        -- Test 9: Division operation
+        i_ALUOp    <= "1001";           -- DIV operation
+        i_Read1    <= x"00000008";      -- First operand = 8
+        i_Read2    <= x"00000002";      -- Second operand = 2
+
+        s_expected_alu        <= x"00000004";  -- Expected quotient: 8 / 2 = 4
+        s_expected_read1      <= x"00000008";
+        s_expected_read2      <= x"00000002";
+
+        wait for cclk_per;
+        check_outputs;
+
+        -- Test 10: Forwarding from MEM/WB stage
+        i_ForwardB <= "01";             -- Forward from MEM/WB
+        i_WriteData <= x"0000000F";     -- Forward value = 15
+        i_Read1    <= x"00000003";      -- First operand = 3
+
+        s_expected_alu   <= x"00000012";  -- Expected: 3 + 15 = 18
+        s_expected_read1 <= x"00000003";
+
+        wait for cclk_per;
+        check_outputs;
+
+        -- Test 11: Branch instruction with negative offset
+        i_Branch   <= '1';
+        i_Extended <= x"FFFFFFF0";      -- Negative offset of -16
+        i_PCplus4  <= x"00000100";      -- PC+4 = 256
+
+        s_expected_branch     <= '1';
+        s_expected_branchaddr <= x"000000C0";  -- Expected: 256 + (-16 << 2) = 256 - 64 = 192
+
+        wait for cclk_per;
+        check_outputs;
+
+        -- Test 12: Load word with negative offset
+        i_Branch   <= '0';
+        i_ALUOp    <= "0000";           -- Load operation
+        i_ALUSrc   <= "01";             -- Use immediate
+        i_MemRead  <= '1';
+        i_MemtoReg <= '1';
+        i_Extended <= x"FFFFFFFC";      -- Negative offset of -4
+        i_Read1    <= x"00000100";      -- Base address
+
+        s_expected_alu      <= x"000000FC";  -- Expected: base + offset = 256 - 4 = 252
+        s_expected_alusrc   <= "01";
+        s_expected_memread  <= '1';
+        s_expected_memtoreg <= '1';
+        s_expected_branch   <= '0';
+        s_expected_read1    <= x"00000100";
+
+        wait for cclk_per;
+        check_outputs;
+
+        -- Test 13: Store word with zero offset
+        i_MemRead  <= '0';
+        i_MemWrite <= '1';
+        i_MemtoReg <= '0';
+        i_RegWrite <= '0';
+        i_Extended <= x"00000000";      -- Zero offset
+        i_Read2    <= x"CAFEBABE";      -- Data to store
+
+        s_expected_memread  <= '0';
+        s_expected_memwrite <= '1';
+        s_expected_memtoreg <= '0';
+        s_expected_regwrite <= '0';
+        s_expected_read2    <= x"CAFEBABE";
+
+        wait for cclk_per;
+        check_outputs;
+
         report "Testbench completed successfully!";
         wait;
     end process p_tb;
 
 end architecture Behavioral;
-
