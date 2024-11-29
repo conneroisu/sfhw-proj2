@@ -17,15 +17,15 @@
 ├── LICENSE
 ├── README.md
 ├── README.png
-├── src_sc
+├── src_sc (the source code of the single cycle implementation)
 │   ├── LICENSE
 │   ├── README.md
 │   ├── README.png
-├── src_sf
+├── src_sf (the source code of the software pipelined multi-cycle implementation)
 │   ├── LICENSE
 │   ├── README.md
 │   ├── README.png
-└── src_hw
+└── src_hw (the source code of the hardware pipelined multi-cycle implementation)
     ├── LICENSE
     ├── README.md
     └── README.png
