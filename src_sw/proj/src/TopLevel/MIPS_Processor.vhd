@@ -193,15 +193,15 @@ architecture structure of MIPS_Processor is
 
     component control_unit is
         port (
-            i_opcode      : in  std_logic_vector(5 downto 0);
-            i_funct       : in  std_logic_vector(5 downto 0);
-            i_rt          : in  std_logic_vector(4 downto 0);
+            i_Opcode      : in  std_logic_vector(5 downto 0);
+            i_Funct       : in  std_logic_vector(5 downto 0);
+            i_Rt          : in  std_logic_vector(4 downto 0);
             o_RegWr       : out std_logic;
             o_RegDst      : out std_logic_vector(1 downto 0);
-            o_sign_ext_en : out std_logic;
-            o_jump        : out std_logic_vector(1 downto 0);
+            o_SignExtEnable : out std_logic;
+            o_Jump        : out std_logic_vector(1 downto 0);
             o_MemSel      : out std_logic_vector(1 downto 0);
-            o_branchCtl   : out std_logic;
+            o_BranchCtl   : out std_logic;
             o_BranchType  : out std_logic_vector(2 downto 0);
             o_ALUSrc      : out std_logic;
             o_ALUOp       : out std_logic_vector(2 downto 0);
