@@ -43,3 +43,4 @@ et.log
 ._*
 *.mti
 .nfs*
+.DS_Store
