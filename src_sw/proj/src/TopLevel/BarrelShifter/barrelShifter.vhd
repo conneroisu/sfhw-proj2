@@ -37,7 +37,6 @@ architecture structure of barrelShifter is
                 o_O  : out std_logic_vector(N - 1 downto 0)          --output
                 );
     end component;
--- mux signals (i think i need 5 or 6 for outputs, 5 or 6 for r/l, and 1 for carrying 16 bits)
     signal s_mux0, s_mux1, s_mux2, s_mux3, s_muxUnflip            : std_logic_vector(N -1 downto 0);  --shamt mux
     signal s_mux0t, s_mux1t, s_mux2t, s_mux3t, s_mux4t, s_muxFlip : std_logic_vector(N -1 downto 0);
     signal s_b                                                    : std_logic_vector(15 downto 0);
