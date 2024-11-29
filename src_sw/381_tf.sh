@@ -133,15 +133,6 @@ elif [ "$1" == "submit" ]; then
     fi
     
 else
-    echo "==========================================================================================="
-    echo "   _____ _____  _____    ______   ____   ___  __   _______          _  __ _                "
-    echo "  / ____|  __ \|  __ \  |  ____| |___ \ / _ \/_ | |__   __|        | |/ _| |               "
-    echo " | |    | |__) | |__) | | |__      __) | (_) || |    | | ___   ___ | | |_| | _____      __ "
-    echo " | |    |  ___/|  _  /  |  __|    |__ < > _ < | |    | |/ _ \ / _ \| |  _| |/ _ \ \ /\ / / "
-    echo " | |____| |    | | \ \  | |____   ___) | (_) || |    | | (_) | (_) | | | | | (_) \ V  V /  "
-    echo "  \_____|_|    |_|  \_\ |______| |____/ \___/ |_|    |_|\___/ \___/|_|_| |_|\___/ \_/\_/   "
-    echo "==========================================================================================="
-    echo "Welcome to CPR E 381 Toolflow."
     echo "This toolflow may be used to test and synthesize your code, as well as provide a submission"
     echo "template for Canvas. For more information on this tool, please see the attached manual file."
     echo "The general workflow for this toolflow is to "
