@@ -211,4 +211,3 @@ o_d2 <= s_d2;
 
 
 end structure;
-

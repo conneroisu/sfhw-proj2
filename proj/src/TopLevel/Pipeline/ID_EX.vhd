@@ -296,4 +296,3 @@ begin
             );
 
 end structure;
-

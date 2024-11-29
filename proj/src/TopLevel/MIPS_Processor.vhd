@@ -43,6 +43,15 @@ architecture structure of MIPS_Processor is
     signal s_Halt         : std_logic;  -- TODO: this signal indicates to the simulation that intended program execution has completed. (Opcode: 01 0100)
     -- Required overflow signal -- for overflow exception detection
     signal s_Ovfl         : std_logic;  -- TODO: this signal indicates an overflow exception would have been initiated
+    -- Pipeline stage signals
+    signal s_IFID_Inst    : std_logic_vector(N-1 downto 0);
+    signal s_IFID_PC      : std_logic_vector(N-1 downto 0);
+    signal s_IDEX_Inst    : std_logic_vector(N-1 downto 0);
+    signal s_IDEX_PC      : std_logic_vector(N-1 downto 0);
+    signal s_EXMEM_Inst   : std_logic_vector(N-1 downto 0);
+    signal s_EXMEM_PC     : std_logic_vector(N-1 downto 0);
+    signal s_MEMWB_Inst   : std_logic_vector(N-1 downto 0);
+    signal s_MEMWB_PC     : std_logic_vector(N-1 downto 0);
     component mem is
         generic(ADDR_WIDTH : integer;
                 DATA_WIDTH : integer);
@@ -54,98 +63,102 @@ architecture structure of MIPS_Processor is
             q    : out std_logic_vector((DATA_WIDTH -1) downto 0));
     end component;
 
---    component MEM_WB is
---        generic(ADDR_WIDTH : integer;
---                DATA_WIDTH : integer);
---        port (
---            clk     : in std_logic;
---            reset   : in std_logic;
---            WriteEn : in std_logic;         -- Write enable signal
---    
---    
---            ALU_result_in : in std_logic_vector(31 downto 0);  -- ALU result to WB
---            DataMem_in    : in std_logic_vector(31 downto 0);
---            RegDst_in     : in std_logic_vector(4 downto 0);  -- Destination register number to Register File
---            RegWrite_in   : in std_logic;
---            MemToReg_in   : in std_logic;
---    
---            -- Outputs to WB stage
---            ALU_result_out: out std_logic_vector(31 downto 0);  -- ALU result to WB
---            DataMem_out   : out std_logic_vector(31 downto 0);
---            RegDst_out    : out std_logic_vector(4 downto 0); -- Destination reguster number to register file
---            RegWrite_out  : out std_logic;
---            MemToReg_out  : out std_logic
---        );
---    end component;
+    component IF_ID_STAGE is
+        port(
+            i_clk  : in std_logic;
+            i_rst  : in std_logic;
+            i_flush: in std_logic;
+            i_stall: in std_logic;
+            i_sctrl: in std_logic; --sign control signal
+            o_regw : out std_logic; --register write signal
+            i_addr : in std_logic_vector(31 downto 0);
+            i_instr: in std_logic_vector(31 downto 0);
+            o_instr: out std_logic_vector(31 downto 0);
+            o_addr : out std_logic_vector(31 downto 0);
+            o_d1   : out std_logic_vector(31 downto 0);
+            o_d2   : out std_logic_vector(31 downto 0);
+            o_sign : out std_logic_vector(31 downto 0)
+        );
+    end component;
 
     component ID_EX is
-
-    port (
-        -- Common Stage Signals [begin]
-        i_CLK        : in  std_logic;
-        i_RST        : in  std_logic;
-        i_WE         : in  std_logic;
-        i_PC         : in  std_logic_vector(N-1 downto 0);
-        -- Control Signals (From Control Unit) [begin]
-        --= Stage Specific Signals [begin]
-        --         RegDst  ALUOp  ALUSrc
-        -- R-Type:   1      10      00
-        -- lw    :   0      00      01
-        -- sw    :   x      00      01
-        -- beq   :   x      01      00
-        i_RegDst     : in  std_logic;   -- Control Unit Destination Register
-        i_ALUOp      : in  std_logic_vector(2 downto 0);  -- ALU operation from control unit.
-        i_ALUSrc     : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
-        i_MemRead    : in  std_logic;   -- Memory Read control
-        i_MemWrite   : in  std_logic;   -- Memory Write control
-        i_MemtoReg   : in  std_logic;   -- Memory to Register control
-        i_RegWrite   : in  std_logic;   -- Register Write control
-        i_Branch     : in  std_logic;   -- Branch control
-        -- Future Stage Signals [begin]
-        -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png
-        o_ALU        : out std_logic_vector(N-1 downto 0);
-        o_ALUSrc     : out std_logic_vector(1 downto 0);
-        o_MemRead    : out std_logic;
-        o_MemWrite   : out std_logic;
-        o_MemtoReg   : out std_logic;
-        o_RegWrite   : out std_logic;
-        o_Branch     : out std_logic;
-        -- Input Signals [begin]
-        --= Register File Signals [begin]
-        i_Read1      : in  std_logic_vector(N-1 downto 0);
-        i_Read2      : in  std_logic_vector(N-1 downto 0);
-        o_Read1      : out std_logic_vector(N-1 downto 0);
-        o_Read2      : out std_logic_vector(N-1 downto 0);
-        -- Forward Unit Signals [begin]
-        --= Forwarded Signals (received from Forward Unit) [begin]
-        -- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
-        -- MuxInputs    -> {Source} -> {Explanation}
-        -- ForwardA=00  -> ID/EX    -> operand from registerfile
-        -- ForwardA=10  -> EX/MEM   -> operand forwarded from prior alu result
-        -- ForwardA=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
-        -- ForwardB=00  -> ID/EX    -> operand from registerfile
-        -- ForwardB=10  -> EX/MEM   -> operand forwarded from prior alu result
-        -- ForwardB=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
-        i_ForwardA   : in  std_logic_vector(1 downto 0);
-        i_ForwardB   : in  std_logic_vector(1 downto 0);
-        --= Forwarding Signals (sent to Forward Unit) [begin]
-        i_WriteData  : in  std_logic_vector(N-1 downto 0);  -- Data from the end of writeback stage's mux
-        i_DMem1      : in  std_logic_vector(N-1 downto 0);  -- Data from the first input to the DMem output of ex/mem
-        --= Instruction Signals [begin]
-        i_Rs         : in  std_logic_vector(4 downto 0);
-        i_Rt         : in  std_logic_vector(4 downto 0);
-        i_Rd         : in  std_logic_vector(4 downto 0);
-        i_Shamt      : in  std_logic_vector(4 downto 0);
-        i_Funct      : in  std_logic_vector(5 downto 0);
-        i_Imm        : in  std_logic_vector(15 downto 0);
-        -- Halt signals
-        i_Halt       : in  std_logic_vector(0 downto 0);
-        o_Halt       : out std_logic_vector(0 downto 0)
+        port (
+            i_CLK        : in  std_logic;
+            i_RST        : in  std_logic;
+            i_WE         : in  std_logic;
+            i_PC         : in  std_logic_vector(N-1 downto 0);
+            i_RegDst     : in  std_logic;
+            i_ALUOp      : in  std_logic_vector(2 downto 0);
+            i_ALUSrc     : in  std_logic_vector(1 downto 0);
+            i_MemRead    : in  std_logic;
+            i_MemWrite   : in  std_logic;
+            i_MemtoReg   : in  std_logic;
+            i_RegWrite   : in  std_logic;
+            i_Branch     : in  std_logic;
+            o_ALU        : out std_logic_vector(N-1 downto 0);
+            o_ALUSrc     : out std_logic_vector(1 downto 0);
+            o_MemRead    : out std_logic;
+            o_MemWrite   : out std_logic;
+            o_MemtoReg   : out std_logic;
+            o_RegWrite   : out std_logic;
+            o_Branch     : out std_logic;
+            i_Read1      : in  std_logic_vector(N-1 downto 0);
+            i_Read2      : in  std_logic_vector(N-1 downto 0);
+            o_Read1      : out std_logic_vector(N-1 downto 0);
+            o_Read2      : out std_logic_vector(N-1 downto 0);
+            i_ForwardA   : in  std_logic_vector(1 downto 0);
+            i_ForwardB   : in  std_logic_vector(1 downto 0);
+            i_WriteData  : in  std_logic_vector(N-1 downto 0);
+            i_DMem1      : in  std_logic_vector(N-1 downto 0);
+            i_Rs         : in  std_logic_vector(4 downto 0);
+            i_Rt         : in  std_logic_vector(4 downto 0);
+            i_Rd         : in  std_logic_vector(4 downto 0);
+            i_Shamt      : in  std_logic_vector(4 downto 0);
+            i_Funct      : in  std_logic_vector(5 downto 0);
+            i_Imm        : in  std_logic_vector(15 downto 0);
+            i_Halt       : in  std_logic_vector(0 downto 0);
+            o_Halt       : out std_logic_vector(0 downto 0)
         );
-
     end component;
+
+    component EX_MEM is
+        port (
+            clk     : in std_logic;
+            reset   : in std_logic;
+            WriteEn : in std_logic;
+            ALU_result_in : in std_logic_vector(31 downto 0);
+            Read_data2_in : in std_logic_vector(31 downto 0);
+            RegDst_in     : in std_logic_vector(4 downto 0);
+            MemRead_in    : in std_logic;
+            MemWrite_in   : in std_logic;
+            RegWrite_in   : in std_logic;
+            MemToReg_in   : in std_logic;
+            ALU_result_out : out std_logic_vector(31 downto 0);
+            Read_data2_out : out std_logic_vector(31 downto 0);
+            RegDst_out     : out std_logic_vector(4 downto 0);
+            MemRead_out    : out std_logic;
+            MemWrite_out   : out std_logic;
+            RegWrite_out   : out std_logic;
+            MemToReg_out   : out std_logic
+        );
+    end component;
+
+    component MEM_WB is
+        port (
+            clk        : in std_logic;
+            reset      : in std_logic;
+            i_ALUResult : in std_logic_vector(31 downto 0);
+            i_DataMem   : in std_logic_vector(31 downto 0);
+            i_RegDst    : in std_logic_vector(4 downto 0);
+            i_RegWrite  : in std_logic;
+            i_MemToReg  : in std_logic;
+            o_regDst    : out std_logic_vector(4 downto 0);
+            o_regWrite  : out std_logic;
+            o_wbData    : out std_logic_vector(31 downto 0)
+        );
+    end component;
+
 begin
-    -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
     with iInstLd select
         s_IMemAddr <= s_NextInstAddr when '0',
         iInstAddr                    when others;
@@ -165,14 +178,96 @@ begin
                  data => s_DMemData,
                  we   => s_DMemWr,
                  q    => s_DMemOut);
---MemWB : MEM_WB --I think this entire block is instantiated wrong. Not sure entirely what this definition is doing here. Apologies
---    generic map(ADDR_WIDTH => ADDR_WIDTH,
---                DATA_WIDTH => N)
---    port map(clk => clk,
---             addr =>
---    )
--- TODO: Ensure that s_Halt is connected to an output control signal produced from decoding the Halt instruction (Opcode: 01 0100)
--- TODO: Ensure that s_Ovfl is connected to the overflow output of your ALU
--- TODO: Implement the rest of your processor below this comment! 
-end structure;
 
+    IFID : IF_ID_STAGE
+        port map(
+            i_clk  => iCLK,
+            i_rst  => iRST,
+            i_flush => '0',
+            i_stall => '0',
+            i_sctrl => '0',
+            o_regw => open,
+            i_addr => s_NextInstAddr,
+            i_instr => s_Inst,
+            o_instr => s_IFID_Inst,
+            o_addr => s_IFID_PC,
+            o_d1 => open,
+            o_d2 => open,
+            o_sign => open
+        );
+
+    IDEX : ID_EX
+        port map(
+            i_CLK => iCLK,
+            i_RST => iRST,
+            i_WE => '1',
+            i_PC => s_IFID_PC,
+            i_RegDst => '0',
+            i_ALUOp => "000",
+            i_ALUSrc => "00",
+            i_MemRead => '0',
+            i_MemWrite => '0',
+            i_MemtoReg => '0',
+            i_RegWrite => '0',
+            i_Branch => '0',
+            o_ALU => open,
+            o_ALUSrc => open,
+            o_MemRead => open,
+            o_MemWrite => open,
+            o_MemtoReg => open,
+            o_RegWrite => open,
+            o_Branch => open,
+            i_Read1 => open,
+            i_Read2 => open,
+            o_Read1 => open,
+            o_Read2 => open,
+            i_ForwardA => "00",
+            i_ForwardB => "00",
+            i_WriteData => (others => '0'),
+            i_DMem1 => (others => '0'),
+            i_Rs => (others => '0'),
+            i_Rt => (others => '0'),
+            i_Rd => (others => '0'),
+            i_Shamt => (others => '0'),
+            i_Funct => (others => '0'),
+            i_Imm => (others => '0'),
+            i_Halt => '0',
+            o_Halt => open
+        );
+
+    EXMEM : EX_MEM
+        port map(
+            clk => iCLK,
+            reset => iRST,
+            WriteEn => '1',
+            ALU_result_in => open,
+            Read_data2_in => open,
+            RegDst_in => (others => '0'),
+            MemRead_in => '0',
+            MemWrite_in => '0',
+            RegWrite_in => '0',
+            MemToReg_in => '0',
+            ALU_result_out => open,
+            Read_data2_out => open,
+            RegDst_out => open,
+            MemRead_out => open,
+            MemWrite_out => open,
+            RegWrite_out => open,
+            MemToReg_out => open
+        );
+
+    MEMWB : MEM_WB
+        port map(
+            clk => iCLK,
+            reset => iRST,
+            i_ALUResult => open,
+            i_DataMem => open,
+            i_RegDst => (others => '0'),
+            i_RegWrite => '0',
+            i_MemToReg => '0',
+            o_regDst => open,
+            o_regWrite => open,
+            o_wbData => open
+        );
+
+end structure;

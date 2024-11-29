@@ -84,4 +84,3 @@ begin
     MemToReg_out   <= MemToReg_reg;
 
 end Behavioral;
-
