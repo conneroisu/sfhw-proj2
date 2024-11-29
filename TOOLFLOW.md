@@ -175,11 +175,11 @@ order until a valid option is found.
 #### Example 10 : Example Configuration
 
 ```ini
-[ Config ]
+[Config]
 modelsim_paths =[ "/path/to/modelsim/bin" , "/path2/to/modelsim/bin" ]
 quartus_paths =[ "/path/to/quartus/bin" ]
 needs_license = false
-[ AnotherConfig ]
+[AnotherConfig]
 modelsim_paths =[ "/another/path/to/modelsim/bin" ]
 quartus_paths =[ "/another/path/to/quartus/bin" ]
 needs_license = false
