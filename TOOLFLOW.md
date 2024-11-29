@@ -198,3 +198,23 @@ file.
 ./381_tf synth -- config Config
 ./381_tf synth -- config AnotherConfig
 ```
+
+## Config
+
+The `config.ini` file is used to configure the toolflow. The file consists of one or more configurations organized into sections.
+
+```ini
+# Copy this file up a directory (into the cpre381-toolflow directory `internal`) and
+# uncomment the below config to set custom paths.
+
+# This creates a config name "Config". You can change the section name and 
+# create multiple sections. Make sure to pass the option -c "Config" to the
+# test framework.
+
+# [Config]
+# modelsim_paths = ["/path/to/modelsim/bin"]
+# 
+# quartus_paths = ["/path/to/quartus/bin"]
+# 
+# needs_license = "false"
+```
