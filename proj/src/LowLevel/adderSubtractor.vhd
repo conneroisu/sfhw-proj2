@@ -14,6 +14,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use work.MIPS_types.all;
+
 entity adderSubtractor is
     generic (
         N : integer := 32  -- Generic of type integer for input/output data width. Default value is 32.
@@ -28,6 +29,7 @@ entity adderSubtractor is
         o_Overflow : out std_logic      -- Overflow Indicator
         );
 end entity adderSubtractor;
+
 architecture structural of adderSubtractor is
     component mux2t1_N is generic (
         N : integer := 32
