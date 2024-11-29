@@ -8,7 +8,7 @@
 
 # sfhw-proj2
 
-![diagram](./README.png)
+![diagram](./assets/DIAGRAM.png)
 
 ## Structure
 
