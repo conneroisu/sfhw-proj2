@@ -120,13 +120,13 @@ architecture mixed of ALU is
 
   component barrel_shifter is
     port (
-            i_shamt       : in  std_logic_vector(4 downto 0);  --01001 would do shift 3 and shift 0, mux each bit to decide how much to shift
-            i_data        : in  std_logic_vector(N - 1 downto 0);
-            i_leftOrRight : in  std_logic;  --0=right, 1=left
-            i_shiftType   : in  std_logic;  --0 for logicical shift, 1 for arithmetic shift
-            o_O           : out std_logic_vector(N - 1 downto 0)  --shifted output
-            );
-        
+      i_shamt       : in  std_logic_vector(4 downto 0);  --01001 would do shift 3 and shift 0, mux each bit to decide how much to shift
+      i_data        : in  std_logic_vector(N - 1 downto 0);
+      i_leftOrRight : in  std_logic;    --0=right, 1=left
+      i_shiftType   : in  std_logic;  --0 for logicical shift, 1 for arithmetic shift
+      o_O           : out std_logic_vector(N - 1 downto 0)  --shifted output
+      );
+
   end component;
 
 begin
@@ -143,10 +143,11 @@ begin
     port map (i_Data_0, i_Data_1, s_slt);
 
   barrel_shift : barrel_shifter
+    generic map (N => 32)
     port map (
       i_shamt,
       i_Data_1,
-      not (i_ALUCtrl(0) and i_ALUCtrl(1)),
+      (i_ALUCtrl(0) and i_ALUCtrl(1)),
       i_ALUCtrl(0) xor i_ALUCtrl(1),
       s_bshift_out
       );
