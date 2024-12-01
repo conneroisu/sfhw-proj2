@@ -64,8 +64,16 @@ architecture structure of MIPS_Processor is
     signal s_EX_ALUSel : std_logic_vector(4 downto 0);
     signal s_EX_alud1 : std_logic_vector(N - 1 downto 0);
     signal s_EX_alu_out : std_logic_vector(N - 1 downto 0);
+    signal s_DMemWr : std_logic;
+    signal s_DMemWrAddr : std_logic_vector(N - 1 downto 0);
+    signal s_EX_Inst_imm : std_logic_vector(15 downto 0);
+    signal s_EX_lui_val : std_logic_vector(15 downto 0);
+    signal s_MEM_Inst_imm : std_logic_vector(15 downto 0);
+    signal s_MEM_lui_val : std_logic_vector(15 downto 0);
+    signal s_MEM_PCP4 : std_logic_vector(31 downto 0);
 
-    signal s_EX_lui_val : std_logic_vector(N - 1 downto 0);
+    signal s_WB_reg_write_data_bus : bus_array(3 downto 0)(N - 1 downto 0);
+    signal s_Halt : std_logic;
 
     signal s_EX_PCP4 : std_logic_vector(N - 1 downto 0);
     signal s_EX_new_pc : std_logic_vector(N - 1 downto 0);
@@ -78,6 +86,7 @@ architecture structure of MIPS_Processor is
     signal s_EX_ALUOp : std_logic_vector(2 downto 0);
     signal s_EX_DMemWr : std_logic;
     signal s_EX_Halt : std_logic;
+    signal s_DMemOut : std_logic_vector(N - 1 downto 0);
 
     signal s_EX_dsrc1, s_EX_dsrc2 : std_logic_vector(N - 1 downto 0);
     signal s_EX_sign_ext_imm : std_logic_vector(N - 1 downto 0);
@@ -86,7 +95,6 @@ architecture structure of MIPS_Processor is
     signal s_EX_Inst_shamt : std_logic_vector(4 downto 0);
     signal s_EX_Inst_rt : std_logic_vector(4 downto 0);
     signal s_EX_Inst_rd : std_logic_vector(4 downto 0);
-    signal s_MEM_PCP4 : std_logic_vector(N - 1 downto 0);
     signal s_MEM_new_pc : std_logic_vector(N - 1 downto 0);
     signal s_MEM_do_branch : std_logic;
     signal s_MEM_memSel : std_logic_vector(1 downto 0);
@@ -128,6 +136,9 @@ architecture structure of MIPS_Processor is
         );
     end component;
     component mux2t1_N is
+        generic (
+        N : integer := 32
+        );
         port (
             i_S : in std_logic;
             i_D0 : in std_logic_vector(N - 1 downto 0);
@@ -269,7 +280,7 @@ architecture structure of MIPS_Processor is
         );
     end component;
 
-    component pc_source_module is
+    component program_counter_source is
         port (
             i_do_branch : in std_logic;
             i_jump : in std_logic_vector(1 downto 0);
@@ -409,7 +420,7 @@ begin
 
         iInstAddr when others;
 
-    pc_src_ctrl : pc_source_module
+    pc_src_ctrl : program_counter_source
     port map
     (
         s_WB_do_branch,
