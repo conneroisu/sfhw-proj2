@@ -1,15 +1,17 @@
 -- <header>
--- Author(s): Conner Ohnesorge
--- Name: src_sw/proj/src/TopLevel/BarrelShifter/barrelShifter.vhd
+-- Author(s): Kariniux, Conner Ohnesorge
+-- Name: proj/src/TopLevel/BarrelShifter/barrelShifter.vhd
 -- Notes:
---      Conner Ohnesorge 2024-11-21T10:30:54-06:00 added-alu-barrel-shifter-and-fetch-modules-to-the-top-level-of-the
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--      Conner Ohnesorge 2024-11-18T10:07:32-06:00 rename-stages-to-pipeline-remove-back-up-file-and-add-space-for
+--      Conner Ohnesorge 2024-11-14T08:12:11-06:00 add-barrelshifter-from-proj-1
 -- </header>
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 use work.MIPS_types.all;
 
-entity barrelShifter is
+entity BarrelShifter is
     generic
         (N : integer := 32);
     
@@ -22,9 +24,9 @@ entity barrelShifter is
             o_O           : out std_logic_vector(N - 1 downto 0)  --shifted output
             );
         
-end barrelShifter;
+end BarrelShifter;
 
-architecture structure of barrelShifter is
+architecture structure of BarrelShifter is
 
     component mux2t1_N
         generic
@@ -37,6 +39,7 @@ architecture structure of barrelShifter is
                 o_O  : out std_logic_vector(N - 1 downto 0)          --output
                 );
     end component;
+-- mux signals (i think i need 5 or 6 for outputs, 5 or 6 for r/l, and 1 for carrying 16 bits)
     signal s_mux0, s_mux1, s_mux2, s_mux3, s_muxUnflip            : std_logic_vector(N -1 downto 0);  --shamt mux
     signal s_mux0t, s_mux1t, s_mux2t, s_mux3t, s_mux4t, s_muxFlip : std_logic_vector(N -1 downto 0);
     signal s_b                                                    : std_logic_vector(15 downto 0);
