@@ -44,11 +44,11 @@ begin
     begin
         flipflop : dffg
             port map(
-                i_CLK => i_CLK,         -- Clock input
-                i_RST => i_RST,         -- Reset input
-                i_WE  => i_WrE,         -- Write enable input
-                i_D   => i_D(i),        -- Data input
-                o_Q   => o_Q(i)         -- Data output
+                i_CLK,         -- Clock input
+                i_RST,         -- Reset input
+                i_WrE,         -- Write enable input
+                i_D(i),        -- Data input
+                o_Q(i)         -- Data output
                 );
     end generate;
 
