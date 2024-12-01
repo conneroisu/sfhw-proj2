@@ -38,13 +38,13 @@ architecture structural of alu is
                 o_Overflow : out std_logic
                 );
     end component;
-    component barrelShifter is
+    component barrel_shifter is
         generic
             (N : integer := 32);
         port
             (
-                i_data        : in  std_logic_vector(N - 1 downto 0);
                 i_shamt       : in  std_logic_vector(4 downto 0);
+                i_data        : in  std_logic_vector(N - 1 downto 0);
                 i_leftOrRight : in  std_logic;  -- 0=right, 1=left
                 i_shiftType   : in  std_logic;  -- 0 for logical shift, 1 for arithmetic shift
                 o_O           : out std_logic_vector(N - 1 downto 0)  -- shifted output
@@ -130,7 +130,7 @@ begin
     -- Zero Output
     o_Zero     <= '1' when s_AddSub_res = x"00000000" else '0';
     -- Barrel Shifting Unit (Shift operations)
-    G_SHIFTER : barrelShifter
+    G_SHIFTER : barrel_shifter
         port map
         (
             i_data        => i_Data2,

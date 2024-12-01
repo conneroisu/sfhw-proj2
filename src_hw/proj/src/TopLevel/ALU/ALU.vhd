@@ -119,17 +119,14 @@ architecture mixed of ALU is
   end component;
 
   component barrel_shifter is
-    generic (
-      bus_width : integer := 32;
-      sel_width : integer := 5
-      );
     port (
-      i_shamt : in  std_logic_vector(sel_width - 1 downto 0);
-      i_shsrc : in  std_logic_vector(bus_width - 1 downto 0);  -- Input to shift
-      i_shdir : in  std_logic;  -- Shift direction (0 = left, 1 = right)
-      i_sharr : in  std_logic;  -- Shift arithmetic (0 = logical, 1 = yes)
-      o_val   : out std_logic_vector(bus_width - 1 downto 0)
-      );
+            i_shamt       : in  std_logic_vector(4 downto 0);  --01001 would do shift 3 and shift 0, mux each bit to decide how much to shift
+            i_data        : in  std_logic_vector(N - 1 downto 0);
+            i_leftOrRight : in  std_logic;  --0=right, 1=left
+            i_shiftType   : in  std_logic;  --0 for logicical shift, 1 for arithmetic shift
+            o_O           : out std_logic_vector(N - 1 downto 0)  --shifted output
+            );
+        
   end component;
 
 begin

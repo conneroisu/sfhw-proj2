@@ -15,8 +15,7 @@ entity barrel_shifter is
     generic
         (N : integer := 32);
     
-    port
-        (
+    port (
             i_data        : in  std_logic_vector(N - 1 downto 0);
             i_shamt       : in  std_logic_vector(4 downto 0);  --01001 would do shift 3 and shift 0, mux each bit to decide how much to shift
             i_leftOrRight : in  std_logic;  --0=right, 1=left
@@ -39,7 +38,7 @@ architecture structure of barrel_shifter is
                 o_O  : out std_logic_vector(N - 1 downto 0)          --output
                 );
     end component;
--- mux signals (i think i need 5 or 6 for outputs, 5 or 6 for r/l, and 1 for carrying 16 bits)
+    
     signal s_mux0, s_mux1, s_mux2, s_mux3, s_muxUnflip            : std_logic_vector(N -1 downto 0);  --shamt mux
     signal s_mux0t, s_mux1t, s_mux2t, s_mux3t, s_mux4t, s_muxFlip : std_logic_vector(N -1 downto 0);
     signal s_b                                                    : std_logic_vector(15 downto 0);
