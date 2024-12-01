@@ -123,8 +123,16 @@ architecture structure of ID_EX is
             );
     end component;
 
+    component alu_control is
+        port (
+            i_Funct   : in  std_logic_vector(5 downto 0);
+            i_ALUOp   : in  std_logic_vector(2 downto 0);
+            o_ALUSel  : out std_logic_vector(4 downto 0)
+            );
+    end component;
+
     -- see: https://github.com/user-attachments/assets/b31df788-32cf-48a5-a3ac-c44345cac682
-    signal s_ALUOp          : std_logic_vector(3 downto 0);
+    signal s_ALUOp          : std_logic_vector(2 downto 0);
     signal s_ALUOperand1    : std_logic_vector(31 downto 0);
     signal s_PreALUOperand2 : std_logic_vector(31 downto 0);
     signal s_ALUOperand2    : std_logic_vector(31 downto 0);
@@ -133,6 +141,7 @@ architecture structure of ID_EX is
     signal s_PC             : std_logic_vector(31 downto 0);
     signal s_PCplus4        : std_logic_vector(31 downto 0);
     signal s_Extended       : std_logic_vector(31 downto 0);
+    signal s_ALUSel         : std_logic_vector(4 downto 0);
 
     signal s_Shamt : std_logic_vector(4 downto 0);
     signal s_Rs    : std_logic_vector(4 downto 0);
@@ -159,7 +168,7 @@ begin
         generic map (32)
         port map(i_CLK, i_RST, i_WE, i_Read2, o_Read2);
 
-    ALUOperation_reg : dffg_n
+    ALUOp_reg : dffg_n
         generic map (4)
         port map(i_CLK, i_RST, i_WE, i_ALUOp, s_ALUOp);
 
@@ -295,13 +304,20 @@ begin
             output => s_Rd
             );
 
+    ALUControl : alu_control
+        port map (
+            i_Funct   => s_Funct,
+            i_ALUOp   => s_ALUOp,
+            o_ALUSel  => s_ALUSel
+            );
+        
     ALUinst : alu
         port map (
             CLK        => i_CLK,
             i_Data1    => s_ALUOperand1,
             i_Data2    => s_ALUOperand2,
             i_shamt    => s_Shamt,
-            i_aluOp    => s_ALUOp,
+            i_aluOp    => s_ALUSel,
             o_F        => o_ALU,
             o_Overflow => s_Overflow,
             o_Zero     => s_Zero

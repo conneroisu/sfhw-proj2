@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 format_vhdl_files() {
     # Gather all VHDL files into an array
