@@ -9,12 +9,15 @@ work
 .vhdl_checker/
 .vhdl_checker
 .vhdl_checker/*
+internal/ModelSimContainer/vcom.log
 .vhdl_checker/**/*
 .hdl_checker/
 .hdl_checker
 .hdl_checker/*
 .hdl_checker/**/*
-/Xilinx\ ISE/**/*.*
+internal/ModelSimContainer/vcom.log
+<t_ý€>Ã½require"cmp.utils.feedkeys".run(1)
+./Xilinx\ ISE/**/*.*
 /Xilinx\ ISE/**/ise
 !/Xilinx\ ISE/**/*.xise
 !/Xilinx\ ISE/**/iseconfig/filter.filter
@@ -45,3 +48,5 @@ et.log
 .nfs*
 .DS_Store
 **/**/QuartusWork/
+internal/ModelSimContainer/vcom.log
+internal/testpy/__pycache__/
