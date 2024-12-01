@@ -12,17 +12,15 @@ library ieee;
 use ieee.std_logic_1164.all;
 use work.MIPS_types.all;
 
--- Entity Declaration for 16 to 1 Multiplexer
-
 entity mux16t1 is
+    
     port (
         i_I : in  array_16x32;                   -- Data value input
         i_S : in  std_logic_vector(3 downto 0);  -- Select signal input
         o_O : out std_logic_vector(31 downto 0)  -- Data value output
         );
+    
 end entity mux16t1;
-
--- Architecture Declaration for 8 to 1 Multiplexer
 
 architecture behavior of mux16t1 is
 
