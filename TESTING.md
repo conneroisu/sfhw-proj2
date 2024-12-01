@@ -3,7 +3,7 @@
 ## Project Structure
 
 ### Introduction 
-Components of the project are organized into directories:
+Components of the processors are organized into directories:
 
 - `LowLevel/`: The low level components of the project. (e.g. `LowLevel/*.vhd)
 - `MidLevel/`:  The mid level components of the project. (e.g. `MidLevel/*.vhd)
