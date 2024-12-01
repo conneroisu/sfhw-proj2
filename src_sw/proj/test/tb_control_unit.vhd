@@ -13,6 +13,7 @@ end tb_control_unit;
 
 architecture structural of tb_control_unit is
     component control_unit is
+        
         port (
             -- Instruction inputs
             i_Opcode : in std_logic_vector(5 downto 0);  -- Opcode from MIPS instruction memory (s_Instr[31-26])
@@ -31,6 +32,7 @@ architecture structural of tb_control_unit is
             o_MemWr       : out std_logic;  -- Data Memory write enable
             o_Halt        : out std_logic  --Indicates program execution finished
             );
+        
     end component;
 
     -- Instruction inputs
