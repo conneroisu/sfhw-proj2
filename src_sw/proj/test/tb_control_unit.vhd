@@ -18,7 +18,6 @@ architecture structural of tb_control_unit is
             i_Opcode : in std_logic_vector(5 downto 0);  -- Opcode from MIPS instruction memory (s_Instr[31-26])
             i_Funct  : in std_logic_vector(5 downto 0);  -- Function code for certain instructions with same opcode
             i_Rt     : in std_logic_vector(4 downto 0);  -- RT field helps determine branch type   
-
             -- Control signal outputs
             o_RegWr       : out std_logic;  -- Register write enable
             o_RegDst      : out std_logic_vector(1 downto 0);  -- Register destination
