@@ -75,6 +75,8 @@ begin
     -- Testbench process - Opcodes from Processor Spreadsheet
     P_TEST : process
     begin
+
+        s_iRt <= "00000";
         -- add
         s_iOpcode <= "000000";
         s_iFunct  <= "100000";
