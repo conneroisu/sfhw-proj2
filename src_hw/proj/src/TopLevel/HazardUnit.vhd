@@ -39,10 +39,11 @@ begin
         and i_EXMEM_RegWr /= '0')
                          else '0';
 
-    o_PC_pause <= '1' when (i_EXMEM_rd /= b"00000"  -- Detect Load Instr - Unlike an ALU instruction whose calculated value is known and can be forwarded, a load instruction must get data from memory. No forwarding can speed up that data access. 
-                            and ((i_IFID_rs = i_EXMEM_rd) or (i_IFID_rt = i_EXMEM_rd))
-                            and i_EXMEM_RegWr /= '0'
-                            and i_IDEX_RegWr /= '0')
+    o_PC_pause <= '1' when (
+        i_EXMEM_rd /= b"00000"  -- Detect Load Instr - Unlike an ALU instruction whose calculated value is known and can be forwarded, a load instruction must get data from memory. No forwarding can speed up that data access. 
+        and ((i_IFID_rs = i_EXMEM_rd) or (i_IFID_rt = i_EXMEM_rd))
+        and i_EXMEM_RegWr /= '0'
+        and i_IDEX_RegWr /= '0')
                   else '0';
 
     -- Conditions that trigger control hazard avoidance
@@ -53,4 +54,3 @@ begin
     o_IDEX_squash  <= o_IFID_squash;
     o_EXMEM_squash <= o_IFID_squash;
 end architecture;
-
