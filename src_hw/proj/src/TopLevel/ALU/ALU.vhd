@@ -146,21 +146,53 @@ begin
     port map (i_Data_0, i_Data_1, s_slt);
 
   barrel_shift : barrel_shifter
-    --Important note: for left shift, the third field evalutes to 0 for left shift and 1 for right shift as per barrel shifter design
-    port map (i_shamt, i_Data_1, not (i_ALUCtrl(0) and i_ALUCtrl(1)), i_ALUCtrl(0) xor i_ALUCtrl(1), s_bshift_out);
+    port map (
+      i_shamt,
+      i_Data_1,
+      not (i_ALUCtrl(0) and i_ALUCtrl(1)),
+      i_ALUCtrl(0) xor i_ALUCtrl(1),
+      s_bshift_out
+      );
 
-  -- s_nli is used to make compiler happy, but is never selected
-  s_alu_bus_array <= (0 => s_and_or, 1 => s_and_or, 2 => s_dummy, 3 => s_dummy, 4 => s_dummy, 5 => s_dummy, 6 => s_and_or, 7 => s_and_or, 8 => s_dummy, 9 => s_dummy, 10 => s_sum, 11 => s_bshift_out, 12 => s_bshift_out, 13 => s_bshift_out, 14 => s_sum, 15 => s_slt);
+  -- s_nli is used to satisfy compiler 
+  s_alu_bus_array <= (0  => s_and_or,
+                      1  => s_and_or,
+                      2  => s_nil,
+                      3  => s_nil,
+                      4  => s_nil,
+                      5  => s_nil,
+                      6  => s_and_or,
+                      7  => s_and_or,
+                      8  => s_nil,
+                      9  => s_dummy,
+                      10 => s_sum,
+                      11 => s_bshift_out,
+                      12 => s_bshift_out,
+                      13 => s_bshift_out,
+                      14 => s_sum,
+                      15 => s_slt
+                      );
+
   out_mux : mux_Nt1
-    generic map (bus_width => N, sel_width => 4)
-    port map (s_alu_bus_array, i_ALUCtrl(3 downto 0), o_ALUOut);
+    generic map (
+      bus_width => N,
+      sel_width => 4
+      )
+    port map (
+      s_alu_bus_array,
+      i_ALUCtrl(3 downto 0),
+      o_ALUOut
+      );
 
   with i_ALUCtrl select
-    --Addition overflow, if input signs are the same and output different then overflow
-    s_Overflow <= ((i_Data_0(31) and i_Data_1(31) and (not s_sum(31))) or ((not i_Data_0(31)) and (not i_Data_1(31)) and s_sum(31)))                 when b"11010",
-    --Subtraction overflow, if input signs are different, and result has same sign of input data 1 then overflow
-    ((i_Data_0(31) xor i_Data_1(31)) and (s_sum(31) and i_Data_1(31))) or ((i_Data_0(31) xor i_Data_1(31)) and (not s_sum(31) and not i_Data_1(31))) when b"11110",
-    '0'                                                                                                                                              when others;
+    -- Addition overflow, if input signs are the same and output different then overflow has occurred
+    s_Overflow <= (
+      (i_Data_0(31) and i_Data_1(31) and (not s_sum(31)))
+      or ((not i_Data_0(31)) and (not i_Data_1(31)) and s_sum(31))) when b"11010",
+    -- Subtraction overflow, if input signs are different, and result has same sign of input data 1 then overflow has occurred
+    ((i_Data_0(31) xor i_Data_1(31)) and (s_sum(31) and i_Data_1(31)))
+    or ((i_Data_0(31) xor i_Data_1(31)) and (not s_sum(31) and not i_Data_1(31))) when b"11110",
+    '0'                                                                           when others;
 
   --Overflow depends on whether the instruction is for signed/unsigned operation
   o_Overflow <= (s_Overflow and i_ALUCtrl(4));
