@@ -41,8 +41,6 @@ architecture structural of Branch_Unit is
             );
     end component;
 
-    signal s_PCplus4          : std_logic_vector(31 downto 0);
-    signal s_Extended         : std_logic_vector(31 downto 0);
     signal s_PredictionScheme : std_logic_vector(1 downto 0);
     signal s_BranchTarget     : std_logic_vector(31 downto 0);
 begin
@@ -50,18 +48,5 @@ begin
     BranchTargetReg : dffg_n
         generic map (2)
         port map(i_Clk, i_Reset, i_WriteEnable, i_BranchTarget, s_BranchTarget);
-
-    PCP4_reg : dffg_n                   -- output of adder, output pc+4
-        generic map (32)
-        port map(i_Clk, i_Reset, i_WriteEnable, i_PCplus4, s_PCplus4);
-
-    SignExtend_reg : dffg_n
-        generic map (32)
-        port map(i_Clk, i_Reset, i_WriteEnable, i_Extended, s_Extended);
-
-    -- Add 2x shifted extended value to PCplus4
-    o_BranchAddr <= std_logic_vector(
-        unsigned(std_logic_vector(shift_left(unsigned(i_Extended), 2))) + unsigned(i_PCplus4)
-        );
 
 end architecture structural;

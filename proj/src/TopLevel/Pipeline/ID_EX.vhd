@@ -19,10 +19,10 @@ entity ID_EX is
 
     port (
         -- Common Stage Signals [begin]
-        i_CLK        : in  std_logic;
-        i_RST        : in  std_logic;
-        i_WE         : in  std_logic;
-        i_PC         : in  std_logic_vector(N-1 downto 0);
+        i_CLK       : in  std_logic;
+        i_RST       : in  std_logic;
+        i_WE        : in  std_logic;
+        i_PC        : in  std_logic_vector(N-1 downto 0);
         -- Control Signals (From Control Unit) [begin]
         --= Stage Specific Signals [begin]
         --         RegDst  ALUOp  ALUSrc
@@ -30,29 +30,29 @@ entity ID_EX is
         -- lw    :   0      00      01
         -- sw    :   x      00      01
         -- beq   :   x      01      00
-        i_RegDst     : in  std_logic;   -- Control Unit Destination Register
-        i_ALUOp      : in  std_logic_vector(2 downto 0);  -- ALU operation from control unit.
-        i_ALUSrc     : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
-        i_MemRead    : in  std_logic;   -- Memory Read control
-        i_MemWrite   : in  std_logic;   -- Memory Write control
-        i_MemtoReg   : in  std_logic;   -- Memory to Register control
-        i_RegWrite   : in  std_logic;   -- Register Write control
-        i_Branch     : in  std_logic;   -- Branch control
+        i_RegDst    : in  std_logic;    -- Control Unit Destination Register
+        i_ALUOp     : in  std_logic_vector(2 downto 0);  -- ALU operation from control unit.
+        i_ALUSrc    : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
+        i_MemRead   : in  std_logic;    -- Memory Read control
+        i_MemWrite  : in  std_logic;    -- Memory Write control
+        i_MemtoReg  : in  std_logic;    -- Memory to Register control
+        i_RegWrite  : in  std_logic;    -- Register Write control
+        i_Branch    : in  std_logic;    -- Branch control
         -- Future Stage Signals [begin]
         -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png
-        o_ALU        : out std_logic_vector(N-1 downto 0);
-        o_ALUSrc     : out std_logic_vector(1 downto 0);
-        o_MemRead    : out std_logic;
-        o_MemWrite   : out std_logic;
-        o_MemtoReg   : out std_logic;
-        o_RegWrite   : out std_logic;
-        o_Branch     : out std_logic;
+        o_ALU       : out std_logic_vector(N-1 downto 0);
+        o_ALUSrc    : out std_logic_vector(1 downto 0);
+        o_MemRead   : out std_logic;
+        o_MemWrite  : out std_logic;
+        o_MemtoReg  : out std_logic;
+        o_RegWrite  : out std_logic;
+        o_Branch    : out std_logic;
         -- Input Signals [begin]
         --= Register File Signals [begin]
-        i_Read1      : in  std_logic_vector(N-1 downto 0);
-        i_Read2      : in  std_logic_vector(N-1 downto 0);
-        o_Read1      : out std_logic_vector(N-1 downto 0);
-        o_Read2      : out std_logic_vector(N-1 downto 0);
+        i_Read1     : in  std_logic_vector(N-1 downto 0);
+        i_Read2     : in  std_logic_vector(N-1 downto 0);
+        o_Read1     : out std_logic_vector(N-1 downto 0);
+        o_Read2     : out std_logic_vector(N-1 downto 0);
         -- Forward Unit Signals [begin]
         --= Forwarded Signals (received from Forward Unit) [begin]
         -- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
@@ -63,21 +63,23 @@ entity ID_EX is
         -- ForwardB=00  -> ID/EX    -> operand from registerfile
         -- ForwardB=10  -> EX/MEM   -> operand forwarded from prior alu result
         -- ForwardB=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
-        i_ForwardA   : in  std_logic_vector(1 downto 0);
-        i_ForwardB   : in  std_logic_vector(1 downto 0);
+        i_ForwardA  : in  std_logic_vector(1 downto 0);
+        i_ForwardB  : in  std_logic_vector(1 downto 0);
         --= Forwarding Signals (sent to Forward Unit) [begin]
-        i_WriteData  : in  std_logic_vector(N-1 downto 0);  -- Data from the end of writeback stage's mux
-        i_DMem1      : in  std_logic_vector(N-1 downto 0);  -- Data from the first input to the DMem output of ex/mem
+        i_WriteData : in  std_logic_vector(N-1 downto 0);  -- Data from the end of writeback stage's mux
+        i_DMem1     : in  std_logic_vector(N-1 downto 0);  -- Data from the first input to the DMem output of ex/mem
         --= Instruction Signals [begin]
-        i_Rs         : in  std_logic_vector(4 downto 0);
-        i_Rt         : in  std_logic_vector(4 downto 0);
-        i_Rd         : in  std_logic_vector(4 downto 0);
-        i_Shamt      : in  std_logic_vector(4 downto 0);
-        i_Funct      : in  std_logic_vector(5 downto 0);
-        i_Imm        : in  std_logic_vector(15 downto 0);
+        i_Rs        : in  std_logic_vector(4 downto 0);
+        i_Rt        : in  std_logic_vector(4 downto 0);
+        i_Rd        : in  std_logic_vector(4 downto 0);
+        i_Shamt     : in  std_logic_vector(4 downto 0);
+        i_Funct     : in  std_logic_vector(5 downto 0);
+        i_Imm       : in  std_logic_vector(15 downto 0);
+        i_Extended     : in  std_logic_vector(31 downto 0);
+        o_BranchAddr   : out std_logic_vector(31 downto 0);
         -- Halt signals
-        i_Halt       : in  std_logic_vector(0 downto 0);
-        o_Halt       : out std_logic_vector(0 downto 0)
+        i_Halt      : in  std_logic_vector(0 downto 0);
+        o_Halt      : out std_logic_vector(0 downto 0)
         );
 
 end entity;
@@ -95,6 +97,7 @@ architecture structure of ID_EX is
             );
     end component;
 
+    -- N-bit multiplexer (inputs are always reverse order)
     component mux_NtM is
         generic (
             INPUT_COUNT : integer := 2;
@@ -121,15 +124,15 @@ architecture structure of ID_EX is
     end component;
 
     -- see: https://github.com/user-attachments/assets/b31df788-32cf-48a5-a3ac-c44345cac682
-    signal s_ALUOp       : std_logic_vector(3 downto 0);
-    signal s_ALUOperand1 : std_logic_vector(31 downto 0);
+    signal s_ALUOp          : std_logic_vector(3 downto 0);
+    signal s_ALUOperand1    : std_logic_vector(31 downto 0);
     signal s_PreALUOperand2 : std_logic_vector(31 downto 0);
-    signal s_ALUOperand2 : std_logic_vector(31 downto 0);
-    signal s_Overflow    : std_logic;
-    signal s_Zero        : std_logic;
-    signal s_PC          : std_logic_vector(31 downto 0);
-    signal s_PCplus4     : std_logic_vector(31 downto 0);
-    signal s_Extended    : std_logic_vector(31 downto 0);
+    signal s_ALUOperand2    : std_logic_vector(31 downto 0);
+    signal s_Overflow       : std_logic;
+    signal s_Zero           : std_logic;
+    signal s_PC             : std_logic_vector(31 downto 0);
+    signal s_PCplus4        : std_logic_vector(31 downto 0);
+    signal s_Extended       : std_logic_vector(31 downto 0);
 
     signal s_Shamt : std_logic_vector(4 downto 0);
     signal s_Rs    : std_logic_vector(4 downto 0);
@@ -137,6 +140,7 @@ architecture structure of ID_EX is
     signal s_Rd    : std_logic_vector(4 downto 0);
     signal s_Imm   : std_logic_vector(15 downto 0);
     signal s_Funct : std_logic_vector(5 downto 0);
+
 begin
 
     ----------------------------------------------------------------------state
@@ -166,6 +170,14 @@ begin
     Halt_reg : dffg_n
         generic map (1)
         port map(i_CLK, i_RST, i_WE, i_Halt, o_Halt);
+        
+    PCP4_reg : dffg_n                   -- output of adder, output pc+4
+        generic map (32)
+        port map(i_Clk, i_RST, i_WE, s_PCplus4, s_PCplus4);
+
+    SignExtend_reg : dffg_n
+        generic map (32)
+        port map(i_Clk, i_RST, i_WE, i_Extended, s_Extended);
 
     -- "Instruction" registers
 
@@ -266,7 +278,7 @@ begin
             DATA_WIDTH  => 32
             )
         port map (
-            inputs => s_ALUOperand2 & s_Extended,
+            inputs => s_Extended& s_ALUOperand2,
             Sel    => o_ALUSrc,
             output => s_ALUOperand2
             );
@@ -295,5 +307,10 @@ begin
             o_Zero     => s_Zero
             );
 
-end structure;
 
+    -- Add 2x shifted extended value to PCplus4
+    o_BranchAddr <= std_logic_vector(
+        unsigned(std_logic_vector(shift_left(unsigned(i_Extended), 2))) + unsigned(s_PCplus4)
+        );
+
+end structure;
