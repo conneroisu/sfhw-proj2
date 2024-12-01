@@ -11,14 +11,19 @@ use IEEE.numeric_std.all;
 use work.MIPS_types.all;
 
 entity MIPS_Processor is
-    generic (N : integer := DATA_WIDTH);
+    generic (
+                N : integer := DATA_WIDTH
+            );
+    
     port (
         iCLK : in std_logic;
         iRST : in std_logic;
         iInstLd : in std_logic;
         iInstAddr : in std_logic_vector(N - 1 downto 0);
         iInstExt : in std_logic_vector(N - 1 downto 0);
-        oALUOut : out std_logic_vector(N - 1 downto 0));
+        oALUOut : out std_logic_vector(N - 1 downto 0)
+    );
+    
 end MIPS_Processor;
 
 architecture structure of MIPS_Processor is
@@ -243,12 +248,11 @@ architecture structure of MIPS_Processor is
         );
     end component;
 
-    component mips_pc is
+    component program_counter is
         generic (N : integer := 32);
         port (
             i_CLK : in std_logic;
             i_RST : in std_logic;
-            i_WEn : in std_logic;
             i_Data : in std_logic_vector(N - 1 downto 0);
             o_Data : out std_logic_vector(N - 1 downto 0)
         );
@@ -419,11 +423,10 @@ begin
         s_WB_new_pc,
         s_IF_final_pc);
 
-    PC : mips_pc
+    PC : program_counter
     port map(
         iCLK,
         iRST,
-        '1',
         s_IF_final_pc,
         s_NextInstAddr
     );
