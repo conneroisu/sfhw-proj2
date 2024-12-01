@@ -2,12 +2,14 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity Branch_State is
+    
     port (
         clk         : in  std_logic;
         rst         : in  std_logic;
         branch_taken: in  std_logic;  -- Actual branch outcome
         prediction  : out std_logic   -- Predicted outcome (1 = taken, 0 = not taken)
     );
+    
 end Branch_State;
 
 architecture behavioral of Branch_State is

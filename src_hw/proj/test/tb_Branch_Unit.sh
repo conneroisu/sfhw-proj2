@@ -1,5 +1,5 @@
 #!/bin/bash
-target=tb_ALU_Control
+target=tb_Branch_Unit
 # make sure parent folder is `test`
 parent_path=$( cd "$(dirname "$0")" ; pwd -P )
 echo "parent_path: $parent_path"

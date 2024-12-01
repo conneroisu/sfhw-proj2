@@ -3,23 +3,23 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity Branch_Unit is
+    
     port(
         -- Control signals
         i_CLK           : in std_logic;
         i_RST          : in std_logic;
         i_WriteEnable  : in std_logic;
-        
         -- Branch information
         i_BranchTarget : in std_logic_vector(31 downto 0);  -- Target address
         i_BranchPC     : in std_logic_vector(31 downto 0);  -- PC of branch instruction
         i_BranchTaken  : in std_logic;                      -- Actual branch outcome
         i_BranchValid  : in std_logic;                      -- Branch instruction is valid
-        
         -- Output signals
         o_PredictTaken : out std_logic;                     -- Prediction result
         o_BranchTarget : out std_logic_vector(31 downto 0); -- Predicted target address
         o_Mispredict   : out std_logic                      -- Misprediction signal
     );
+    
 end entity Branch_Unit;
 
 architecture structural of Branch_Unit is
@@ -36,7 +36,7 @@ architecture structural of Branch_Unit is
     end component;
 
     -- Branch predictor component
-    component branch_predictor is
+    component Branch_State is
         port (
             clk          : in  std_logic;
             rst          : in  std_logic;
@@ -66,7 +66,7 @@ begin
         );
 
     -- 2-bit Branch Predictor
-    Predictor : branch_predictor
+    Predictor : Branch_State
         port map(
             clk          => i_CLK,
             rst          => i_RST,
