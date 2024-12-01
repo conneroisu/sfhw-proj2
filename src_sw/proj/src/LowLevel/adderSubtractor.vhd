@@ -19,6 +19,7 @@ entity adderSubtractor is
     generic (
         N : integer := 32  -- Generic of type integer for input/output data width. Default value is 32.
         );
+    
     port (
         nAdd_Sub   : in  std_logic;
         i_A        : in  std_logic_vector(N - 1 downto 0);     -- Input A
@@ -28,6 +29,7 @@ entity adderSubtractor is
         o_Cout     : out std_logic;     -- Carry out
         o_Overflow : out std_logic      -- Overflow Indicator
         );
+    
 end entity adderSubtractor;
 
 architecture structural of adderSubtractor is
