@@ -1,4 +1,4 @@
-set target "tb_control"
+set target "tb_control_unit"
 set file "${target}.vhd"
 
 vcom -2008 -work work ../src/MIPS_types.vhd
