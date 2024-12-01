@@ -20,6 +20,5 @@ end mux_Nt1;
 
 architecture dataflow of mux_Nt1 is
 begin
-    --Just pick the correct bus out of the array based on the input
     o_reg <= i_reg_bus(to_integer(unsigned(i_sel)));
 end dataflow;
