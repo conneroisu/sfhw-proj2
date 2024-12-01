@@ -44,3 +44,4 @@ et.log
 *.mti
 .nfs*
 .DS_Store
+**/**/QuartusWork/
