@@ -44,14 +44,14 @@ def read_config(config="Lab"):
     c = ConfigParser()
 
     if not def_config.is_file():
-        print("Default configuration file internal/.config.ini not found."
+        print("Default configuration file internal/.config.ini not found." +
                "Please re-install toolflow or replace the file")
 
-    c.read(def_config)
+    _ = c.read(def_config)
 
     if opt_config.is_file():
         print("Using optional config config.ini")
-        c.read(opt_config)
+        _ = c.read(opt_config)
 
     if not c.has_section(config):
         print(f"Error. Section {config} does not exists")
@@ -59,11 +59,11 @@ def read_config(config="Lab"):
 
     modelsim = resolve_paths(json.loads(c.get(config, "modelsim_paths")))
     if modelsim is None:
-        print("WARN: Modelsim is not found with any of the provided paths. "
+        print("WARN: Modelsim is not found with any of the provided paths. " +
               "Please check your config file, or specify a new config")
     quartus = resolve_paths(json.loads(c.get(config, "quartus_paths")))
     if quartus is None:
-        print("WARN: Quartus is not found with any of the provided paths. "
+        print("WARN: Quartus is not found with any of the provided paths. " +
               "Please check your config file, or specify a new config")
     license = json.loads(c.get(config, "lm_license_file"))
     mars_tok = json.loads(c.get(config, "mars_token"))
