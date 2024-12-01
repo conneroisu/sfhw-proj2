@@ -13,8 +13,9 @@ use IEEE.std_logic_1164.all;
 use work.MIPS_types.all;
 
 entity ALU is 
-  --Data bus width
+  
   generic (N : integer := 32);
+  
   port (
         i_ALUCtrl   : in std_logic_vector(4 downto 0);
         i_Data_0    : in std_logic_vector(N-1 downto 0);
@@ -25,6 +26,7 @@ entity ALU is
         o_Cout      : out std_logic;
         o_Overflow  : out std_logic
   );
+  
 end ALU;
 
 architecture mixed of ALU is
