@@ -10,8 +10,8 @@ use ieee.std_logic_1164.all;
 use work.mips_types.all;
 
 entity register_file is
-    port
-        (
+    
+    port (
             clk   : in  std_logic;                      -- Clock input
             i_wA  : in  std_logic_vector(4 downto 0);   -- Write address input
             i_wD  : in  std_logic_vector(31 downto 0);  -- Write data input
@@ -22,6 +22,7 @@ entity register_file is
             o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
             o_d2  : out std_logic_vector(31 downto 0)   -- Read data 2 output
             );
+        
 end entity register_file;
 
 architecture structural of register_file is
@@ -44,14 +45,18 @@ architecture structural of register_file is
     end component;
 
     component dffg_n is
-        port
-            (
-                i_clk : in  std_logic;  -- Clock input
-                i_rst : in  std_logic;  -- Reset input
-                i_we  : in  std_logic;  -- Write enable input
-                i_d   : in  std_logic_vector(31 downto 0);  -- Data input
-                o_q   : out std_logic_vector(31 downto 0)   -- Data output
-                );
+        generic(
+            N : integer := 32
+            );
+        
+    port(
+        i_CLK : in  std_logic;                       -- Clock input
+        i_RST : in  std_logic;                       -- Reset input
+        i_WrE : in  std_logic;                       -- Write enable input
+        i_D   : in  std_logic_vector(N-1 downto 0);  -- Data input
+        o_Q   : out std_logic_vector(N-1 downto 0)   -- Data output
+        );
+
     end component;
 
     signal s1, s3 : std_logic_vector(31 downto 0);  -- 2 32-bit signals
@@ -68,13 +73,13 @@ begin
 
     -- Set register $0 to 0
     reg0 : component dffg_n
-        port
-        map(
-            i_clk => clk,               -- clock
-            i_rst => reset,             -- reset
-            i_we  => '0',               -- write enable
-            i_d   => x"00000000",       -- write data
-            o_q   => s2(0)              -- 2d array
+    generic map(N => 32)
+        port map(
+            clk,               -- clock
+            reset,             -- reset
+            '0',               -- write enable
+            x"00000000",       -- write data
+            s2(0)              -- 2d array
             );
 
     -- AND gate to enable write using decoder output
@@ -91,21 +96,20 @@ begin
     registerlist : for i in 1 to 31 generate
 
         regi : component dffg_n
-            port
-            map(
-                i_clk => clk,           -- clock
-                i_rst => reset,         -- reset
-                i_we  => s3(i),         -- write enable
-                i_d   => i_wD,          -- write data
-                o_q   => s2(i)          -- 2d array
+        generic map(N => 32)
+            port map(
+                clk,           -- clock
+                reset,         -- reset
+                s3(i),         -- write enable
+                i_wD,          -- write data
+                s2(i)          -- 2d array
                 );
 
     end generate registerlist;
 
     -- Generate 2 Read Ports
     read1 : component mux32t1
-        port
-        map(
+        port map(
             s2,                         -- 2d array
             i_r1,                       -- read address 1
             o_d1                        -- read data 1
