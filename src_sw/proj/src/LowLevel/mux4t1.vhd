@@ -12,6 +12,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity mux4t1 is
+    
     port (
         i_s  : in  std_logic_vector(1 downto 0);  -- Select input width is 2.
         i_d0 : in  std_logic;
@@ -20,6 +21,7 @@ entity mux4t1 is
         i_d3 : in  std_logic;
         o_o  : out std_logic
         );
+    
 end entity mux4t1;
 
 architecture structural of mux4t1 is
@@ -33,7 +35,7 @@ architecture structural of mux4t1 is
             );
     end component;
 
-    --signal temp_o : std_logic;
+    
     signal s_1 : std_logic;
     signal s_2 : std_logic;
 
