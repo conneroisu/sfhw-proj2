@@ -78,6 +78,26 @@ architecture structure of MIPS_Processor is
 --        );
 --    end component;
 
+    component Branch_Unit is
+
+    port(
+        -- Control signals
+        i_CLK           : in std_logic;
+        i_RST          : in std_logic;
+        i_WriteEnable  : in std_logic;
+        -- Branch information
+        i_BranchTarget : in std_logic_vector(31 downto 0);  -- Target address
+        i_BranchPC     : in std_logic_vector(31 downto 0);  -- PC of branch instruction
+        i_BranchTaken  : in std_logic;                      -- Actual branch outcome
+        i_BranchValid  : in std_logic;                      -- Branch instruction is valid
+        -- Output signals
+        o_PredictTaken : out std_logic;                     -- Prediction result
+        o_BranchTarget : out std_logic_vector(31 downto 0); -- Predicted target address
+        o_Mispredict   : out std_logic                      -- Misprediction signal
+    );
+    
+    end component;
+
     component ID_EX is
 
     port (
