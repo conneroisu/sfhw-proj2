@@ -7,23 +7,18 @@ entity Branch_Unit is
 
     port (
         i_Clk          : in  std_logic;
-        i_Reset          : in  std_logic;
+        i_Reset        : in  std_logic;
         i_WriteEnable  : in  std_logic;
         i_Flush        : in  std_logic;
         i_Stall        : in  std_logic;
-        i_Extended     : in  std_logic_vector(31 downto 0);
         i_PCplus4      : in  std_logic_vector(31 downto 0);
-        i_sctrl        : in  std_logic;  --sign control signal
         i_BranchTarget : in  std_logic_vector(31 downto 0);
-        o_regw         : out std_logic;  --register write signal
         i_addr         : in  std_logic_vector(31 downto 0);
         o_addr         : out std_logic_vector(31 downto 0);
-        o_D1           : out std_logic_vector(31 downto 0);
-        o_D2           : out std_logic_vector(31 downto 0);
         o_Sign         : out std_logic_vector(31 downto 0);
-        o_BranchCtrl  : out std_logic_vector(5 downto 0);
+        o_BranchCtrl   : out std_logic_vector(5 downto 0);
         o_BranchAddr   : out std_logic_vector(31 downto 0);
-        o_BranchTaken : out std_logic
+        o_BranchTaken  : out std_logic
         );
 
 end entity Branch_Unit;
