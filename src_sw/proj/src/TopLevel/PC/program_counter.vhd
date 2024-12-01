@@ -7,6 +7,7 @@
 
 library IEEE;
 use IEEE.std_logic_1164.all;
+
 entity program_counter is
     generic(
         N : integer := 32
@@ -17,6 +18,7 @@ entity program_counter is
         i_D   : in  std_logic_vector(N-1 downto 0);   -- Data value input
         o_Q   : out std_logic_vector(N-1 downto 0));  -- Data value output
 end program_counter;
+
 architecture structural of program_counter is
     component program_counter_dff is
         port(
