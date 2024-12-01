@@ -188,11 +188,13 @@ begin
     -- Addition overflow, if input signs are the same and output different then overflow has occurred
     s_Overflow <= (
       (i_Data_0(31) and i_Data_1(31) and (not s_sum(31)))
-      or ((not i_Data_0(31)) and (not i_Data_1(31)) and s_sum(31))) when b"11010",
+      or
+      ((not i_Data_0(31)) and (not i_Data_1(31)) and s_sum(31))) when b"11010",
     -- Subtraction overflow, if input signs are different, and result has same sign of input data 1 then overflow has occurred
     ((i_Data_0(31) xor i_Data_1(31)) and (s_sum(31) and i_Data_1(31)))
-    or ((i_Data_0(31) xor i_Data_1(31)) and (not s_sum(31) and not i_Data_1(31))) when b"11110",
-    '0'                                                                           when others;
+    or
+    ((i_Data_0(31) xor i_Data_1(31)) and (not s_sum(31) and not i_Data_1(31))) when b"11110",
+    '0'                                                                        when others;
 
   --Overflow depends on whether the instruction is for signed/unsigned operation
   o_Overflow <= (s_Overflow and i_ALUCtrl(4));
