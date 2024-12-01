@@ -13,15 +13,15 @@ use ieee.std_logic_1164.all;
 
 -- Entity declaration of dffg_tb
 
-entity dffg_tb is
+entity tb_dffg is
     generic (
         gclk_hper : time := 50 ns
         );
-end entity dffg_tb;
+end entity tb_dffg;
 
 -- Architecture declaration of dffg_tb
 
-architecture behavior of dffg_tb is
+architecture behavior of tb_dffg is
 
     -- Calculate the clock period as twice the half-period
     constant cclk_per : time := gclk_hper * 2;
