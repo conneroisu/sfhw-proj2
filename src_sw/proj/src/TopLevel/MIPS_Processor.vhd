@@ -159,22 +159,20 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component regfile is
-        generic (
-            reg_size  : integer := 32;
-            sel_width : integer := 5
+    component register_file is
+        
+    port (
+            clk   : in  std_logic;                      -- Clock input
+            i_wA  : in  std_logic_vector(4 downto 0);   -- Write address input
+            i_wD  : in  std_logic_vector(31 downto 0);  -- Write data input
+            i_wC  : in  std_logic;                      -- Write enable input
+            i_r1  : in  std_logic_vector(4 downto 0);   -- Read address 1 input
+            i_r2  : in  std_logic_vector(4 downto 0);   -- Read address 2 input
+            reset : in  std_logic;                      -- Reset input
+            o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
+            o_d2  : out std_logic_vector(31 downto 0)   -- Read data 2 output
             );
-        port (
-            i_src1      : in  std_logic_vector(sel_width-1 downto 0);
-            i_src2      : in  std_logic_vector(sel_width-1 downto 0);
-            i_dest      : in  std_logic_vector(sel_width-1 downto 0);
-            i_wdata     : in  std_logic_vector(reg_size-1 downto 0);
-            i_RegWrite  : in  std_logic;
-            i_CLK       : in  std_logic;
-            i_RST       : in  std_logic;
-            o_data_src1 : out std_logic_vector(reg_size-1 downto 0);
-            o_data_src2 : out std_logic_vector(reg_size-1 downto 0)
-            );
+        
     end component;
 
     component sign_extender_32 is
@@ -478,7 +476,7 @@ begin
  s_WB_do_branch or s_WB_CntrlRegWr,
  s_RegWr);
 
-    reg_file : regfile port map (s_ID_Inst(25 downto 21),
+    reg_file : register_file port map (s_ID_Inst(25 downto 21),
  s_ID_Inst(20 downto 16),
  s_RegWrAddr,
  s_RegWrData,

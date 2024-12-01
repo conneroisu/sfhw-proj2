@@ -10,8 +10,8 @@ use ieee.std_logic_1164.all;
 use work.mips_types.all;
 
 entity register_file is
-    port
-        (
+    
+    port (
             clk   : in  std_logic;                      -- Clock input
             i_wA  : in  std_logic_vector(4 downto 0);   -- Write address input
             i_wD  : in  std_logic_vector(31 downto 0);  -- Write data input
@@ -22,6 +22,7 @@ entity register_file is
             o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
             o_d2  : out std_logic_vector(31 downto 0)   -- Read data 2 output
             );
+        
 end entity register_file;
 
 architecture structural of register_file is
