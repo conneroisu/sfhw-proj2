@@ -4,6 +4,7 @@ use ieee.numeric_std.all;
 use work.MIPS_types.all;
 
 entity mux_Nt1 is
+    
     generic (
         bus_width : integer := 32;
         sel_width : integer := 5
