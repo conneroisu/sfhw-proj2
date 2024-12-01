@@ -11,7 +11,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use work.MIPS_types.all;
 
-entity BarrelShifter is
+entity barrel_shifter is
     generic
         (N : integer := 32);
     
@@ -24,9 +24,9 @@ entity BarrelShifter is
             o_O           : out std_logic_vector(N - 1 downto 0)  --shifted output
             );
         
-end BarrelShifter;
+end barrel_shifter;
 
-architecture structure of BarrelShifter is
+architecture structure of barrel_shifter is
 
     component mux2t1_N
         generic
