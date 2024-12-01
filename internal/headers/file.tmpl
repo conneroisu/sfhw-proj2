@@ -1,6 +1,6 @@
 {{ define "file" }}-- <header>
 -- Author(s): {{.Author}}
--- Name: {{.Name}}
+-- Name: {{.Name}}{{ if .Desc }}\n -- Description: {{.Desc}}{{ end }}
 -- Notes: {{- range .Notes }}
 --	{{.}}{{- end }}
 -- </header>

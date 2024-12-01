@@ -28,7 +28,13 @@ func TestFile(t *testing.T) {
 
 	file := "internal/headers/testdata/golden_basic.vhd"
 	headless := reduceContent(ctx, string(content))
-	output, err := FillTemplate(commits.Authors(), file, commits.Notes(), headless)
+	output, err := FillTemplate(
+		commits.Authors(),
+		"",
+		file,
+		commits.Notes(),
+		headless,
+	)
 	if err != nil {
 		t.Errorf("Error: %v", err)
 	}

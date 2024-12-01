@@ -79,6 +79,7 @@ const (
 // FillTemplate fills the template with the given data
 func FillTemplate(
 	authors []string,
+	description string,
 	name string,
 	notes []string,
 	content string,
@@ -88,6 +89,7 @@ func FillTemplate(
 		Name    string
 		Notes   []string
 		Content string
+		Desc    string
 	}
 	rNotes := []string{}
 	for _, note := range notes {
@@ -179,6 +181,7 @@ func run(ctx context.Context) error {
 		newContent, err := FillTemplate(
 			commits.Authors(),
 			file,
+			"",
 			commits.Notes(),
 			headless,
 		)
