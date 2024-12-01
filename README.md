@@ -21,11 +21,11 @@
 │   ├── LICENSE
 │   ├── README.md
 │   ├── README.png
-├── src_sf (the source code of the software pipelined multi-cycle implementation)
+├── src_sf (the source code of the software scheduled pipelined multi-cycle implementation)
 │   ├── LICENSE
 │   ├── README.md
 │   ├── README.png
-└── src_hw (the source code of the hardware pipelined multi-cycle implementation)
+└── src_hw (the source code of the hardware scheduled pipelined multi-cycle implementation)
     ├── LICENSE
     ├── README.md
     └── README.png
