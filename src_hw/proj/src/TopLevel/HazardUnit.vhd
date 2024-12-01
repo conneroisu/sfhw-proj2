@@ -38,6 +38,7 @@ begin
          or i_IDEX_rt = i_IFID_rt)  -- next instruction's second read operand is the register being written by load, a stall is needed.
         and i_EXMEM_RegWr /= '0')
                          else '0';
+
     o_PC_pause <= '1' when (i_EXMEM_rd /= b"00000"  -- Detect Load Instr - Unlike an ALU instruction whose calculated value is known and can be forwarded, a load instruction must get data from memory. No forwarding can speed up that data access. 
                             and ((i_IFID_rs = i_EXMEM_rd) or (i_IFID_rt = i_EXMEM_rd))
                             and i_EXMEM_RegWr /= '0'
@@ -46,7 +47,7 @@ begin
 
     -- Conditions that trigger control hazard avoidance
     -- If we are detecting the branch in the writeback stage, we will need to squash IFID/IDEX/EXMEM
-    -- We will also need the branchCtl signal from the writeback stage to tell us if we have a control flow instruction about to go through
+    -- We will also need the branchCtl signal from the writeback stage to tell us if we have a control flow instruction about to go through the pipeline.
     -- Since the instruction is in the writeback stage, the next rising edge will upadte the PC with the correct value and then all preceding instructions in pipeline will be squashed
     o_IFID_squash  <= '1' when i_MEMWB_branch_taken = '1' else '0';
     o_IDEX_squash  <= o_IFID_squash;
