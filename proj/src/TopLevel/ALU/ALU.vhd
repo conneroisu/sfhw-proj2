@@ -2,10 +2,10 @@
 -- Author(s): Conner Ohnesorge, Kariniux
 -- Name: proj/src/TopLevel/ALU/ALU.vhd
 -- Notes:
---	Conner Ohnesorge 2024-11-21T10:25:45-06:00 remove-unused-declarations-from-the-ALU
---	Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---	Conner Ohnesorge 2024-11-18T10:09:46-06:00 fix-spacing-in-alu.vhd
---	Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
+--      Conner Ohnesorge 2024-11-21T10:25:45-06:00 remove-unused-declarations-from-the-ALU
+--      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
+--      Conner Ohnesorge 2024-11-18T10:09:46-06:00 fix-spacing-in-alu.vhd
+--      Conner Ohnesorge 2024-11-13T10:12:57-06:00 save-stage-progess
 -- </header>
 
 library IEEE;
@@ -133,11 +133,11 @@ begin
             o_O           => s_shift_res
             );
     -- Logical Operations (AND, OR, XOR, NAND, NOR)
-    G_AND32  : andg32 port map(i_A  => i_Data1, i_B => i_Data2, o_F => s_o_andg32);
-    G_OR32   : org32 port map(i_A   => i_Data1, i_B => i_Data2, o_F => s_o_org32);
-    G_XOR32  : xorg32 port map(i_A  => i_Data1, i_B => i_Data2, o_F => s_o_xorg32);
-    G_NAND32 : nandg32 port map(i_A => i_Data1, i_B => i_Data2, o_F => s_o_nandg32);
-    G_NOR32  : norg32 port map(i_A  => i_Data1, i_B => i_Data2, o_F => s_o_norg32);
+    G_AND32  : andg32 port map(i_Data1, i_Data2, s_o_andg32);
+    G_OR32   : org32 port map(i_Data1, i_Data2, s_o_org32);
+    G_XOR32  : xorg32 port map(i_Data1, i_Data2, s_o_xorg32);
+    G_NAND32 : nandg32 port map(i_Data1, i_Data2, s_o_nandg32);
+    G_NOR32  : norg32 port map(i_Data1, i_Data2, s_o_norg32);
     -- SLT and SLTU Generation
     s_o_slt(0) <= s_AddSub_res(31);
     G2       : for i in 1 to 31 generate
@@ -171,4 +171,3 @@ begin
             o_O     => o_F              -- ALU final output
             );
 end structural;
-
