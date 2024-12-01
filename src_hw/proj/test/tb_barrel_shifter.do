@@ -1,4 +1,4 @@
-set target "tb_ALU_Control"
+set target "tb_barrel_shifter"
 set file "${target}.vhd"
 
 vcom -2008 -work work ../src/MIPS_types.vhd

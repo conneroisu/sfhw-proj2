@@ -1,21 +1,20 @@
 -- <header>
--- Author(s): Kariniux, Conner Ohnesorge
--- Name: proj/test/tb_barrelShifter.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: src_sc/proj/test/tb_barrelShifter.vhd
 -- Notes:
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      Conner Ohnesorge 2024-11-14T08:12:11-06:00 add-barrelshifter-from-proj-1
+--      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity tb_BarrelShifter is
+entity tb_barrel_shifter is
     generic (
         halfClk : time    := 50 ns;
         N       : integer := 32);
-end tb_BarrelShifter;
+end tb_barrel_shifter;
 
-architecture behavior of tb_BarrelShifter is
+architecture behavior of tb_barrel_shifter is
     constant ClkHelper : time := halfClk * 2;
     component barrelShifter is
         generic (N : integer := 32);
