@@ -12,7 +12,10 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity dffg_n is
-    generic(N : integer := 32);
+    generic(
+        N : integer := 32
+        );
+
     port(
         i_CLK : in  std_logic;                       -- Clock input
         i_RST : in  std_logic;                       -- Reset input
@@ -25,7 +28,6 @@ end dffg_n;
 
 architecture structural of dffg_n is
 
-    --Original edge-triggered flip-flop
     component dffg is
         port(
             i_CLK : in  std_logic;      -- Clock input
@@ -41,13 +43,13 @@ begin
     G1 : for i in 0 to N-1 generate
     begin
         flipflop : dffg
-            port map(i_CLK => i_CLK,    -- Clock input
-                     i_RST => i_RST,    -- Reset input
-                     i_WE  => i_WrE,    -- Write enable input
-                     i_D   => i_D(i),   -- Data input
-                     o_Q   => o_Q(i)    -- Data output
-                     );
+            port map(
+                i_CLK => i_CLK,         -- Clock input
+                i_RST => i_RST,         -- Reset input
+                i_WE  => i_WrE,         -- Write enable input
+                i_D   => i_D(i),        -- Data input
+                o_Q   => o_Q(i)         -- Data output
+                );
     end generate;
 
 end structural;
-
