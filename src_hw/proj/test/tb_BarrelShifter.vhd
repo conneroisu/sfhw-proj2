@@ -8,12 +8,14 @@
 
 library IEEE;
 use IEEE.std_logic_1164.all;
-entity tb_barrelShifter is
+
+entity tb_BarrelShifter is
     generic (
         halfClk : time    := 50 ns;
         N       : integer := 32);
-end tb_barrelShifter;
-architecture behavior of tb_barrelShifter is
+end tb_BarrelShifter;
+
+architecture behavior of tb_BarrelShifter is
     constant ClkHelper : time := halfClk * 2;
     component barrelShifter is
         generic (N : integer := 32);
