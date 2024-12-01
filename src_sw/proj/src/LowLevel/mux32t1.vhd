@@ -13,13 +13,15 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use work.MIPS_types.all;
 entity mux32t1 is
+    
     port (
         i_I : in  TwoDArray;            -- Data value input
         i_S : in  std_logic_vector(4 downto 0);  -- Select signal input
         o_O : out std_logic_vector(31 downto 0)  -- Data value output
         );
+    
 end entity mux32t1;
--- Architecture Declaration for 32 to 1 Multiplexer
+
 architecture behavior of mux32t1 is
 begin
     -- Selects the output based on the input select signal
