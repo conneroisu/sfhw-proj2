@@ -45,6 +45,9 @@ architecture structural of register_file is
     end component;
 
     component dffg_n is
+        generic(
+            N : integer := 32
+            );
         
     port(
         i_CLK : in  std_logic;                       -- Clock input
@@ -70,8 +73,8 @@ begin
 
     -- Set register $0 to 0
     reg0 : component dffg_n
-        port
-        map(
+    generic map(N => 32)
+        port map(
             clk,               -- clock
             reset,             -- reset
             '0',               -- write enable
@@ -93,8 +96,8 @@ begin
     registerlist : for i in 1 to 31 generate
 
         regi : component dffg_n
-            port
-            map(
+        generic map(N => 32)
+            port map(
                 clk,           -- clock
                 reset,         -- reset
                 s3(i),         -- write enable
@@ -106,8 +109,7 @@ begin
 
     -- Generate 2 Read Ports
     read1 : component mux32t1
-        port
-        map(
+        port map(
             s2,                         -- 2d array
             i_r1,                       -- read address 1
             o_d1                        -- read data 1
