@@ -25,11 +25,13 @@ entity muxNtM is
         DATA_WIDTH  : positive := 8;    -- Width of each input/output
         INPUT_COUNT : positive := 4     -- Number of inputs
         );
+    
     port (
         inputs : in  std_logic_vector(INPUT_COUNT * DATA_WIDTH - 1 downto 0);
         sel    : in  std_logic_vector(integer(ceil(log2(real(INPUT_COUNT)))) - 1 downto 0);
         output : out std_logic_vector(DATA_WIDTH - 1 downto 0)
         );
+    
 end muxNtM;
 
 architecture Behavioral of muxNtM is
