@@ -10,18 +10,23 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+
 entity complementor1_N is
-    generic(N : integer := 32);
+    generic(
+        N : integer := 32
+        );
+
     port(
         i_D0 : in  std_logic_vector(N-1 downto 0);  -- Input data 0.
         o_O  : out std_logic_vector(N-1 downto 0)   -- Output data.
         );
 end complementor1_N;
+
 architecture structural of complementor1_N is
     component invg is
         port(
-            i_A : in  std_logic;                    -- Input data.
-            o_F : out std_logic                     -- Output data.
+            i_A : in  std_logic;        -- Input data.
+            o_F : out std_logic         -- Output data.
             );
     end component;
 begin
@@ -35,4 +40,3 @@ begin
             );
     end generate G_NBit_Comp1;
 end structural;
-
