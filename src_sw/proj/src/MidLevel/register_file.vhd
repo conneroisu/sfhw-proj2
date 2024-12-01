@@ -45,14 +45,15 @@ architecture structural of register_file is
     end component;
 
     component dffg_n is
-        port
-            (
-                i_clk : in  std_logic;  -- Clock input
-                i_rst : in  std_logic;  -- Reset input
-                i_we  : in  std_logic;  -- Write enable input
-                i_d   : in  std_logic_vector(31 downto 0);  -- Data input
-                o_q   : out std_logic_vector(31 downto 0)   -- Data output
-                );
+        
+    port(
+        i_CLK : in  std_logic;                       -- Clock input
+        i_RST : in  std_logic;                       -- Reset input
+        i_WrE : in  std_logic;                       -- Write enable input
+        i_D   : in  std_logic_vector(N-1 downto 0);  -- Data input
+        o_Q   : out std_logic_vector(N-1 downto 0)   -- Data output
+        );
+
     end component;
 
     signal s1, s3 : std_logic_vector(31 downto 0);  -- 2 32-bit signals
@@ -71,11 +72,11 @@ begin
     reg0 : component dffg_n
         port
         map(
-            i_clk => clk,               -- clock
-            i_rst => reset,             -- reset
-            i_we  => '0',               -- write enable
-            i_d   => x"00000000",       -- write data
-            o_q   => s2(0)              -- 2d array
+            clk,               -- clock
+            reset,             -- reset
+            '0',               -- write enable
+            x"00000000",       -- write data
+            s2(0)              -- 2d array
             );
 
     -- AND gate to enable write using decoder output
@@ -94,11 +95,11 @@ begin
         regi : component dffg_n
             port
             map(
-                i_clk => clk,           -- clock
-                i_rst => reset,         -- reset
-                i_we  => s3(i),         -- write enable
-                i_d   => i_wD,          -- write data
-                o_q   => s2(i)          -- 2d array
+                clk,           -- clock
+                reset,         -- reset
+                s3(i),         -- write enable
+                i_wD,          -- write data
+                s2(i)          -- 2d array
                 );
 
     end generate registerlist;
