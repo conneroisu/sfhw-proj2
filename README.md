@@ -5,7 +5,7 @@
 > ### WhenToMeet: https://www.when2meet.com/?27331718-g3Ah7
 >
 > ### Discord: https://discord.gg/JrZtEWpW
-
+https://huly.app/login/join?inviteId=674ce8edf6c7bf03784f0694&navigateUrl=%7B%22path%22%3A%5B%22workbench%22%2C%22cpre381%22%2C%22love%22%5D%2C%22query%22%3A%7B%22sessionId%22%3A%22674ce6ea9c2a819aaf3f74f3%22%7D%2C%22fragment%22%3A%22%22%7D
 # sfhw-proj2
 
 ![diagram](./assets/DIAGRAM.png)
