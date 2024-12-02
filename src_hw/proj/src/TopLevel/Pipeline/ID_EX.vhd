@@ -76,10 +76,7 @@ entity ID_EX is
         i_Funct     : in  std_logic_vector(5 downto 0);
         i_Imm       : in  std_logic_vector(15 downto 0);
         i_Extended     : in  std_logic_vector(31 downto 0);
-        o_BranchAddr   : out std_logic_vector(31 downto 0);
-        -- Halt signals
-        i_Halt      : in  std_logic_vector(0 downto 0);
-        o_Halt      : out std_logic_vector(0 downto 0)
+        o_BranchAddr   : out std_logic_vector(31 downto 0)
         );
 
 end entity;
@@ -176,10 +173,6 @@ begin
         generic map (2)
         port map(i_CLK, i_RST, i_WE, i_ALUSrc, o_ALUSrc);
 
-    Halt_reg : dffg_n
-        generic map (1)
-        port map(i_CLK, i_RST, i_WE, i_Halt, o_Halt);
-        
     PCP4_reg : dffg_n                   -- output of adder, output pc+4
         generic map (32)
         port map(i_Clk, i_RST, i_WE, s_PCplus4, s_PCplus4);
