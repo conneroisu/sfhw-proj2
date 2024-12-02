@@ -50,3 +50,5 @@ et.log
 **/**/QuartusWork/
 **/internal/ModelSimContainer/vcom.log
 **/internal/testpy/__pycache__/
+*.pyc
+
