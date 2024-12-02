@@ -177,8 +177,6 @@ architecture structure of MIPS_Processor is
     signal s_IRWrite     : std_logic;
     signal s_MemRead     : std_logic;
     signal s_MemWrite    : std_logic;
-    signal so_IMemAddr   : std_logic_vector(N-1 downto 0);
-    signal so_PCPlusFour : std_logic_vector(N-1 downto 0);
 begin
     -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
     with iInstLd select
@@ -229,16 +227,6 @@ begin
         end if;
     end process;
 
-    addFour : adderSubtractor
-        generic map(N => 32)
-        port map(
-            i_S      => '1',
-            nAdd_Sub => '0',
-            i_A      => so_IMemAddr,
-            i_B      => x"00000004",
-            o_Y      => so_PCPlusFour,
-            o_Cout   => s_nil1
-            );
     -- State Machine for Multicycle Operation
     process(current_state)
     begin
@@ -253,8 +241,7 @@ begin
         s_DMemAddr  <= (others => '0');
         s_RegWrAddr <= (others => '0');
         s_RegWrData <= (others => '0');
-        so_IMemAddr <= s_IMemAddr;
-        s_NextInstAddr <= so_PCPlusFour;
+        s_NextInstAddr <= s_PCPlusFour;
 
         case current_state is
 
