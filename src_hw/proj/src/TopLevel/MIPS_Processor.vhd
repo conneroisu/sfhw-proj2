@@ -199,12 +199,7 @@ begin
         port map(iCLK, s_DMemAddr(11 downto 2), s_DMemData, s_DMemWr, s_DMemOut);
 
     instPC : program_counter
-        port map(
-            i_CLK => iCLK,
-            i_RST => iRST,
-            i_D   => s_IMemAddr,
-            o_Q   => s_PCPlusFour
-            );
+        port map(iCLK, iRST, s_IMemAddr, s_PCPlusFour);
 
     instPCPlus4 : adderSubtractor
         generic map(N => 32)
