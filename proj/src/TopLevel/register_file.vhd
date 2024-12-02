@@ -49,7 +49,7 @@ architecture structural of register_file is
             (
                 i_clk : in  std_logic;  -- Clock input
                 i_rst : in  std_logic;  -- Reset input
-                i_we  : in  std_logic;  -- Write enable input
+                i_wre  : in  std_logic;  -- Write enable input
                 i_d   : in  std_logic_vector(31 downto 0);  -- Data input
                 o_q   : out std_logic_vector(31 downto 0)   -- Data output
                 );
@@ -73,7 +73,7 @@ begin
         map(
             i_clk => clk,               -- clock
             i_rst => reset,             -- reset
-            i_we  => '0',               -- write enable
+            i_wre  => '0',               -- write enable
             i_d   => x"00000000",       -- write data
             o_q   => s2(0)              -- 2d array
             );
@@ -96,7 +96,7 @@ begin
             map(
                 i_clk => clk,           -- clock
                 i_rst => reset,         -- reset
-                i_we  => s3(i),         -- write enable
+                i_wre  => s3(i),         -- write enable
                 i_d   => i_wD,          -- write data
                 o_q   => s2(i)          -- 2d array
                 );

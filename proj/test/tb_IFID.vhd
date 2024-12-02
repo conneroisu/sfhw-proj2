@@ -73,24 +73,72 @@ begin
 	wait for 10 ns;
 	s_rst <= '0';
 	wait for 10 ns;
-	
+--normal add instruction
 	s_stall <= '0';
 	s_flush <= '0';
+	wait for 10 ns;
 	s_instr <= x"012A4020";
 	s_addr <= x"00000001";
-
-
-	wait for 10 ns;
+	wait for 100 ns;
 	s_clk <= '1';
-	wait for 10 ns ;
+	wait for 10 ns;
 	s_clk <= '0';
-	wait for 10 ns ;
+	wait for 100 ns;
 
-	s_stall <= '1';
-	s_flush <= '1';
-	s_instr <= x"02528022";
-	s_addr <= x"00000001";
+
+
+---addi instruction
+	--s_stall <= '0';
+	--s_flush <= '0';
+	--s_instr <= x"21490005";
+	--s_addr <= x"00000001";
+
+	--wait for 100 ns;
+	--s_clk <= '1';
+	--wait for 10 ns;
+
+---add instruction w stall
+--	wait for 10 ns;
+--	s_clk <= '1';
+--	wait for 10 ns ;
+--	s_clk <= '0';
+--	wait for 10 ns ;
+
+--	s_stall <= '1';
+--	s_flush <= '1';
+--	s_instr <= x"02528022";
+--	s_addr <= x"00000001";
 	
+---i type instruction
+	--s_stall <= '0';
+	--s_flush <= '0';
+	--s_instr <= x"8FA80004";
+	--s_addr <= x"00000003";
+
+	--wait for 100 ns;
+	--s_clk <= '1';
+	--wait for 10 ns;
+
+---jump instruction
+	--s_stall <= '0';
+	--s_flush <= '0';
+	--s_instr <= x"08010000";
+	--s_addr <=  x"00000051";
+
+	--wait for 100 ns;
+	--s_clk <= '1';
+	--wait for 10 ns;
+
+---branch instruction
+	--s_stall <= '0';
+	--s_flush <= '0';
+	--s_instr <= x"11090004";
+	--s_addr <=  x"00000401";
+
+	--wait for 100 ns;
+	--s_clk <= '1';
+	--wait for 10 ns;
+
 
 
 
