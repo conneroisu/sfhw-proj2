@@ -72,7 +72,6 @@ architecture structure of MIPS_Processor is
     signal s_MEM_lui_val : std_logic_vector(15 downto 0);
     signal s_MEM_PCP4 : std_logic_vector(31 downto 0);
 
-    signal s_WB_reg_write_data_bus : bus_array(3 downto 0)(N - 1 downto 0);
     signal s_Halt : std_logic;
 
     signal s_EX_PCP4 : std_logic_vector(N - 1 downto 0);
