@@ -43,7 +43,7 @@ architecture structure of MIPS_Processor is
     signal s_Halt         : std_logic;  -- TODO: this signal indicates to the simulation that intended program execution has completed. (Opcode: 01 0100)
     -- Required overflow signal -- for overflow exception detection
     signal s_Ovfl         : std_logic;  -- TODO: this signal indicates an overflow exception would have been initiated
-    
+
     component mem is
         generic(ADDR_WIDTH : integer;
                 DATA_WIDTH : integer);
@@ -108,29 +108,44 @@ architecture structure of MIPS_Processor is
             i_Extended   : in  std_logic_vector(31 downto 0);
             o_BranchAddr : out std_logic_vector(31 downto 0)
             );
-
     end component;
 
-    signal s_ALUOp        : std_logic_vector(2 downto 0);
-    signal s_ALUSrc       : std_logic_vector(1 downto 0);
-    signal s_MemRead      : std_logic;
-    signal s_MemWrite     : std_logic;
-    signal s_MemtoReg     : std_logic;
-    signal s_Branch       : std_logic;
-    signal s_ALUOut       : std_logic_vector(N-1 downto 0);
-    signal s_RegFile1     : std_logic_vector(N-1 downto 0);
-    signal s_RegFile2     : std_logic_vector(N-1 downto 0);
-    signal s_ForwardA     : std_logic_vector(1 downto 0);
-    signal s_ForwardB     : std_logic_vector(1 downto 0);
-    signal s_WriteData    : std_logic_vector(N-1 downto 0);
-    signal s_Rs           : std_logic_vector(4 downto 0);
-    signal s_Rt           : std_logic_vector(4 downto 0);
-    signal s_Rd           : std_logic_vector(4 downto 0);
-    signal s_Shamt        : std_logic_vector(4 downto 0);
-    signal s_Funct        : std_logic_vector(5 downto 0);
-    signal s_Imm          : std_logic_vector(15 downto 0);
-    signal s_Extended     : std_logic_vector(31 downto 0);
-    signal s_BranchAddr   : std_logic_vector(31 downto 0);
+    component MEM_WB is
+        port (
+            clk         : in  std_logic;
+            reset       : in  std_logic;
+            i_ALUResult : in  std_logic_vector(31 downto 0);  -- ALU result to WB
+            i_DataMem   : in  std_logic_vector(31 downto 0);  -- Data from memory
+            i_RegDst    : in  std_logic_vector(4 downto 0);  -- Destination register number
+            i_RegWrite  : in  std_logic;
+            i_MemToReg  : in  std_logic;  -- MUX select signal
+            o_regDst    : out std_logic_vector(4 downto 0);  -- Destination register output
+            o_regWrite  : out std_logic;  -- Write enable output
+            o_wbData    : out std_logic_vector(31 downto 0)  -- Data to write back
+            );
+    end component;
+
+
+    signal s_ALUOp      : std_logic_vector(2 downto 0);
+    signal s_ALUSrc     : std_logic_vector(1 downto 0);
+    signal s_MemRead    : std_logic;
+    signal s_MemWrite   : std_logic;
+    signal s_MemtoReg   : std_logic;
+    signal s_Branch     : std_logic;
+    signal s_ALUOut     : std_logic_vector(N-1 downto 0);
+    signal s_RegFile1   : std_logic_vector(N-1 downto 0);
+    signal s_RegFile2   : std_logic_vector(N-1 downto 0);
+    signal s_ForwardA   : std_logic_vector(1 downto 0);
+    signal s_ForwardB   : std_logic_vector(1 downto 0);
+    signal s_WriteData  : std_logic_vector(N-1 downto 0);
+    signal s_Rs         : std_logic_vector(4 downto 0);
+    signal s_Rt         : std_logic_vector(4 downto 0);
+    signal s_Rd         : std_logic_vector(4 downto 0);
+    signal s_Shamt      : std_logic_vector(4 downto 0);
+    signal s_Funct      : std_logic_vector(5 downto 0);
+    signal s_Imm        : std_logic_vector(15 downto 0);
+    signal s_Extended   : std_logic_vector(31 downto 0);
+    signal s_BranchAddr : std_logic_vector(31 downto 0);
 begin
     -- TODO: This is required to be your final input to your instruction memory.
     -- This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
@@ -191,9 +206,26 @@ begin
             i_Imm        => s_Imm,
             i_Extended   => s_Extended,
             o_BranchAddr => s_BranchAddr
-        );
+            );
 
-    -- TODO: Ensure that s_Halt is connected to an output control signal produced from decoding the Halt instruction (Opcode: 01 0100)
-    -- TODO: Ensure that s_Ovfl is connected to the overflow output of your ALU
-    -- TODO: Implement the rest of your processor below this comment! 
+
+
+    instMemWB : MEM_WB
+        port map(
+            clk        => iCLK,
+            reset      => iRST,
+            i_ALUResult => s_ALUOut,
+            i_DataMem   => s_DMemOut,
+            i_RegDst    => s_RegFile1,
+            i_RegWrite  => s_RegWr,
+            i_MemToReg  => s_MemtoReg,
+            o_regDst    => s_RegFile2,
+            o_regWrite  => s_RegWr,
+            o_wbData    => s_WriteData
+            );
+
+
+-- TODO: Ensure that s_Halt is connected to an output control signal produced from decoding the Halt instruction (Opcode: 01 0100)
+-- TODO: Ensure that s_Ovfl is connected to the overflow output of your ALU
+-- TODO: Implement the rest of your processor below this comment! 
 end structure;

@@ -4,6 +4,7 @@ use IEEE.STD_LOGIC_ARITH.all;
 use IEEE.STD_LOGIC_UNSIGNED.all;
 
 entity MEM_WB is
+    
     port (
         clk        : in std_logic;
         reset      : in std_logic;
@@ -16,6 +17,7 @@ entity MEM_WB is
         o_regWrite  : out std_logic;                    -- Write enable output
         o_wbData    : out std_logic_vector(31 downto 0) -- Data to write back
     );
+    
 end MEM_WB;
 
 architecture structural of MEM_WB is
