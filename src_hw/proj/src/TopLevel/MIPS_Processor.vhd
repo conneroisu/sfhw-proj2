@@ -239,8 +239,6 @@ begin
             o_BranchAddr => s_BranchAddr
             );
 
-
-
     instMemWB : MEM_WB
         port map(
             clk         => iCLK,
