@@ -106,9 +106,7 @@ architecture structure of MIPS_Processor is
             i_Funct      : in  std_logic_vector(5 downto 0);
             i_Imm        : in  std_logic_vector(15 downto 0);
             i_Extended   : in  std_logic_vector(31 downto 0);
-            o_BranchAddr : out std_logic_vector(31 downto 0);
-            i_Halt       : in  std_logic_vector(0 downto 0);
-            o_Halt       : out std_logic_vector(0 downto 0)
+            o_BranchAddr : out std_logic_vector(31 downto 0)
             );
 
     end component;
@@ -134,7 +132,8 @@ architecture structure of MIPS_Processor is
     signal s_Extended     : std_logic_vector(31 downto 0);
     signal s_BranchAddr   : std_logic_vector(31 downto 0);
 begin
-    -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
+    -- TODO: This is required to be your final input to your instruction memory.
+    -- This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
     with iInstLd select
         s_IMemAddr <= s_NextInstAddr when '0',
         iInstAddr                    when others;
@@ -194,7 +193,7 @@ begin
             o_BranchAddr => s_BranchAddr
         );
 
--- TODO: Ensure that s_Halt is connected to an output control signal produced from decoding the Halt instruction (Opcode: 01 0100)
--- TODO: Ensure that s_Ovfl is connected to the overflow output of your ALU
--- TODO: Implement the rest of your processor below this comment! 
+    -- TODO: Ensure that s_Halt is connected to an output control signal produced from decoding the Halt instruction (Opcode: 01 0100)
+    -- TODO: Ensure that s_Ovfl is connected to the overflow output of your ALU
+    -- TODO: Implement the rest of your processor below this comment! 
 end structure;
