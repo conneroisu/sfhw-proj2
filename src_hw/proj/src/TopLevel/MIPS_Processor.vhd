@@ -38,6 +38,8 @@ architecture structure of MIPS_Processor is
     -- TODO: use s_Inst as the instruction signal 
     -- TODO: s_Halt indicates to the simulation that intended program execution has completed. (Opcode: 01 0100)
     -- TODO: s_Ovfl indicates an overflow exception would have been initiated
+    -- TODO: Ensure that s_Halt is connected to an output control signal produced from decoding the Halt instruction (Opcode: 01 0100)
+    -- TODO: Ensure that s_Ovfl is connected to the overflow output of your ALU
 
     -- TODO:Add EXMEM stage
     -- TODO:Add IFID stage
@@ -259,7 +261,4 @@ begin
             );
 
 
--- TODO: Ensure that s_Halt is connected to an output control signal produced from decoding the Halt instruction (Opcode: 01 0100)
--- TODO: Ensure that s_Ovfl is connected to the overflow output of your ALU
--- TODO: Implement the rest of your processor below this comment! 
 end structure;
