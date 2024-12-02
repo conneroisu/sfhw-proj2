@@ -270,12 +270,12 @@ architecture structure of MIPS_Processor is
 
     component shift_left_2 is
         generic (
-            in_width : integer := 26;
-            resize : std_logic := '0');
+            INPUT_WIDTH : integer := 26;
+            RESIZE : std_logic := '0');
         port (
-            i_data : in std_logic_vector(in_width - 1 downto 0);
-            o_shft_data_resize : out std_logic_vector((in_width + 1) downto 0);
-            o_shft_data_norsze : out std_logic_vector(in_width - 1 downto 0)
+            i_data : in std_logic_vector(INPUT_WIDTH - 1 downto 0);
+            o_shft_data_resize : out std_logic_vector((INPUT_WIDTH + 1) downto 0);
+            o_shft_data_norsze : out std_logic_vector(INPUT_WIDTH - 1 downto 0)
         );
     end component;
 
@@ -453,8 +453,7 @@ begin
 
     IMem : mem
     generic map(
-        ADDR_WIDTH => ADDR_WIDTH,
-
+        ADDR_WIDTH => 32,
         DATA_WIDTH => N)
     port map(
         clk => iCLK,
@@ -495,12 +494,12 @@ begin
         s_RegWr);
 
     reg_file : register_file port map(
+    iCLK,
+    s_RegWrAddr,
+    s_RegWrData,
+    s_RegWr,
         s_ID_Inst(25 downto 21),
         s_ID_Inst(20 downto 16),
-        s_RegWrAddr,
-        s_RegWrData,
-        s_RegWr,
-        iCLK,
         iRST,
         s_ID_dsrc1,
         s_ID_dsrc2);
@@ -513,8 +512,8 @@ begin
 
     sl2_jaddr : shift_left_2
     generic map(
-        in_width => 26,
-        resize => '1')
+        INPUT_WIDTH => 26,
+        RESIZE => '1')
     port map(
         s_ID_Inst(25 downto 0),
         s_ID_j_addr(27 downto 0),
@@ -523,8 +522,8 @@ begin
 
     sl2_branch : shift_left_2
     generic map(
-        in_width => 32,
-        resize => '0')
+        INPUT_WIDTH => 32,
+        RESIZE => '0')
     port map(
         s_ID_sign_ext_imm,
         open,
@@ -655,6 +654,7 @@ begin
         s_EX_alu_out,
         open,
         s_Ovfl);
+    
     oALUOut <= s_EX_alu_out;
 
     s_EX_lui_val <= s_EX_Inst_lui & x"0000";
@@ -694,6 +694,7 @@ begin
 
     s_DMemAddr <= s_MEM_ALUOut;
     s_DMemData <= s_MEM_dsrc2;
+    
     DMem : mem
     generic map(
         ADDR_WIDTH => ADDR_WIDTH,
@@ -741,6 +742,7 @@ begin
         1 => s_WB_DMemOut,
         2 => s_WB_PCP4,
         3 => s_WB_lui_val);
+    
     alu_dmem_mux : mux_Nt1
     generic map(
         bus_width => 32,
