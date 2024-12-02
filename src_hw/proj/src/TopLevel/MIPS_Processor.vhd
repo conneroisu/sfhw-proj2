@@ -16,7 +16,7 @@ use work.MIPS_types.all;
 
 
 entity MIPS_Processor is
-    generic(N : integer := DATA_WIDTH);
+    generic(N : integer := 32);
     port(iCLK      : in  std_logic;
          iRST      : in  std_logic;
          iInstLd   : in  std_logic;
@@ -93,9 +93,9 @@ architecture structure of MIPS_Processor is
             i_RST        : in  std_logic;
             i_WE         : in  std_logic;
             i_PC         : in  std_logic_vector(N-1 downto 0);
-            i_RegDst     : in  std_logic;  
-            i_ALUOp      : in  std_logic_vector(2 downto 0);  
-            i_ALUSrc     : in  std_logic_vector(1 downto 0); 
+            i_RegDst     : in  std_logic;
+            i_ALUOp      : in  std_logic_vector(2 downto 0);
+            i_ALUSrc     : in  std_logic_vector(1 downto 0);
             i_MemRead    : in  std_logic;  -- Memory Read control
             i_MemWrite   : in  std_logic;  -- Memory Write control
             i_MemtoReg   : in  std_logic;  -- Memory to Register control
@@ -142,6 +142,47 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
+    component ForwardUnit is
+        port (
+            i_forwarding  : in  std_logic;
+            i_exRs        : in  std_logic_vector (4 downto 0);
+            i_exRt        : in  std_logic_vector (4 downto 0);
+            i_memRd       : in  std_logic_vector (4 downto 0);
+            i_wbRd        : in  std_logic_vector (4 downto 0);
+            i_memMemRead  : in  std_logic_vector (4 downto 0);
+            i_memMemWrite : in  std_logic_vector (4 downto 0);
+            i_memPCSrc    : in  std_logic_vector (1 downto 0);
+            i_wbRegWrite  : in  std_logic_vector (4 downto 0);
+            o_exForwardA  : out std_logic_vector (1 downto 0);  -- forwarding 1st mux signal to EX stage
+            o_exForwardB  : out std_logic_vector (1 downto 0)  -- forwarding 2nd mux signal to EX stage
+            );
+    end component;
+
+    component ControlUnit is
+        port (
+            i_opcode      : in  std_logic_vector(5 downto 0);
+            i_Rt          : in  std_logic_vector(4 downto 0);
+            i_Rs          : in  std_logic_vector(4 downto 0);
+            i_Rd          : in  std_logic_vector(4 downto 0);
+            i_Shamt       : in  std_logic_vector(4 downto 0);
+            i_Funct       : in  std_logic_vector(5 downto 0);
+            i_Imm         : in  std_logic_vector(15 downto 0);
+            o_RegDst      : out std_logic_vector(1 downto 0);
+            o_PCWriteCond : out std_logic;
+            o_PCWrite     : out std_logic;
+            o_IorD        : out std_logic;
+            o_MemtoReg    : out std_logic;
+            o_IRWrite     : out std_logic;
+            o_PCSrc       : out std_logic;
+            o_ALUOp       : out std_logic_vector(3 downto 0);
+            o_ALUSrcA     : out std_logic_vector(1 downto 0);
+            o_ALUSrcB     : out std_logic_vector(1 downto 0);
+            o_RegWrite    : out std_logic;
+            o_Halt        : out std_logic;
+            o_IFFlush     : out std_logic
+            );
+    end component;
+
     component adderSubtractor is
         generic
             (N : integer := 32);
@@ -164,52 +205,83 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component ForwardUnit is
-        port (
-            i_forwarding  : in  std_logic;
-            i_exRs        : in  std_logic_vector (4 downto 0);
-            i_exRt        : in  std_logic_vector (4 downto 0);
-            i_memRd       : in  std_logic_vector (4 downto 0);
-            i_wbRd        : in  std_logic_vector (4 downto 0);
-            i_memMemRead  : in  std_logic_vector (4 downto 0);
-            i_memMemWrite : in  std_logic_vector (4 downto 0);
-            i_memPCSrc    : in  std_logic_vector (1 downto 0);
-            i_wbRegWrite  : in  std_logic_vector (4 downto 0);
-            o_exForwardA  : out std_logic_vector (1 downto 0);  -- forwarding 1st mux signal to EX stage
-            o_exForwardB  : out std_logic_vector (1 downto 0)  -- forwarding 2nd mux signal to EX stage
-            );
-    end component;
-
-
-    signal s_ALUOp      : std_logic_vector(2 downto 0);
-    signal s_ALUSrc     : std_logic_vector(1 downto 0);
-    signal s_MemRead    : std_logic;
-    signal s_MemWrite   : std_logic;
-    signal s_MemtoReg   : std_logic;
-    signal s_Branch     : std_logic;
-    signal s_ALUOut     : std_logic_vector(N-1 downto 0);
-    signal s_RegFile1   : std_logic_vector(N-1 downto 0);
-    signal s_RegFile2   : std_logic_vector(N-1 downto 0);
-    signal s_ForwardA   : std_logic_vector(1 downto 0);
-    signal s_ForwardB   : std_logic_vector(1 downto 0);
-    signal s_WriteData  : std_logic_vector(N-1 downto 0);
-    signal s_Rs         : std_logic_vector(4 downto 0);
-    signal s_Rt         : std_logic_vector(4 downto 0);
-    signal s_Rd         : std_logic_vector(4 downto 0);
-    signal s_Shamt      : std_logic_vector(4 downto 0);
-    signal s_Funct      : std_logic_vector(5 downto 0);
-    signal s_Imm        : std_logic_vector(15 downto 0);
-    signal s_Extended   : std_logic_vector(31 downto 0);
-    signal s_BranchAddr : std_logic_vector(31 downto 0);
-    signal s_nilb       : std_logic;
-    signal s_PCPlusFour : std_logic_vector(31 downto 0);
+    signal s_ALUOp        : std_logic_vector(2 downto 0);
+    signal s_ALUSrc       : std_logic_vector(1 downto 0);
+    signal s_MemRead      : std_logic;
+    signal s_MemWrite     : std_logic;
+    signal s_MemtoReg     : std_logic;
+    signal s_Branch       : std_logic;
+    signal s_ALUOut       : std_logic_vector(N-1 downto 0);
+    signal s_RegFile1     : std_logic_vector(N-1 downto 0);
+    signal s_RegFile2     : std_logic_vector(N-1 downto 0);
+    signal s_ForwardA     : std_logic_vector(1 downto 0);
+    signal s_ForwardB     : std_logic_vector(1 downto 0);
+    signal s_WriteData    : std_logic_vector(N-1 downto 0);
+    signal s_Rs           : std_logic_vector(4 downto 0);
+    signal s_Rt           : std_logic_vector(4 downto 0);
+    signal s_Rd           : std_logic_vector(4 downto 0);
+    signal s_Shamt        : std_logic_vector(4 downto 0);
+    signal s_Funct        : std_logic_vector(5 downto 0);
+    signal s_Imm          : std_logic_vector(15 downto 0);
+    signal s_BranchAddr   : std_logic_vector(N-1 downto 0);
+    signal s_nilb         : std_logic;
+    signal s_PCPlusFour   : std_logic_vector(31 downto 0);
     signal s_PredictTaken : std_logic;
-    signal s_Mispredict : std_logic;
-    signal s_IFID_MemRead : std_logic;
-    signal s_IFID_MemWrite : std_logic;
-    signal s_IDEX_MemRead : std_logic;
-    signal s_IDEX_MemWrite : std_logic;
-    
+    signal s_Mispredict   : std_logic;
+
+    signal s_IFID_MemRead    : std_logic;
+    signal s_IFID_MemWrite   : std_logic;
+    signal s_IFID_MemToReg   : std_logic;
+    signal s_IFID_RegWrite   : std_logic;
+    signal s_IFID_RegDst     : std_logic_vector(4 downto 0);
+    signal s_IFID_ALUSrc     : std_logic_vector(1 downto 0);
+    signal s_IFID_ALUOp      : std_logic_vector(3 downto 0);
+    signal s_IFID_Branch     : std_logic;
+    signal s_IFID_PCPlusFour : std_logic_vector(31 downto 0);
+    --
+    signal s_IFID_Imm        : std_logic_vector(15 downto 0);
+    signal s_IFID_Extended   : std_logic_vector(N-1 downto 0);
+    signal s_IFID_ReadData1  : std_logic_vector(N-1 downto 0);
+    signal s_IFID_ReadData2  : std_logic_vector(N-1 downto 0);
+
+    signal s_IDEX_MemRead    : std_logic;
+    signal s_IDEX_MemWrite   : std_logic;
+    signal s_IDEX_MemToReg   : std_logic;
+    signal s_IDEX_RegWrite   : std_logic;
+    signal s_IDEX_RegDst     : std_logic_vector(4 downto 0);
+    signal s_IDEX_ALUSrc     : std_logic_vector(1 downto 0);
+    signal s_IDEX_ALUOp      : std_logic_vector(3 downto 0);
+    signal s_IDEX_Branch     : std_logic;
+    signal s_IDEX_PCPlusFour : std_logic_vector(31 downto 0);
+    --
+    signal s_IDEX_ALUZero    : std_logic;
+    signal s_IDEX_ALUResult  : std_logic_vector(N-1 downto 0);
+    signal s_IDEX_AddrToMux  : std_logic_vector(1 downto 0);
+    signal s_IDEX_FWBB       : std_logic_vector(N-1 downto 0);
+    signal s_IDEX_RegisterRd : std_logic_vector(4 downto 0);
+
+    signal s_EXMEM_MemRead    : std_logic;
+    signal s_EXMEM_MemWrite   : std_logic;
+    signal s_EXMEM_MemToReg   : std_logic;
+    signal s_EXMEM_RegWrite   : std_logic;
+    signal s_EXMEM_RegDst     : std_logic_vector(4 downto 0);
+    signal s_EXMEM_Branch     : std_logic;
+    signal s_EXMEM_PCPlusFour : std_logic_vector(31 downto 0);
+    signal s_EXMEM_ALUResult  : std_logic_vector(N-1 downto 0);
+    --
+    signal s_EXMEM_BranchTMux : std_logic_vector(1 downto 0);
+    signal s_EXMEM_DataOut    : std_logic_vector(N-1 downto 0);
+    signal s_EXMEM_RegisterRd : std_logic_vector(4 downto 0);
+
+    signal s_MEMWB_MemToReg    : std_logic;
+    signal s_MEMWB_RegWrite    : std_logic;
+    signal s_MEMWB_DataOut     : std_logic_vector(N-1 downto 0);
+    signal s_MEMWB_ALUResult   : std_logic_vector(N-1 downto 0);
+    --
+    signal s_MEMWB_MemToRegMux : std_logic_vector(1 downto 0);
+    signal s_MEMWBRegRD        : std_logic_vector(4 downto 0);
+
+
 begin
     with iInstLd select
         s_IMemAddr <= s_NextInstAddr when '0',
@@ -265,11 +337,11 @@ begin
             i_Shamt      => s_Shamt,
             i_Funct      => s_Funct,
             i_Imm        => s_Imm,
-            i_Extended   => s_Extended,
+            i_Extended   => s_IFID_Extended,
             o_BranchAddr => s_BranchAddr
             );
 
-    instMemWB : MEM_WB
+    instMEMWB : MEM_WB
         port map(
             clk         => iCLK,
             reset       => iRST,

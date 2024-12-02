@@ -24,10 +24,7 @@ entity Control is
         i_Shamt  : in std_logic_vector(4 downto 0);
         i_Funct  : in std_logic_vector(5 downto 0);
         i_Imm    : in std_logic_vector(15 downto 0);
-
-
         o_RegDst : out std_logic_vector(1 downto 0);
-
         o_PCWriteCond : out std_logic;
         o_PCWrite     : out std_logic;
         o_IorD        : out std_logic;
