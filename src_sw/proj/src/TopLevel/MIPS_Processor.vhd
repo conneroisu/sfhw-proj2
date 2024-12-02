@@ -472,7 +472,8 @@ begin
         s_IF_PCP4,
         s_Inst,
         s_ID_PCP4,
-        s_ID_Inst);
+        s_ID_Inst
+    );
 
     s_ID_dest_input_bus <= (0 => s_WB_Inst_rt,
                            1 => s_WB_Inst_rd,
@@ -493,24 +494,27 @@ begin
         s_WB_RegDst(1),
         s_WB_CntrlRegWr,
         s_WB_do_branch or s_WB_CntrlRegWr,
-        s_RegWr);
+        s_RegWr
+    );
 
     reg_file : register_file port map(
-    iCLK,
-    s_RegWrAddr,
-    s_RegWrData,
-    s_RegWr,
+        iCLK,
+        s_RegWrAddr,
+        s_RegWrData,
+        s_RegWr,
         s_ID_Inst(25 downto 21),
         s_ID_Inst(20 downto 16),
         iRST,
         s_ID_dsrc1,
-        s_ID_dsrc2);
+        s_ID_dsrc2
+    );
 
     sign_extend_32 : sign_extender_32
     port map(
         s_ID_Inst(15 downto 0),
         s_ID_sign_ext_en,
-        s_ID_sign_ext_imm);
+        s_ID_sign_ext_imm
+    );
 
     sl2_jaddr : shift_left_2
     generic map(
@@ -553,7 +557,8 @@ begin
         s_ID_dsrc1,
         s_ID_dsrc2,
         s_ID_BranchType,
-        s_ID_branch_mod_out);
+        s_ID_branch_mod_out
+    );
 
     branch_adder : ripple_adder
     port map(
@@ -561,7 +566,8 @@ begin
         s_ID_branch_label,
         '0',
         s_ID_branch_addr,
-        open);
+        open
+    );
 
     branch_and : andg2
     port map(
@@ -587,7 +593,8 @@ begin
     port map(
         s_ID_final_pc_mux_bus,
         s_ID_jump,
-        s_ID_new_pc);
+        s_ID_new_pc
+    );
 
     ID_EX_pipe_reg : id_ex_reg
     port map(
@@ -630,7 +637,8 @@ begin
         s_EX_Inst_rd,
         s_EX_Inst_funct,
         s_EX_Inst_lui,
-        s_EX_Inst_shamt);
+        s_EX_Inst_shamt
+    );
 
     mux2t1_alusrc2 : mux2t1_N
     generic map(32)
@@ -655,7 +663,8 @@ begin
         s_EX_Inst_shamt,
         s_EX_alu_out,
         open,
-        s_Ovfl);
+        s_Ovfl
+    );
     
     oALUOut <= s_EX_alu_out;
 
@@ -706,7 +715,8 @@ begin
         addr => s_DMemAddr(11 downto 2),
         data => s_DMemData,
         we => s_DMemWr,
-        q => s_DMemOut);
+        q => s_DMemOut
+    );
 
     MEM_WB_pipe_reg : mem_wb_reg
     port map(
@@ -737,13 +747,15 @@ begin
         s_WB_ALUOut,
         s_WB_lui_val,
         s_WB_Inst_rt,
-        s_WB_Inst_rd);
+        s_WB_Inst_rd
+    );
 
     s_WB_reg_write_data_bus <= (
         0 => s_WB_ALUOut,
         1 => s_WB_DMemOut,
         2 => s_WB_PCP4,
-        3 => s_WB_lui_val);
+        3 => s_WB_lui_val
+    );
     
     alu_dmem_mux : mux_Nt1
     generic map(
@@ -752,5 +764,7 @@ begin
     port map(
         s_WB_reg_write_data_bus,
         s_WB_MemSel,
-        s_RegWrData);
+        s_RegWrData
+    );
+    
 end structure;
