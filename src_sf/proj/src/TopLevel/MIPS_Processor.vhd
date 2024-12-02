@@ -315,19 +315,6 @@ begin
             o_d2  => B
         );
 
-    -- ALU Operations
-    arithmeticLogicUnit : alu
-        port map(
-            CLK        => iCLK,
-            i_Data1    => A,
-            i_Data2    => B, -- Or immediate value based on instruction
-            i_aluOp    => "0000", -- ALU operation code determined by instruction
-            i_shamt    => IR(10 downto 6),
-            o_F        => ALUOut,
-            o_OverFlow => s_Ovfl,
-            o_Zero     => open
-        );
-
     -- Update output
     oALUOut <= ALUOut;
     -- ==========================================================================
