@@ -177,6 +177,8 @@ architecture structure of MIPS_Processor is
     signal s_IRWrite     : std_logic;
     signal s_MemRead     : std_logic;
     signal s_MemWrite    : std_logic;
+    signal so_IMemAddr   : std_logic_vector(N-1 downto 0);
+    signal so_PCPlusFour : std_logic_vector(N-1 downto 0);
 begin
     -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
     with iInstLd select
@@ -227,6 +229,16 @@ begin
         end if;
     end process;
 
+    addFour : adderSubtractor
+        generic map(N => 32)
+        port map(
+            i_S      => '1',
+            nAdd_Sub => '0',
+            i_A      => so_IMemAddr,
+            i_B      => x"00000004",
+            o_Y      => so_PCPlusFour,
+            o_Cout   => s_nil1
+            );
     -- State Machine for Multicycle Operation
     process(current_state)
     begin
@@ -241,7 +253,8 @@ begin
         s_DMemAddr  <= (others => '0');
         s_RegWrAddr <= (others => '0');
         s_RegWrData <= (others => '0');
-        s_NextInstAddr <= PC + 4;
+        so_IMemAddr <= s_IMemAddr;
+        s_NextInstAddr <= so_PCPlusFour;
 
         case current_state is
 
@@ -369,18 +382,6 @@ begin
     -- Instruction Decode (ID)
     -- ==========================================================================
     -- registers is a register file
-    registers : register_file
-        port map(
-            clk   => iCLK,
-            i_wA  => s_RegWrAddr,
-            i_wD  => s_RegWrData,
-            i_wC  => s_RegWr,
-            i_r1  => s_RegInReadData1,
-            i_r2  => s_RegInReadData2,
-            reset => iRST,
-            o_d1  => s_RegOutReadData1,
-            o_d2  => s_DMemData
-            );
     control : control_unit  -- grabs the fields from the instruction after decoding that translate to control signals
         port map(
             i_opcode    => s_opCode,    -- in std_logic_vector(5 downto 0);
