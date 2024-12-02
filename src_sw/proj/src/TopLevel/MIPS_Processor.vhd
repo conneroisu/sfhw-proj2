@@ -416,12 +416,50 @@ architecture structure of MIPS_Processor is
 
 begin
     s_nil <= x"CCCCCCCC";
+    oALUOut <= s_EX_alu_out;
+
+    s_EX_lui_val <= s_EX_Inst_lui & x"0000";
+    s_ID_j_addr(31 downto 28) <= s_ID_PCP4(31 downto 28);
+
+    s_WB_reg_write_data_bus <= (
+        0 => s_WB_ALUOut,
+        1 => s_WB_DMemOut,
+        2 => s_WB_PCP4,
+        3 => s_WB_lui_val
+        );
 
     with iInstLd select
         s_IMemAddr <= s_NextInstAddr when '0',
-
         iInstAddr when others;
 
+    mux2t1_alusrc2 : mux2t1_N
+    generic map(32)
+    port map(
+        s_EX_ALUSrc,
+        s_EX_dsrc2,
+        s_EX_sign_ext_imm,
+        s_EX_alud1
+    );
+
+    instALU_CONTROL : alu_control
+    port map(
+        s_EX_Inst_funct,
+        s_EX_ALUOp,
+        s_EX_ALUSel);
+
+    branch_and : andg2
+    port map(
+        s_ID_branchCtl,
+        s_ID_branch_mod_out,
+        s_ID_do_branch);
+
+    branch_mux : mux2t1_N
+    port map(
+        s_ID_do_branch,
+        s_ID_PCP4,
+        s_ID_branch_addr,
+        s_ID_pcp4_branch_out);
+    
     pc_src_ctrl : program_counter_source
     port map
     (
@@ -478,11 +516,12 @@ begin
         s_ID_Inst
     );
 
-    s_ID_dest_input_bus <= (0 => s_WB_Inst_rt,
+    s_ID_dest_input_bus <= (
+                           0 => s_WB_Inst_rt,
         1                         => s_WB_Inst_rd,
-        2                         => std_logic_vector(to_unsigned(31,
-        5)),
-        3 => s_nil(4 downto 0));
+        2                         => std_logic_vector(to_unsigned(31, 5)),
+        3 => s_nil(4 downto 0)
+    );
 
     reg_dest_mux : mux_Nt1
     generic map(
@@ -531,8 +570,18 @@ begin
         s_ID_j_addr(27 downto 0),
         open
     );
+
+    alu_dmem_mux : mux_Nt1
+    generic map(
+        bus_width => 32,
+        sel_width => 2)
+    port map(
+        s_WB_reg_write_data_bus,
+        s_WB_MemSel,
+        s_RegWrData
+    );
+
     
-    s_ID_j_addr(31 downto 28) <= s_ID_PCP4(31 downto 28);
 
     sl2_branch : shift_left_2
     generic map(
@@ -541,7 +590,8 @@ begin
     port map(
         s_ID_sign_ext_imm,
         open,
-        s_ID_branch_label);
+        s_ID_branch_label
+    );
 
     central_control : control_unit
     port map(
@@ -577,18 +627,6 @@ begin
         open
     );
 
-    branch_and : andg2
-    port map(
-        s_ID_branchCtl,
-        s_ID_branch_mod_out,
-        s_ID_do_branch);
-
-    branch_mux : mux2t1_N
-    port map(
-        s_ID_do_branch,
-        s_ID_PCP4,
-        s_ID_branch_addr,
-        s_ID_pcp4_branch_out);
 
     s_ID_final_pc_mux_bus <= (
         0 => s_ID_pcp4_branch_out,
@@ -651,21 +689,6 @@ begin
         s_EX_Inst_shamt
     );
 
-    mux2t1_alusrc2 : mux2t1_N
-    generic map(32)
-    port map(
-        s_EX_ALUSrc,
-        s_EX_dsrc2,
-        s_EX_sign_ext_imm,
-        s_EX_alud1
-    );
-
-    instALU_CONTROL : alu_control
-    port map(
-        s_EX_Inst_funct,
-        s_EX_ALUOp,
-        s_EX_ALUSel);
-
     proc_alu : ALU
     generic map(32)
     port map(
@@ -678,9 +701,6 @@ begin
         s_Ovfl
     );
 
-    oALUOut <= s_EX_alu_out;
-
-    s_EX_lui_val <= s_EX_Inst_lui & x"0000";
 
     EX_MEM_pipe_reg : ex_mem_reg
     port map(
@@ -760,23 +780,6 @@ begin
         s_WB_lui_val,
         s_WB_Inst_rt,
         s_WB_Inst_rd
-    );
-
-    s_WB_reg_write_data_bus <= (
-        0 => s_WB_ALUOut,
-        1 => s_WB_DMemOut,
-        2 => s_WB_PCP4,
-        3 => s_WB_lui_val
-        );
-
-    alu_dmem_mux : mux_Nt1
-    generic map(
-        bus_width => 32,
-        sel_width => 2)
-    port map(
-        s_WB_reg_write_data_bus,
-        s_WB_MemSel,
-        s_RegWrData
     );
 
 end structure;
