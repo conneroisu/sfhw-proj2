@@ -418,7 +418,7 @@ begin
     s_nil <= x"CCCCCCCC";
     oALUOut <= s_EX_alu_out;
 
-    s_EX_lui_val <= s_EX_Inst_lui & x"0000";
+    s_EX_lui_val <= s_EX_Inst_lui & (others => '0');
     s_ID_j_addr(31 downto 28) <= s_ID_PCP4(31 downto 28);
 
     s_WB_reg_write_data_bus <= (
