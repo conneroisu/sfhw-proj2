@@ -192,19 +192,11 @@ begin
     IMem : mem
         generic map(ADDR_WIDTH => 32,
                     DATA_WIDTH => N)
-        port map(clk  => iCLK,
-                 addr => s_IMemAddr(11 downto 2),
-                 data => iInstExt,
-                 we   => iInstLd,
-                 q    => s_Inst);
+        port map(iCLK, s_IMemAddr(11 downto 2), iInstExt, iInstLd, s_Inst);
     DMem : mem
         generic map(ADDR_WIDTH => 32,
                     DATA_WIDTH => N)
-        port map(clk  => iCLK,
-                 addr => s_DMemAddr(11 downto 2),
-                 data => s_DMemData,
-                 we   => s_DMemWr,
-                 q    => s_DMemOut);
+        port map(iCLK, s_DMemAddr(11 downto 2), s_DMemData, s_DMemWr, s_DMemOut);
 
     instPC : program_counter
         port map(
