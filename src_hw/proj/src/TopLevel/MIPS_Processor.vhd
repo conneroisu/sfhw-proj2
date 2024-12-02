@@ -203,7 +203,7 @@ begin
     instPC : program_counter
         port map(iCLK, iRST, s_IMemAddr, s_PCPlusFour);
 
-    instPCPlus4 : adderSubtractor
+    instPCPlus4Adder : adderSubtractor
         generic map(N => 32)
         port map('1', '0', s_IMemAddr, x"00000004", s_PCPlusFour, s_nilb);
 
