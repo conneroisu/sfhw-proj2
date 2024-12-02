@@ -15,6 +15,7 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
 
 entity ForwardUnit is
+    
     port (
         i_forwarding  : in  std_logic;
         i_exRs        : in  std_logic_vector (4 downto 0);
@@ -28,6 +29,7 @@ entity ForwardUnit is
         o_exForwardA  : out std_logic_vector (1 downto 0);  -- forwarding 1st mux signal to EX stage
         o_exForwardB  : out std_logic_vector (1 downto 0)  -- forwarding 2nd mux signal to EX stage
         );
+    
 end ForwardUnit;
 
 architecture Behavioral of ForwardUnit is
