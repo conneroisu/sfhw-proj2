@@ -427,14 +427,16 @@ begin
     (
         s_WB_do_branch,
         s_WB_jump,
-        s_IF_PCSrcSel);
+        s_IF_PCSrcSel
+    );
 
     pc_src_mux : mux2t1_N
     port map(
         s_IF_PCSrcSel,
         s_IF_PCP4,
         s_WB_new_pc,
-        s_IF_final_pc);
+        s_IF_final_pc
+    );
 
     PC : program_counter
     port map(
