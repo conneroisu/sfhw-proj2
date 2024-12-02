@@ -38,6 +38,11 @@ architecture structure of MIPS_Processor is
     -- TODO: use s_Inst as the instruction signal 
     -- TODO: s_Halt indicates to the simulation that intended program execution has completed. (Opcode: 01 0100)
     -- TODO: s_Ovfl indicates an overflow exception would have been initiated
+
+    -- TODO:Add EXMEM stage
+    -- TODO:Add IFID stage
+    -- TODO:Add Hazard Unit
+
     signal s_DMemWr       : std_logic;
     signal s_DMemAddr     : std_logic_vector(N-1 downto 0);
     signal s_DMemData     : std_logic_vector(N-1 downto 0);
@@ -48,12 +53,12 @@ architecture structure of MIPS_Processor is
     signal s_RegWrData    : std_logic_vector(N-1 downto 0);
     -- Required instruction memory signals
     signal s_IMemAddr     : std_logic_vector(N-1 downto 0);  -- Do not assign this signal, assign to s_NextInstAddr instead
-    signal s_NextInstAddr : std_logic_vector(N-1 downto 0);  
-    signal s_Inst         : std_logic_vector(N-1 downto 0);  
+    signal s_NextInstAddr : std_logic_vector(N-1 downto 0);
+    signal s_Inst         : std_logic_vector(N-1 downto 0);
     -- Required halt signal -- for simulation
-    signal s_Halt         : std_logic;  
+    signal s_Halt         : std_logic;
     -- Required overflow signal -- for overflow exception detection
-    signal s_Ovfl         : std_logic;  
+    signal s_Ovfl         : std_logic;
 
     component mem is
         generic(ADDR_WIDTH : integer;
@@ -136,6 +141,19 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
+    component adderSubtractor is
+        generic
+            (N : integer := 32);
+        port (
+            nAdd_Sub : in  std_logic;  ------------------------- 0 for add, 1 for subtract
+            i_S      : in  std_logic;  ------------------------- signed or unsigned operations
+            i_A      : in  std_logic_vector(N - 1 downto 0);  -- input a
+            i_B      : in  std_logic_vector(N - 1 downto 0);  -- input b
+            o_Y      : out std_logic_vector(N - 1 downto 0);  -- output y
+            o_Cout   : out std_logic    ------------------------ carry out
+            );
+    end component;
+    
     signal s_ALUOp      : std_logic_vector(2 downto 0);
     signal s_ALUSrc     : std_logic_vector(1 downto 0);
     signal s_MemRead    : std_logic;
@@ -178,6 +196,10 @@ begin
                  data => s_DMemData,
                  we   => s_DMemWr,
                  q    => s_DMemOut);
+
+    instPCPlus4 : adderSubtractor
+        generic map(N => 32)
+        port map('1', '0', s_IMemAddr, x"00000004", s_PCPlusFour, s_nil1);
 
     instIDEX : ID_EX
         port map(
