@@ -153,7 +153,7 @@ architecture structure of MIPS_Processor is
             o_Cout   : out std_logic    ------------------------ carry out
             );
     end component;
-    
+
     signal s_ALUOp      : std_logic_vector(2 downto 0);
     signal s_ALUSrc     : std_logic_vector(1 downto 0);
     signal s_MemRead    : std_logic;
@@ -174,9 +174,8 @@ architecture structure of MIPS_Processor is
     signal s_Imm        : std_logic_vector(15 downto 0);
     signal s_Extended   : std_logic_vector(31 downto 0);
     signal s_BranchAddr : std_logic_vector(31 downto 0);
+    signal s_nilb   : std_logic;
 begin
-    -- TODO: This is required to be your final input to your instruction memory.
-    -- This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
     with iInstLd select
         s_IMemAddr <= s_NextInstAddr when '0',
         iInstAddr                    when others;
@@ -199,7 +198,7 @@ begin
 
     instPCPlus4 : adderSubtractor
         generic map(N => 32)
-        port map('1', '0', s_IMemAddr, x"00000004", s_PCPlusFour, s_nil1);
+        port map('1', '0', s_IMemAddr, x"00000004", s_PCPlusFour, s_nilb);
 
     instIDEX : ID_EX
         port map(
