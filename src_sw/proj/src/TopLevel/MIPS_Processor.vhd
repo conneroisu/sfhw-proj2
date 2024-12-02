@@ -218,7 +218,7 @@ architecture structure of MIPS_Processor is
         );
     end component;
 
-    component alu_control_logic is
+    component alu_control is
         port (
             i_funct : in std_logic_vector(5 downto 0);
             i_ALUOp : in std_logic_vector(2 downto 0);
@@ -648,7 +648,7 @@ begin
         s_EX_sign_ext_imm,
         s_EX_alud1);
 
-    alu_control : alu_control_logic
+    instALU_CONTROL : alu_control
     port map(
         s_EX_Inst_funct,
         s_EX_ALUOp,
@@ -668,7 +668,7 @@ begin
     
     oALUOut <= s_EX_alu_out;
 
-    s_EX_lui_val <= s_EX_Inst_lui & x"000";
+    s_EX_lui_val <= s_EX_Inst_lui & x"0000";
 
     EX_MEM_pipe_reg : ex_mem_reg
     port map(
