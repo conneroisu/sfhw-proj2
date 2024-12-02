@@ -67,7 +67,7 @@ architecture structure of MIPS_Processor is
     signal s_DMemWr               : std_logic;
     signal s_DMemWrAddr           : std_logic_vector(N - 1 downto 0);
     signal s_EX_Inst_imm          : std_logic_vector(15 downto 0);
-    signal s_EX_lui_val           : std_logic_vector(32 downto 0);
+    signal s_EX_lui_val           : std_logic_vector(31 downto 0);
     signal s_MEM_Inst_imm         : std_logic_vector(15 downto 0);
     signal s_MEM_lui_val          : std_logic_vector(31 downto 0);
     signal s_MEM_PCP4             : std_logic_vector(31 downto 0);
@@ -418,7 +418,7 @@ begin
     s_nil <= x"CCCCCCCC";
     oALUOut <= s_EX_alu_out;
 
-    s_EX_lui_val <= s_EX_Inst_lui & (others => '0');
+    s_EX_lui_val <= s_EX_Inst_lui & x"0000";
     s_ID_j_addr(31 downto 28) <= s_ID_PCP4(31 downto 28);
 
     s_WB_reg_write_data_bus <= (
