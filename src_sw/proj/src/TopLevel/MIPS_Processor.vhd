@@ -104,7 +104,6 @@ architecture structure of MIPS_Processor is
     signal s_MEM_dsrc2 : std_logic_vector(N - 1 downto 0);
     signal s_MEM_Halt : std_logic;
     signal s_MEM_ALUOut : std_logic_vector(N - 1 downto 0);
-    signal s_MEM_lui_val : std_logic_vector(N - 1 downto 0);
     signal s_MEM_Inst_rt : std_logic_vector(4 downto 0);
     signal s_MEM_Inst_rd : std_logic_vector(4 downto 0);
     signal s_WB_PCP4 : std_logic_vector(N - 1 downto 0);
@@ -478,7 +477,7 @@ begin
                            1 => s_WB_Inst_rd,
                            2 => std_logic_vector(to_unsigned(31,
                            5)),
-                           3 => s_dummy(4 downto 0));
+                           3 => s_nil(4 downto 0));
     reg_dest_mux : mux_Nt1
     generic map(
         bus_width => 5,
@@ -579,7 +578,7 @@ begin
     s_ID_final_pc_mux_bus <= (0 => s_ID_pcp4_branch_out,
                              1 => s_ID_j_addr,
                              2 => s_ID_dsrc1,
-                             3 => s_dummy);
+                             3 => s_nil);
     j_jr_b_mux : mux_Nt1
     generic map(
         bus_width => 32,
@@ -698,7 +697,6 @@ begin
     DMem : mem
     generic map(
         ADDR_WIDTH => ADDR_WIDTH,
-
         DATA_WIDTH => N)
     port map(
         clk => iCLK,
