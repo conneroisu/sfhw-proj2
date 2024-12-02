@@ -25,6 +25,8 @@ entity MIPS_Processor is
 end MIPS_Processor;
 
 architecture structure of MIPS_Processor is
+ type state_type is (Fetch, Decode, Execute, Memory, WriteBack);
+    signal current_state, next_state : state_type;
     -- Required data memory signals
     signal s_DMemWr       : std_logic;
     signal s_DMemAddr     : std_logic_vector(N-1 downto 0);
@@ -165,6 +167,16 @@ architecture structure of MIPS_Processor is
     signal s_bSelect                                  : std_logic_vector(1 downto 0);  --lb & lh selectors
     signal s_lb_word, s_lh_word, s_lbOrlh             : std_logic_vector(31 downto 0);  --extended selected signal
     signal s_nil1, s_nil2                             : std_logic;
+  -- Internal signals for multicycle operation
+    signal IR            : std_logic_vector(N-1 downto 0); -- Instruction Register
+    signal MDR           : std_logic_vector(N-1 downto 0); -- Memory Data Register
+    signal A, B          : std_logic_vector(N-1 downto 0); -- Register operands
+    signal ALUOut        : std_logic_vector(N-1 downto 0); -- ALU output register
+    signal PC            : std_logic_vector(N-1 downto 0); -- Program Counter
+    signal s_PCWrite     : std_logic;
+    signal s_IRWrite     : std_logic;
+    signal s_MemRead     : std_logic;
+    signal s_MemWrite    : std_logic;
 begin
     -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
     with iInstLd select
@@ -192,6 +204,132 @@ begin
             we   => s_DMemWr,           -- Write enable.
             q    => s_DMemOut           -- Output.
             );
+
+    -- Program Counter logic
+    process(iCLK, iRST)
+    begin
+        if iRST = '1' then
+            PC <= (others => '0');
+        elsif rising_edge(iCLK) then
+            if s_PCWrite = '1' then
+                PC <= s_NextInstAddr;
+            end if;
+        end if;
+    end process;
+
+    -- Instruction Fetch and Decode logic
+    process(iCLK, iRST)
+    begin
+        if iRST = '1' then
+            current_state <= Fetch;
+        elsif rising_edge(iCLK) then
+            current_state <= next_state;
+        end if;
+    end process;
+
+    -- State Machine for Multicycle Operation
+    process(current_state)
+    begin
+        -- Default control signal values
+        s_PCWrite   <= '0';
+        s_IRWrite   <= '0';
+        s_MemRead   <= '0';
+        s_MemWrite  <= '0';
+        s_RegWr     <= '0';
+        s_DMemWr    <= '0';
+        s_DMemData  <= (others => '0');
+        s_DMemAddr  <= (others => '0');
+        s_RegWrAddr <= (others => '0');
+        s_RegWrData <= (others => '0');
+        s_NextInstAddr <= PC + 4;
+
+        case current_state is
+
+            when Fetch =>
+                s_MemRead <= '1';
+                s_IRWrite <= '1';
+                s_PCWrite <= '1';
+                next_state <= Decode;
+
+            when Decode =>
+                -- No control signals asserted
+                -- In software-scheduled, the compiler ensures correct operand availability
+                next_state <= Execute;
+
+            when Execute =>
+                -- Execute instruction based on opcode
+                -- ALU operations, branch calculations, etc.
+                -- Control signals would be set based on instruction type
+                next_state <= Memory;
+
+            when Memory =>
+                -- Memory access if needed
+                -- s_MemRead or s_MemWrite would be asserted
+                next_state <= WriteBack;
+
+            when WriteBack =>
+                -- Write results back to registers if needed
+                s_RegWr <= '1';
+                next_state <= Fetch;
+
+            when others =>
+                next_state <= Fetch;
+
+        end case;
+    end process;
+
+    -- Instruction Register
+    process(iCLK)
+    begin
+        if rising_edge(iCLK) then
+            if s_IRWrite = '1' then
+                IR <= s_Inst;
+            end if;
+        end if;
+    end process;
+
+    -- Memory Data Register
+    process(iCLK)
+    begin
+        if rising_edge(iCLK) then
+            if s_MemRead = '1' then
+                MDR <= s_DMemOut;
+            end if;
+        end if;
+    end process;
+
+    -- ALU and Register Operations
+    -- Similar to single-cycle but operations are distributed over multiple cycles
+
+    -- Register File
+    registers : register_file
+        port map(
+            clk   => iCLK,
+            i_wA  => s_RegWrAddr,
+            i_wD  => s_RegWrData,
+            i_wC  => s_RegWr,
+            i_r1  => IR(25 downto 21), -- rs
+            i_r2  => IR(20 downto 16), -- rt
+            reset => iRST,
+            o_d1  => A,
+            o_d2  => B
+        );
+
+    -- ALU Operations
+    arithmeticLogicUnit : alu
+        port map(
+            CLK        => iCLK,
+            i_Data1    => A,
+            i_Data2    => B, -- Or immediate value based on instruction
+            i_aluOp    => "0000", -- ALU operation code determined by instruction
+            i_shamt    => IR(10 downto 6),
+            o_F        => ALUOut,
+            o_OverFlow => s_Ovfl,
+            o_Zero     => open
+        );
+
+    -- Update output
+    oALUOut <= ALUOut;
     -- ==========================================================================
     -- Instruction Fetch (IF)
     -- ==========================================================================
