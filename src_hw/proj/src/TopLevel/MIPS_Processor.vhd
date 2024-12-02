@@ -43,7 +43,6 @@ architecture structure of MIPS_Processor is
     -- TODO:Add EXMEM stage
     -- TODO:Add IFID stage
     -- TODO:Add Hazard Unit
-    -- TODO:Add Forward Unit
 
     signal s_DMemWr       : std_logic;
     signal s_DMemAddr     : std_logic_vector(N-1 downto 0);
