@@ -42,6 +42,7 @@ architecture structure of MIPS_Processor is
     -- TODO:Add EXMEM stage
     -- TODO:Add IFID stage
     -- TODO:Add Hazard Unit
+    -- TODO:Add Forward Unit
 
     signal s_DMemWr       : std_logic;
     signal s_DMemAddr     : std_logic_vector(N-1 downto 0);
@@ -154,6 +155,15 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
+    component program_counter is
+        port (
+            i_CLK : in  std_logic;
+            i_RST : in  std_logic;
+            i_D   : in  std_logic_vector(31 downto 0);
+            o_Q   : out std_logic_vector(31 downto 0)
+            );
+    end component;
+
     signal s_ALUOp      : std_logic_vector(2 downto 0);
     signal s_ALUSrc     : std_logic_vector(1 downto 0);
     signal s_MemRead    : std_logic;
@@ -174,7 +184,7 @@ architecture structure of MIPS_Processor is
     signal s_Imm        : std_logic_vector(15 downto 0);
     signal s_Extended   : std_logic_vector(31 downto 0);
     signal s_BranchAddr : std_logic_vector(31 downto 0);
-    signal s_nilb   : std_logic;
+    signal s_nilb       : std_logic;
 begin
     with iInstLd select
         s_IMemAddr <= s_NextInstAddr when '0',
@@ -195,6 +205,14 @@ begin
                  data => s_DMemData,
                  we   => s_DMemWr,
                  q    => s_DMemOut);
+
+    instPC : program_counter
+        port map(
+            i_CLK => iCLK,
+            i_RST => iRST,
+            i_D   => s_IMemAddr,
+            o_Q   => s_PCPlusFour
+            );
 
     instPCPlus4 : adderSubtractor
         generic map(N => 32)
