@@ -165,7 +165,7 @@ begin
                       6  => s_and_or,
                       7  => s_and_or,
                       8  => s_nil,
-                      9  => s_dummy,
+                      9  => s_nil,
                       10 => s_sum,
                       11 => s_bshift_out,
                       12 => s_bshift_out,
