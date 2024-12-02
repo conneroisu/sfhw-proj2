@@ -26,7 +26,6 @@ entity MIPS_Processor is
 end MIPS_Processor;
 
 architecture structure of MIPS_Processor is
-    -- Required data memory signals
     -- TODO: use s_DMemWr as the final active high data memory write enable signal
     -- TODO: use s_DMemAddr as the final data memory address input
     -- TODO: use s_DMemData as the final data memory data input
@@ -148,12 +147,12 @@ architecture structure of MIPS_Processor is
         generic
             (N : integer := 32);
         port (
-            nAdd_Sub : in  std_logic;  ------------------------- 0 for add, 1 for subtract
-            i_S      : in  std_logic;  ------------------------- signed or unsigned operations
-            i_A      : in  std_logic_vector(N - 1 downto 0);  -- input a
-            i_B      : in  std_logic_vector(N - 1 downto 0);  -- input b
-            o_Y      : out std_logic_vector(N - 1 downto 0);  -- output y
-            o_Cout   : out std_logic    ------------------------ carry out
+            nAdd_Sub : in  std_logic;   -- 0 for add, 1 for subtract
+            i_S      : in  std_logic;   -- signed or unsigned operations
+            i_A      : in  std_logic_vector(N - 1 downto 0);
+            i_B      : in  std_logic_vector(N - 1 downto 0);
+            o_Y      : out std_logic_vector(N - 1 downto 0);
+            o_Cout   : out std_logic
             );
     end component;
 
@@ -165,6 +164,23 @@ architecture structure of MIPS_Processor is
             o_Q   : out std_logic_vector(31 downto 0)
             );
     end component;
+
+    component ForwardUnit is
+        port (
+            i_forwarding  : in  std_logic;
+            i_exRs        : in  std_logic_vector (4 downto 0);
+            i_exRt        : in  std_logic_vector (4 downto 0);
+            i_memRd       : in  std_logic_vector (4 downto 0);
+            i_wbRd        : in  std_logic_vector (4 downto 0);
+            i_memMemRead  : in  std_logic_vector (4 downto 0);
+            i_memMemWrite : in  std_logic_vector (4 downto 0);
+            i_memPCSrc    : in  std_logic_vector (1 downto 0);
+            i_wbRegWrite  : in  std_logic_vector (4 downto 0);
+            o_exForwardA  : out std_logic_vector (1 downto 0);  -- forwarding 1st mux signal to EX stage
+            o_exForwardB  : out std_logic_vector (1 downto 0)  -- forwarding 2nd mux signal to EX stage
+            );
+    end component;
+
 
     signal s_ALUOp      : std_logic_vector(2 downto 0);
     signal s_ALUSrc     : std_logic_vector(1 downto 0);
@@ -187,6 +203,11 @@ architecture structure of MIPS_Processor is
     signal s_Extended   : std_logic_vector(31 downto 0);
     signal s_BranchAddr : std_logic_vector(31 downto 0);
     signal s_nilb       : std_logic;
+signal s_PCPlusFour : std_logic_vector(31 downto 0);
+signal s_PredictTaken : std_logic;
+signal s_Mispredict : std_logic;
+signal s_IDEX_MemRead : std_logic;
+signal s_IDEX_MemWrite : std_logic;
 begin
     with iInstLd select
         s_IMemAddr <= s_NextInstAddr when '0',
@@ -258,6 +279,35 @@ begin
             o_regDst    => s_RegFile2,
             o_regWrite  => s_RegWr,
             o_wbData    => s_WriteData
+            );
+
+    instBranch : Branch_Unit
+        port map(
+            i_CLK          => iCLK,
+            i_RST          => iRST,
+            i_WriteEnable  => s_RegWr,
+            i_BranchTarget => s_BranchAddr,
+            i_BranchPC     => s_PCPlusFour,
+            i_BranchTaken  => s_Branch,
+            i_BranchValid  => s_Branch,
+            o_PredictTaken => s_PredictTaken,
+            o_BranchTarget => s_BranchAddr,
+            o_Mispredict   => s_Mispredict
+            );
+
+    instForward : ForwardUnit
+        port map(
+            i_forwarding  => s_PredictTaken,
+            i_exRs        => s_Rs,
+            i_exRt        => s_Rt,
+            i_memRd       => s_Rd,
+            i_wbRd        => s_RegFile1,
+            i_memMemRead  => (0 => s_IDEX_MemRead),
+            i_memMemWrite => (0 => s_IDEX_MemWrite),
+            i_memPCSrc    => s_ALUSrc,
+            i_wbRegWrite  => s_RegFile2,
+            o_exForwardA  => s_ForwardA,
+            o_exForwardB  => s_ForwardB
             );
 
 

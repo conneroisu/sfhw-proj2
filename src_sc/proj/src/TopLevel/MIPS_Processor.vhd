@@ -123,11 +123,10 @@ architecture structure of MIPS_Processor is
             );
     end component;
     component control_unit is
-        port
-            (
-                i_opcode    : in  std_logic_vector(5 downto 0);  -- in std_logic_vector(5 downto 0);
-                i_funct     : in  std_logic_vector(5 downto 0);  -- in std_logic_vector(5 downto 0);
-                o_Ctrl_Unit : out std_logic_vector(20 downto 0)  -- out std_logic_vector(14 downto 0)); (all the control signals needed lumped into 1 vector)
+        port (
+                i_opcode    : in  std_logic_vector(5 downto 0); 
+                i_funct     : in  std_logic_vector(5 downto 0);
+                o_Ctrl_Unit : out std_logic_vector(20 downto 0) -- (all the control signals needed lumped into 1 vector)
                 );
     end component;
     -- ==========================================================================
