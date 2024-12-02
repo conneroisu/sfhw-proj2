@@ -1,0 +1,54 @@
+.doc#
+*.bak
+**.bak
+**/work/
+work/
+work
+.vscode
+.vscode/
+.vhdl_checker/
+.vhdl_checker
+.vhdl_checker/*
+internal/ModelSimContainer/vcom.log
+.vhdl_checker/**/*
+.hdl_checker/
+.hdl_checker
+.hdl_checker/*
+.hdl_checker/**/*
+internal/ModelSimContainer/vcom.log
+<t_ý>Ã½require"cmp.utils.feedkeys".run(1)
+./Xilinx\ ISE/**/*.*
+/Xilinx\ ISE/**/ise
+!/Xilinx\ ISE/**/*.xise
+!/Xilinx\ ISE/**/iseconfig/filter.filter
+/Xilinx\ Vivado/**/*.*
+!/Xilinx\ Vivado/**/*.xpr
+/QuestaSim/*
+/QuestaSim/**/*.*
+!/QuestaSim/*.cmd
+!/QuestaSim/*.log
+/ghdl/**/*.*
+!/ghdl/*.cmd
+!/ghdl/*.log
+!.publish
+!.git*
+ltex.dictionary.en-US.txt
+ltex.disabledRules.en-US.txt
+ltex.hiddenFalsePositives.en-US.txt
+transcript
+*/transcript
+*/*/transcript
+output/
+etch*
+*.wlf
+et.log
+*.dbg
+._*
+*.mti
+.nfs*
+.DS_Store
+**/**/QuartusWork/
+internal/ModelSimContainer/vcom.log
+internal/testpy/__pycache__/
+*.pyc
+
