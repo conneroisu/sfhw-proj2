@@ -668,7 +668,7 @@ begin
     
     oALUOut <= s_EX_alu_out;
 
-    s_EX_lui_val <= s_EX_Inst_lui & x"0000";
+    s_EX_lui_val <= s_EX_Inst_lui & x"000";
 
     EX_MEM_pipe_reg : ex_mem_reg
     port map(
