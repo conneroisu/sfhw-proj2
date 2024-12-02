@@ -93,9 +93,9 @@ architecture structure of MIPS_Processor is
             i_RST        : in  std_logic;
             i_WE         : in  std_logic;
             i_PC         : in  std_logic_vector(N-1 downto 0);
-            i_RegDst     : in  std_logic;  -- Control Unit Destination Register
-            i_ALUOp      : in  std_logic_vector(2 downto 0);  -- ALU operation from control unit.
-            i_ALUSrc     : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
+            i_RegDst     : in  std_logic;  
+            i_ALUOp      : in  std_logic_vector(2 downto 0);  
+            i_ALUSrc     : in  std_logic_vector(1 downto 0); 
             i_MemRead    : in  std_logic;  -- Memory Read control
             i_MemWrite   : in  std_logic;  -- Memory Write control
             i_MemtoReg   : in  std_logic;  -- Memory to Register control
@@ -202,11 +202,14 @@ architecture structure of MIPS_Processor is
     signal s_Extended   : std_logic_vector(31 downto 0);
     signal s_BranchAddr : std_logic_vector(31 downto 0);
     signal s_nilb       : std_logic;
-signal s_PCPlusFour : std_logic_vector(31 downto 0);
-signal s_PredictTaken : std_logic;
-signal s_Mispredict : std_logic;
-signal s_IDEX_MemRead : std_logic;
-signal s_IDEX_MemWrite : std_logic;
+    signal s_PCPlusFour : std_logic_vector(31 downto 0);
+    signal s_PredictTaken : std_logic;
+    signal s_Mispredict : std_logic;
+    signal s_IFID_MemRead : std_logic;
+    signal s_IFID_MemWrite : std_logic;
+    signal s_IDEX_MemRead : std_logic;
+    signal s_IDEX_MemWrite : std_logic;
+    
 begin
     with iInstLd select
         s_IMemAddr <= s_NextInstAddr when '0',
@@ -308,6 +311,5 @@ begin
             o_exForwardA  => s_ForwardA,
             o_exForwardB  => s_ForwardB
             );
-
 
 end structure;
