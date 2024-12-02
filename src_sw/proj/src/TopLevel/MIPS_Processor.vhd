@@ -136,6 +136,7 @@ architecture structure of MIPS_Processor is
             q    : out std_logic_vector((DATA_WIDTH - 1) downto 0)
         );
     end component;
+    
     component mux2t1_N is
         generic (
             N : integer := 32
@@ -446,8 +447,7 @@ begin
     PC_plus_4_adder : ripple_adder
     port map(
         s_NextInstAddr,
-        std_logic_vector(to_unsigned(4,
-        N)),
+        std_logic_vector(to_unsigned(4, N)),
         '0',
         s_IF_PCP4,
         open
@@ -456,7 +456,8 @@ begin
     IMem : mem
     generic map(
         ADDR_WIDTH => 32,
-        DATA_WIDTH => N)
+        DATA_WIDTH => N
+    )
     port map(
         clk  => iCLK,
         addr => s_IMemAddr(11 downto 2),
@@ -480,6 +481,7 @@ begin
         2                         => std_logic_vector(to_unsigned(31,
         5)),
         3 => s_nil(4 downto 0));
+
     reg_dest_mux : mux_Nt1
     generic map(
         bus_width => 5,
@@ -487,7 +489,8 @@ begin
     port map(
         s_ID_dest_input_bus,
         s_WB_RegDst,
-        s_RegWrAddr);
+        s_RegWrAddr
+    );
 
     reg_write_mux : mux2t1
     port map(
@@ -519,11 +522,14 @@ begin
     sl2_jaddr : shift_left_2
     generic map(
         INPUT_WIDTH => 26,
-        RESIZE      => '1')
+        RESIZE      => '1'
+    )
     port map(
         s_ID_Inst(25 downto 0),
         s_ID_j_addr(27 downto 0),
-        open);
+        open
+    );
+    
     s_ID_j_addr(31 downto 28) <= s_ID_PCP4(31 downto 28);
 
     sl2_branch : shift_left_2
