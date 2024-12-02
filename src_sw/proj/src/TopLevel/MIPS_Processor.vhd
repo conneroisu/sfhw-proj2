@@ -120,6 +120,9 @@ architecture structure of MIPS_Processor is
     signal s_WB_reg_write_data_bus : bus_array(3 downto 0)(N - 1 downto 0);
 
     signal s_nil : std_logic_vector(N - 1 downto 0);
+    signal s_RegWrAddr : std_logic_vector(4 downto 0);
+    signal s_RegWrData : std_logic_vector(31 downto 0);
+    signal s_RegWr : std_logic;
 
     component mem is
         generic (
