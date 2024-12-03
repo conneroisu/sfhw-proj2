@@ -1,8 +1,8 @@
 -- <header>
 -- Author(s): Conner Ohnesorge
--- Name: src_sw/proj/test/tb_regFile.vhd
+-- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-11-21T10:43:43-06:00 added-do-file-and-sh-file-for-forward-unit-test-and-added-regfile-test
+--      Conner Ohnesorge 2024-12-01T16:50:44-06:00 update-test-bench-for-register-file
 -- </header>
 
 library ieee;

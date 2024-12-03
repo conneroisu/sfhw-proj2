@@ -1,7 +1,9 @@
 -- <header>
 -- Author(s): Conner Ohnesorge
--- Name: src_sw/proj/src/TopLevel/Control/control.vhd
+-- Name: 
 -- Notes:
+--      Conner Ohnesorge 2024-12-01T17:01:44-06:00 update-to-adhere-to-coding-style
+--      Conner Ohnesorge 2024-11-29T14:46:12-06:00 pdate-control-unit-ports-to-better-fit-style-guide
 --      Conner Ohnesorge 2024-11-21T09:31:56-06:00 removed-unused-uncompleted-files-and-implemented-control-unit-for-software-pipeline
 -- </header>
 
@@ -12,23 +14,23 @@ entity control_unit is
 
     port (
         -- Instruction inputs
-        i_Opcode : in std_logic_vector(5 downto 0);  -- Opcode from MIPS instruction memory (s_Instr[31-26])
-        i_Funct  : in std_logic_vector(5 downto 0);  -- Function code for certain instructions with same opcode
-        i_Rt     : in std_logic_vector(4 downto 0);  -- RT field helps determine branch type   
+        i_Opcode        : in  std_logic_vector(5 downto 0);  -- Opcode from MIPS instruction memory (s_Instr[31-26])
+        i_Funct         : in  std_logic_vector(5 downto 0);  -- Function code for certain instructions with same opcode
+        i_Rt            : in  std_logic_vector(4 downto 0);  -- RT field helps determine branch type   
         -- Control signal outputs
-        o_RegWr       : out std_logic;  -- Register write enable
-        o_RegDst      : out std_logic_vector(1 downto 0);  -- Register destination
+        o_RegWr         : out std_logic;  -- Register write enable
+        o_RegDst        : out std_logic_vector(1 downto 0);  -- Register destination
         o_SignExtEnable : out std_logic;  -- Sign extension enable
-        o_Jump        : out std_logic_vector(1 downto 0);  -- Controls address for jump
-        o_MemSel      : out std_logic_vector(1 downto 0);  -- Select write back source, either data memory, ALU, or PC+4
-        o_branchCtl   : out std_logic;  -- ANDed with branch signal from ALU to determine if branch is taken
-        o_BranchType  : out std_logic_vector(2 downto 0);  -- Tells Branch control what branch type we want to do
-        o_ALUSrc      : out std_logic;  -- ALU source
-        o_ALUOp       : out std_logic_vector(2 downto 0);  -- Used by ALU control to determine ALU operation
-        o_MemWr       : out std_logic;  -- Data Memory write enable
-        o_Halt        : out std_logic   --Indicates program execution finished
+        o_Jump          : out std_logic_vector(1 downto 0);  -- Controls address for jump
+        o_MemSel        : out std_logic_vector(1 downto 0);  -- Select write back source, either data memory, ALU, or PC+4
+        o_branchCtl     : out std_logic;  -- ANDed with branch signal from ALU to determine if branch is taken
+        o_BranchType    : out std_logic_vector(2 downto 0);  -- Tells Branch control what branch type we want to do
+        o_ALUSrc        : out std_logic;  -- ALU source
+        o_ALUOp         : out std_logic_vector(2 downto 0);  -- Used by ALU control to determine ALU operation
+        o_MemWr         : out std_logic;  -- Data Memory write enable
+        o_Halt          : out std_logic  --Indicates program execution finished
         );
-    
+
 end control_unit;
 
 architecture dataflow of control_unit is
@@ -67,7 +69,7 @@ begin
     with i_Opcode select
         -- Sign extension enable
         o_SignExtEnable <= '0' when b"000000" | b"001100" | b"001110" | b"001101" | b"000010" | b"000011",
-        '1'                  when others;
+        '1'                    when others;
 
     with i_Opcode select
         -- Select write back source, either data memory, ALU, or PC+4          

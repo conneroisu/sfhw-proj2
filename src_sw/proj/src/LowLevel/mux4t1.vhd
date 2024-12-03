@@ -1,18 +1,17 @@
 -- <header>
--- Author(s): aidanfoss, Conner Ohnesorge
--- Name: proj/src/LowLevel/mux4t1.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      aidanfoss 2024-11-21T08:32:03-06:00 unused-declarations
---      connero 2024-11-11T09:11:16-06:00 Merge-branch-main-into-component-forward-unit
---      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
---      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+--      Conner Ohnesorge 2024-12-01T16:13:46-06:00 make-mux4t1-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library ieee;
 use ieee.std_logic_1164.all;
 
 entity mux4t1 is
-    
+
     port (
         i_s  : in  std_logic_vector(1 downto 0);  -- Select input width is 2.
         i_d0 : in  std_logic;
@@ -21,7 +20,7 @@ entity mux4t1 is
         i_d3 : in  std_logic;
         o_o  : out std_logic
         );
-    
+
 end entity mux4t1;
 
 architecture structural of mux4t1 is
@@ -35,7 +34,7 @@ architecture structural of mux4t1 is
             );
     end component;
 
-    
+
     signal s_1 : std_logic;
     signal s_2 : std_logic;
 

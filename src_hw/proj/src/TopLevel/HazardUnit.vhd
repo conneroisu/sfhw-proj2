@@ -1,8 +1,10 @@
 -- <header>
 -- Author(s): Conner Ohnesorge
--- Name: proj/src/TopLevel/HazardUnit.vhd
+-- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-11-21T10:20:49-06:00 added-HazardUnit-and-Updated-testbench-for-the-Units-Execute
+--      Conner Ohnesorge 2024-12-01T13:52:19-06:00 format-hazard-unit-better-for-the-first-if-statement
+--      Conner Ohnesorge 2024-12-01T12:32:01-06:00 dd-more-grammatically-correct-comment-of-conditions-that-trigger-control-hazard-avoidance
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
 library IEEE;
@@ -54,3 +56,4 @@ begin
     o_IDEX_squash  <= o_IFID_squash;
     o_EXMEM_squash <= o_IFID_squash;
 end architecture;
+

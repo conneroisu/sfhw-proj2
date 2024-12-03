@@ -1,11 +1,10 @@
 -- <header>
--- Author(s): Kariniux, aidanfoss
--- Name: proj/src/LowLevel/extender16t32.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:09:28-06:00 Merge-pull-request-63-from-conneroisu-New_IFIDSTAGE
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      aidanfoss 2024-11-21T08:32:03-06:00 unused-declarations
---      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+--      Conner Ohnesorge 2024-12-01T16:16:23-06:00 make-extender16t32-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library IEEE;
@@ -35,3 +34,4 @@ begin
         o_O(i) <= ext_bit;
     end generate;
 end dataflow;
+

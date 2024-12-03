@@ -1,7 +1,9 @@
 -- <header>
 -- Author(s): Conner Ohnesorge
--- Name: src_sw/proj/src/MIPS_types.vhd
+-- Name: 
 -- Notes:
+--      Conner Ohnesorge 2024-11-21T13:17:29-06:00 added-bus-array-type-to-MIPS_types.vhd
+--      Conner Ohnesorge 2024-11-21T13:11:02-06:00 update-MIPS_types-to-src-from-src_sc
 --      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 

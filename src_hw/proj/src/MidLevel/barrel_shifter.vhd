@@ -1,10 +1,8 @@
 -- <header>
--- Author(s): Kariniux, Conner Ohnesorge
--- Name: proj/src/TopLevel/BarrelShifter/barrelShifter.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      Conner Ohnesorge 2024-11-18T10:07:32-06:00 rename-stages-to-pipeline-remove-back-up-file-and-add-space-for
---      Conner Ohnesorge 2024-11-14T08:12:11-06:00 add-barrelshifter-from-proj-1
+--      Conner Ohnesorge 2024-12-01T16:24:07-06:00 update-barrel_shifter-name
 -- </header>
 
 library IEEE;
@@ -14,7 +12,7 @@ use work.MIPS_types.all;
 entity barrel_shifter is
     generic
         (N : integer := 32);
-    
+
     port
         (
             i_data        : in  std_logic_vector(N - 1 downto 0);
@@ -23,7 +21,7 @@ entity barrel_shifter is
             i_shiftType   : in  std_logic;  --0 for logicical shift, 1 for arithmetic shift
             o_O           : out std_logic_vector(N - 1 downto 0)  --shifted output
             );
-        
+
 end barrel_shifter;
 
 architecture structure of barrel_shifter is

@@ -1,13 +1,10 @@
 -- <header>
--- Author(s): Kariniux, aidanfoss, Conner Ohnesorge
--- Name: proj/src/LowLevel/adderSubtractor.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:09:28-06:00 Merge-pull-request-63-from-conneroisu-New_IFIDSTAGE
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      aidanfoss 2024-11-21T08:32:03-06:00 unused-declarations
---      connero 2024-11-11T09:11:16-06:00 Merge-branch-main-into-component-forward-unit
---      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
---      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+--      Conner Ohnesorge 2024-12-01T16:18:49-06:00 make-adderSubtractor-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library IEEE;
@@ -19,17 +16,17 @@ entity adderSubtractor is
     generic (
         N : integer := 32  -- Generic of type integer for input/output data width. Default value is 32.
         );
-    
+
     port (
         nAdd_Sub   : in  std_logic;
-        i_A        : in  std_logic_vector(N - 1 downto 0);     -- Input A
-        i_B        : in  std_logic_vector(N - 1 downto 0);     -- Input B
+        i_A        : in  std_logic_vector(N - 1 downto 0);  -- Input A
+        i_B        : in  std_logic_vector(N - 1 downto 0);  -- Input B
         i_S        : in  std_logic;  -- selects between signed or unsigned operations (signed = 1)
-        o_Y        : out std_logic_vector(N - 1 downto 0);     -- Output Y
+        o_Y        : out std_logic_vector(N - 1 downto 0);  -- Output Y
         o_Cout     : out std_logic;     -- Carry out
         o_Overflow : out std_logic      -- Overflow Indicator
         );
-    
+
 end entity adderSubtractor;
 
 architecture structural of adderSubtractor is

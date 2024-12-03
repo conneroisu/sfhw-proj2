@@ -1,11 +1,10 @@
 -- <header>
--- Author(s): Kariniux, Conner Ohnesorge, aidanfoss
--- Name: proj/src/LowLevel/fulladder.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      connero 2024-11-11T09:11:16-06:00 Merge-branch-main-into-component-forward-unit
---      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
---      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+--      Conner Ohnesorge 2024-12-01T16:15:48-06:00 make-fulladder-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library ieee;
@@ -13,7 +12,7 @@ use ieee.std_logic_1164.all;
 
 
 entity fulladder is
-    
+
     port (
         i_x0   : in  std_logic;         -- Input 0 to be added.
         i_x1   : in  std_logic;         -- Input 1 to be added.
@@ -21,7 +20,7 @@ entity fulladder is
         o_y    : out std_logic;         -- Sum output.
         o_cout : out std_logic          -- Carry out.
         );
-    
+
 end entity fulladder;
 
 architecture structural of fulladder is

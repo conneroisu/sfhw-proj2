@@ -1,12 +1,9 @@
 -- <header>
--- Author(s): Kariniux, Conner Ohnesorge
--- Name: proj/src/TopLevel/Pipeline/Execute.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:09:28-06:00 Merge-pull-request-63-from-conneroisu-New_IFIDSTAGE
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      Conner Ohnesorge 2024-11-21T08:20:09-06:00 remove-commented-out-input-for-idex_regRdmux
---      Conner Ohnesorge 2024-11-21T08:17:52-06:00 Removed-instruction-slicing-from-the-id-ex-stage-of-the-pipeline
---      Conner Ohnesorge 2024-11-18T14:18:35-06:00 renamed-the-tb_stage_idex-to-Execute-and-added-neccesssary-comments-to
+--      Conner Ohnesorge 2024-12-01T21:02:53-06:00 remove-halt-signals-from-id_ex
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
 library IEEE;
@@ -19,10 +16,10 @@ entity ID_EX is
 
     port (
         -- Common Stage Signals [begin]
-        i_CLK       : in  std_logic;
-        i_RST       : in  std_logic;
-        i_WE        : in  std_logic;
-        i_PC        : in  std_logic_vector(N-1 downto 0);
+        i_CLK        : in  std_logic;
+        i_RST        : in  std_logic;
+        i_WE         : in  std_logic;
+        i_PC         : in  std_logic_vector(N-1 downto 0);
         -- Control Signals (From Control Unit) [begin]
         --= Stage Specific Signals [begin]
         --         RegDst  ALUOp  ALUSrc
@@ -30,29 +27,29 @@ entity ID_EX is
         -- lw    :   0      00      01
         -- sw    :   x      00      01
         -- beq   :   x      01      00
-        i_RegDst    : in  std_logic;    -- Control Unit Destination Register
-        i_ALUOp     : in  std_logic_vector(2 downto 0);  -- ALU operation from control unit.
-        i_ALUSrc    : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
-        i_MemRead   : in  std_logic;    -- Memory Read control
-        i_MemWrite  : in  std_logic;    -- Memory Write control
-        i_MemtoReg  : in  std_logic;    -- Memory to Register control
-        i_RegWrite  : in  std_logic;    -- Register Write control
-        i_Branch    : in  std_logic;    -- Branch control
+        i_RegDst     : in  std_logic;   -- Control Unit Destination Register
+        i_ALUOp      : in  std_logic_vector(2 downto 0);  -- ALU operation from control unit.
+        i_ALUSrc     : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
+        i_MemRead    : in  std_logic;   -- Memory Read control
+        i_MemWrite   : in  std_logic;   -- Memory Write control
+        i_MemtoReg   : in  std_logic;   -- Memory to Register control
+        i_RegWrite   : in  std_logic;   -- Register Write control
+        i_Branch     : in  std_logic;   -- Branch control
         -- Future Stage Signals [begin]
         -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png
-        o_ALU       : out std_logic_vector(N-1 downto 0);
-        o_ALUSrc    : out std_logic_vector(1 downto 0);
-        o_MemRead   : out std_logic;
-        o_MemWrite  : out std_logic;
-        o_MemtoReg  : out std_logic;
-        o_RegWrite  : out std_logic;
-        o_Branch    : out std_logic;
+        o_ALU        : out std_logic_vector(N-1 downto 0);
+        o_ALUSrc     : out std_logic_vector(1 downto 0);
+        o_MemRead    : out std_logic;
+        o_MemWrite   : out std_logic;
+        o_MemtoReg   : out std_logic;
+        o_RegWrite   : out std_logic;
+        o_Branch     : out std_logic;
         -- Input Signals [begin]
         --= Register File Signals [begin]
-        i_Read1     : in  std_logic_vector(N-1 downto 0);
-        i_Read2     : in  std_logic_vector(N-1 downto 0);
-        o_Read1     : out std_logic_vector(N-1 downto 0);
-        o_Read2     : out std_logic_vector(N-1 downto 0);
+        i_Read1      : in  std_logic_vector(N-1 downto 0);
+        i_Read2      : in  std_logic_vector(N-1 downto 0);
+        o_Read1      : out std_logic_vector(N-1 downto 0);
+        o_Read2      : out std_logic_vector(N-1 downto 0);
         -- Forward Unit Signals [begin]
         --= Forwarded Signals (received from Forward Unit) [begin]
         -- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
@@ -63,20 +60,20 @@ entity ID_EX is
         -- ForwardB=00  -> ID/EX    -> operand from registerfile
         -- ForwardB=10  -> EX/MEM   -> operand forwarded from prior alu result
         -- ForwardB=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
-        i_ForwardA  : in  std_logic_vector(1 downto 0);
-        i_ForwardB  : in  std_logic_vector(1 downto 0);
+        i_ForwardA   : in  std_logic_vector(1 downto 0);
+        i_ForwardB   : in  std_logic_vector(1 downto 0);
         --= Forwarding Signals (sent to Forward Unit) [begin]
-        i_WriteData : in  std_logic_vector(N-1 downto 0);  -- Data from the end of writeback stage's mux
-        i_DMem1     : in  std_logic_vector(N-1 downto 0);  -- Data from the first input to the DMem output of ex/mem
+        i_WriteData  : in  std_logic_vector(N-1 downto 0);  -- Data from the end of writeback stage's mux
+        i_DMem1      : in  std_logic_vector(N-1 downto 0);  -- Data from the first input to the DMem output of ex/mem
         --= Instruction Signals [begin]
-        i_Rs        : in  std_logic_vector(4 downto 0);
-        i_Rt        : in  std_logic_vector(4 downto 0);
-        i_Rd        : in  std_logic_vector(4 downto 0);
-        i_Shamt     : in  std_logic_vector(4 downto 0);
-        i_Funct     : in  std_logic_vector(5 downto 0);
-        i_Imm       : in  std_logic_vector(15 downto 0);
-        i_Extended     : in  std_logic_vector(31 downto 0);
-        o_BranchAddr   : out std_logic_vector(31 downto 0)
+        i_Rs         : in  std_logic_vector(4 downto 0);
+        i_Rt         : in  std_logic_vector(4 downto 0);
+        i_Rd         : in  std_logic_vector(4 downto 0);
+        i_Shamt      : in  std_logic_vector(4 downto 0);
+        i_Funct      : in  std_logic_vector(5 downto 0);
+        i_Imm        : in  std_logic_vector(15 downto 0);
+        i_Extended   : in  std_logic_vector(31 downto 0);
+        o_BranchAddr : out std_logic_vector(31 downto 0)
         );
 
 end entity;
@@ -122,9 +119,9 @@ architecture structure of ID_EX is
 
     component alu_control is
         port (
-            i_Funct   : in  std_logic_vector(5 downto 0);
-            i_ALUOp   : in  std_logic_vector(2 downto 0);
-            o_ALUSel  : out std_logic_vector(4 downto 0)
+            i_Funct  : in  std_logic_vector(5 downto 0);
+            i_ALUOp  : in  std_logic_vector(2 downto 0);
+            o_ALUSel : out std_logic_vector(4 downto 0)
             );
     end component;
 
@@ -299,11 +296,11 @@ begin
 
     ALUControl : alu_control
         port map (
-            i_Funct   => s_Funct,
-            i_ALUOp   => s_ALUOp,
-            o_ALUSel  => s_ALUSel
+            i_Funct  => s_Funct,
+            i_ALUOp  => s_ALUOp,
+            o_ALUSel => s_ALUSel
             );
-        
+
     ALUinst : alu
         port map (
             CLK        => i_CLK,
@@ -323,3 +320,4 @@ begin
         );
 
 end structure;
+

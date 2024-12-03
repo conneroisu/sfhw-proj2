@@ -1,10 +1,10 @@
 -- <header>
--- Author(s): Kariniux, Conner Ohnesorge, aidanfoss
--- Name: proj/src/LowLevel/dffg.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
---      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+--      Conner Ohnesorge 2024-12-01T16:17:22-06:00 make-dffg-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library IEEE;
@@ -12,7 +12,7 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity dffg is
-    
+
     port (
         i_CLK : in  std_logic;          -- Clock input
         i_RST : in  std_logic;          -- Reset input
@@ -20,7 +20,7 @@ entity dffg is
         i_D   : in  std_logic;          -- Data value input
         o_Q   : out std_logic           -- Data value output
         );
-    
+
 end dffg;
 
 architecture mixed of dffg is

@@ -1,9 +1,8 @@
 -- <header>
--- Author(s): Kariniux, Conner Ohnesorge
--- Name: proj/src/TopLevel/Fetch/program_counter.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
+--      Conner Ohnesorge 2024-12-01T12:27:41-06:00 rename-the-fetch-dir-to-pc
 -- </header>
 
 library IEEE;

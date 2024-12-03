@@ -1,15 +1,23 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-01T14:04:08-06:00 add-test-bench-and-refactor-branch-unit-to-fit-style-guide
+--      Conner Ohnesorge 2024-12-01T14:01:31-06:00 made-a-better-branch-unit-implementation
+-- </header>
+
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_1164.all;
 
 entity Branch_State is
-    
+
     port (
-        clk         : in  std_logic;
-        rst         : in  std_logic;
-        branch_taken: in  std_logic;  -- Actual branch outcome
-        prediction  : out std_logic   -- Predicted outcome (1 = taken, 0 = not taken)
-    );
-    
+        clk          : in  std_logic;
+        rst          : in  std_logic;
+        branch_taken : in  std_logic;   -- Actual branch outcome
+        prediction   : out std_logic  -- Predicted outcome (1 = taken, 0 = not taken)
+        );
+
 end Branch_State;
 
 architecture behavioral of Branch_State is
@@ -18,7 +26,7 @@ architecture behavioral of Branch_State is
     -- "10" = Weakly Taken (State 2)
     -- "01" = Weakly Not Taken (State 1)
     -- "00" = Strongly Not Taken (State 0)
-    
+
     type state_type is (STRONGLY_TAKEN, WEAKLY_TAKEN, WEAKLY_NOT_TAKEN, STRONGLY_NOT_TAKEN);
     signal current_state, next_state : state_type;
 
@@ -72,10 +80,11 @@ begin
     begin
         case current_state is
             when STRONGLY_TAKEN | WEAKLY_TAKEN =>
-                prediction <= '1';  -- Predict taken
+                prediction <= '1';      -- Predict taken
             when STRONGLY_NOT_TAKEN | WEAKLY_NOT_TAKEN =>
-                prediction <= '0';  -- Predict not taken
+                prediction <= '0';      -- Predict not taken
         end case;
     end process;
 
 end behavioral;
+

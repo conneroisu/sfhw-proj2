@@ -1,12 +1,9 @@
 -- <header>
--- Author(s): Conner Ohnesorge, Kariniux
--- Name: proj/src/TopLevel/Control.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-11-21T09:31:56-06:00 removed-unused-uncompleted-files-and-implemented-control-unit-for-software-pipeline
---      Kariniux 2024-11-21T09:09:28-06:00 Merge-pull-request-63-from-conneroisu-New_IFIDSTAGE
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
---      Conner Ohnesorge 2024-11-18T10:09:21-06:00 move-control-to-top-level-dir-and-rename
+--      Conner Ohnesorge 2024-12-02T15:00:49-06:00 added-missing-signals-for-each-stage-of-the-pipeline
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
 library IEEE;
@@ -17,14 +14,14 @@ use IEEE.NUMERIC_STD.all;
 entity Control is
 
     port (
-        i_opcode : in std_logic_vector(5 downto 0);
-        i_Rt     : in std_logic_vector(4 downto 0);
-        i_Rs     : in std_logic_vector(4 downto 0);
-        i_Rd     : in std_logic_vector(4 downto 0);
-        i_Shamt  : in std_logic_vector(4 downto 0);
-        i_Funct  : in std_logic_vector(5 downto 0);
-        i_Imm    : in std_logic_vector(15 downto 0);
-        o_RegDst : out std_logic_vector(1 downto 0);
+        i_opcode      : in  std_logic_vector(5 downto 0);
+        i_Rt          : in  std_logic_vector(4 downto 0);
+        i_Rs          : in  std_logic_vector(4 downto 0);
+        i_Rd          : in  std_logic_vector(4 downto 0);
+        i_Shamt       : in  std_logic_vector(4 downto 0);
+        i_Funct       : in  std_logic_vector(5 downto 0);
+        i_Imm         : in  std_logic_vector(15 downto 0);
+        o_RegDst      : out std_logic_vector(1 downto 0);
         o_PCWriteCond : out std_logic;
         o_PCWrite     : out std_logic;
         o_IorD        : out std_logic;
@@ -36,7 +33,7 @@ entity Control is
         o_ALUSrcB     : out std_logic_vector(1 downto 0);
         o_RegWrite    : out std_logic;
         o_Halt        : out std_logic;
-        o_IFFlush     : out std_logic -- figure 4.9.4
+        o_IFFlush     : out std_logic   -- figure 4.9.4
         );
 
 end entity;

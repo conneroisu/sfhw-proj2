@@ -1,10 +1,9 @@
 -- <header>
--- Author(s): Kariniux, Conner Ohnesorge
--- Name: proj/src/TopLevel/BarrelShifter/barrelShifter.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      Conner Ohnesorge 2024-11-18T10:07:32-06:00 rename-stages-to-pipeline-remove-back-up-file-and-add-space-for
---      Conner Ohnesorge 2024-11-14T08:12:11-06:00 add-barrelshifter-from-proj-1
+--      Conner Ohnesorge 2024-12-01T16:27:54-06:00 update-fix-barrel_shifter-declarations
+--      Conner Ohnesorge 2024-12-01T16:24:07-06:00 update-barrel_shifter-name
 -- </header>
 
 library IEEE;
@@ -14,15 +13,15 @@ use work.MIPS_types.all;
 entity barrel_shifter is
     generic
         (N : integer := 32);
-    
+
     port (
-            i_data        : in  std_logic_vector(N - 1 downto 0);
-            i_shamt       : in  std_logic_vector(4 downto 0);  --01001 would do shift 3 and shift 0, mux each bit to decide how much to shift
-            i_leftOrRight : in  std_logic;  --0=right, 1=left
-            i_shiftType   : in  std_logic;  --0 for logicical shift, 1 for arithmetic shift
-            o_O           : out std_logic_vector(N - 1 downto 0)  --shifted output
-            );
-        
+        i_data        : in  std_logic_vector(N - 1 downto 0);
+        i_shamt       : in  std_logic_vector(4 downto 0);  --01001 would do shift 3 and shift 0, mux each bit to decide how much to shift
+        i_leftOrRight : in  std_logic;  --0=right, 1=left
+        i_shiftType   : in  std_logic;  --0 for logicical shift, 1 for arithmetic shift
+        o_O           : out std_logic_vector(N - 1 downto 0)  --shifted output
+        );
+
 end barrel_shifter;
 
 architecture structure of barrel_shifter is
@@ -32,13 +31,13 @@ architecture structure of barrel_shifter is
             (N : integer := 32);
         port
             (
-                i_D0 : in  std_logic_vector(N - 1 downto 0);         --input 1
-                i_D1 : in  std_logic_vector(N - 1 downto 0);         --input 2
-                i_S  : in  std_logic;   --shift toggle
-                o_O  : out std_logic_vector(N - 1 downto 0)          --output
+                i_D0 : in  std_logic_vector(N - 1 downto 0);  --input 1
+                i_D1 : in  std_logic_vector(N - 1 downto 0);  --input 2
+                i_S  : in  std_logic;                         --shift toggle
+                o_O  : out std_logic_vector(N - 1 downto 0)   --output
                 );
     end component;
-    
+
     signal s_mux0, s_mux1, s_mux2, s_mux3, s_muxUnflip            : std_logic_vector(N -1 downto 0);  --shamt mux
     signal s_mux0t, s_mux1t, s_mux2t, s_mux3t, s_mux4t, s_muxFlip : std_logic_vector(N -1 downto 0);
     signal s_b                                                    : std_logic_vector(15 downto 0);
