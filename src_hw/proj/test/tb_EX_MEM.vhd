@@ -1,165 +1,161 @@
--- <header>
--- Author(s): Kariniux, dmvp01
--- Name: proj/test/TB_EX_MEM.vhd
--- Notes:
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      dmvp01 2024-11-13T16:31:57-06:00 adding-pipeline-Reg-Ex-Mem-implementation-as-well-as-test-bench
--- </header>
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
-use IEEE.STD_LOGIC_ARITH.all;
-use IEEE.STD_LOGIC_UNSIGNED.all;
+use IEEE.NUMERIC_STD.all;
 
-entity TB_EX_MEM is
-end TB_EX_MEM;
+entity tb_EX_MEM is
+end entity;
 
-architecture Behavioral of TB_EX_MEM is
-    component EX_MEM
-        port (
-            clk            : in  std_logic;
-            reset          : in  std_logic;
-            WriteEn        : in  std_logic;
-            ALU_result_in  : in  std_logic_vector(31 downto 0);
-            Read_data2_in  : in  std_logic_vector(31 downto 0);
-            RegDst_in      : in  std_logic_vector(4 downto 0);
-            MemRead_in     : in  std_logic;
-            MemWrite_in    : in  std_logic;
-            RegWrite_in    : in  std_logic;
-            MemToReg_in    : in  std_logic;
-            ALU_result_out : out std_logic_vector(31 downto 0);
-            Read_data2_out : out std_logic_vector(31 downto 0);
-            RegDst_out     : out std_logic_vector(4 downto 0);
-            MemRead_out    : out std_logic;
-            MemWrite_out   : out std_logic;
-            RegWrite_out   : out std_logic;
-            MemToReg_out   : out std_logic
-            );
-    end component;
+architecture sim of tb_EX_MEM is
 
-    signal clk            : std_logic := '0';
-    signal reset          : std_logic := '0';
-    signal WriteEn        : std_logic := '0';
-    signal ALU_result_in  : std_logic_vector(31 downto 0);
-    signal Read_data2_in  : std_logic_vector(31 downto 0);
-    signal RegDst_in      : std_logic_vector(4 downto 0);
-    signal MemRead_in     : std_logic;
-    signal MemWrite_in    : std_logic;
-    signal RegWrite_in    : std_logic;
-    signal MemToReg_in    : std_logic;
-    signal ALU_result_out : std_logic_vector(31 downto 0);
-    signal Read_data2_out : std_logic_vector(31 downto 0);
-    signal RegDst_out     : std_logic_vector(4 downto 0);
-    signal MemRead_out    : std_logic;
-    signal MemWrite_out   : std_logic;
-    signal RegWrite_out   : std_logic;
-    signal MemToReg_out   : std_logic;
+    -- Constants for data width
+    constant N : integer := 32;
 
-    constant clk_period : time := 50 ns;
+    -- Testbench signals
+    signal tb_CLK        : std_logic := '0';
+    signal tb_RST        : std_logic := '0';
+    signal tb_WE         : std_logic := '0';
+    signal tb_PC         : std_logic_vector(N-1 downto 0) := (others => '0');
+    signal tb_ALUResult  : std_logic_vector(N-1 downto 0) := (others => '0');
+    signal tb_ReadData2  : std_logic_vector(N-1 downto 0) := (others => '0');
+    signal tb_RegDstAddr : std_logic_vector(4 downto 0) := (others => '0');
+    signal tb_Zero       : std_logic := '0';
 
-begin
-    -- Instantiate the EX_MEM pipeline register
-    uut : EX_MEM port map (
-        clk            => clk,
-        reset          => reset,
-        WriteEn        => WriteEn,
-        ALU_result_in  => ALU_result_in,
-        Read_data2_in  => Read_data2_in,
-        RegDst_in      => RegDst_in,
-        MemRead_in     => MemRead_in,
-        MemWrite_in    => MemWrite_in,
-        RegWrite_in    => RegWrite_in,
-        MemToReg_in    => MemToReg_in,
-        ALU_result_out => ALU_result_out,
-        Read_data2_out => Read_data2_out,
-        RegDst_out     => RegDst_out,
-        MemRead_out    => MemRead_out,
-        MemWrite_out   => MemWrite_out,
-        RegWrite_out   => RegWrite_out,
-        MemToReg_out   => MemToReg_out
-        );
+    signal tb_MemRead    : std_logic := '0';
+    signal tb_MemWrite   : std_logic := '0';
+    signal tb_Branch     : std_logic := '0';
+    signal tb_MemtoReg   : std_logic := '0';
+    signal tb_RegWrite   : std_logic := '0';
+
+    -- Outputs
+    signal tb_o_ALUResult  : std_logic_vector(N-1 downto 0);
+    signal tb_o_ReadData2  : std_logic_vector(N-1 downto 0);
+    signal tb_o_RegDstAddr : std_logic_vector(4 downto 0);
+    signal tb_o_MemtoReg   : std_logic;
+    signal tb_o_RegWrite   : std_logic;
+    signal tb_o_MemRead    : std_logic;
+    signal tb_o_MemWrite   : std_logic;
+    signal tb_o_BranchAddr : std_logic_vector(N-1 downto 0);
+    signal tb_o_BranchTaken: std_logic;
 
     -- Clock generation process
-    clk_process : process
+    constant CLK_PERIOD : time := 10 ns;
+
+begin
+    -- Instantiate EX_MEM
+    uut: entity work.EX_MEM
+        generic map (
+            N => N
+        )
+        port map (
+            i_CLK        => tb_CLK,
+            i_RST        => tb_RST,
+            i_WE         => tb_WE,
+            i_PC         => tb_PC,
+            i_ALUResult  => tb_ALUResult,
+            i_ReadData2  => tb_ReadData2,
+            i_RegDstAddr => tb_RegDstAddr,
+            i_Zero       => tb_Zero,
+            i_MemRead    => tb_MemRead,
+            i_MemWrite   => tb_MemWrite,
+            i_Branch     => tb_Branch,
+            i_MemtoReg   => tb_MemtoReg,
+            i_RegWrite   => tb_RegWrite,
+            o_ALUResult  => tb_o_ALUResult,
+            o_ReadData2  => tb_o_ReadData2,
+            o_RegDstAddr => tb_o_RegDstAddr,
+            o_MemtoReg   => tb_o_MemtoReg,
+            o_RegWrite   => tb_o_RegWrite,
+            o_MemRead    => tb_o_MemRead,
+            o_MemWrite   => tb_o_MemWrite,
+            o_BranchAddr => tb_o_BranchAddr,
+            o_BranchTaken=> tb_o_BranchTaken
+        );
+
+    -- Clock generation
+    clk_gen: process
     begin
-        clk <= '0';
-        wait for clk_period / 2;
-        clk <= '1';
-        wait for clk_period / 2;
+        tb_CLK <= '0';
+        wait for CLK_PERIOD / 2;
+        tb_CLK <= '1';
+        wait for CLK_PERIOD / 2;
     end process;
 
-    -- Test process with intermediate assertions
-    stim_proc : process
+    -- Stimulus process
+    stimulus: process
     begin
-        -- Initialize and assert reset behavior
-        reset <= '1';
-        wait for clk_period;
-        reset <= '0';
-        wait for clk_period;
+        -- Test Case 1: Basic operation
+        tb_RST <= '1'; -- Apply reset
+        tb_WE  <= '0';
+        wait for CLK_PERIOD;
+        
+        tb_RST <= '0'; -- Deassert reset
+        tb_WE  <= '1'; -- Enable writing
 
-        -- Apply first set of values with WriteEn enabled
-        WriteEn       <= '1';
-        ALU_result_in <= X"00000010";
-        Read_data2_in <= X"00000020";
-        RegDst_in     <= "00001";
-        MemRead_in    <= '1';
-        MemWrite_in   <= '0';
-        RegWrite_in   <= '1';
-        MemToReg_in   <= '1';
-        wait for clk_period;
+        -- Set inputs
+        tb_PC         <= x"00000004";
+        tb_ALUResult  <= x"00000010";
+        tb_ReadData2  <= x"00000020";
+        tb_RegDstAddr <= "00011";
+        tb_Zero       <= '1';
+        tb_MemRead    <= '1';
+        tb_MemWrite   <= '0';
+        tb_Branch     <= '1';
+        tb_MemtoReg   <= '1';
+        tb_RegWrite   <= '1';
 
-        -- Assert that the outputs match the expected first set of values
-        assert ALU_result_out = X"00000010" report "ALU_result_out mismatch on first test" severity error;
-        assert Read_data2_out = X"00000020" report "Read_data2_out mismatch on first test" severity error;
-        assert RegDst_out = "00001" report "RegDst_out mismatch on first test" severity error;
-        assert MemRead_out = '1' report "MemRead_out mismatch on first test" severity error;
-        assert MemWrite_out = '0' report "MemWrite_out mismatch on first test" severity error;
-        assert RegWrite_out = '1' report "RegWrite_out mismatch on first test" severity error;
-        assert MemToReg_out = '1' report "MemToReg_out mismatch on first test" severity error;
+        wait for CLK_PERIOD; -- Wait for clock edge
 
-        -- Disable WriteEn and change inputs to verify no change in outputs
-        WriteEn       <= '0';
-        ALU_result_in <= X"00000030";
-        Read_data2_in <= X"00000040";
-        RegDst_in     <= "00010";
-        MemRead_in    <= '0';
-        MemWrite_in   <= '1';
-        RegWrite_in   <= '0';
-        MemToReg_in   <= '0';
-        wait for clk_period;
+        --assert Inputs, establish at least those work
+        assert tb_PC = x"00000004"
+            report "Test Case 1 Failed: Incorrect Inputs"
+            severity error;
+            
+        assert tb_PC = x"00000005"
+            report "Test Case 1 Passed: Correct Inputs (probably)---------------------------------------------"
+            severity NOTE;
+            
+        -- Assert outputs
+        assert tb_o_ALUResult = x"00000010"
+            report "Test Case 1 Failed: Incorrect ALU Result"
+            severity error;
 
-        -- Assert that outputs remain unchanged with WriteEn disabled
-        assert ALU_result_out = X"00000010" report "ALU_result_out changed unexpectedly when WriteEn is disabled" severity error;
-        assert Read_data2_out = X"00000020" report "Read_data2_out changed unexpectedly when WriteEn is disabled" severity error;
-        assert RegDst_out = "00001" report "RegDst_out changed unexpectedly when WriteEn is disabled" severity error;
-        assert MemRead_out = '1' report "MemRead_out changed unexpectedly when WriteEn is disabled" severity error;
-        assert MemWrite_out = '0' report "MemWrite_out changed unexpectedly when WriteEn is disabled" severity error;
-        assert RegWrite_out = '1' report "RegWrite_out changed unexpectedly when WriteEn is disabled" severity error;
-        assert MemToReg_out = '1' report "MemToReg_out changed unexpectedly when WriteEn is disabled" severity error;
+        assert tb_o_BranchAddr = x"00000014" -- PC + ALUResult
+            report "Test Case 1 Failed: Incorrect Branch Address"
+            severity error;
 
-        -- Re-enable WriteEn and apply a second set of values
-        WriteEn       <= '1';
-        ALU_result_in <= X"00000050";
-        Read_data2_in <= X"00000060";
-        RegDst_in     <= "00011";
-        MemRead_in    <= '1';
-        MemWrite_in   <= '0';
-        RegWrite_in   <= '1';
-        MemToReg_in   <= '1';
-        wait for clk_period;
+        assert tb_o_BranchTaken = '1' -- Branch is taken (Branch AND Zero)
+            report "Test Case 1 Failed: Incorrect Branch Taken Signal"
+            severity error;
 
-        -- Assert that the outputs match the second set of values after WriteEn is re-enabled
-        assert ALU_result_out = X"00000050" report "ALU_result_out mismatch on second test after WriteEn re-enabled" severity error;
-        assert Read_data2_out = X"00000060" report "Read_data2_out mismatch on second test after WriteEn re-enabled" severity error;
-        assert RegDst_out = "00011" report "RegDst_out mismatch on second test after WriteEn re-enabled" severity error;
-        assert MemRead_out = '1' report "MemRead_out mismatch on second test after WriteEn re-enabled" severity error;
-        assert MemWrite_out = '0' report "MemWrite_out mismatch on second test after WriteEn re-enabled" severity error;
-        assert RegWrite_out = '1' report "RegWrite_out mismatch on second test after WriteEn re-enabled" severity error;
-        assert MemToReg_out = '1' report "MemToReg_out mismatch on second test after WriteEn re-enabled" severity error;
+        assert tb_o_RegDstAddr = "00011"
+            report "Test Case 1 Failed: Incorrect Destination Register Address"
+            severity error;
+
+        -- Test Case 2: Branch not taken
+        tb_Zero <= '0';
+        wait for CLK_PERIOD;
+
+        assert tb_o_BranchTaken = '0'
+            report "Test Case 2 Failed: Branch Taken Signal Should Be '0'"
+            severity error;
+
+        -- Test Case 3: Disable write enable
+        tb_WE <= '0'; -- Disable write enable
+        tb_PC         <= x"00000008"; -- Change inputs
+        tb_ALUResult  <= x"00000020";
+        tb_ReadData2  <= x"00000040";
+
+        wait for CLK_PERIOD;
+
+        -- Outputs should not change
+        assert tb_o_ALUResult = x"00000010" -- Should retain old value
+            report "Test Case 3 Failed: ALU Result Changed Despite WE='0'"
+            severity error;
 
         -- Finish simulation
+        wait for CLK_PERIOD;
+        report "All Test Cases Passed!" severity note;
         wait;
     end process;
 
-end Behavioral;
-
+end architecture;
