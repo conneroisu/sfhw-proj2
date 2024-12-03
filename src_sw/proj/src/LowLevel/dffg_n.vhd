@@ -1,11 +1,11 @@
 -- <header>
--- Author(s): Kariniux, Conner Ohnesorge, aidanfoss
--- Name: proj/src/LowLevel/dffg_n.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      Conner Ohnesorge 2024-11-11T08:50:02-06:00 merge-d-flip-flop-into-the-structural-definition
---      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
---      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+--      Conner Ohnesorge 2024-12-01T17:27:02-06:00 latest
+--      Conner Ohnesorge 2024-12-01T16:17:06-06:00 make-dffg_n-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library IEEE;
@@ -44,12 +44,13 @@ begin
     begin
         flipflop : dffg
             port map(
-                i_CLK,         -- Clock input
-                i_RST,         -- Reset input
-                i_WrE,         -- Write enable input
-                i_D(i),        -- Data input
-                o_Q(i)         -- Data output
+                i_CLK,                  -- Clock input
+                i_RST,                  -- Reset input
+                i_WrE,                  -- Write enable input
+                i_D(i),                 -- Data input
+                o_Q(i)                  -- Data output
                 );
     end generate;
 
 end structural;
+

@@ -1,9 +1,10 @@
 -- <header>
--- Author(s): Kariniux, aidanfoss
--- Name: proj/src/LowLevel/mux2t1.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+--      Conner Ohnesorge 2024-12-01T16:14:37-06:00 make-mux2t1-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library IEEE;
@@ -12,14 +13,14 @@ use IEEE.numeric_std.all;
 use work.MIPS_types.all;
 
 entity mux2t1 is
-    
+
     port (
         i_s  : in  std_logic;           -- Select input
         i_d0 : in  std_logic;           -- Data input 0
         i_d1 : in  std_logic;           -- Data input 1
         o_o  : out std_logic            -- Output
         );
-    
+
 end entity mux2t1;
 
 architecture dataflow of mux2t1 is

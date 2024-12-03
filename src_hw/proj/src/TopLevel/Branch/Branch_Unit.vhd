@@ -1,25 +1,34 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-01T14:04:08-06:00 add-test-bench-and-refactor-branch-unit-to-fit-style-guide
+--      Conner Ohnesorge 2024-12-01T14:01:31-06:00 made-a-better-branch-unit-implementation
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity Branch_Unit is
-    
+
     port(
         -- Control signals
-        i_CLK           : in std_logic;
-        i_RST          : in std_logic;
-        i_WriteEnable  : in std_logic;
+        i_CLK          : in  std_logic;
+        i_RST          : in  std_logic;
+        i_WriteEnable  : in  std_logic;
         -- Branch information
-        i_BranchTarget : in std_logic_vector(31 downto 0);  -- Target address
-        i_BranchPC     : in std_logic_vector(31 downto 0);  -- PC of branch instruction
-        i_BranchTaken  : in std_logic;                      -- Actual branch outcome
-        i_BranchValid  : in std_logic;                      -- Branch instruction is valid
+        i_BranchTarget : in  std_logic_vector(31 downto 0);  -- Target address
+        i_BranchPC     : in  std_logic_vector(31 downto 0);  -- PC of branch instruction
+        i_BranchTaken  : in  std_logic;  -- Actual branch outcome
+        i_BranchValid  : in  std_logic;  -- Branch instruction is valid
         -- Output signals
-        o_PredictTaken : out std_logic;                     -- Prediction result
-        o_BranchTarget : out std_logic_vector(31 downto 0); -- Predicted target address
-        o_Mispredict   : out std_logic                      -- Misprediction signal
-    );
-    
+        o_PredictTaken : out std_logic;  -- Prediction result
+        o_BranchTarget : out std_logic_vector(31 downto 0);  -- Predicted target address
+        o_Mispredict   : out std_logic  -- Misprediction signal
+        );
+
 end entity Branch_Unit;
 
 architecture structural of Branch_Unit is
@@ -32,7 +41,7 @@ architecture structural of Branch_Unit is
             i_WrE : in  std_logic;
             i_D   : in  std_logic_vector(N-1 downto 0);
             o_Q   : out std_logic_vector(N-1 downto 0)
-        );
+            );
     end component;
 
     -- Branch predictor component
@@ -42,7 +51,7 @@ architecture structural of Branch_Unit is
             rst          : in  std_logic;
             branch_taken : in  std_logic;
             prediction   : out std_logic
-        );
+            );
     end component;
 
     -- Internal signals
@@ -63,7 +72,7 @@ begin
             i_WrE => i_WriteEnable,
             i_D   => i_BranchTarget,
             o_Q   => s_BranchTarget
-        );
+            );
 
     -- 2-bit Branch Predictor
     Predictor : Branch_State
@@ -72,7 +81,7 @@ begin
             rst          => i_RST,
             branch_taken => i_BranchTaken,
             prediction   => s_Prediction
-        );
+            );
 
     -- Convert prediction to vector for DFF input
     s_LastPredIn(0) <= s_Prediction;
@@ -86,7 +95,7 @@ begin
             i_WrE => i_BranchValid,
             i_D   => s_LastPredIn,
             o_Q   => s_LastPrediction
-        );
+            );
 
     -- Predicted Target Register
     PredictedTargetReg : dffg_n
@@ -97,10 +106,10 @@ begin
             i_WrE => i_WriteEnable,
             i_D   => s_PredictedTarget,
             o_Q   => o_BranchTarget
-        );
+            );
 
     -- Combinational Logic
-    s_PredictedTarget <= i_BranchTarget when s_Prediction = '1' else 
+    s_PredictedTarget <= i_BranchTarget when s_Prediction = '1' else
                          std_logic_vector(unsigned(i_BranchPC) + 4);
 
     -- Output Logic
@@ -108,3 +117,4 @@ begin
     o_Mispredict   <= '1' when (i_BranchValid = '1' and s_LastPrediction(0) /= i_BranchTaken) else '0';
 
 end architecture structural;
+

@@ -1,9 +1,10 @@
 -- <header>
--- Author(s): Kariniux, aidanfoss
--- Name: proj/src/LowLevel/mux2t1_N.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+--      Conner Ohnesorge 2024-12-01T16:14:13-06:00 make-mux2t1_N-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library IEEE;
@@ -15,14 +16,14 @@ entity mux2t1_N is
     generic (
         N : integer := 32
         );
-    
+
     port (
         i_S  : in  std_logic;           -- Select input.
         i_D0 : in  std_logic_vector(N - 1 downto 0);  -- Input data width is N.
         i_D1 : in  std_logic_vector(N - 1 downto 0);  -- Input data width is N.
         o_O  : out std_logic_vector(N - 1 downto 0)  -- Output data width is N.
         );
-    
+
 end mux2t1_N;
 
 architecture structural of mux2t1_N is
@@ -35,7 +36,7 @@ architecture structural of mux2t1_N is
             );
     end component;
 begin
-    
+
     G_NBit_MUX : for i in 0 to N - 1 generate
         MUXI : mux2t1 port map(
             i_S  => i_S,    -- All instances share the same select input.

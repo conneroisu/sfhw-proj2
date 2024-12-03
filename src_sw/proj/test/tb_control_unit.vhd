@@ -1,8 +1,11 @@
 -- <header>
 -- Author(s): Conner Ohnesorge
--- Name: src_sw/proj/test/tb_control.vhd
+-- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-11-21T09:31:56-06:00 removed-unused-uncompleted-files-and-implemented-control-unit-for-software-pipeline
+--      Conner Ohnesorge 2024-12-01T17:19:04-06:00 set-i_Rt-to-00000-in-test-bench
+--      Conner Ohnesorge 2024-12-01T17:18:04-06:00 fix-dofile-for-control-unit
+--      Conner Ohnesorge 2024-12-01T17:01:44-06:00 update-to-adhere-to-coding-style
+--      Conner Ohnesorge 2024-12-01T16:54:20-06:00 fix-tb_control_unit-do-file
 -- </header>
 
 library IEEE;
@@ -13,26 +16,26 @@ end tb_control_unit;
 
 architecture structural of tb_control_unit is
     component control_unit is
-        
+
         port (
             -- Instruction inputs
-            i_Opcode : in std_logic_vector(5 downto 0);  -- Opcode from MIPS instruction memory (s_Instr[31-26])
-            i_Funct  : in std_logic_vector(5 downto 0);  -- Function code for certain instructions with same opcode
-            i_Rt     : in std_logic_vector(4 downto 0);  -- RT field helps determine branch type   
+            i_Opcode        : in  std_logic_vector(5 downto 0);  -- Opcode from MIPS instruction memory (s_Instr[31-26])
+            i_Funct         : in  std_logic_vector(5 downto 0);  -- Function code for certain instructions with same opcode
+            i_Rt            : in  std_logic_vector(4 downto 0);  -- RT field helps determine branch type   
             -- Control signal outputs
-            o_RegWr       : out std_logic;  -- Register write enable
-            o_RegDst      : out std_logic_vector(1 downto 0);  -- Register destination
+            o_RegWr         : out std_logic;  -- Register write enable
+            o_RegDst        : out std_logic_vector(1 downto 0);  -- Register destination
             o_SignExtEnable : out std_logic;  -- Sign extension enable
-            o_Jump        : out std_logic_vector(1 downto 0);  -- Controls address for jump
-            o_MemSel      : out std_logic_vector(1 downto 0);  -- Select write back source, either data memory, ALU, or PC+4
-            o_BranchCtl   : out std_logic;  -- ANDed with branch signal from ALU to determine if branch is taken
-            o_BranchType  : out std_logic_vector(2 downto 0);  -- Tells Branch control what branch type we want to do
-            o_ALUSrc      : out std_logic;  -- ALU source
-            o_ALUOp       : out std_logic_vector(2 downto 0);  -- Used by ALU control to determine ALU operation
-            o_MemWr       : out std_logic;  -- Data Memory write enable
-            o_Halt        : out std_logic  --Indicates program execution finished
+            o_Jump          : out std_logic_vector(1 downto 0);  -- Controls address for jump
+            o_MemSel        : out std_logic_vector(1 downto 0);  -- Select write back source, either data memory, ALU, or PC+4
+            o_BranchCtl     : out std_logic;  -- ANDed with branch signal from ALU to determine if branch is taken
+            o_BranchType    : out std_logic_vector(2 downto 0);  -- Tells Branch control what branch type we want to do
+            o_ALUSrc        : out std_logic;  -- ALU source
+            o_ALUOp         : out std_logic_vector(2 downto 0);  -- Used by ALU control to determine ALU operation
+            o_MemWr         : out std_logic;  -- Data Memory write enable
+            o_Halt          : out std_logic  --Indicates program execution finished
             );
-        
+
     end component;
 
     -- Instruction inputs
@@ -56,27 +59,27 @@ architecture structural of tb_control_unit is
 
 begin
     DUT0 : control_unit port map(
-        i_Opcode      => s_iOpcode,
-        i_Funct       => s_iFunct,
-        i_Rt          => s_iRt,
-        o_RegWr       => s_oRegWr,
-        o_RegDst      => s_oRegDst,
+        i_Opcode        => s_iOpcode,
+        i_Funct         => s_iFunct,
+        i_Rt            => s_iRt,
+        o_RegWr         => s_oRegWr,
+        o_RegDst        => s_oRegDst,
         o_SignExtEnable => s_oSignExtEn,
-        o_Jump        => s_oJump,
-        o_MemSel      => s_oMemSel,
-        o_BranchCtl   => s_oBranchCtl,
-        o_BranchType  => s_oBranchType,
-        o_ALUSrc      => s_oALUSrc,
-        o_ALUOp       => s_oALUOp,
-        o_MemWr       => s_oMemWr,
-        o_Halt        => s_oHalt
+        o_Jump          => s_oJump,
+        o_MemSel        => s_oMemSel,
+        o_BranchCtl     => s_oBranchCtl,
+        o_BranchType    => s_oBranchType,
+        o_ALUSrc        => s_oALUSrc,
+        o_ALUOp         => s_oALUOp,
+        o_MemWr         => s_oMemWr,
+        o_Halt          => s_oHalt
         );
 
     -- Testbench process - Opcodes from Processor Spreadsheet
     P_TEST : process
     begin
 
-        s_iRt <= "00000";
+        s_iRt     <= "00000";
         -- add
         s_iOpcode <= "000000";
         s_iFunct  <= "100000";

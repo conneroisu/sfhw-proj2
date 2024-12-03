@@ -1,7 +1,8 @@
 -- <header>
 -- Author(s): Conner Ohnesorge
--- Name: src_sc/proj/src/TopLevel/ALU/ALU.vhd
+-- Name: 
 -- Notes:
+--      Conner Ohnesorge 2024-12-01T16:27:54-06:00 update-fix-barrel_shifter-declarations
 --      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 

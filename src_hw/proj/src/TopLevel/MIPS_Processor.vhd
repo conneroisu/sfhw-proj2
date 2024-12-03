@@ -1,12 +1,25 @@
 -- <header>
--- Author(s): Kariniux, aidanfoss, Conner Ohnesorge
--- Name: proj/src/TopLevel/MIPS_Processor.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:09:28-06:00 Merge-pull-request-63-from-conneroisu-New_IFIDSTAGE
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      aidanfoss 2024-11-21T08:24:27-06:00 MEMWB-stage-work-added-fixed-mux-declaration
---      Conner Ohnesorge 2024-11-07T08:35:18-06:00 run-manual-update-to-header-program-and-run-it
---      Conner Ohnesorge 2024-10-31T09:22:46-05:00 added-initial-new-from-toolflow
+--      Conner Ohnesorge 2024-12-02T15:00:49-06:00 added-missing-signals-for-each-stage-of-the-pipeline
+--      Conner Ohnesorge 2024-12-01T22:55:31-06:00 add-daniels-changes
+--      Conner Ohnesorge 2024-12-01T22:07:38-06:00 remove-forward-unit-todo
+--      Conner Ohnesorge 2024-12-01T22:07:21-06:00 add-branch-and-forward-unit
+--      Conner Ohnesorge 2024-12-01T21:53:08-06:00 rename-plus-four-adder
+--      Conner Ohnesorge 2024-12-01T21:52:12-06:00 congegate-todos
+--      Conner Ohnesorge 2024-12-01T21:46:13-06:00 simplify-port-map-of-program-counter
+--      Conner Ohnesorge 2024-12-01T21:45:18-06:00 simplify-given-imem-and-dmem-ports
+--      Conner Ohnesorge 2024-12-01T21:44:40-06:00 added-program-counter
+--      Conner Ohnesorge 2024-12-01T21:42:22-06:00 futher-clean-up
+--      Conner Ohnesorge 2024-12-01T21:41:58-06:00 clean-up
+--      Conner Ohnesorge 2024-12-01T21:40:05-06:00 add-adderSubtractor-component-and-pc-plus-four-adder
+--      Conner Ohnesorge 2024-12-01T21:35:46-06:00 move-todos-to-top-of-file
+--      Conner Ohnesorge 2024-12-01T21:31:02-06:00 added-MEM_WB-to-MIPS_Processor
+--      Conner Ohnesorge 2024-12-01T21:05:54-06:00 remove-halt-from-ID_EX-declaration
+--      Conner Ohnesorge 2024-12-01T21:02:53-06:00 remove-halt-signals-from-id_ex
+--      Conner Ohnesorge 2024-12-01T14:49:11-06:00 added-branch-unit-declaration-to-processor
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
 library IEEE;
@@ -385,3 +398,4 @@ begin
             );
 
 end structure;
+

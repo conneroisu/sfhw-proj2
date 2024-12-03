@@ -1,18 +1,24 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-01T19:18:16-06:00 fix-register-file-instantiation
+-- </header>
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity shift_left_2 is
-    
+
     generic (INPUT_WIDTH : integer   := 26;
-             RESIZE   : std_logic := '0');
+             RESIZE      : std_logic := '0');
     port (
         i_data             : in  std_logic_vector(INPUT_WIDTH-1 downto 0);
         o_shft_data_resize : out std_logic_vector((INPUT_WIDTH+1) downto 0);
         o_shft_data_norsze : out std_logic_vector(INPUT_WIDTH-1 downto 0)
         );
-    
+
 end shift_left_2;
 
 architecture dataflow of shift_left_2 is
@@ -32,3 +38,4 @@ begin
         end if;
     end process;
 end dataflow;
+

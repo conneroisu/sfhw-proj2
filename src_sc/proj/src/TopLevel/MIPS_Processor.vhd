@@ -1,7 +1,9 @@
 -- <header>
 -- Author(s): Conner Ohnesorge
--- Name: src_sc/proj/src/TopLevel/MIPS_Processor.vhd
+-- Name: 
 -- Notes:
+--      Conner Ohnesorge 2024-12-01T22:07:21-06:00 add-branch-and-forward-unit
+--      Conner Ohnesorge 2024-12-01T20:16:00-06:00 test
 --      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
@@ -12,16 +14,16 @@ use work.MIPS_types.all;
 
 entity MIPS_Processor is
     generic(N : integer := DATA_WIDTH);
-    
+
     port(
-         iCLK      : in  std_logic;
-         iRST      : in  std_logic;
-         iInstLd   : in  std_logic;
-         iInstAddr : in  std_logic_vector(N-1 downto 0);
-         iInstExt  : in  std_logic_vector(N-1 downto 0);
-         oALUOut   : out std_logic_vector(N-1 downto 0)
-     );  
-    
+        iCLK      : in  std_logic;
+        iRST      : in  std_logic;
+        iInstLd   : in  std_logic;
+        iInstAddr : in  std_logic_vector(N-1 downto 0);
+        iInstExt  : in  std_logic_vector(N-1 downto 0);
+        oALUOut   : out std_logic_vector(N-1 downto 0)
+        );
+
 end MIPS_Processor;
 
 architecture structure of MIPS_Processor is
@@ -124,10 +126,10 @@ architecture structure of MIPS_Processor is
     end component;
     component control_unit is
         port (
-                i_opcode    : in  std_logic_vector(5 downto 0); 
-                i_funct     : in  std_logic_vector(5 downto 0);
-                o_Ctrl_Unit : out std_logic_vector(20 downto 0) -- (all the control signals needed lumped into 1 vector)
-                );
+            i_opcode    : in  std_logic_vector(5 downto 0);
+            i_funct     : in  std_logic_vector(5 downto 0);
+            o_Ctrl_Unit : out std_logic_vector(20 downto 0)  -- (all the control signals needed lumped into 1 vector)
+            );
     end component;
     -- ==========================================================================
     -- Internal Signals

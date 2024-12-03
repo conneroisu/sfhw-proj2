@@ -1,11 +1,8 @@
 -- <header>
--- Author(s): aidanfoss
--- Name: proj/test/tb_MEM_WB.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      aidanfoss 2024-11-21T10:10:56-06:00 working-on-fixing-memwb
---      aidanfoss 2024-11-21T09:45:28-06:00 fixed-all-issue-in-tb
---      aidanfoss 2024-11-21T09:03:40-06:00 finished-up-tb_MEM_WB
---      aidanfoss 2024-11-21T08:54:57-06:00 beginning-tb-for-memWB
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
 library IEEE;
@@ -18,18 +15,18 @@ end TB_MEM_WB;
 
 architecture Behavioral of TB_MEM_WB is
     component MEM_WB
-    port (
-        clk        : in std_logic;
-        reset      : in std_logic;
-        i_ALUResult : in std_logic_vector(31 downto 0);  -- ALU result to WB
-        i_DataMem   : in std_logic_vector(31 downto 0);  -- Data from memory
-        i_RegDst    : in std_logic_vector(4 downto 0);   -- Destination register number
-        i_RegWrite  : in std_logic;
-        i_MemToReg  : in std_logic;                     -- MUX select signal
-        o_regDst    : out std_logic_vector(4 downto 0); -- Destination register output
-        o_regWrite  : out std_logic;                    -- Write enable output
-        o_wbData    : out std_logic_vector(31 downto 0) -- Data to write back
-    );
+        port (
+            clk         : in  std_logic;
+            reset       : in  std_logic;
+            i_ALUResult : in  std_logic_vector(31 downto 0);  -- ALU result to WB
+            i_DataMem   : in  std_logic_vector(31 downto 0);  -- Data from memory
+            i_RegDst    : in  std_logic_vector(4 downto 0);  -- Destination register number
+            i_RegWrite  : in  std_logic;
+            i_MemToReg  : in  std_logic;  -- MUX select signal
+            o_regDst    : out std_logic_vector(4 downto 0);  -- Destination register output
+            o_regWrite  : out std_logic;  -- Write enable output
+            o_wbData    : out std_logic_vector(31 downto 0)  -- Data to write back
+            );
     end component;
     signal clk   : std_logic := '0';
     signal reset : std_logic := '0';
@@ -76,7 +73,7 @@ begin
         wait for clk_period;
         reset <= '0';
         wait for clk_period;
-	wait for clk_period;
+        wait for clk_period;
 
         --Test 1: Select Data Memory Value (i_MemToReg = 1)
         si_ALUResult <= X"AAAAAAAA";
@@ -132,10 +129,10 @@ begin
         --assert values
         assert si_RegDst = "00011" report "i_RegDst    mismatch on test 4";
         assert si_RegWrite = '0' report "i_RegWrite  mismatch on test 4";
-	
 
-	--end test
-	wait;
+
+        --end test
+        wait;
     end process;
 end Behavioral;
 

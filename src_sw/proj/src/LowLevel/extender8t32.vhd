@@ -1,26 +1,23 @@
 -- <header>
--- Author(s): Kariniux, aidanfoss, Conner Ohnesorge
--- Name: proj/src/LowLevel/extender8t32.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:09:28-06:00 Merge-pull-request-63-from-conneroisu-New_IFIDSTAGE
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      aidanfoss 2024-11-21T08:32:03-06:00 unused-declarations
---      connero 2024-11-11T09:11:16-06:00 Merge-branch-main-into-component-forward-unit
---      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
---      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+--      Conner Ohnesorge 2024-12-01T16:16:37-06:00 make-extender8t32-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library ieee;
 use ieee.std_logic_1164.all;
 
 entity extender8t32 is
-    
+
     port(
         i_I : in  std_logic_vector(7 downto 0);  -- byte value
         i_C : in  std_logic;                     -- signed extender or unsigned
         o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended value
         );
-    
+
 end extender8t32;
 
 architecture dataflow of extender8t32 is

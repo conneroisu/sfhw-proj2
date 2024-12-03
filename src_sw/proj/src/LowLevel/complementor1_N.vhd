@@ -1,10 +1,10 @@
 -- <header>
--- Author(s): Kariniux, Conner Ohnesorge, aidanfoss
--- Name: proj/src/LowLevel/complementor1_N.vhd
+-- Author(s): Conner Ohnesorge
+-- Name: 
 -- Notes:
---      Kariniux 2024-11-21T09:04:48-06:00 pushing-pulling
---      Conner Ohnesorge 2024-11-07T09:51:12-06:00 progress-on-stage-2
---      aidanfoss 2024-11-07T09:37:43-06:00 create-exmem-stage
+--      Conner Ohnesorge 2024-12-01T16:17:55-06:00 make-complementor1_N-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library IEEE;
@@ -40,3 +40,4 @@ begin
             );
     end generate G_NBit_Comp1;
 end structural;
+

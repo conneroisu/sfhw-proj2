@@ -1,3 +1,11 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-01T14:55:06-06:00 make-mux_Nt1-fit-style-guide
+--      Conner Ohnesorge 2024-12-01T14:54:39-06:00 unignore-mux_Nt1.vhd
+-- </header>
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -8,7 +16,7 @@ entity mux_Nt1 is
         bus_width : integer := 32;
         sel_width : integer := 5
         );
-    
+
     port (
         -- BUS 2D array of [2^sel_width][bus_width] size
         i_reg_bus : in  bus_array((2**sel_width)-1 downto 0)(bus_width-1 downto 0);
@@ -22,3 +30,4 @@ architecture dataflow of mux_Nt1 is
 begin
     o_reg <= i_reg_bus(to_integer(unsigned(i_sel)));
 end dataflow;
+
