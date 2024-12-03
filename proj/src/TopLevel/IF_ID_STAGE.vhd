@@ -224,5 +224,4 @@ o_regw <= s_regw;
 o_instr <= s_instr;
 o_addr <= s_addr;
 
-
 end structure;
