@@ -31,8 +31,8 @@ component IF_ID_STAGE is
         
 end component;
 
-signal s_clk 			: std_logic;
-signal s_rst 			: std_logic;
+signal s_clk 			: std_logic := '0';
+signal s_rst 			: std_logic := '0';
 signal s_flush 			: std_logic;
 signal s_stall 			: std_logic;
 signal s_sctrl		   	: std_logic;
@@ -44,8 +44,7 @@ signal s_oaddr 	 		: std_logic_vector(31 downto 0);
 signal s_od1 		        : std_logic_vector(31 downto 0);
 signal s_od2    		: std_logic_vector(31 downto 0);
 signal s_osign    		: std_logic_vector(31 downto 0);
-
-
+    constant cclk_per : time := 50 ns;
 begin
   
   
@@ -62,35 +61,86 @@ port map(i_clk => s_clk,
 	o_addr => s_oaddr,
 	o_d1   => s_od1,
 	o_d2   => s_od2,
-	o_sign => s_osign);
+	o_sign => s_osign
+    );
 
 P_TB: process
 begin
 
 ----Simple First Test------
-	s_clk <= '0';
-	s_rst <= '1';
-	wait for 10 ns;
+        s_clk <= '0';
+        wait for cclk_per / 2;
+        s_clk <= '1';
+        wait for cclk_per / 2;
 	s_rst <= '0';
 	wait for 10 ns;
-	
+--normal add instruction
 	s_stall <= '0';
 	s_flush <= '0';
+wait for cclk_per;
 	s_instr <= x"012A4020";
 	s_addr <= x"00000001";
-
-
-	wait for 10 ns;
+wait for cclk_per;
 	s_clk <= '1';
-	wait for 10 ns ;
+wait for cclk_per;
 	s_clk <= '0';
-	wait for 10 ns ;
+wait for cclk_per;
 
-	s_stall <= '1';
-	s_flush <= '1';
-	s_instr <= x"02528022";
-	s_addr <= x"00000001";
+
+
+
+---addi instruction
+	--s_stall <= '0';
+	--s_flush <= '0';
+	--s_instr <= x"21490005";
+	--s_addr <= x"00000001";
+
+	--wait for 100 ns;
+	--s_clk <= '1';
+	--wait for 10 ns;
+
+---add instruction w stall
+--	wait for 10 ns;
+--	s_clk <= '1';
+--	wait for 10 ns ;
+--	s_clk <= '0';
+--	wait for 10 ns ;
+
+--	s_stall <= '1';
+--	s_flush <= '1';
+--	s_instr <= x"02528022";
+--	s_addr <= x"00000001";
 	
+---i type instruction
+	--s_stall <= '0';
+	--s_flush <= '0';
+	--s_instr <= x"8FA80004";
+	--s_addr <= x"00000003";
+
+	--wait for 100 ns;
+	--s_clk <= '1';
+	--wait for 10 ns;
+
+---jump instruction
+	--s_stall <= '0';
+	--s_flush <= '0';
+	--s_instr <= x"08010000";
+	--s_addr <=  x"00000051";
+
+	--wait for 100 ns;
+	--s_clk <= '1';
+	--wait for 10 ns;
+
+---branch instruction
+	--s_stall <= '0';
+	--s_flush <= '0';
+	--s_instr <= x"11090004";
+	--s_addr <=  x"00000401";
+
+	--wait for 100 ns;
+	--s_clk <= '1';
+	--wait for 10 ns;
+
 
 
 
@@ -99,4 +149,3 @@ begin
 
     end process;
 end behavior;
-
