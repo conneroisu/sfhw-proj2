@@ -51,7 +51,6 @@ architecture structure of MIPS_Processor is
     end component;
 
     component register_file is
-
         port (
             clk   : in  std_logic;                      -- Clock input
             i_wA  : in  std_logic_vector(4 downto 0);   -- Write address input
@@ -63,7 +62,6 @@ architecture structure of MIPS_Processor is
             o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
             o_d2  : out std_logic_vector(31 downto 0)   -- Read data 2 output
             );
-
     end component;
 
     component IF_ID is
@@ -326,8 +324,7 @@ architecture structure of MIPS_Processor is
         s_ALUOut, s_MEMALU, s_WBALU,
         s_WBMEMOut,
         s_Forward_A, s_Forward_B,
-        s_trueINST
-        : std_logic_vector(31 downto 0);
+        s_trueINST : std_logic_vector(31 downto 0);
 
     signal
         s_jump_branch, s_RegDst, s_memToReg, s_ALUSrc, s_j, s_jr, s_jal,
@@ -337,8 +334,7 @@ architecture structure of MIPS_Processor is
         s_IDhalt, s_IDMemWr, s_IDRegWr, s_ID_memRD,
         s_EXRegDst, s_EXRegWr, s_EXmemToReg, s_EXMemWr, s_EXMemRd, s_EXALUSrc, s_EXjal, s_EXhalt,
         s_MEMjal, s_MEMmemtoReg, s_MEMhalt, s_MEMRegWr,
-        s_WBjal, s_WBmemToReg, s_WBRegWr
-        : std_logic;
+        s_WBjal, s_WBmemToReg, s_WBRegWr : std_logic;
 
 begin
     with iInstLd select
@@ -490,14 +486,10 @@ begin
             s_Ovfl <= '0';
         elsif rising_edge(iclk) then
             if s_internal_CarryOut = '1' then
-                s_CarryOut <= '1';
-            else
-                s_CarryOut <= s_CarryOut;
+                s_CarryOut <= '1'; else s_CarryOut <= s_CarryOut;
             end if;
             if s_internal_Overflow = '1' then
-                s_Ovfl <= '1';
-            else
-                s_Ovfl <= s_Ovfl;
+                s_Ovfl <= '1'; else s_Ovfl <= s_Ovfl;
             end if;
         end if;
     end process;
@@ -693,10 +685,10 @@ begin
             i_branch_ID => s_jump_branch,
             i_rAddrA   => s_ID_Inst(25 downto 21),
             i_rAddrB   => s_ID_Inst(20 downto 16),
-            i_wAddr_ID => s_EXrtrd,     --s_EXrt
-            i_wAddr_EX => s_MEMrtrd,    --s_EXrt
-            i_wE_ID    => s_EXRegWr,    --s_EXMemRd
-            i_wE_EX    => s_MemRegWr,   --ex memrd to see if mem data hazard
+            i_wAddr_ID => s_EXrtrd,    
+            i_wAddr_EX => s_MEMrtrd,    
+            i_wE_ID    => s_EXRegWr,    
+            i_wE_EX    => s_MemRegWr,  
             o_stall => s_stall,
             o_flush => s_flush
             );

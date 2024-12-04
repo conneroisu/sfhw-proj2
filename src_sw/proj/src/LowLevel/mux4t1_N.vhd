@@ -2,20 +2,17 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T16:13:52-06:00 make-mux4t1_N-fit-styleguide
---      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
---      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
 library ieee;
 use ieee.std_logic_1164.all;
 
 entity mux4t1_n is
-
     generic (
         n : integer := 32  -- Generic of type integer for input/output data width. Default value is 32.
         );
-
+    
     port (
         i_s  : in  std_logic_vector(1 downto 0);  -- Select input width is 2 (1 bit for each input data width bit
         i_d0 : in  std_logic_vector(n - 1 downto 0);  -- Input data width is N.
@@ -24,7 +21,7 @@ entity mux4t1_n is
         i_d3 : in  std_logic_vector(n - 1 downto 0);  -- Input data width is N.
         o_o  : out std_logic_vector(n - 1 downto 0)  -- Output data width is N.
         );
-
+    
 end entity mux4t1_n;
 
 architecture structural of mux4t1_n is
@@ -41,7 +38,7 @@ architecture structural of mux4t1_n is
     end component;
 
 begin
-
+    -- Instantiate N mux instances.
     g_nbit_mux : for i in 0 to n - 1 generate
 
         muxi : component mux4t1

@@ -1,30 +1,21 @@
--- <header>
--- Author(s): Conner Ohnesorge
--- Name: 
--- Notes:
---      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
--- </header>
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity mem is
 
-    generic
-        (
-            DATA_WIDTH : natural := 32;
-            ADDR_WIDTH : natural := 10
-            );
+    generic (
+        DATA_WIDTH : natural := 32;
+        ADDR_WIDTH : natural := 10
+        );
 
-    port
-        (
-            clk  : in  std_logic;
-            addr : in  std_logic_vector((ADDR_WIDTH-1) downto 0);
-            data : in  std_logic_vector((DATA_WIDTH-1) downto 0);
-            we   : in  std_logic := '1';
-            q    : out std_logic_vector((DATA_WIDTH -1) downto 0)
-            );
+    port (
+        clk  : in  std_logic;
+        addr : in  std_logic_vector((ADDR_WIDTH-1) downto 0);
+        data : in  std_logic_vector((DATA_WIDTH-1) downto 0);
+        we   : in  std_logic := '1';
+        q    : out std_logic_vector((DATA_WIDTH -1) downto 0)
+        );
 
 end mem;
 
@@ -52,4 +43,3 @@ begin
     q <= ram(to_integer(unsigned(addr)));
 
 end rtl;
-

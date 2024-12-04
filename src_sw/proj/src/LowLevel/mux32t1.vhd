@@ -1,16 +1,8 @@
--- <header>
--- Author(s): Conner Ohnesorge
--- Name: 
--- Notes:
---      Conner Ohnesorge 2024-12-01T16:12:51-06:00 make-mux32t1-fit-styleguide
---      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
---      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
--- </header>
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use work.MIPS_types.all;
+
 entity mux32t1 is
 
     port (

@@ -2,37 +2,32 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T16:14:56-06:00 make-logic_N-fit-styleguide
---      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-12-01T15:13:23-06:00 addded-tests-for-logic_N-and-size_filter-and-fixed-ALU-their
 -- </header>
 
 library IEEE;
 use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
 
 entity logic_N is
-    generic (
-        N : integer := 32
-        );
-
-    port (
-        i_D0     : in  std_logic_vector(N-1 downto 0);
-        i_D1     : in  std_logic_vector(N-1 downto 0);
-        i_op     : in  std_logic_vector(1 downto 0);
-        o_result : out std_logic_vector(N-1 downto 0)
+    generic(N : integer := 32);
+    
+    port(
+        i_A                       : in  std_logic_vector(N-1 downto 0);
+        i_B                       : in  std_logic_vector(N-1 downto 0);
+        o_OR, o_AND, o_XOR, o_NOR : out std_logic_vector(N-1 downto 0)
         );
 
 end logic_N;
 
-architecture dataflow of logic_N is
-    signal s_others : std_logic_vector(0 downto 0);
+architecture looped of logic_N is
 begin
-    s_others <= b"0";
-    with i_op select
-        o_result <= i_D0 and i_D1                                     when b"00",
-        i_D0 or i_D1                                                  when b"01",
-        i_D0 nor i_D1                                                 when b"10",
-        i_D0 xor i_D1                                                 when b"11",
-        std_logic_vector(resize(unsigned(s_others), o_result'length)) when others;
-end dataflow;
-
+    process(i_A, i_B)
+    begin
+        for i in 0 to 31 loop
+            o_OR(i)  <= i_A(i) or i_B(i);
+            o_AND(i) <= i_A(i) and i_B(i);
+            o_XOR(i) <= i_A(i) xor i_B(i);
+            o_NOR(i) <= i_A(i) nor i_B(i);
+        end loop;
+    end process;
+end looped;

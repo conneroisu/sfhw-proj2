@@ -2,9 +2,7 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T16:17:22-06:00 make-dffg-fit-styleguide
---      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
---      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
 library IEEE;
@@ -12,7 +10,6 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity dffg is
-
     port (
         i_CLK : in  std_logic;          -- Clock input
         i_RST : in  std_logic;          -- Reset input
@@ -20,9 +17,7 @@ entity dffg is
         i_D   : in  std_logic;          -- Data value input
         o_Q   : out std_logic           -- Data value output
         );
-
 end dffg;
-
 architecture mixed of dffg is
     signal s_D : std_logic;             -- Multiplexed input to the FF
     signal s_Q : std_logic;             -- Output of the FF

@@ -2,26 +2,20 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T16:17:38-06:00 make-decoder_5t32-fit-styleguide
---      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
---      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use ieee.std_logic_arith.all;
-
 entity decoder5t32 is
-
     port
         (
             i_i : in  std_logic_vector(4 downto 0);  -- 5-bit input
             o_o : out std_logic_vector(31 downto 0)  -- 32-bit output
             );
-
 end entity decoder5t32;
-
 architecture mixed of decoder5t32 is
 
 begin
