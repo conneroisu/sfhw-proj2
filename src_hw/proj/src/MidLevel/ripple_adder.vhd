@@ -10,6 +10,7 @@ use IEEE.std_logic_1164.all;
 
 entity ripple_adder is
     generic (N : integer := 32);
+
     port (
         i_A    : in  std_logic_vector(N-1 downto 0);
         i_B    : in  std_logic_vector(N-1 downto 0);
@@ -17,16 +18,17 @@ entity ripple_adder is
         o_Sum  : out std_logic_vector(N-1 downto 0);
         o_Cout : out std_logic
         );
+
 end ripple_adder;
 
 architecture structural of ripple_adder is
     component full_adder is
         port (
-            i_0    : in  std_logic;
-            i_1    : in  std_logic;
-            i_Cin  : in  std_logic;
-            o_Sum  : out std_logic;
-            o_Cout : out std_logic
+            i_x0   : in  std_logic;     -- Input 0 to be added.
+            i_x1   : in  std_logic;     -- Input 1 to be added.
+            i_cin  : in  std_logic;     -- Carry in.
+            o_y    : out std_logic;     -- Sum output.
+            o_cout : out std_logic      -- Carry out.
             );
     end component;
 
@@ -45,4 +47,3 @@ begin
     end generate g_ripple_carry;
 
 end structural;
-
