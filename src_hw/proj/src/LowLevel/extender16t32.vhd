@@ -9,6 +9,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use work.MIPS_types.all;
+
 entity extender16t32 is
     
     port(
