@@ -9,11 +9,13 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity alu_control is
+    
     port (
         i_Funct  : in  std_logic_vector(5 downto 0);
         i_ALUOp  : in  std_logic_vector(2 downto 0);
         o_ALUSel : out std_logic_vector(4 downto 0)
         );
+    
 end alu_control;
 
 architecture behavioral of alu_control is
