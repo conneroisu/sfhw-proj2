@@ -34,13 +34,13 @@ begin
     o_Overflow <= carry(N) xor carry(N - 1);
 
 
-    G_NBit_FullAdder : for i in 0 to N - 1 generate
+    G_NBit_FullAdder : for j in 0 to N - 1 generate
         FullAdderI : Full_Adder port map(
-            i_C => carry(i),            -- previous out carry = new in carry
-            i_A => i_A(i),  -- ith instance's data 0 input = ith data 0 input.
-            i_B => i_B(i),  -- ith instance's data 1 input = ith data 1 input.
-            o_S => o_S(i),
-            o_C => carry(i + 1)  -- ith instance's data output = ith data output.
+            i_C => carry(j),            -- previous out carry = new in carry
+            i_A => i_A(j),  -- ith instance's data 0 input = jth data 0 input.
+            i_B => i_B(j),  -- ith instance's data 1 input = jth data 1 input.
+            o_S => o_S(j),  -- ith instance's data output = jth data output.
+            o_C => carry(j + 1)  -- ith instance's data output = jth data output.
             );
     end generate G_NBit_FullAdder;
 
