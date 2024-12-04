@@ -2,9 +2,7 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T16:14:13-06:00 make-mux2t1_N-fit-styleguide
---      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
---      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
 library IEEE;
@@ -36,7 +34,6 @@ architecture structural of mux2t1_N is
             );
     end component;
 begin
-
     G_NBit_MUX : for i in 0 to N - 1 generate
         MUXI : mux2t1 port map(
             i_S  => i_S,    -- All instances share the same select input.
@@ -46,4 +43,3 @@ begin
             );
     end generate G_NBit_MUX;
 end structural;
-

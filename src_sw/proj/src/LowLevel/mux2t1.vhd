@@ -2,9 +2,7 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T16:14:37-06:00 make-mux2t1-fit-styleguide
---      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
---      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
 library IEEE;
@@ -13,14 +11,12 @@ use IEEE.numeric_std.all;
 use work.MIPS_types.all;
 
 entity mux2t1 is
-
     port (
         i_s  : in  std_logic;           -- Select input
         i_d0 : in  std_logic;           -- Data input 0
         i_d1 : in  std_logic;           -- Data input 1
         o_o  : out std_logic            -- Output
         );
-
 end entity mux2t1;
 
 architecture dataflow of mux2t1 is
