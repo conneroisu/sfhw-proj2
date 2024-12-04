@@ -10,8 +10,8 @@ entity ID_EX is
                 i_readA        : in  std_logic_vector(31 downto 0);
                 i_readB        : in  std_logic_vector(31 downto 0);
                 i_signExtImmed : in  std_logic_vector(31 downto 0);
-                i_IDRt    : in  std_logic_vector(4 downto 0);
-                i_IDRD    : in  std_logic_vector(4 downto 0);
+                i_IDRt         : in  std_logic_vector(4 downto 0);
+                i_IDRD         : in  std_logic_vector(4 downto 0);
                 i_RegDst       : in  std_logic;
                 i_RegWrite     : in  std_logic;
                 i_memToReg     : in  std_logic;
@@ -27,8 +27,8 @@ entity ID_EX is
                 o_readA        : out std_logic_vector(31 downto 0);
                 o_readB        : out std_logic_vector(31 downto 0);
                 o_signExtImmed : out std_logic_vector(31 downto 0);
-                o_inst20_16    : out std_logic_vector(4 downto 0);
-                o_inst15_11    : out std_logic_vector(4 downto 0);
+                o_Rt           : out std_logic_vector(4 downto 0); -- inst20_16
+                o_Rd           : out std_logic_vector(4 downto 0); -- inst15_11
                 o_RegDst       : out std_logic;
                 o_RegWrite     : out std_logic;
                 o_memToReg     : out std_logic;
@@ -125,7 +125,7 @@ begin
                         i_RST => i_RST,
                         i_WE  => s_stall,
                         i_D   => i_IDRt,
-                        o_Q   => o_inst20_16
+                        o_Q   => o_Rt
                         );
 
         instRdReg : dffg_N
@@ -135,7 +135,7 @@ begin
                         i_RST => i_RST,
                         i_WE  => s_stall,
                         i_D   => i_IDRD,
-                        o_Q   => o_inst15_11
+                        o_Q   => o_Rd
                         );
 
         instRegDstReg : dffg

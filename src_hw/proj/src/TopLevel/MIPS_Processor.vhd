@@ -104,8 +104,8 @@ architecture structure of MIPS_Processor is
             o_readA        : out std_logic_vector(31 downto 0);
             o_readB        : out std_logic_vector(31 downto 0);
             o_signExtImmed : out std_logic_vector(31 downto 0);
-            o_inst20_16    : out std_logic_vector(4 downto 0);
-            o_inst15_11    : out std_logic_vector(4 downto 0);
+            o_Rt    : out std_logic_vector(4 downto 0); -- inst20_16
+            o_Rd    : out std_logic_vector(4 downto 0); -- inst15_11
             o_RegDst       : out std_logic;
             o_RegWrite     : out std_logic;
             o_memToReg     : out std_logic;
@@ -594,8 +594,8 @@ begin
             o_readA        => s_EXA,
             o_readB        => s_EXB,
             o_signExtImmed => s_EXImmediate,
-            o_inst20_16    => s_EXrt,
-            o_inst15_11    => s_EXrd,
+            o_Rt    => s_EXrt,
+            o_Rd    => s_EXrd,
             o_RegDst       => s_EXRegDst,
             o_RegWrite     => s_EXRegWr,
             o_memToReg     => s_EXmemToReg,
