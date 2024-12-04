@@ -5,6 +5,7 @@ vcom -2008 -work work ../src/MIPS_types.vhd
 vcom -2008 -work work ../src/LowLevel/*.vhd
 vcom -2008 -work work ../src/MidLevel/*.vhd
 vcom -2008 -work work ../src/TopLevel/ALU/*.vhd
+vcom -2008 -work work ../src/TopLevel/Pipeline/ID_EX.vhd
 
 vcom -2008 -work work $file
 
