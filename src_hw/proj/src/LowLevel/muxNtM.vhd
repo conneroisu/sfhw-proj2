@@ -10,19 +10,21 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.MATH_REAL.all;
 use IEEE.NUMERIC_STD.all;
 
-entity muxNtM is
+entity mux_NtM is
     generic (
         DATA_WIDTH  : positive := 8;    -- Width of each input/output
         INPUT_COUNT : positive := 4     -- Number of inputs
         );
+    
     port (
         inputs : in  std_logic_vector(INPUT_COUNT * DATA_WIDTH - 1 downto 0);
         sel    : in  std_logic_vector(integer(ceil(log2(real(INPUT_COUNT)))) - 1 downto 0);
         output : out std_logic_vector(DATA_WIDTH - 1 downto 0)
         );
-end muxNtM;
+    
+end mux_NtM;
 
-architecture Behavioral of muxNtM is
+architecture Behavioral of mux_NtM is
     --constant SEL_WIDTH : integer := integer(ceil(log2(real(INPUT_COUNT))));
 
     -- Function to check if vector contains any metavalues

@@ -10,10 +10,10 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
 use IEEE.MATH_REAL.all;
 
-entity tb_muxNtM is
-end tb_muxNtM;
+entity tb_mux_NtM is
+end tb_mux_NtM;
 
-architecture Behavioral of tb_muxNtM is
+architecture Behavioral of tb_mux_NtM is
     -- Constants for this specific test configuration
     constant DATA_WIDTH  : positive := 8;
     constant INPUT_COUNT : positive := 4;
@@ -134,7 +134,7 @@ begin
     end process;
 
     -- DUT instantiation
-    DUT : entity work.muxNtM
+    DUT : entity work.mux_NtM
         generic map (
             DATA_WIDTH  => DATA_WIDTH,
             INPUT_COUNT => INPUT_COUNT
