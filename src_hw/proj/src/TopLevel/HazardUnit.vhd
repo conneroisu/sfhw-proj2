@@ -29,25 +29,25 @@ begin
             i_wE_ID,
             i_wE_EX)
     begin
-        --case1
+        --case 1
         if((i_wE_ID = '1' and i_rAddrA = i_wAddr_ID and i_rAddrA /= "00000") or (i_wE_EX = '1' and i_rAddrA = i_wAddr_EX and i_rAddrA /= "00000")) then  --RegReadA Hazard
             o_stall <= '1';
             o_flush <= '0';
 
 
-        --case2
+        --case 2
         elsif ((i_wE_ID = '1' and i_rAddrB = i_wAddr_ID and i_rAddrB /= "00000") or (i_wE_EX = '1' and i_rAddrB = i_wAddr_EX and i_rAddrB /= "00000")) then  --RegReadB Hazard
             o_stall <= '1';
             o_flush <= '0';
 
-        --case3
+        --case 3
         elsif(
             i_jump_ID = '1' or
             i_branch_ID = '1') then
             o_flush <= '1';             --Control Hazard 
             o_stall <= '0';
 
-        --case4
+        --case 4
         else
             o_stall <= '0';
             o_flush <= '0';

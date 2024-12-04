@@ -244,7 +244,6 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    --PC register
     component dffg_N is
         port (
             i_CLK : in  std_logic;                      -- Clock input
