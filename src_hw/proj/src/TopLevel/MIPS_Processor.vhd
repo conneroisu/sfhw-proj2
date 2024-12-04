@@ -219,9 +219,9 @@ architecture structure of MIPS_Processor is
         generic (N : integer);
         port (
             i_S  : in  std_logic;
-            i_D0 : in  std_logic_vector(31 downto 0);
-            i_D1 : in  std_logic_vector(31 downto 0);
-            o_O  : out std_logic_vector(31 downto 0)
+            i_D0 : in  std_logic_vector(N - 1 downto 0);
+            i_D1 : in  std_logic_vector(N - 1 downto 0);
+            o_O  : out std_logic_vector(N - 1 downto 0)
             );
     end component;
 
@@ -231,16 +231,6 @@ architecture structure of MIPS_Processor is
             i_D0 : in  std_logic;
             i_D1 : in  std_logic;
             o_O  : out std_logic
-            );
-    end component;
-
-    component mux2t1_5bit is
-        generic (N : integer);
-        port (
-            i_S  : in  std_logic;
-            i_D0 : in  std_logic_vector(4 downto 0);
-            i_D1 : in  std_logic_vector(4 downto 0);
-            o_O  : out std_logic_vector(4 downto 0)
             );
     end component;
 
@@ -377,7 +367,7 @@ begin
             o_B     => s_RegB
             );
 
-    rtrdMUX : mux2t1_5bit
+    rtrdMUX : mux2t1_N
         generic map(N => 5)
         port map(
             i_S  => s_EXRegDst,
@@ -386,7 +376,7 @@ begin
             o_O  => s_rtrd
             );
 
-    writeMUX : mux2t1_5bit
+    writeMUX : mux2t1_N
         generic map(n => 5)
         port map(
             i_S  => s_EXjal,

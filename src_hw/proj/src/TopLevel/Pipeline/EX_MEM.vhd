@@ -26,6 +26,7 @@ entity EX_MEM is
         i_PC4      : in  std_logic_vector(31 downto 0);  
         o_PC4      : out std_logic_vector(31 downto 0)
         );
+    
 end EX_MEM;
 
 architecture structural of EX_MEM is
