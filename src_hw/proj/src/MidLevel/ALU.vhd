@@ -30,15 +30,15 @@ architecture mixed of ALU is
             o_OF     : out std_logic
             );
     end component;
-    
+
     component BarrelShifter is
         generic (N : integer := 32);  -- Generic of type integer for input/output data width. Default value is 32.
         port (
             i_data             : in  std_logic_vector(N - 1 downto 0);
             i_logic_arithmetic : in  std_logic;  -- 0 for logical, 1 for arithmetic (sign bit)
-            i_left_right       : in  std_logic;  --0 for shift left, 1 for shift right
-            i_shamt            : in  std_logic_vector(4 downto 0);  --shift amount
-            o_Out              : out std_logic_vector(N - 1 downto 0)  --output of the shifter
+            i_left_right       : in  std_logic;  -- 0 for shift left, 1 for shift right
+            i_shamt            : in  std_logic_vector(4 downto 0);  -- Shift amount.
+            o_Out              : out std_logic_vector(N - 1 downto 0)  -- Output of the shifter
             );
     end component;
 
@@ -90,70 +90,105 @@ architecture mixed of ALU is
         s_NOR,
         s_set : std_logic_vector(31 downto 0);
     signal s_zero,
-        s_NOTzero,
+        s_notZero,
         s_addSub_overflow,
         s_lui,
         s_nAdd_Sub,
         s_left_right,
         s_logic_arithmetic,
         s_bne,
-        s_unsigned : std_logic;                      --internal control signals
+        s_unsigned : std_logic;
     signal s_shamt  : std_logic_vector(4 downto 0);
     signal s_select : std_logic_vector(2 downto 0);  --final mux select
 begin
-    -- Select add_sub function
-    with i_ALUOP select s_nAdd_Sub <=
-        '1' when "1110",                -- sub for beq
-        '1' when "1101",                -- sub for bne
-        '1' when "0011",                -- subu
-        '1' when "1111",                -- sub
-        '1' when "1000",                -- slt, use sub
-        '0' when others;                -- add for other instructions
+  -- A single combinational process to handle all signals derived from i_ALUOp
+    process(i_ALUOp)
+    begin
+        -- Default values to avoid latches
+        s_nAdd_Sub         <= '0';
+        s_lui              <= '0';
+        s_left_right       <= '0';
+        s_logic_arithmetic <= '0';
+        s_bne              <= '0';
+        s_unsigned         <= '1';
+        s_select           <= "000";
 
-    --lui select
-    with i_ALUOP select s_lui <=
-        '1' when "1001",                --lui instruction
-        '0' when others;
+        case i_ALUOp is
+            when "1110" =>  -- beq
+                s_nAdd_Sub <= '1';
+                s_unsigned <= '1';
+                s_select   <= "000";
 
-    --left or right shift select
-    with i_ALUOP select s_left_right <=
-        '1' when "1100",                -- sra
-        '1' when "1011",                -- srl
-        '0' when others;
+            when "1101" =>  -- bne
+                s_nAdd_Sub <= '1';
+                s_bne      <= '1';
+                s_unsigned <= '1';
+                s_select   <= "000";
 
-    --logical or arithmetic shift select
-    with i_ALUOP select s_logic_arithmetic <=
-        '1' when "1100",                -- sra
-        '0' when others;
+            when "0001" =>  -- addu
+                s_unsigned <= '0';
+                s_select   <= "000";
 
-    --check if branch not equal instruction
-    with i_ALUOP select s_bne <=
-        '1' when "1101",                -- bne instruction
-        '0' when others;
+            when "0011" =>  -- subu
+                s_nAdd_Sub <= '1';
+                s_unsigned <= '0';
+                s_select   <= "000";
 
-    --check if unsigned instruction
-    with i_ALUOP select s_unsigned <=
-        '0' when "0001",                -- addu
-        '0' when "0011",                -- subu
-        '1' when others;                -- consider overflow if not unsigned
+            when "0010" =>  -- add
+                s_unsigned <= '1';
+                s_select   <= "000";
 
-    with i_ALUOP select s_select <=
-        "000" when "1110",              -- beq, output doesn't matter
-        "000" when "1101",              -- bne, output doesn't matter
-        "000" when "0001",              -- addu, use adder output
-        "000" when "0011",              -- subu, use adder output
-        "000" when "0010",              -- add, use adder output
-        "000" when "1111",              -- sub, use adder output
-        "011" when "0100",              -- and, use and output
-        "010" when "0101",              -- or, use or output
-        "100" when "0110",              -- xor, use xor output
-        "101" when "0111",              -- nor, use nor output
-        "001" when "1001",              -- lui, use shifter output
-        "110" when "1000",              -- slt, use slt output
-        "001" when "1010",              -- sll, use shifter output
-        "001" when "1011",              -- srl, use shifter output
-        "001" when "1100",              -- sra, use shifter output
-        "000" when others;              -- doesn't matter, just use adder output
+            when "1111" =>  -- sub
+                s_nAdd_Sub <= '1';
+                s_unsigned <= '1';
+                s_select   <= "000";
+
+            when "0100" =>  -- and
+                s_unsigned <= '1';
+                s_select   <= "011";
+
+            when "0101" =>  -- or
+                s_unsigned <= '1';
+                s_select   <= "010";
+
+            when "0110" =>  -- xor
+                s_unsigned <= '1';
+                s_select   <= "100";
+
+            when "0111" =>  -- nor
+                s_unsigned <= '1';
+                s_select   <= "101";
+
+            when "1001" =>  -- lui
+                s_lui      <= '1';
+                s_unsigned <= '1';
+                s_select   <= "001";
+
+            when "1000" =>  -- slt
+                s_nAdd_Sub <= '1';
+                s_unsigned <= '1';
+                s_select   <= "110";
+
+            when "1010" =>  -- sll
+                s_unsigned <= '1';
+                s_select   <= "001";
+
+            when "1011" =>  -- srl
+                s_unsigned   <= '1';
+                s_left_right <= '1';
+                s_select     <= "001";
+
+            when "1100" =>  -- sra
+                s_unsigned         <= '1';
+                s_left_right       <= '1';
+                s_logic_arithmetic <= '1';
+                s_select           <= "001";
+
+            when others =>
+                -- Defaults already assigned
+                null;
+        end case;
+    end process;
 
     --selects shamt or 16(used for lui)
     luiMUX : mux2t1_N
@@ -190,8 +225,8 @@ begin
             i_F    => s_Adder_Out,
             o_zero => s_zero);
 
-    s_NOTzero <= not s_zero;
-    o_zero    <= s_NOTzero xor s_bne;
+    s_notZero <= not s_zero;
+    o_zero    <= s_notZero xor s_bne;
 
     instLogicGates : logic_N
         generic map(N => 32)
@@ -223,7 +258,7 @@ begin
             i_D4 => s_XOR,
             i_D5 => s_NOR,
             i_D6 => s_set,
-            i_D7 => x"00000000",  --unused value, never selected for this project
+            i_D7 => x"00000000",
             o_O  => o_resultF);
 
 end mixed;

@@ -37,14 +37,14 @@ architecture structural of BarrelShifter is
 
     signal s_sign : std_logic;          --sign bit used for arithmetic signals
 
-    --Right shifted signals
+    -- Right shifted signals
     signal s_shiftR0 : std_logic_vector(N - 1 downto 0);
     signal s_shiftR1 : std_logic_vector(N - 1 downto 0);
     signal s_shiftR2 : std_logic_vector(N - 1 downto 0);
     signal s_shiftR3 : std_logic_vector(N - 1 downto 0);
     signal s_shiftR4 : std_logic_vector(N - 1 downto 0);
 
-    --Left shifted signals
+    -- Left shifted signals
     signal s_shiftL0 : std_logic_vector(N - 1 downto 0);
     signal s_shiftL1 : std_logic_vector(N - 1 downto 0);
     signal s_shiftL2 : std_logic_vector(N - 1 downto 0);
