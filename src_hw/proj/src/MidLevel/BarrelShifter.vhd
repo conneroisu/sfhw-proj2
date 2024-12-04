@@ -1,14 +1,7 @@
--- <header>
--- Author(s): Conner Ohnesorge
--- Name: 
--- Notes:
---      Conner Ohnesorge 2024-12-01T16:24:07-06:00 update-barrel_shifter-name
--- </header>
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity barrel_shifter is
+entity BarrelShifter is
     generic (N : integer := 32);
 
     port (
@@ -19,9 +12,9 @@ entity barrel_shifter is
         o_Out              : out std_logic_vector(N - 1 downto 0)  --output of the shifter
         );
 
-end barrel_shifter;
+end BarrelShifter;
 
-architecture structural of barrel_shifter is
+architecture structural of BarrelShifter is
 
     component mux2t1_N is
         port (

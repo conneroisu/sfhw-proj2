@@ -30,7 +30,8 @@ architecture mixed of ALU is
             o_OF     : out std_logic
             );
     end component;
-    component Barrel_Shifter is
+    
+    component BarrelShifter is
         generic (N : integer := 32);  -- Generic of type integer for input/output data width. Default value is 32.
         port (
             i_data             : in  std_logic_vector(N - 1 downto 0);
@@ -164,7 +165,7 @@ begin
             o_O  => s_shamt
             );
 
-    instShifter : Barrel_Shifter
+    instShifter : BarrelShifter
         port map(
             i_data             => i_B,
             i_shamt            => s_shamt,
