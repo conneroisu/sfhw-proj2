@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity adderSubtractor is
+entity AdderSubtractor is
     generic (N : integer := 32);
 
     port (
@@ -12,9 +12,9 @@ entity adderSubtractor is
         o_C, o_OF : out std_logic
         );
 
-end adderSubtractor;
+end AdderSubtractor;
 
-architecture structural of adderSubtractor is
+architecture structural of AdderSubtractor is
 
     component full_adder_N is
         generic (N : integer := 32);
