@@ -10,7 +10,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use work.mips_types.all;
 
-entity register_file is
+entity RegisterFile is
 
     port (
         clk   : in  std_logic;                      -- Clock input
@@ -24,9 +24,9 @@ entity register_file is
         o_d2  : out std_logic_vector(31 downto 0)   -- Read data 2 output
         );
 
-end entity register_file;
+end entity RegisterFile;
 
-architecture structural of register_file is
+architecture structural of RegisterFile is
 
     component mux32t1 is
         port

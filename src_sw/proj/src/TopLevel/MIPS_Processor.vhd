@@ -45,7 +45,7 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component register_file is
+    component RegisterFile is
         port (
             clk   : in  std_logic;
             i_wA  : in  std_logic_vector(4 downto 0);
@@ -324,7 +324,7 @@ begin
     s_RegWr     <= s_WBRegWr;
     s_RegWrAddr <= s_WBrtrd;
 
-    instRegFile : register_file
+    instRegFile : RegisterFile
         port map(
             i_wD  => s_RegWrData,
             i_wA  => s_RegWrAddr,
