@@ -20,19 +20,15 @@ entity IF_ID_STAGE is
 		i_flush: in std_logic;
 		i_stall: in std_logic;
 		i_sctrl: in std_logic; --sign control signal
+		i_wA   : in std_logic_vector(4 downto 0); -- input write address from the later stage
+		i_write: in std_logic_vector(31 downto 0); --input write data which should come from later stage
+		i_addr : in std_logic_vector(31 downto 0); --saved address where the instruction lives
+		i_instr: in std_logic_vector(31 downto 0); --saved instruction
 		o_regw : out std_logic; --register write signal
-		i_addr : in std_logic_vector(31 downto 0);
-		i_instr: in std_logic_vector(31 downto 0);
 		o_instr: out std_logic_vector(31 downto 0);
 		o_addr : out std_logic_vector(31 downto 0);
 		o_d1   : out std_logic_vector(31 downto 0);
 		o_d2   : out std_logic_vector(31 downto 0);
-
-
-		--multiple outputs to make it easier to connect them to the next stage
---		o_ctrl : out std_logic_vector(5 downto 0); -- bits that go to control 
---		o_ex1  : out std_logic_vector(4 downto 0); -- bits that go to ID/EX 20 downto 16
---		o_ex2  : out std_logic_vector(4 downto 0); -- bits that go to ID/EX  15 downto 11
 		o_sign : out std_logic_vector(31 downto 0));
         
 end IF_ID_STAGE;
@@ -74,10 +70,12 @@ end component;
 
 
 --signals
-    signal s_instr, s_d1, s_d2: std_logic_vector(31 downto 0);
+    signal s_instr: std_logic_vector(31 downto 0);
+    signal s_d1   : std_logic_vector(31 downto 0);
+    signal s_d2   : std_logic_vector(31 downto 0);
     signal s_addr: std_logic_vector(31 downto 0);
     signal s_addrFlush, s_instrFlush : std_logic_vector(31 downto 0);
-    signal s_regw   : std_logic;
+    signal s_regw, s_en   : std_logic;
     signal s_Shamt  : std_logic_vector(4 downto 0);
     signal s_Rs     : std_logic_vector(4 downto 0);
     signal s_Rt     : std_logic_vector(4 downto 0);
@@ -92,8 +90,6 @@ end component;
     signal si_Shamt : std_logic_vector(4 downto 0);
     signal si_Funct : std_logic_vector(5 downto 0);
     signal si_Imm   : std_logic_vector(15 downto 0);
-    signal s_wA   : std_logic_vector(4 downto 0);
-    signal inst2    : std_logic_vector(4 downto 0);
 begin
 
 
@@ -148,45 +144,21 @@ begin
 
 s_addrFlush <= (others => '0') when i_flush = '1' else i_addr;
 s_instrFlush <= (others => '0') when i_flush = '1' else i_instr;
---s_regw <= '0' when i_stall = '1'  or i_rst = '1' else 
-	--'1' when i_instr(31 downto 26) = "000000" and i_instr(5 downto 0) /= "001000" else --
---	'1' when i_instr(31 downto 26) = "001000" -- addi instr
-	--or i_instr(31 downto 26) = "100011" --
-	--or i_instr(31 downto 26) = "000011" else '0';
 
-process(i_instr, i_stall, i_rst) -- handles s_regw writes to register during the appropriate instructions that do so.
-begin
-    if i_rst = '1' or i_stall = '1' then
-        s_regw <= '0'; -- Disable writes on reset or stall
-    else
-        case i_instr(31 downto 26) is
-            when "000000" => -- R-format
-                if i_instr(5 downto 0) /= "001000" then -- Exclude `jr`
-                    s_regw <= '1';
-                else
-                    s_regw <= '0';
-                end if;
-            when "001000" | "001100" | "001101" | "100011" | "000011" => -- I-format and `jal`
-                s_regw <= '1';
-            when others =>
-                s_regw <= '0'; -- No register write for other instructions
-        end case;
-    end if;
-end process;
+s_en <= '0' when (i_rst = '1' or i_stall = '1') else '1';
+s_regw <= '0' when (i_rst = '1' or i_stall = '1') else
+          '1' when (i_instr(31 downto 26) = "000000" and i_instr(5 downto 0) /= "001000") else -- R-format, excluding `jr`
+          '1' when (i_instr(31 downto 26) /= "000000" and i_instr(31 downto 26) /= "000010" and i_instr(31 downto 26) /= "000011") else -- I-format
+          '1' when (i_instr(31 downto 26) = "000011") else -- jal
+          '0'; -- Default case for all other instructions
 
-
-
-s_wA <= i_instr(15 downto 11) when i_instr(31 downto 26) = "000000" else -- r format instructions
-	"11111" when i_instr(31 downto 26) = "000011" else -- jal instruction
-	i_instr(20 downto 16); -- I format instructions
 
 
 CurrentInstruction: dffg_n 
 	port map(
 		i_CLK => i_clk, -- rising edge?
 		i_RST => i_rst,
-		i_WrE  => s_regw,
-		--i_d   => (others => '0') when i_flush = '1' else s_instr;
+		i_WrE  => s_en,
 		i_D   => s_instrFlush,
 		o_Q   => s_instr);
 
@@ -194,8 +166,7 @@ NextInstruction: dffg_n
 	port map(
 		i_CLK => i_clk,
 		i_RST => i_rst,
-		i_WrE  => s_regw,
-		--i_d   => (others => '0') when i_flush = '1' else s_addr;
+		i_WrE  => s_en,
 		i_D   => s_addrFlush,
 		o_Q   => s_addr);
 
@@ -204,8 +175,8 @@ RegFile0: register_file
 		clk   => i_clk,
 		reset => i_rst,
 		i_wC  => s_regw, -- Write enable input
-		i_wA  => s_wA, --write address
-		i_wD  => i_instr,
+		i_wA  => i_wA, --write address
+		i_wD  => i_write,
 		i_r1  => i_instr(25 downto 21),
 		i_r2  => i_instr(20 downto 16),
 		o_d1  => s_d1,
@@ -218,6 +189,8 @@ SignExt0: extender16t32
 		i_C => i_sctrl,
 		o_O => o_sign
 	);
+--o_d1 <= si_Rs;
+--o_d2 <= si_Rt;
 o_d1 <= s_d1;
 o_d2 <= s_d2;
 o_regw <= s_regw;

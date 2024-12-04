@@ -20,9 +20,11 @@ component IF_ID_STAGE is
 		i_flush: in std_logic;
 		i_stall: in std_logic;
 		i_sctrl: in std_logic; --sign control signal
+		i_wA   : in std_logic_vector(4 downto 0); -- input write address from the later stage
+		i_write: in std_logic_vector(31 downto 0); --input write data which should come from later stage
+		i_addr : in std_logic_vector(31 downto 0); --saved address
+		i_instr: in std_logic_vector(31 downto 0); --saved instruction
 		o_regw : out std_logic; --register write signal
-		i_instr: in std_logic_vector(31 downto 0);
-		i_addr : in std_logic_vector(31 downto 0);
 		o_instr: out std_logic_vector(31 downto 0);
 		o_addr : out std_logic_vector(31 downto 0);
 		o_d1   : out std_logic_vector(31 downto 0);
@@ -37,6 +39,8 @@ signal s_flush 			: std_logic;
 signal s_stall 			: std_logic;
 signal s_sctrl		   	: std_logic;
 signal s_regw 			: std_logic;
+signal s_wA			: std_logic_vector(4 downto 0);
+signal s_write			: std_logic_vector(31 downto 0);
 signal s_instr  	    	: std_logic_vector(31 downto 0);
 signal s_addr 	 		: std_logic_vector(31 downto 0);
 signal s_oinstr 	    	: std_logic_vector(31 downto 0);
@@ -54,6 +58,8 @@ port map(i_clk => s_clk,
 	i_flush=> s_flush,
 	i_stall=> s_stall,
 	i_sctrl=> s_sctrl,
+	i_wA   => s_wA,
+	i_write=> s_write,
 	o_regw => s_regw, 
 	i_instr=> s_instr,
 	i_addr => s_addr,
@@ -64,27 +70,34 @@ port map(i_clk => s_clk,
 	o_sign => s_osign
     );
 
+    clk_gen : process
+    begin
+        while true loop
+            s_clk <= '1';
+            wait for cclk_per / 2;
+            s_clk <= '0';
+            wait for cclk_per / 2;
+        end loop;
+    end process;
+
 P_TB: process
 begin
 
 ----Simple First Test------
-        s_clk <= '0';
-        wait for cclk_per / 2;
-        s_clk <= '1';
-        wait for cclk_per / 2;
+	s_rst <= '1';
+	wait for cclk_per * 2;
 	s_rst <= '0';
-	wait for 10 ns;
+	wait for cclk_per ;
 --normal add instruction
 	s_stall <= '0';
 	s_flush <= '0';
-wait for cclk_per;
-	s_instr <= x"012A4020";
+	wait for cclk_per;
+	s_instr <= x"012A4020"; -- register 9 + register 10 = register 8, lets say $9 = 1 and $10 = 2.
 	s_addr <= x"00000001";
-wait for cclk_per;
-	s_clk <= '1';
-wait for cclk_per;
-	s_clk <= '0';
-wait for cclk_per;
+	s_wA <= "01000";
+	s_write <= x"00000003";
+	wait for cclk_per;
+	wait for cclk_per;
 
 
 
