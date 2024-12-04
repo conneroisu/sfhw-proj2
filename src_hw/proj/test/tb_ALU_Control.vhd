@@ -15,7 +15,7 @@ entity tb_alu_control is
 end tb_alu_control;
 
 architecture structural of tb_alu_control is
-    component alu_control_logic is
+    component alu_control is
         port (
             i_funct  : in  std_logic_vector(5 downto 0);
             i_ALUOp  : in  std_logic_vector(2 downto 0);
@@ -45,7 +45,7 @@ architecture structural of tb_alu_control is
     end function;
 
 begin
-    DUT0 : alu_control_logic port map(s_iFunct, s_iALUOp, s_oALUSel);
+    DUT0 : alu_control port map(s_iFunct, s_iALUOp, s_oALUSel);
 
     -- Testbench process with assertions and printing
     P_TEST : process
