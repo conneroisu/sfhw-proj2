@@ -50,18 +50,20 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component MIPS_regfile is
+    component register_file is
+
         port (
-            i_data  : in  std_logic_vector(31 downto 0);
-            i_write : in  std_logic_vector(4 downto 0);
-            i_en    : in  std_logic;
-            clk     : in  std_logic;
-            reset   : in  std_logic;
-            i_readA : in  std_logic_vector(4 downto 0);
-            i_readB : in  std_logic_vector(4 downto 0);
-            o_A     : out std_logic_vector(31 downto 0);
-            o_B     : out std_logic_vector(31 downto 0)
+            clk   : in  std_logic;                      -- Clock input
+            i_wA  : in  std_logic_vector(4 downto 0);   -- Write address input
+            i_wD  : in  std_logic_vector(31 downto 0);  -- Write data input
+            i_wC  : in  std_logic;                      -- Write enable input
+            i_r1  : in  std_logic_vector(4 downto 0);   -- Read address 1 input
+            i_r2  : in  std_logic_vector(4 downto 0);   -- Read address 2 input
+            reset : in  std_logic;                      -- Reset input
+            o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
+            o_d2  : out std_logic_vector(31 downto 0)   -- Read data 2 output
             );
+
     end component;
 
     component IF_ID is
@@ -323,7 +325,8 @@ architecture structure of MIPS_Processor is
         s_ALUOut, s_MEMALU, s_WBALU,
         s_WBMEMOut,
         s_Forward_A, s_Forward_B,
-        s_trueINST : std_logic_vector(31 downto 0);
+        s_trueINST
+        : std_logic_vector(31 downto 0);
 
     signal
         s_jump_branch, s_RegDst, s_memToReg, s_ALUSrc, s_j, s_jr, s_jal,
@@ -354,17 +357,17 @@ begin
     s_RegWrAddr <= s_WBrtrd;
     s_not_clk   <= not iCLK;
 
-    RegFile : MIPS_regfile
+    instRegFile : register_file
         port map(
-            i_data  => s_RegWrData,
-            i_write => s_RegWrAddr,
-            i_en    => s_RegWr,
-            clk     => s_not_clk,
-            reset   => iRST,
-            i_readA => s_ID_Inst(25 downto 21),
-            i_readB => s_ID_Inst(20 downto 16),
-            o_A     => s_RegA,
-            o_B     => s_RegB
+            i_wD  => s_RegWrData,
+            i_wA  => s_RegWrAddr,
+            i_wC  => s_RegWr,
+            clk   => s_not_clk,
+            reset => iRST,
+            i_r1  => s_ID_Inst(25 downto 21),
+            i_r2  => s_ID_Inst(20 downto 16),
+            o_d1  => s_RegA,
+            o_d2  => s_RegB
             );
 
     rtrdMUX : mux2t1_N
