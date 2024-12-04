@@ -17,22 +17,22 @@ end MIPS_Processor;
 
 architecture structure of MIPS_Processor is
     -- Required data memory signals
-    signal s_DMemWr   : std_logic;
-    signal s_DMemAddr : std_logic_vector(N - 1 downto 0);
-    signal s_DMemData : std_logic_vector(N - 1 downto 0);
-    signal s_DMemOut  : std_logic_vector(N - 1 downto 0);
+    signal s_DMemWr       : std_logic;
+    signal s_DMemAddr     : std_logic_vector(N - 1 downto 0);
+    signal s_DMemData     : std_logic_vector(N - 1 downto 0);
+    signal s_DMemOut      : std_logic_vector(N - 1 downto 0);
     -- Required register file signals 
-    signal s_RegWr     : std_logic;
-    signal s_RegWrAddr : std_logic_vector(4 downto 0);
-    signal s_RegWrData : std_logic_vector(N - 1 downto 0);
+    signal s_RegWr        : std_logic;
+    signal s_RegWrAddr    : std_logic_vector(4 downto 0);
+    signal s_RegWrData    : std_logic_vector(N - 1 downto 0);
     -- Required instruction memory signals
     signal s_IMemAddr     : std_logic_vector(N - 1 downto 0);  -- Do not assign this signal, assign to s_NextInstAddr instead
     signal s_NextInstAddr : std_logic_vector(N - 1 downto 0);
     signal s_Inst         : std_logic_vector(N - 1 downto 0);
     -- Required halt signal -- for simulation
-    signal s_Halt : std_logic;
+    signal s_Halt         : std_logic;
     -- Required overflow signal -- for overflow exception detection
-    signal s_Ovfl : std_logic;
+    signal s_Ovfl         : std_logic;
 
     component mem is
         generic (ADDR_WIDTH, DATA_WIDTH : integer);
@@ -47,17 +47,16 @@ architecture structure of MIPS_Processor is
 
     component register_file is
         port (
-            clk   : in  std_logic;                      -- Clock input
-            i_wA  : in  std_logic_vector(4 downto 0);   -- Write address input
-            i_wD  : in  std_logic_vector(31 downto 0);  -- Write data input
-            i_wC  : in  std_logic;                      -- Write enable input
-            i_r1  : in  std_logic_vector(4 downto 0);   -- Read address 1 input
-            i_r2  : in  std_logic_vector(4 downto 0);   -- Read address 2 input
-            reset : in  std_logic;                      -- Reset input
-            o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
-            o_d2  : out std_logic_vector(31 downto 0)   -- Read data 2 output
+            clk   : in  std_logic;
+            i_wA  : in  std_logic_vector(4 downto 0);
+            i_wD  : in  std_logic_vector(31 downto 0);
+            i_wC  : in  std_logic;
+            i_r1  : in  std_logic_vector(4 downto 0);
+            i_r2  : in  std_logic_vector(4 downto 0);
+            reset : in  std_logic;
+            o_d1  : out std_logic_vector(31 downto 0);
+            o_d2  : out std_logic_vector(31 downto 0)
             );
-
     end component;
 
     component IF_ID is
@@ -112,43 +111,43 @@ architecture structure of MIPS_Processor is
 
     component EX_MEM is
         port (
-            i_CLK      : in  std_logic;  -- Clock input
-            i_RST      : in  std_logic;  -- Reset input
-            i_ALU      : in  std_logic_vector(31 downto 0);  -- ALU value input
-            o_ALU      : out std_logic_vector(31 downto 0);  -- ALU value output
-            i_B        : in  std_logic_vector(31 downto 0);  --Mem address value
-            o_B        : out std_logic_vector(31 downto 0);  --Mem address value
-            i_WrAddr   : in  std_logic_vector(4 downto 0);  --write address to register file
+            i_CLK      : in  std_logic;  
+            i_RST      : in  std_logic; 
+            i_ALU      : in  std_logic_vector(31 downto 0);  
+            o_ALU      : out std_logic_vector(31 downto 0);  
+            i_B        : in  std_logic_vector(31 downto 0);  
+            o_B        : out std_logic_vector(31 downto 0);  
+            i_WrAddr   : in  std_logic_vector(4 downto 0);  
             o_WrAddr   : out std_logic_vector(4 downto 0);
-            i_MemWr    : in  std_logic;  --write to memory
-            o_MemWr    : out std_logic;  --write to memory signal
-            i_MemtoReg : in  std_logic;  --memory vs alu signal
+            i_MemWr    : in  std_logic;  
+            o_MemWr    : out std_logic;  
+            i_MemtoReg : in  std_logic;  
             o_MemtoReg : out std_logic;
-            i_Halt     : in  std_logic;  --Halt signal
+            i_Halt     : in  std_logic;  
             o_Halt     : out std_logic;
-            i_RegWr    : in  std_logic;  --write enable for reg file
+            i_RegWr    : in  std_logic;  
             o_RegWr    : out std_logic;
             i_jal      : in  std_logic;
             o_jal      : out std_logic;
-            i_PC4      : in  std_logic_vector(31 downto 0);  --pc+4
+            i_PC4      : in  std_logic_vector(31 downto 0);
             o_PC4      : out std_logic_vector(31 downto 0)
             );
     end component;
 
     component MEM_WB is
         port (
-            i_CLK      : in  std_logic;  -- Clock input
-            i_RST      : in  std_logic;  -- Reset input
-            i_ALU      : in  std_logic_vector(31 downto 0);  -- ALU value input
-            i_Mem      : in  std_logic_vector(31 downto 0);  --Mem value
-            i_WrAddr   : in  std_logic_vector(4 downto 0);  --write address to register file
-            i_MemtoReg : in  std_logic;  --memory vs alu signal
-            i_Halt     : in  std_logic;  --halt signal
-            i_RegWr    : in  std_logic;  --write enable for reg file
+            i_CLK      : in  std_logic; 
+            i_RST      : in  std_logic;  
+            i_ALU      : in  std_logic_vector(31 downto 0); 
+            i_Mem      : in  std_logic_vector(31 downto 0);  
+            i_WrAddr   : in  std_logic_vector(4 downto 0);  
+            i_MemtoReg : in  std_logic; 
+            i_Halt     : in  std_logic; 
+            i_RegWr    : in  std_logic;  
             i_jal      : in  std_logic;
-            i_PC4      : in  std_logic_vector(31 downto 0);  --pc+4
-            o_ALU      : out std_logic_vector(31 downto 0);  -- ALU value output
-            o_Mem      : out std_logic_vector(31 downto 0);  --Mem value
+            i_PC4      : in  std_logic_vector(31 downto 0);  
+            o_ALU      : out std_logic_vector(31 downto 0); 
+            o_Mem      : out std_logic_vector(31 downto 0);  
             o_WrAddr   : out std_logic_vector(4 downto 0);
             o_MemtoReg : out std_logic;
             o_Halt     : out std_logic;
@@ -185,26 +184,26 @@ architecture structure of MIPS_Processor is
 
     component FetchUnit is
         port (
-            i_PC4         : in  std_logic_vector(31 downto 0);  --Program counter
-            i_branch_addr : in  std_logic_vector(31 downto 0);  --potential branch address
-            i_jump_addr   : in  std_logic_vector(31 downto 0);  --potential jump address
-            i_jr          : in  std_logic_vector(31 downto 0);  --potential jump register address
-            i_jr_select   : in  std_logic;  --selector for jump register
-            i_branch      : in  std_logic;  --selects if a branch instruction is active
+            i_PC4         : in  std_logic_vector(31 downto 0);  
+            i_branch_addr : in  std_logic_vector(31 downto 0);  
+            i_jump_addr   : in  std_logic_vector(31 downto 0);  
+            i_jr          : in  std_logic_vector(31 downto 0);  
+            i_jr_select   : in  std_logic;  
+            i_branch      : in  std_logic; 
             i_bne         : in  std_logic;
             i_A           : in  std_logic_vector(31 downto 0);
             i_B           : in  std_logic_vector(31 downto 0);
-            i_jump        : in  std_logic;  --selector for j or jal
+            i_jump        : in  std_logic;  
             o_PC          : out std_logic_vector(31 downto 0);
-            o_jump_branch : out std_logic   --signals if PC must change
+            o_jump_branch : out std_logic  
             );
     end component;
 
     component extender16t32 is
         port(
-            i_I : in  std_logic_vector(15 downto 0);  -- 16 bit immediate
-            i_C : in  std_logic;        -- signed extender or unsigned
-            o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended immediate
+            i_I : in  std_logic_vector(15 downto 0);  
+            i_C : in  std_logic;        
+            o_O : out std_logic_vector(31 downto 0)  
             );
     end component;
 
@@ -229,18 +228,18 @@ architecture structure of MIPS_Processor is
 
     component dffg_N is
         port (
-            i_CLK : in  std_logic;                      -- Clock input
-            i_RST : in  std_logic;                      -- Reset input
-            i_WE  : in  std_logic;                      -- Write enable input
-            i_D   : in  std_logic_vector(31 downto 0);  -- Data value input
+            i_CLK : in  std_logic;                      
+            i_RST : in  std_logic;                      
+            i_WE  : in  std_logic;                      
+            i_D   : in  std_logic_vector(31 downto 0);  
             o_Q   : out std_logic_vector(31 downto 0)
             );
     end component;
 
     component ControlUnit is
         port (
-            i_opCode    : in  std_logic_vector(5 downto 0);  
-            i_funct     : in  std_logic_vector(5 downto 0); 
+            i_opCode    : in  std_logic_vector(5 downto 0);
+            i_funct     : in  std_logic_vector(5 downto 0);
             o_RegDst    : out std_logic;
             o_RegWrite  : out std_logic;
             o_memToReg  : out std_logic;
@@ -303,7 +302,7 @@ architecture structure of MIPS_Processor is
     signal
         s_jump_branch, s_RegDst, s_memToReg, s_ALUSrc, s_j, s_jr, s_jal,
         s_signed, s_lui, s_addSub, s_shiftType, s_shiftDir, s_bne, s_beq,
-        s_branch, s_jump, s_zero, s_CarryOut,  
+        s_branch, s_jump, s_zero, s_CarryOut,
         s_muxRegWr, s_muxMemWr, s_internal_CarryOut, s_internal_Overflow,
         s_IDhalt, s_IDMemWr, s_IDRegWr, s_ID_memRD,
         s_EXRegDst, s_EXRegWr, s_EXmemToReg, s_EXMemWr, s_EXMemRd, s_EXALUSrc, s_EXjal, s_EXhalt,
