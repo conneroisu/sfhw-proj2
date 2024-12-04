@@ -10,8 +10,8 @@ entity ID_EX is
                 i_readA        : in  std_logic_vector(31 downto 0);
                 i_readB        : in  std_logic_vector(31 downto 0);
                 i_signExtImmed : in  std_logic_vector(31 downto 0);
-                i_inst20_16    : in  std_logic_vector(4 downto 0);
-                i_inst15_11    : in  std_logic_vector(4 downto 0);
+                i_IDRt    : in  std_logic_vector(4 downto 0);
+                i_IDRD    : in  std_logic_vector(4 downto 0);
                 i_RegDst       : in  std_logic;
                 i_RegWrite     : in  std_logic;
                 i_memToReg     : in  std_logic;
@@ -124,7 +124,7 @@ begin
                         i_CLK => i_CLK,
                         i_RST => i_RST,
                         i_WE  => s_stall,
-                        i_D   => i_inst20_16,
+                        i_D   => i_IDRt,
                         o_Q   => o_inst20_16
                         );
 
@@ -134,7 +134,7 @@ begin
                         i_CLK => i_CLK,
                         i_RST => i_RST,
                         i_WE  => s_stall,
-                        i_D   => i_inst15_11,
+                        i_D   => i_IDRD,
                         o_Q   => o_inst15_11
                         );
 

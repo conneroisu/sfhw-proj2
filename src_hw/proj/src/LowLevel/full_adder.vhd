@@ -4,11 +4,11 @@ use ieee.std_logic_1164.all;
 entity full_adder is
 
     port (
-        i_x0   : in  std_logic;         -- Input 0 to be added.
-        i_x1   : in  std_logic;         -- Input 1 to be added.
-        i_cin  : in  std_logic;         -- Carry in.
-        o_y    : out std_logic;         -- Sum output.
-        o_cout : out std_logic          -- Carry out.
+        i_A   : in  std_logic;         -- Input 0 to be added.
+        i_B   : in  std_logic;         -- Input 1 to be added.
+        i_C  : in  std_logic;         -- Carry in.
+        o_S    : out std_logic;         -- Sum output.
+        o_C : out std_logic          -- Carry out.
         );
 
 end entity full_adder;
@@ -47,29 +47,29 @@ begin
 
     xor1 : component xorg2
         port map (
-            i_a => i_x0,
-            i_b => i_x1,
+            i_a => i_A,
+            i_b => i_B,
             o_f => s1
             );
 
     xor2 : component xorg2
         port map (
             i_a => s1,
-            i_b => i_cin,
-            o_f => o_y
+            i_b => i_C,
+            o_f => o_S
             );
 
     and1 : component andg2
         port map (
             i_a => s1,
-            i_b => i_cin,
+            i_b => i_C,
             o_f => s2
             );
 
     and2 : component andg2
         port map (
-            i_a => i_x0,
-            i_b => i_x1,
+            i_a => i_A,
+            i_b => i_B,
             o_f => s3
             );
 
@@ -77,7 +77,7 @@ begin
         port map (
             i_a => s2,
             i_b => s3,
-            o_f => o_cout
+            o_f => o_C
             );
 
 end architecture structural;

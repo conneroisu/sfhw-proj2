@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity Forward_Unit is
+entity ForwardUnit is
     generic (N : integer := 32);
 
     port (
@@ -15,11 +15,11 @@ entity Forward_Unit is
         o_Forward_B : out std_logic_vector(1 downto 0)
         );
 
-end Forward_Unit;
+end ForwardUnit;
 
 
 
-architecture mixed of Forward_Unit is
+architecture mixed of ForwardUnit is
 
 begin
     -- 00: no forward

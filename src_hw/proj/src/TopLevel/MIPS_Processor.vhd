@@ -169,6 +169,7 @@ architecture structure of MIPS_Processor is
     end component;
 
     component ALU is
+        generic (N : integer := 32);
         port (
             i_A        : in  std_logic_vector(N - 1 downto 0);
             i_B        : in  std_logic_vector(N - 1 downto 0);
@@ -192,7 +193,7 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component Fetch_Pipeline is
+    component FetchUnit is
         port (
             i_PC4         : in  std_logic_vector(31 downto 0);  --Program counter
             i_branch_addr : in  std_logic_vector(31 downto 0);  --potential branch address
@@ -246,7 +247,7 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component Control_Unit is
+    component ControlUnit is
         port (
             i_opCode    : in  std_logic_vector(5 downto 0);  --MIPS instruction opcode (6 bits wide)
             i_funct     : in  std_logic_vector(5 downto 0);  --MIPS instruction function code (6 bits wide) used for R-Type instructions
@@ -272,7 +273,7 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component Forward_Unit is
+    component ForwardUnit is
         port (
             i_EX_rs     : in  std_logic_vector(4 downto 0);
             i_EX_rt     : in  std_logic_vector(4 downto 0);
@@ -296,7 +297,7 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component hazard_detection is
+    component HazardUnit is
         port (
             i_jump_ID   : in  std_logic;  --Control Hazard
             i_branch_ID : in  std_logic;  --Control Hazard
@@ -380,7 +381,7 @@ begin
             );
 
     writeMUX : mux2t1_N
-        generic map(n => 5)
+        generic map(N => 5)
         port map(
             i_S  => s_EXjal,
             i_D0 => s_rtrd,
@@ -388,7 +389,7 @@ begin
             o_O  => s_EXrtrd
             );
 
-    Control : Control_Unit
+    instControl : ControlUnit
         port map(
             i_opCode    => s_ID_Inst(31 downto 26),
             i_funct     => s_ID_Inst(5 downto 0),
@@ -439,7 +440,7 @@ begin
             o_O  => s_nextPC
             );
 
-    Fetch : Fetch_Pipeline
+    Fetch : FetchUnit
         port map(
             i_PC4         => s_ID_PC4,
             i_branch_addr => s_immediate,
@@ -472,6 +473,7 @@ begin
             );
 
     mainALU : ALU
+        generic map(N => 32)
         port map(
             i_A        => s_Forward_A,
             i_B        => s_ALUB,
@@ -636,8 +638,7 @@ begin
             o_PC4      => s_WB_PC4
             );
 
-    --Forwarding components
-    Forwarding_Unit : Forward_Unit
+    instForwardingUnit : ForwardUnit
         port map(
             i_EX_rs     => s_EX_rs,
             i_EX_rt     => s_EXrt,
@@ -649,7 +650,6 @@ begin
             o_Forward_B => s_ForwardB_sel
             );
 
-    --Forwarding Muxs
     ForwardA_MUX : mux4t1_N
         port map(
             i_S  => s_ForwardA_sel,
@@ -670,18 +670,16 @@ begin
             o_O  => s_Forward_B
             );
 
-    Hazard_detector : hazard_detection
+    instHazardUnit : HazardUnit
         port map(
             i_jump_ID   => s_jump,
             i_branch_ID => s_jump_branch,
-
             i_rAddrA   => s_ID_Inst(25 downto 21),
             i_rAddrB   => s_ID_Inst(20 downto 16),
             i_wAddr_ID => s_EXrtrd,     --s_EXrt
             i_wAddr_EX => s_MEMrtrd,    --s_EXrt
             i_wE_ID    => s_EXRegWr,    --s_EXMemRd
             i_wE_EX    => s_MemRegWr,   --ex memrd to see if mem data hazard
-
             o_stall => s_stall,
             o_flush => s_flush
             );

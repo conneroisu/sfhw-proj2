@@ -51,7 +51,7 @@ architecture structural of FetchUnit is
             );
     end component;
 
-    component Zero_Detect is
+    component ZeroDetector is
         port (
             i_F    : in  std_logic_vector(31 downto 0);
             o_zero : out std_logic);
@@ -76,7 +76,7 @@ begin
         end loop;
     end process;
 
-    zero_detector : Zero_Detect
+    zero_detector : ZeroDetector
         port map(
             i_F    => s_XOR,
             o_zero => s_zero);
