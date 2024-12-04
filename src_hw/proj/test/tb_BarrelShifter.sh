@@ -1,5 +1,5 @@
 #!/bin/bash
-target=tb_barrel_shifter
+target=tb_BarrelShifter
 # make sure parent folder is `test`
 parent_path=$( cd "$(dirname "$0")" ; pwd -P )
 echo "parent_path: $parent_path"
