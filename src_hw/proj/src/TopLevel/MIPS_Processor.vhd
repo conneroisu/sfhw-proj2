@@ -345,12 +345,10 @@ begin
         s_IMemAddr <= s_NextInstAddr when '0',
         iInstAddr                    when others;
     IMem : mem
-        generic map(ADDR_WIDTH => ADDR_WIDTH,
-                    DATA_WIDTH => N)
+        generic map(ADDR_WIDTH => ADDR_WIDTH, DATA_WIDTH => N)
         port map(iCLK, s_IMemAddr(11 downto 2), iInstExt, iInstLd, s_Inst);
     DMem : mem
-        generic map(ADDR_WIDTH => ADDR_WIDTH,
-                    DATA_WIDTH => N)
+        generic map(ADDR_WIDTH => ADDR_WIDTH, DATA_WIDTH => N)
         port map(iCLK, s_DMemAddr(11 downto 2), s_DMemData, s_DMemWr, s_DMemOut);
 
     s_DMemAddr  <= s_MEMALU;
