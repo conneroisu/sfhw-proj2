@@ -324,7 +324,6 @@ architecture structure of MIPS_Processor is
         s_ID_Inst, s_ID_PC4,
         s_EXA, s_EXB, s_EXImmediate,
         s_ALUOut, s_MEMALU, s_WBALU,
-        s_WBMEMOut,
         s_Forward_A, s_Forward_B,
         s_trueINST
         : std_logic_vector(31 downto 0);
