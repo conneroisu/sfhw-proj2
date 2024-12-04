@@ -51,9 +51,6 @@ architecture sim of tb_EX_MEM is
 begin
     -- Instantiate EX_MEM
     uut : entity work.EX_MEM
-        generic map (
-            N => N
-            )
         port map (
             i_CLK         => tb_CLK,
             i_RST         => tb_RST,
