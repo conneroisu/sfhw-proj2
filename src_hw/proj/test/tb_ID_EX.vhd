@@ -73,6 +73,7 @@ architecture testbench of tb_ID_EX is
     signal s_i_Read1, s_i_Read2          : std_logic_vector(31 downto 0) := (others => '0');
     signal s_o_Read1, s_o_Read2          : std_logic_vector(31 downto 0);
     signal s_i_WriteData, s_i_DMem1      : std_logic_vector(31 downto 0) := (others => '0');
+    signal s_i_ForwardA, s_i_ForwardB    : std_logic_vector(1 downto 0) := (others => '0');
 
     signal s_i_Rs, s_i_Rt, s_i_Rd, s_i_Shamt : std_logic_vector(4 downto 0) := (others => '0');
     signal s_i_Funct                     : std_logic_vector(5 downto 0) := (others => '0');

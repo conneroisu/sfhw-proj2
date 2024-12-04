@@ -9,7 +9,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 
-entity fulladder is
+entity full_adder is
     -- generic(N : integer := 32); -- Generic of type integer for input/output data width. Default value is 32.
     port (
         i_x0   : in  std_logic;         -- Input 0 to be added.
@@ -18,9 +18,9 @@ entity fulladder is
         o_y    : out std_logic;         -- Sum output.
         o_cout : out std_logic          -- Carry out.
         );
-end entity fulladder;
+end entity full_adder;
 
-architecture structural of fulladder is
+architecture structural of full_adder is
 
     component xorg2 is
         port (
