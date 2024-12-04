@@ -1,169 +1,131 @@
--- <header>
--- Author(s): Conner Ohnesorge
--- Name: 
--- Notes:
---      Conner Ohnesorge 2024-12-01T22:55:31-06:00 add-daniels-changes
---      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
--- </header>
-
 library IEEE;
-use IEEE.STD_LOGIC_1164.all;
-use IEEE.NUMERIC_STD.all;
-use work.MIPS_types.all;
+use IEEE.std_logic_1164.all;
 
 entity EX_MEM is
+
     port (
-        -- Clock, Reset, and Write Enable
-        i_CLK : in std_logic;
-        i_RST : in std_logic;
-        i_WE  : in std_logic;           -- Write enable for EX/MEM registers
-        -- Inputs from ID/EX Stage
-        i_PC         : in std_logic_vector(DATA_WIDTH-1 downto 0);
-        i_ALUResult  : in std_logic_vector(DATA_WIDTH-1 downto 0);
-        i_ReadData2  : in std_logic_vector(DATA_WIDTH-1 downto 0);
-        i_RegDstAddr : in std_logic_vector(4 downto 0);  -- Destination register address
-        i_Zero       : in std_logic;    -- Zero flag from ALU
-        -- Control Signals
-        i_MemRead  : in std_logic;
-        i_MemWrite : in std_logic;
-        i_Branch   : in std_logic;
-        i_MemtoReg : in std_logic;
-        i_RegWrite : in std_logic;
-        -- Outputs to MEM/WB Stage
-        o_ALUResult  : out std_logic_vector(DATA_WIDTH-1 downto 0);
-        o_ReadData2  : out std_logic_vector(DATA_WIDTH-1 downto 0);
-        o_RegDstAddr : out std_logic_vector(4 downto 0);
-        o_MemtoReg   : out std_logic;
-        o_RegWrite   : out std_logic;
-        -- Outputs for Memory Stage
-        o_MemRead     : out std_logic;
-        o_MemWrite    : out std_logic;
-        o_BranchAddr  : out std_logic_vector(DATA_WIDTH-1 downto 0);  -- Branch address for PC update
-        o_BranchTaken : out std_logic   -- Indicates if branch is taken
+        i_CLK      : in  std_logic;   
+        i_RST      : in  std_logic;    
+        i_stall    : in  std_logic;     
+        i_ALU      : in  std_logic_vector(31 downto 0);
+        o_ALU      : out std_logic_vector(31 downto 0);
+        i_B        : in  std_logic_vector(31 downto 0); 
+        o_B        : out std_logic_vector(31 downto 0);  
+        i_WrAddr   : in  std_logic_vector(4 downto 0); 
+        o_WrAddr   : out std_logic_vector(4 downto 0);
+        i_MemWr    : in  std_logic;  
+        o_MemWr    : out std_logic;   
+        i_MemtoReg : in  std_logic;    
+        o_MemtoReg : out std_logic;
+        i_Halt     : in  std_logic;     
+        o_Halt     : out std_logic;
+        i_RegWr    : in  std_logic;     
+        o_RegWr    : out std_logic;
+        i_jal      : in  std_logic;    
+        o_jal      : out std_logic;
+        i_PC4      : in  std_logic_vector(31 downto 0);  
+        o_PC4      : out std_logic_vector(31 downto 0)
         );
-    
-end entity;
+end EX_MEM;
 
-architecture structure of EX_MEM is
+architecture structural of EX_MEM is
 
-    -- Signal for branch address calculation
-    signal s_BranchAddr : std_logic_vector(DATA_WIDTH-1 downto 0);
-
-    -- Intermediate signals for single-bit control signals
-    signal s_MemtoReg : std_logic_vector(0 downto 0);
-    signal s_RegWrite : std_logic_vector(0 downto 0);
-    signal s_MemRead  : std_logic_vector(0 downto 0);
-    signal s_MemWrite : std_logic_vector(0 downto 0);
-
-    -- Component for dffg_n (Pipeline Register)
-    component dffg_n is
-        generic (N : integer := 32);
+    component dffg is
         port (
-            i_CLK : in  std_logic;
-            i_RST : in  std_logic;
-            i_WrE : in  std_logic;      -- Write Enable for the register
-            i_D   : in  std_logic_vector(N-1 downto 0);
-            o_Q   : out std_logic_vector(N-1 downto 0)
-            );
+            i_CLK : in  std_logic;      -- Clock input
+            i_RST : in  std_logic;      -- Reset input
+            i_WE  : in  std_logic;      -- Write enable input
+            i_D   : in  std_logic;      -- Data value input
+            o_Q   : out std_logic);     -- Data value output
     end component;
 
+    signal s_stall : std_logic;
+
 begin
-    -- Pipeline registers to store stage-specific values
-    ALUResult_reg : dffg_n
-        generic map (DATA_WIDTH)
-        port map (
+    s_stall <= not i_stall;
+
+    G_ALU_Reg : for i in 0 to 31 generate
+        ALUDFFGI : dffg port map(
             i_CLK => i_CLK,
             i_RST => i_RST,
-            i_WrE => i_WE,
-            i_D   => i_ALUResult,
-            o_Q   => o_ALUResult
-            );
+            i_WE  => s_stall,
+            i_D   => i_ALU(i),
+            o_Q   => o_ALU(i));
+    end generate G_ALU_Reg;
 
-    ReadData2_reg : dffg_n
-        generic map (DATA_WIDTH)
-        port map (
+    G_B_Reg : for i in 0 to 31 generate
+        BDFFGI : dffg port map(
             i_CLK => i_CLK,
             i_RST => i_RST,
-            i_WrE => i_WE,
-            i_D   => i_ReadData2,
-            o_Q   => o_ReadData2
+            i_WE  => s_stall,
+            i_D   => i_B(i),
+            o_Q   => o_B(i)
             );
+    end generate G_B_Reg;
 
-    RegDstAddr_reg : dffg_n
-        generic map (5)
-        port map (
+    G_WrAddr_Reg : for i in 0 to 4 generate
+        WrAddrI : dffg port map(
             i_CLK => i_CLK,
             i_RST => i_RST,
-            i_WrE => i_WE,
-            i_D   => i_RegDstAddr,
-            o_Q   => o_RegDstAddr
+            i_WE  => s_stall,
+            i_D   => i_WrAddr(i),
+            o_Q   => o_WrAddr(i)
             );
+    end generate G_WrAddr_Reg;
 
-    -- Assign single-bit control signals to 1-bit vectors
-    s_MemtoReg <= (0 => i_MemtoReg);
-    s_RegWrite <= (0 => i_RegWrite);
-    s_MemRead  <= (0 => i_MemRead);
-    s_MemWrite <= (0 => i_MemWrite);
-
-    MemtoReg_reg : dffg_n
-        generic map (1)
-        port map (
+    MemWrReg : dffg
+        port map(
             i_CLK => i_CLK,
             i_RST => i_RST,
-            i_WrE => i_WE,
-            i_D   => s_MemtoReg,
-            o_Q   => s_MemtoReg
+            i_WE  => s_stall,
+            i_D   => i_MemWr,
+            o_Q   => o_MemWr
             );
-    o_MemtoReg <= s_MemtoReg(0);
 
-    RegWrite_reg : dffg_n
-        generic map (1)
-        port map (
+    MemtoReg : dffg
+        port map(
             i_CLK => i_CLK,
             i_RST => i_RST,
-            i_WrE => i_WE,
-            i_D   => s_RegWrite,
-            o_Q   => s_RegWrite
+            i_WE  => s_stall,
+            i_D   => i_MemtoReg,
+            o_Q   => o_MemtoReg
             );
-    o_RegWrite <= s_RegWrite(0);
 
-    MemRead_reg : dffg_n
-        generic map (1)
-        port map (
+    HaltReg : dffg
+        port map(
             i_CLK => i_CLK,
             i_RST => i_RST,
-            i_WrE => i_WE,
-            i_D   => s_MemRead,
-            o_Q   => s_MemRead
+            i_WE  => s_stall,
+            i_D   => i_Halt,
+            o_Q   => o_Halt
             );
-    o_MemRead <= s_MemRead(0);
 
-    MemWrite_reg : dffg_n
-        generic map (1)
-        port map (
+    RegWrReg : dffg
+        port map(
             i_CLK => i_CLK,
             i_RST => i_RST,
-            i_WrE => i_WE,
-            i_D   => s_MemWrite,
-            o_Q   => s_MemWrite
+            i_WE  => s_stall,
+            i_D   => i_RegWr,
+            o_Q   => o_RegWr
             );
-    o_MemWrite <= s_MemWrite(0);
 
-    BranchAddr_reg : dffg_n
-        generic map (DATA_WIDTH)
-        port map (
+    jalReg : dffg
+        port map(
             i_CLK => i_CLK,
             i_RST => i_RST,
-            i_WrE => i_WE,
-            i_D   => s_BranchAddr,
-            o_Q   => o_BranchAddr
+            i_WE  => s_stall,
+            i_D   => i_jal,
+            o_Q   => o_jal
             );
 
-    -- Calculate branch address
-    s_BranchAddr <= std_logic_vector(unsigned(i_PC) + unsigned(i_ALUResult));
+    G_PC4_reg : for i in 0 to 31 generate
+        WrAddrI : dffg port map(
+            i_CLK => i_CLK,
+            i_RST => i_RST,
+            i_WE  => s_stall,
+            i_D   => i_PC4(i),
+            o_Q   => o_PC4(i)
+            );
+    end generate G_PC4_reg;
 
-    -- Branch Taken Signal
-    o_BranchTaken <= i_Branch and i_Zero;
-
-end structure;
-
+end structural;

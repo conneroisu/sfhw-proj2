@@ -7,89 +7,58 @@
 -- </header>
 
 library IEEE;
-use IEEE.STD_LOGIC_1164.all;
-use IEEE.NUMERIC_STD.all;
+use IEEE.std_logic_1164.all;
 
-entity ForwardUnit is
+entity Forward_Unit is
+    generic (N : integer := 32);
 
     port (
-        i_forwarding  : in  std_logic;
-        i_exRs        : in  std_logic_vector (4 downto 0);
-        i_exRt        : in  std_logic_vector (4 downto 0);
-        i_memRd       : in  std_logic_vector (4 downto 0);
-        i_wbRd        : in  std_logic_vector (4 downto 0);
-        i_memMemRead  : in  std_logic_vector (4 downto 0);
-        i_memMemWrite : in  std_logic_vector (4 downto 0);
-        i_memPCSrc    : in  std_logic_vector (1 downto 0);
-        i_wbRegWrite  : in  std_logic_vector (4 downto 0);
-        o_exForwardA  : out std_logic_vector (1 downto 0);  -- forwarding 1st mux signal to EX stage
-        o_exForwardB  : out std_logic_vector (1 downto 0)  -- forwarding 2nd mux signal to EX stage
+        i_EX_rs     : in  std_logic_vector(4 downto 0);
+        i_EX_rt     : in  std_logic_vector(4 downto 0);
+        i_MEM_rd    : in  std_logic_vector(4 downto 0);
+        i_WB_rd     : in  std_logic_vector(4 downto 0);
+        i_MEM_wb    : in  std_logic;
+        i_WB_wb     : in  std_logic;
+        o_Forward_A : out std_logic_vector(1 downto 0);
+        o_Forward_B : out std_logic_vector(1 downto 0)
         );
 
-end ForwardUnit;
+end Forward_Unit;
 
-architecture Behavioral of ForwardUnit is
-    signal memRegWrite : std_logic;
+
+
+architecture mixed of Forward_Unit is
+
 begin
+    --KEY:
+    --00: no forward
+    --10: EX hazard, take value from MEM state
+    --01: MEM hazard, take value from WB state
 
-    process(i_exRs, i_exRt, i_memRd, i_wbRd, i_memMemRead, i_memMemWrite, i_memPCSrc, i_wbRegWrite, i_forwarding)
-        variable exRs     : unsigned(4 downto 0);
-        variable exRt     : unsigned(4 downto 0);
-        variable memRd    : unsigned(4 downto 0);
-        variable wbRd     : unsigned(4 downto 0);
-        variable memPCSrc : std_logic_vector(1 downto 0);
+    process(i_MEM_wb, i_WB_wb, i_EX_rs, i_EX_rt, i_MEM_rd, i_WB_rd)
     begin
-        exRs     := unsigned(i_exRs);
-        exRt     := unsigned(i_exRt);
-        memRd    := unsigned(i_memRd);
-        wbRd     := unsigned(i_wbRd);
-        memPCSrc := i_memPCSrc;
 
-        -- Initialize outputs
-        o_exForwardA <= "00";
-        o_exForwardB <= "00";
-
-        -- Determine memRegWrite
-        if (i_memMemWrite = "0") and (memPCSrc = "00") then
-            memRegWrite <= '1';
-        else
-            memRegWrite <= '0';
+        o_Forward_A <= "00";
+        o_Forward_B <= "00";
+        --case 1: 
+        if i_WB_wb = '1' and i_WB_rd = i_EX_rs and i_WB_rd /= "00000" then
+            o_Forward_A <= "01";
         end if;
 
-        if (i_forwarding = '1') then
-            -- Forward from MEM stage
-            if (memRegWrite = '1')
-                and (memRd /= to_unsigned(0, 5))
-                and (memRd = exRs) then
-                o_exForwardA <= "10";
-            end if;
-
-            if (memRegWrite = '1')
-                and (memRd /= to_unsigned(0, 5))
-                and (memRd = exRt) then
-                o_exForwardB <= "10";
-            end if;
-
-            -- Forward from WB stage
-            if (i_wbRegWrite = "1")
-                and (wbRd /= to_unsigned(0, 5))
-                and not ((memRegWrite = '1')
-                         and (memRd /= to_unsigned(0, 5))
-                         and (memRd = exRs))
-                and (wbRd = exRs) then
-                o_exForwardA <= "01";
-            end if;
-
-            if (i_wbRegWrite = "1")
-                and (wbRd /= to_unsigned(0, 5))
-                and not ((memRegWrite = '1')
-                         and (memRd /= to_unsigned(0, 5))
-                         and (memRd = exRt))
-                and (wbRd = exRt) then
-                o_exForwardB <= "01";
-            end if;
+        --case 2: 
+        if i_WB_wb = '1' and i_WB_rd = i_EX_rt and i_WB_rd /= "00000"then
+            o_Forward_B <= "01";
         end if;
+        --case 3: 
+        if i_MEM_wb = '1' and i_MEM_rd = i_EX_rs and i_MEM_rd /= "00000" then
+            o_Forward_A <= "10";
+        end if;
+
+        --case 4: 
+        if i_MEM_wb = '1' and i_MEM_rd = i_EX_rt and i_MEM_rd /= "00000" then
+            o_Forward_B <= "10";
+        end if;
+
+
     end process;
-
-end Behavioral;
-
+end mixed;

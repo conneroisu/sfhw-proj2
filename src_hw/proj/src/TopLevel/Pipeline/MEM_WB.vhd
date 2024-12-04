@@ -1,88 +1,122 @@
--- <header>
--- Author(s): Conner Ohnesorge
--- Name: 
--- Notes:
---      Conner Ohnesorge 2024-12-01T21:31:02-06:00 added-MEM_WB-to-MIPS_Processor
---      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
--- </header>
-
 library IEEE;
-use IEEE.STD_LOGIC_1164.all;
-use IEEE.STD_LOGIC_ARITH.all;
-use IEEE.STD_LOGIC_UNSIGNED.all;
+use IEEE.std_logic_1164.all;
 
 entity MEM_WB is
 
     port (
-        clk         : in  std_logic;
-        reset       : in  std_logic;
-        i_ALUResult : in  std_logic_vector(31 downto 0);  -- ALU result to WB
-        i_DataMem   : in  std_logic_vector(31 downto 0);  -- Data from memory
-        i_RegDst    : in  std_logic_vector(4 downto 0);  -- Destination register number
-        i_RegWrite  : in  std_logic;
-        i_MemToReg  : in  std_logic;    -- MUX select signal
-        o_regDst    : out std_logic_vector(4 downto 0);  -- Destination register output
-        o_regWrite  : out std_logic;    -- Write enable output
-        o_wbData    : out std_logic_vector(31 downto 0)  -- Data to write back
+        i_CLK      : in  std_logic;
+        i_RST      : in  std_logic;
+        i_stall    : in  std_logic;
+        i_ALU      : in  std_logic_vector(31 downto 0);
+        o_ALU      : out std_logic_vector(31 downto 0);
+        i_Mem      : in  std_logic_vector(31 downto 0);
+        o_Mem      : out std_logic_vector(31 downto 0);
+        i_WrAddr   : in  std_logic_vector(4 downto 0);
+        o_WrAddr   : out std_logic_vector(4 downto 0);
+        i_MemtoReg : in  std_logic;
+        o_MemtoReg : out std_logic;
+        i_Halt     : in  std_logic;
+        o_Halt     : out std_logic;
+        i_RegWr    : in  std_logic;
+        o_RegWr    : out std_logic;
+        i_jal      : in  std_logic;
+        o_jal      : out std_logic;
+        i_PC4      : in  std_logic_vector(31 downto 0);
+        o_PC4      : out std_logic_vector(31 downto 0)
         );
 
 end MEM_WB;
 
 architecture structural of MEM_WB is
 
-    -- Internal signals for the pipeline registers
-    signal ALUreg       : std_logic_vector(31 downto 0) := (others => '0');
-    signal DataMemReg   : std_logic_vector(31 downto 0) := (others => '0');
-    signal RegDstReg    : std_logic_vector(4 downto 0)  := (others => '0');
-    signal RegWrite_reg : std_logic                     := '0';
-    signal MemToReg_reg : std_logic                     := '0';
-
-    -- MUX component declaration
-    component mux2t1_N is
+    component dffg is
         port (
-            i_S  : in  std_logic;                      -- Select input
-            i_D0 : in  std_logic_vector(31 downto 0);  -- Input 0
-            i_D1 : in  std_logic_vector(31 downto 0);  -- Input 1
-            o_O  : out std_logic_vector(31 downto 0)   -- Output
-            );
+            i_CLK : in  std_logic;      -- Clock input
+            i_RST : in  std_logic;      -- Reset input
+            i_WE  : in  std_logic;      -- Write enable input
+            i_D   : in  std_logic;      -- Data value input
+            o_Q   : out std_logic);     -- Data value output
     end component;
+
+    signal s_stall : std_logic;
 
 begin
 
-    -- Pipeline behavior: Capturing inputs on clock edge
-    process(clk, reset)
-    begin
-        if reset = '1' then
-            -- Reset all registers to 0
-            ALUreg       <= (others => '0');
-            DataMemReg   <= (others => '0');
-            RegDstReg    <= (others => '0');
-            RegWrite_reg <= '0';
-            MemToReg_reg <= '0';
-        elsif rising_edge(clk) then
-            -- Latch input signals, this looks like d flip flops inside the schematic
-            ALUreg       <= i_ALUResult;
-            DataMemReg   <= i_DataMem;
-            RegDstReg    <= i_RegDst;
-            RegWrite_reg <= i_RegWrite;
-            MemToReg_reg <= i_MemToReg;
-        --elsif falling_edge(clk) then --why doesnt this work? it seems like it creates a DFF, and the DFF always outputs a null value which overwrites the mux
-        --    o_wbData     <= (others => '0');
-        end if;
+    s_stall <= not i_stall;
 
-        -- Output assignments
-        o_regDst   <= RegDstReg;
-        o_regWrite <= RegWrite_reg;
-    end process;
+    G_ALU_Reg : for i in 0 to 31 generate
+        ALUDFFG : dffg port map(
+            i_CLK => i_CLK,
+            i_RST => i_RST,
+            i_WE  => s_stall,
+            i_D   => i_ALU(i),
+            o_Q   => o_ALU(i));
+    end generate G_ALU_Reg;
 
-    -- MUX instantiation to generate o_wbData
-    MemToRegMux : mux2t1_N  --Muxed value is outputted after 1/2 clock cycle, to be used at next rising edge.
-        port map (
-            i_S  => MemToReg_reg,       -- Select signal from pipeline register
-            i_D0 => ALUreg,             -- ALU result from pipeline register
-            i_D1 => DataMemReg,    -- Data memory result from pipeline register
-            o_O  => o_wbData            -- Final write-back data
+    G_Mem_Reg : for i in 0 to 31 generate
+        BDFFG : dffg port map(
+            i_CLK => i_CLK,
+            i_RST => i_RST,
+            i_WE  => s_stall,
+            i_D   => i_Mem(i),
+            o_Q   => o_Mem(i)
+            );
+    end generate G_Mem_Reg;
+
+    G_WrAddr_Reg : for i in 0 to 4 generate
+        WrAddrI : dffg port map(
+            i_CLK => i_CLK,
+            i_RST => i_RST,
+            i_WE  => s_stall,
+            i_D   => i_WrAddr(i),
+            o_Q   => o_WrAddr(i)
+            );
+    end generate G_WrAddr_Reg;
+
+    instMemtoReg : dffg
+        port map(
+            i_CLK => i_CLK,
+            i_RST => i_RST,
+            i_WE  => s_stall,
+            i_D   => i_MemtoReg,
+            o_Q   => o_MemtoReg
             );
 
-end structural;
+    instHaltReg : dffg
+        port map(
+            i_CLK => i_CLK,
+            i_RST => i_RST,
+            i_WE  => s_stall,
+            i_D   => i_Halt,
+            o_Q   => o_Halt
+            );
 
+    instRegWrReg : dffg
+        port map(
+            i_CLK => i_CLK,
+            i_RST => i_RST,
+            i_WE  => s_stall,
+            i_D   => i_RegWr,
+            o_Q   => o_RegWr
+            );
+
+    instJalReg : dffg
+        port map(
+            i_CLK => i_CLK,
+            i_RST => i_RST,
+            i_WE  => s_stall,
+            i_D   => i_jal,
+            o_Q   => o_jal
+            );
+
+    G_PC4_reg : for i in 0 to 31 generate
+        WrAddrI : dffg port map(
+            i_CLK => i_CLK,
+            i_RST => i_RST,
+            i_WE  => s_stall,
+            i_D   => i_PC4(i),
+            o_Q   => o_PC4(i)
+            );
+    end generate G_PC4_reg;
+
+end structural;

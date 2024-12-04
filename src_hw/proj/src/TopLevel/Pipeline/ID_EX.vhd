@@ -1,321 +1,224 @@
--- <header>
--- Author(s): Conner Ohnesorge
--- Name: 
--- Notes:
---      Conner Ohnesorge 2024-12-01T21:02:53-06:00 remove-halt-signals-from-id_ex
---      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
--- </header>
-
 library IEEE;
-use IEEE.STD_LOGIC_1164.all;
-use IEEE.MATH_REAL.all;
-use IEEE.NUMERIC_STD.all;
+use IEEE.std_logic_1164.all;
 
 entity ID_EX is
-    generic(N : integer := 32);
-
-    port (
-        -- Common Stage Signals [begin]
-        i_CLK        : in  std_logic;
-        i_RST        : in  std_logic;
-        i_WE         : in  std_logic;
-        i_PC         : in  std_logic_vector(N-1 downto 0);
-        i_PCplus4    : in  std_logic_vector(N-1 downto 0);
-        o_PCplus4    : out std_logic_vector(N-1 downto 0);
-        -- Control Signals (From Control Unit) [begin]
-        i_RegDst     : in  std_logic;   -- Control Unit Destination Register
-        i_ALUOp      : in  std_logic_vector(2 downto 0);  -- ALU operation from control unit.
-        i_ALUSrc     : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
-        i_MemRead    : in  std_logic;   -- Memory Read control
-        i_MemWrite   : in  std_logic;   -- Memory Write control
-        i_MemtoReg   : in  std_logic;   -- Memory to Register control
-        i_RegWrite   : in  std_logic;   -- Register Write control
-        i_Branch     : in  std_logic;   -- Branch control
-        -- Future Stage Signals [begin]
-        o_ALU        : out std_logic_vector(N-1 downto 0);
-        o_ALUSrc     : out std_logic_vector(1 downto 0);
-        o_MemRead    : out std_logic;
-        o_MemWrite   : out std_logic;
-        o_MemtoReg   : out std_logic;
-        o_RegWrite   : out std_logic;
-        o_Branch     : out std_logic;
-        -- Input Signals [begin]
-        --= Register File Signals [begin]
-        i_Read1      : in  std_logic_vector(N-1 downto 0);
-        i_Read2      : in  std_logic_vector(N-1 downto 0);
-        o_Read1      : out std_logic_vector(N-1 downto 0);
-        o_Read2      : out std_logic_vector(N-1 downto 0);
-        -- Forward Unit Signals [begin]
-        i_ForwardA   : in  std_logic_vector(1 downto 0);
-        i_ForwardB   : in  std_logic_vector(1 downto 0);
-        --= Forwarding Signals (sent to Forward Unit) [begin]
-        i_WriteData  : in  std_logic_vector(N-1 downto 0);  -- Data from the end of writeback stage's mux
-        i_DMem1      : in  std_logic_vector(N-1 downto 0);  -- Data from the first input to the DMem output of ex/mem
-        --= Instruction Signals [begin]
-        i_Rs         : in  std_logic_vector(4 downto 0);
-        i_Rt         : in  std_logic_vector(4 downto 0);
-        i_Rd         : in  std_logic_vector(4 downto 0);
-        i_Shamt      : in  std_logic_vector(4 downto 0);
-        i_Funct      : in  std_logic_vector(5 downto 0);
-        i_Imm        : in  std_logic_vector(15 downto 0);
-        i_Extended   : in  std_logic_vector(31 downto 0);
-        o_BranchAddr : out std_logic_vector(31 downto 0)
-        );
-
-end entity;
-
---= Forwarded Signals (received from Forward Unit) [begin]
--- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
--- MuxInputs    -> {Source} -> {Explanation}
--- ForwardA=00  -> ID/EX    -> operand from registerfile
--- ForwardA=10  -> EX/MEM   -> operand forwarded from prior alu result
--- ForwardA=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
--- ForwardB=00  -> ID/EX    -> operand from registerfile
--- ForwardB=10  -> EX/MEM   -> operand forwarded from prior alu result
--- ForwardB=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
---= Stage Specific Signals [begin]
---         RegDst  ALUOp  ALUSrc
--- R-Type:   1      10      00
--- lw    :   0      00      01
--- sw    :   x      00      01
--- beq   :   x      01      00
-architecture structure of ID_EX is
-
-    component dffg_n is
-        generic(N : integer := 32);
-        port(
-            i_CLK : in  std_logic;
-            i_RST : in  std_logic;
-            i_WrE : in  std_logic;
-            i_D   : in  std_logic_vector(N-1 downto 0);
-            o_Q   : out std_logic_vector(N-1 downto 0)
-            );
-    end component;
-
-    -- N-bit multiplexer (inputs are always reverse order)
-    component mux_NtM is
-        generic (
-            INPUT_COUNT : integer := 2;
-            DATA_WIDTH  : integer := 8
-            );
         port (
-            inputs : in  std_logic_vector((INPUT_COUNT*DATA_WIDTH)-1 downto 0);  -- Concatenated (&) input buses
-            sel    : in  std_logic_vector(integer(ceil(log2(real(INPUT_COUNT)))) - 1 downto 0);
-            output : out std_logic_vector(DATA_WIDTH - 1 downto 0)
-            );
-    end component;
+                i_CLK          : in  std_logic;
+                i_RST          : in  std_logic;
+                i_stall        : in  std_logic;  --stall control
+                i_PC4          : in  std_logic_vector(31 downto 0);
+                i_readA        : in  std_logic_vector(31 downto 0);
+                i_readB        : in  std_logic_vector(31 downto 0);
+                i_signExtImmed : in  std_logic_vector(31 downto 0);
+                i_inst20_16    : in  std_logic_vector(4 downto 0);
+                i_inst15_11    : in  std_logic_vector(4 downto 0);
+                i_RegDst       : in  std_logic;
+                i_RegWrite     : in  std_logic;
+                i_memToReg     : in  std_logic;
+                i_MemWrite     : in  std_logic;
+                i_ALUSrc       : in  std_logic;
+                i_ALUOp        : in  std_logic_vector(3 downto 0);
+                i_jal          : in  std_logic;
+                i_halt         : in  std_logic;
+                i_RS           : in  std_logic_vector(4 downto 0);
+                i_memRd        : in  std_logic;
+                o_RS           : out std_logic_vector(4 downto 0);
+                o_PC4          : out std_logic_vector(31 downto 0);
+                o_readA        : out std_logic_vector(31 downto 0);
+                o_readB        : out std_logic_vector(31 downto 0);
+                o_signExtImmed : out std_logic_vector(31 downto 0);
+                o_inst20_16    : out std_logic_vector(4 downto 0);
+                o_inst15_11    : out std_logic_vector(4 downto 0);
+                o_RegDst       : out std_logic;
+                o_RegWrite     : out std_logic;
+                o_memToReg     : out std_logic;
+                o_MemWrite     : out std_logic;
+                o_ALUSrc       : out std_logic;
+                o_ALUOp        : out std_logic_vector(3 downto 0);
+                o_jal          : out std_logic;
+                o_halt         : out std_logic;
+                o_memRd        : out std_logic
+                );
+end ID_EX;
 
-    component alu is
-        port (
-            i_ALUCtrl  : in  std_logic_vector(4 downto 0);
-            i_Data0    : in  std_logic_vector(N-1 downto 0);
-            i_Data1    : in  std_logic_vector(N-1 downto 0);
-            i_Shamt    : in  std_logic_vector(4 downto 0);
-            o_ALUOut   : out std_logic_vector(N-1 downto 0);
-            o_Cout     : out std_logic;
-            o_Overflow : out std_logic
-            );
-    end component;
+architecture structural of ID_EX is
 
-    component alu_control is
-        port (
-            i_Funct  : in  std_logic_vector(5 downto 0);
-            i_ALUOp  : in  std_logic_vector(2 downto 0);
-            o_ALUSel : out std_logic_vector(4 downto 0)
-            );
-    end component;
+        component dffg_N is
+                generic (N : integer := 32);
+                port (
+                        i_CLK : in  std_logic;
+                        i_RST : in  std_logic;
+                        i_WE  : in  std_logic;
+                        i_D   : in  std_logic_vector(N - 1 downto 0);
+                        o_Q   : out std_logic_vector(N - 1 downto 0)
+                        );
+        end component;
 
-    -- see: https://github.com/user-attachments/assets/b31df788-32cf-48a5-a3ac-c44345cac682
-    signal s_ALUOp          : std_logic_vector(2 downto 0);
-    signal s_ALUOperand1    : std_logic_vector(31 downto 0);
-    signal s_PreALUOperand2 : std_logic_vector(31 downto 0);
-    signal s_ALUOperand2    : std_logic_vector(31 downto 0);
-    signal s_Overflow       : std_logic;
-    signal s_Zero           : std_logic;
-    signal s_PC             : std_logic_vector(31 downto 0);
-    signal s_PCplus4        : std_logic_vector(31 downto 0);
-    signal s_Extended       : std_logic_vector(31 downto 0);
-    signal s_ALUSel         : std_logic_vector(4 downto 0);
+        component dffg is
+                port (
+                        i_CLK : in  std_logic;
+                        i_RST : in  std_logic;
+                        i_WE  : in  std_logic;
+                        i_D   : in  std_logic;
+                        o_Q   : out std_logic
+                        );
+        end component;
 
-    signal s_Shamt : std_logic_vector(4 downto 0);
-    signal s_Rs    : std_logic_vector(4 downto 0);
-    signal s_Rt    : std_logic_vector(4 downto 0);
-    signal s_Rd    : std_logic_vector(4 downto 0);
-    signal s_Imm   : std_logic_vector(15 downto 0);
-    signal s_Funct : std_logic_vector(5 downto 0);
+        signal s_stall : std_logic;
 
 begin
+        s_stall <= not i_stall;
 
-    ----------------------------------------------------------------------state
+        instPCPlus4Reg : dffg_N
+                generic map(N => 32)
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_PC4,
+                        o_Q   => o_PC4
+                        );
 
-    -- Common Stage Signal Registers
+        instReadAReg : dffg_N
+                generic map(N => 32)
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_readA,
+                        o_Q   => o_readA
+                        );
 
-    PC_reg : dffg_n                     -- place of program counter
-        generic map (32)
-        port map(i_CLK, i_RST, i_WE, i_PC, s_PC);
+        instReadBReg : dffg_N
+                generic map(N => 32)
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_readB,
+                        o_Q   => o_readB
+                        );
 
-    Reg1_reg : dffg_n                   -- output of register file, output 1
-        generic map (32)
-        port map(i_CLK, i_RST, i_WE, i_Read1, o_Read1);
+        instImmExtReg : dffg_N
+                generic map(N => 32)
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_signExtImmed,
+                        o_Q   => o_signExtImmed
+                        );
 
-    Reg2_reg : dffg_n                   -- output of register file, output 2
-        generic map (32)
-        port map(i_CLK, i_RST, i_WE, i_Read2, o_Read2);
+        instRs : dffg_N
+                generic map(N => 5)
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_RS,
+                        o_Q   => o_RS);
 
-    ALUOp_reg : dffg_n
-        generic map (3)
-        port map(i_CLK, i_RST, i_WE, i_ALUOp, s_ALUOp);
+        instRtReg : dffg_N
+                generic map(N => 5)
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_inst20_16,
+                        o_Q   => o_inst20_16
+                        );
 
-    ALUSrc_reg : dffg_n
-        generic map (2)
-        port map(i_CLK, i_RST, i_WE, i_ALUSrc, o_ALUSrc);
+        instRdReg : dffg_N
+                generic map(N => 5)
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_inst15_11,
+                        o_Q   => o_inst15_11
+                        );
 
-    PCP4_reg : dffg_n                   -- output of adder, output pc+4
-        generic map (32)
-        port map(i_Clk, i_RST, i_WE, i_PCplus4, o_PCplus4);
+        instRegDstReg : dffg
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_RegDst,
+                        o_Q   => o_RegDst
+                        );
 
-    SignExtend_reg : dffg_n
-        generic map (32)
-        port map(i_Clk, i_RST, i_WE, i_Extended, s_Extended);
+        instRegWriteReg : dffg
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_RegWrite,
+                        o_Q   => o_RegWrite
+                        );
 
-    -- "Instruction" registers
+        instMemToRegReg : dffg
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_memToReg,
+                        o_Q   => o_memToReg
+                        );
 
-    Rd_reg : dffg_n  ----- Destination write address for register file (rd)
-        generic map (5)
-        port map(i_CLK, i_RST, i_WE, i_Rd, s_Rd);
+        instMemWriteReg : dffg
+                port map(
 
-    Rs_reg : dffg_n  ----- Instruction Register Source Address Buffer (rs)
-        generic map (5)
-        port map(i_CLK, i_RST, i_WE, i_Rs, s_Rs);
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_MemWrite,
+                        o_Q   => o_MemWrite
+                        );
 
-    Rt_reg : dffg_n  ----- Instruction Register Target Address Buffer (rt)
-        generic map (5)
-        port map(i_CLK, i_RST, i_WE, i_Rt, s_Rt);
+        instALUSrcReg : dffg
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_ALUSrc,
+                        o_Q   => o_ALUSrc
+                        );
 
-    Shamt_reg : dffg_n  -- Instruction Shift Amount Register (shamt)
-        generic map (5)
-        port map(i_CLK, i_RST, i_WE, i_Shamt, s_Shamt);
+        instALUOpReg : dffg_N
+                generic map(N => 4)
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_ALUOp,
+                        o_Q   => o_ALUOp);
 
-    Funct_reg : dffg_n  -- Instruction Function Code Buffer (funct)
-        generic map (6)
-        port map(i_CLK, i_RST, i_WE, i_Funct, s_Funct);
+        instJalReg : dffg
+                port map(
 
-    Imm_reg : dffg_n  ---- Instruction Immediate Value Buffer (immediate)
-        generic map (16)
-        port map(i_CLK, i_RST, i_WE, i_Imm, s_Imm);
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_jal,
+                        o_Q   => o_jal
+                        );
 
-    MemRead_reg : dffg_n
-        generic map (1)
-        port map(i_CLK, i_RST, i_WE,
-                 i_D(0) => i_MemRead,
-                 o_Q(0) => o_MemRead
-                 );
+        instHaltReg : dffg
+                port map(
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_halt,
+                        o_Q   => o_halt
+                        );
 
-    MemWrite_reg : dffg_n
-        generic map (1)
-        port map(i_CLK, i_RST, i_WE,
-                 i_D(0) => i_MemWrite,
-                 o_Q(0) => o_MemWrite
-                 );
+        instMemoryRd : dffg
+                port map (
+                        i_CLK => i_CLK,
+                        i_RST => i_RST,
+                        i_WE  => s_stall,
+                        i_D   => i_memRd,
+                        o_Q   => o_memRd
+                        );
 
-    MemtoReg_reg : dffg_n
-        generic map (1)
-        port map(i_CLK, i_RST, i_WE,
-                 i_D(0) => i_MemtoReg,
-                 o_Q(0) => o_MemtoReg
-                 );
-
-    RegWrite_reg : dffg_n
-        generic map (1)
-        port map(i_CLK, i_RST, i_WE,
-                 i_D(0) => i_RegWrite,
-                 o_Q(0) => o_RegWrite
-                 );
-
-    Branch_reg : dffg_n
-        generic map (1)
-        port map(i_CLK, i_RST, i_WE,
-                 i_D(0) => i_Branch,
-                 o_Q(0) => o_Branch
-                 );
-
-    ----------------------------------------------------------------------logic
-
-    -- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
-    -- MuxInputs    -> {Source} -> {Explanation}
-    -- ForwardA=00  -> ID/EX    -> operand from registerfile
-    -- ForwardA=10  -> EX/MEM   -> operand is forwarded from prior alu result
-    -- ForwardA=01  -> MEM/WB   -> operand is forwarded from dmem or earlier alu result
-    -- ForwardB=00  -> ID/EX    -> operand from registerfile
-    -- ForwardB=10  -> EX/MEM   -> operand is forwarded from prior alu result
-    -- ForwardB=01  -> MEM/WB   -> operand is forwarded from dmem or earlier alu result
-    ALU1Mux : mux_NtM
-        generic map (
-            INPUT_COUNT => 3,
-            DATA_WIDTH  => 32
-            )
-        port map (
-            inputs => i_Read1 & i_DMem1 & i_WriteData,
-            Sel    => i_ForwardA,
-            output => s_ALUOperand1
-            );
-
-    ALU2Mux : mux_NtM
-        generic map (
-            INPUT_COUNT => 3,
-            DATA_WIDTH  => 32
-            )
-        port map (
-            inputs => i_Read2 & i_DMem1 & i_WriteData,
-            Sel    => i_ForwardB,
-            output => s_PreALUOperand2
-            );
-
-    ALU22Mux : mux_NtM
-        generic map (
-            INPUT_COUNT => 3,
-            DATA_WIDTH  => 32
-            )
-        port map (
-            inputs => s_Extended & s_PreALUOperand2 & s_Extended,
-            Sel    => o_ALUSrc,
-            output => s_ALUOperand2
-            );
-        
-    -- RT & RD mux w/ i_RegDst selector
-    IDEX_RegisterRd : mux_NtM
-        generic map (
-            INPUT_COUNT => 2,
-            DATA_WIDTH  => 5
-            )
-        port map (
-            inputs => s_Rt & s_Rd,
-            Sel(0) => i_RegDst,
-            output => s_Rd
-            );
-
-    ALUControl : alu_control
-        port map (
-            i_Funct  => s_Funct,
-            i_ALUOp  => s_ALUOp,
-            o_ALUSel => s_ALUSel
-            );
-
-    ALUinst : alu
-        port map (
-            i_Data0    => s_ALUOperand1,
-            i_Data1    => s_ALUOperand2,
-            i_Shamt    => s_Shamt,
-            i_ALUCtrl  => s_ALUSel,
-            o_Overflow => s_Overflow,
-            o_Cout     => s_Zero,
-            o_ALUOut   => o_ALU
-            );
-
-
-    -- Add 2x shifted extended value to PCplus4
-    o_BranchAddr <= std_logic_vector(
-        unsigned(std_logic_vector(shift_left(unsigned(i_Extended), 2))) + unsigned(o_PCplus4)
-        );
-
-end structure;
+end structural;

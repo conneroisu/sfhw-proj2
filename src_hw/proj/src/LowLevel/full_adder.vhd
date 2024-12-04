@@ -1,16 +1,8 @@
--- <header>
--- Author(s): Conner Ohnesorge
--- Name: 
--- Notes:
---      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
--- </header>
-
 library ieee;
 use ieee.std_logic_1164.all;
 
-
 entity full_adder is
-    
+
     port (
         i_x0   : in  std_logic;         -- Input 0 to be added.
         i_x1   : in  std_logic;         -- Input 1 to be added.
@@ -18,7 +10,7 @@ entity full_adder is
         o_y    : out std_logic;         -- Sum output.
         o_cout : out std_logic          -- Carry out.
         );
-    
+
 end entity full_adder;
 
 architecture structural of full_adder is
@@ -88,12 +80,4 @@ begin
             o_f => o_cout
             );
 
-    -- Instantiate N mux instances.
-    -- G_OnesComp: for i in 0 to N-1 generate
-    -- idk: invg port map(
-    --  i_A    =>    i_I(i),
-    --  o_F    =>    o_O(i));
-    -- end generate G_OnesComp;
-
 end architecture structural;
-
