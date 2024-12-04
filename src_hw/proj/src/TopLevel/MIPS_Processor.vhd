@@ -102,8 +102,8 @@ architecture structure of MIPS_Processor is
             o_readA        : out std_logic_vector(31 downto 0);
             o_readB        : out std_logic_vector(31 downto 0);
             o_signExtImmed : out std_logic_vector(31 downto 0);
-            o_Rt    : out std_logic_vector(4 downto 0); -- inst20_16
-            o_Rd    : out std_logic_vector(4 downto 0); -- inst15_11
+            o_Rt           : out std_logic_vector(4 downto 0);  -- inst20_16
+            o_Rd           : out std_logic_vector(4 downto 0);  -- inst15_11
             o_RegDst       : out std_logic;
             o_RegWrite     : out std_logic;
             o_memToReg     : out std_logic;
@@ -118,26 +118,26 @@ architecture structure of MIPS_Processor is
 
     component EX_MEM is
         port (
-            i_CLK      : in  std_logic;  -- Clock input
-            i_RST      : in  std_logic;  -- Reset input
-            i_stall    : in  std_logic;  -- stall enable input
-            i_ALU      : in  std_logic_vector(31 downto 0);  -- ALU value input
-            o_ALU      : out std_logic_vector(31 downto 0);  -- ALU value output
-            i_B        : in  std_logic_vector(31 downto 0);  --Mem address value
-            o_B        : out std_logic_vector(31 downto 0);  --Mem address value
-            i_WrAddr   : in  std_logic_vector(4 downto 0);  --write address to register file
-            o_WrAddr   : out std_logic_vector(4 downto 0);
-            i_MemWr    : in  std_logic;  --write to memory
-            o_MemWr    : out std_logic;  --write to memory signal
-            i_MemtoReg : in  std_logic;  --memory vs alu signal
-            o_MemtoReg : out std_logic;
-            i_Halt     : in  std_logic;  --Halt signal
-            o_Halt     : out std_logic;
-            i_RegWr    : in  std_logic;  --write enable for reg file
-            o_RegWr    : out std_logic;
+            i_CLK      : in  std_logic;
+            i_RST      : in  std_logic;
+            i_stall    : in  std_logic;
+            i_ALU      : in  std_logic_vector(31 downto 0);
+            i_B        : in  std_logic_vector(31 downto 0);
+            i_WrAddr   : in  std_logic_vector(4 downto 0);
+            i_MemWr    : in  std_logic;
+            i_MemtoReg : in  std_logic;
+            i_Halt     : in  std_logic;
+            i_RegWr    : in  std_logic;
             i_jal      : in  std_logic;
+            i_PC4      : in  std_logic_vector(31 downto 0);
+            o_ALU      : out std_logic_vector(31 downto 0);
+            o_B        : out std_logic_vector(31 downto 0);
+            o_WrAddr   : out std_logic_vector(4 downto 0);
+            o_MemWr    : out std_logic;
+            o_MemtoReg : out std_logic;
+            o_Halt     : out std_logic;
+            o_RegWr    : out std_logic;
             o_jal      : out std_logic;
-            i_PC4      : in  std_logic_vector(31 downto 0);  --pc+4
             o_PC4      : out std_logic_vector(31 downto 0)
             );
     end component;
@@ -483,217 +483,217 @@ begin
     begin
         if irst = '1' then
             s_CarryOut <= '0';
-            s_Ovfl <= '0';
+            s_Ovfl     <= '0';
         elsif rising_edge(iclk) then
             if s_internal_CarryOut = '1' then
                 s_CarryOut <= '1'; else s_CarryOut <= s_CarryOut;
-            end if;
-            if s_internal_Overflow = '1' then
-                s_Ovfl <= '1'; else s_Ovfl <= s_Ovfl;
-            end if;
-        end if;
-    end process;
+                                   end if;
+                                        if s_internal_Overflow = '1' then
+                                            s_Ovfl <= '1'; else s_Ovfl <= s_Ovfl;
+                                                           end if;
+                                                           end if;
+                                                           end process;
 
-    oALUOut <= s_ALUOut;
+                                                                oALUOut <= s_ALUOut;
 
-    memtoreg : mux2t1_N
-        generic map(N => 32)
-        port map(
-            i_S  => s_WBmemToReg,
-            i_D0 => s_WBALU,
-            i_D1 => s_WBMEMOut,
-            o_O  => s_aluORmem
-            );
+                                                                memtoreg : mux2t1_N
+                                                                    generic map(N => 32)
+                                                                    port map(
+                                                                        i_S  => s_WBmemToReg,
+                                                                        i_D0 => s_WBALU,
+                                                                        i_D1 => s_WBMEMOut,
+                                                                        o_O  => s_aluORmem
+                                                                        );
 
-    raMUX : mux2t1_N
-        generic map(N => 32)
-        port map(
-            i_S  => s_WBjal,
-            i_D0 => s_aluORmem,
-            i_D1 => s_WB_PC4,
-            o_O  => s_RegWrData
-            );
+                                                                raMUX : mux2t1_N
+                                                                    generic map(N => 32)
+                                                                    port map(
+                                                                        i_S  => s_WBjal,
+                                                                        i_D0 => s_aluORmem,
+                                                                        i_D1 => s_WB_PC4,
+                                                                        o_O  => s_RegWrData
+                                                                        );
 
-    PC4Add : Full_Adder_N
-        port map(
-            i_A => s_NextInstAddr,
-            i_B => x"00000004",
-            i_C => '0',
-            o_S => s_IF_PC4
-            );
+                                                                PC4Add : Full_Adder_N
+                                                                    port map(
+                                                                        i_A => s_NextInstAddr,
+                                                                        i_B => x"00000004",
+                                                                        i_C => '0',
+                                                                        o_S => s_IF_PC4
+                                                                        );
 
-    branchjumpMUX : mux2t1_N
-        generic map(N => 32)
-        port map(
-            i_S  => s_flush,
-            i_D0 => s_Inst,
-            i_D1 => x"00000000",
-            o_O  => s_trueINST
-            );
+                                                                branchjumpMUX : mux2t1_N
+                                                                    generic map(N => 32)
+                                                                    port map(
+                                                                        i_S  => s_flush,
+                                                                        i_D0 => s_Inst,
+                                                                        i_D1 => x"00000000",
+                                                                        o_O  => s_trueINST
+                                                                        );
 
-    instIFID : IF_ID
-        port map(
-            i_CLK         => iCLK,
-            i_RST         => iRST,
-            i_stall       => s_stall,
-            i_PC4         => s_IF_PC4,
-            i_instruction => s_trueINST,
-            o_PC4         => s_ID_PC4,
-            o_instruction => s_ID_Inst
-            );
+                                                                instIFID : IF_ID
+                                                                    port map(
+                                                                        i_CLK         => iCLK,
+                                                                        i_RST         => iRST,
+                                                                        i_stall       => s_stall,
+                                                                        i_PC4         => s_IF_PC4,
+                                                                        i_instruction => s_trueINST,
+                                                                        o_PC4         => s_ID_PC4,
+                                                                        o_instruction => s_ID_Inst
+                                                                        );
 
-    s_ID_memRD <= s_memToReg and not s_IDMemWr;
+                                                                s_ID_memRD <= s_memToReg and not s_IDMemWr;
 
-    wbMUX : mux2t1
-        port map(
-            i_S  => s_stall,
-            i_D0 => s_IDRegWr,
-            i_D1 => '0',
-            o_O  => s_muxRegWr
-            );
+                                                                wbMUX : mux2t1
+                                                                    port map(
+                                                                        i_S  => s_stall,
+                                                                        i_D0 => s_IDRegWr,
+                                                                        i_D1 => '0',
+                                                                        o_O  => s_muxRegWr
+                                                                        );
 
-    memRdMUX : mux2t1
-        port map(
-            i_S  => s_stall,
-            i_D0 => s_IDMemWr,
-            i_D1 => '0',
-            o_O  => s_muxMemWr
-            );
+                                                                memRdMUX : mux2t1
+                                                                    port map(
+                                                                        i_S  => s_stall,
+                                                                        i_D0 => s_IDMemWr,
+                                                                        i_D1 => '0',
+                                                                        o_O  => s_muxMemWr
+                                                                        );
 
-    instIDEX : ID_EX
-        port map(
-            i_CLK          => iCLK,
-            i_RST          => '0',
-            i_stall        => '0',
-            i_PC4          => s_ID_PC4,
-            i_readA        => s_RegA,
-            i_readB        => s_RegB,
-            i_signExtImmed => s_immediate,
-            i_IDRt         => s_ID_Inst(20 downto 16),
-            i_IDRD         => s_ID_Inst(15 downto 11),
-            i_RegDst       => s_RegDst,
-            i_RegWrite     => s_muxRegWr,
-            i_memToReg     => s_memToReg,
-            i_MemWrite     => s_muxMemWr,
-            i_ALUSrc       => s_ALUSrc,
-            i_ALUOp        => s_ALUOp,
-            i_jal          => s_jal,
-            i_halt         => s_IDhalt,
-            i_RS           => s_ID_Inst(25 downto 21),
-            i_memRd        => s_ID_memRD,
-            o_RS           => s_EX_rs,
-            o_PC4          => s_EX_PC4,
-            o_readA        => s_EXA,
-            o_readB        => s_EXB,
-            o_signExtImmed => s_EXImmediate,
-            o_Rt    => s_EXrt,
-            o_Rd    => s_EXrd,
-            o_RegDst       => s_EXRegDst,
-            o_RegWrite     => s_EXRegWr,
-            o_memToReg     => s_EXmemToReg,
-            o_MemWrite     => s_EXMemWr,
-            o_ALUSrc       => s_EXALUSrc,
-            o_ALUOp        => s_EXALUOp,
-            o_jal          => s_EXjal,
-            o_halt         => s_EXhalt,
-            o_memRd        => s_EXMemRd
-            );
+                                                                instIDEX : ID_EX
+                                                                    port map(
+                                                                        i_CLK          => iCLK,
+                                                                        i_RST          => '0',
+                                                                        i_stall        => '0',
+                                                                        i_PC4          => s_ID_PC4,
+                                                                        i_readA        => s_RegA,
+                                                                        i_readB        => s_RegB,
+                                                                        i_signExtImmed => s_immediate,
+                                                                        i_IDRt         => s_ID_Inst(20 downto 16),
+                                                                        i_IDRD         => s_ID_Inst(15 downto 11),
+                                                                        i_RegDst       => s_RegDst,
+                                                                        i_RegWrite     => s_muxRegWr,
+                                                                        i_memToReg     => s_memToReg,
+                                                                        i_MemWrite     => s_muxMemWr,
+                                                                        i_ALUSrc       => s_ALUSrc,
+                                                                        i_ALUOp        => s_ALUOp,
+                                                                        i_jal          => s_jal,
+                                                                        i_halt         => s_IDhalt,
+                                                                        i_RS           => s_ID_Inst(25 downto 21),
+                                                                        i_memRd        => s_ID_memRD,
+                                                                        o_RS           => s_EX_rs,
+                                                                        o_PC4          => s_EX_PC4,
+                                                                        o_readA        => s_EXA,
+                                                                        o_readB        => s_EXB,
+                                                                        o_signExtImmed => s_EXImmediate,
+                                                                        o_Rt           => s_EXrt,
+                                                                        o_Rd           => s_EXrd,
+                                                                        o_RegDst       => s_EXRegDst,
+                                                                        o_RegWrite     => s_EXRegWr,
+                                                                        o_memToReg     => s_EXmemToReg,
+                                                                        o_MemWrite     => s_EXMemWr,
+                                                                        o_ALUSrc       => s_EXALUSrc,
+                                                                        o_ALUOp        => s_EXALUOp,
+                                                                        o_jal          => s_EXjal,
+                                                                        o_halt         => s_EXhalt,
+                                                                        o_memRd        => s_EXMemRd
+                                                                        );
 
-    instEXMEM : EX_MEM
-        port map(
-            i_CLK      => iCLK,
-            i_RST      => iRST,
-            i_stall    => '0',
-            i_ALU      => s_ALUOut,
-            o_ALU      => s_MEMALU,
-            i_B        => s_Forward_B,
-            o_B        => s_DMemData,
-            i_WrAddr   => s_EXrtrd,
-            o_WrAddr   => s_MEMrtrd,
-            i_MemWr    => s_EXMemWr,
-            o_MemWr    => s_DMemWr,
-            i_MemtoReg => s_EXmemToReg,
-            o_MemtoReg => s_MEMmemToReg,
-            i_Halt     => s_EXhalt,
-            o_Halt     => s_MEMhalt,
-            i_RegWr    => s_EXRegWr,
-            o_RegWr    => s_MemRegWr,
-            i_jal      => s_EXjal,
-            o_jal      => s_MEMjal,
-            i_PC4      => s_EX_PC4,
-            o_PC4      => s_MEM_PC4
-            );
+                                                                instEXMEM : EX_MEM
+                                                                    port map(
+                                                                        i_CLK      => iCLK,
+                                                                        i_RST      => iRST,
+                                                                        i_stall    => '0',
+                                                                        i_ALU      => s_ALUOut,
+                                                                        o_ALU      => s_MEMALU,
+                                                                        i_B        => s_Forward_B,
+                                                                        o_B        => s_DMemData,
+                                                                        i_WrAddr   => s_EXrtrd,
+                                                                        o_WrAddr   => s_MEMrtrd,
+                                                                        i_MemWr    => s_EXMemWr,
+                                                                        o_MemWr    => s_DMemWr,
+                                                                        i_MemtoReg => s_EXmemToReg,
+                                                                        o_MemtoReg => s_MEMmemToReg,
+                                                                        i_Halt     => s_EXhalt,
+                                                                        o_Halt     => s_MEMhalt,
+                                                                        i_RegWr    => s_EXRegWr,
+                                                                        o_RegWr    => s_MemRegWr,
+                                                                        i_jal      => s_EXjal,
+                                                                        o_jal      => s_MEMjal,
+                                                                        i_PC4      => s_EX_PC4,
+                                                                        o_PC4      => s_MEM_PC4
+                                                                        );
 
-    instMEMWB : MEM_WB
-        port map(
-            i_CLK      => iCLK,
-            i_RST      => iRST,
-            i_stall    => '0',
-            i_ALU      => s_MEMALU,
-            o_ALU      => s_WBALU,
-            i_Mem      => s_DMemOut,
-            o_Mem      => s_WBMEMOut,
-            i_WrAddr   => s_MEMrtrd,
-            o_WrAddr   => s_WBrtrd,
-            i_MemtoReg => s_MEMmemToReg,
-            o_MemtoReg => s_WBmemToReg,
-            i_Halt     => s_MEMHalt,
-            o_Halt     => s_Halt,
-            i_RegWr    => s_MEMRegWr,
-            o_RegWr    => s_WBRegWr,
-            i_jal      => s_MEMjal,
-            o_jal      => s_WBjal,
-            i_PC4      => s_MEM_PC4,
-            o_PC4      => s_WB_PC4
-            );
+                                                                instMEMWB : MEM_WB
+                                                                    port map(
+                                                                        i_CLK      => iCLK,
+                                                                        i_RST      => iRST,
+                                                                        i_stall    => '0',
+                                                                        i_ALU      => s_MEMALU,
+                                                                        o_ALU      => s_WBALU,
+                                                                        i_Mem      => s_DMemOut,
+                                                                        o_Mem      => s_WBMEMOut,
+                                                                        i_WrAddr   => s_MEMrtrd,
+                                                                        o_WrAddr   => s_WBrtrd,
+                                                                        i_MemtoReg => s_MEMmemToReg,
+                                                                        o_MemtoReg => s_WBmemToReg,
+                                                                        i_Halt     => s_MEMHalt,
+                                                                        o_Halt     => s_Halt,
+                                                                        i_RegWr    => s_MEMRegWr,
+                                                                        o_RegWr    => s_WBRegWr,
+                                                                        i_jal      => s_MEMjal,
+                                                                        o_jal      => s_WBjal,
+                                                                        i_PC4      => s_MEM_PC4,
+                                                                        o_PC4      => s_WB_PC4
+                                                                        );
 
-    instForwardingUnit : ForwardUnit
-        port map(
-            i_EX_rs     => s_EX_rs,
-            i_EX_rt     => s_EXrt,
-            i_MEM_rd    => s_MEMrtrd,
-            i_WB_rd     => s_WBrtrd,
-            i_MEM_wb    => s_MemRegWr,
-            i_WB_wb     => s_WBRegWr,
-            o_Forward_A => s_ForwardA_sel,
-            o_Forward_B => s_ForwardB_sel
-            );
+                                                                instForwardingUnit : ForwardUnit
+                                                                    port map(
+                                                                        i_EX_rs     => s_EX_rs,
+                                                                        i_EX_rt     => s_EXrt,
+                                                                        i_MEM_rd    => s_MEMrtrd,
+                                                                        i_WB_rd     => s_WBrtrd,
+                                                                        i_MEM_wb    => s_MemRegWr,
+                                                                        i_WB_wb     => s_WBRegWr,
+                                                                        o_Forward_A => s_ForwardA_sel,
+                                                                        o_Forward_B => s_ForwardB_sel
+                                                                        );
 
-    ForwardA_MUX : mux4t1_N
-        port map(
-            i_S  => s_ForwardA_sel,
-            i_D0 => s_EXA,
-            i_D1 => s_RegWrData,
-            i_D2 => s_MEMALU,
-            i_D3 => x"00000000",        -- Never Used
-            o_O  => s_Forward_A
-            );
+                                                                ForwardA_MUX : mux4t1_N
+                                                                    port map(
+                                                                        i_S  => s_ForwardA_sel,
+                                                                        i_D0 => s_EXA,
+                                                                        i_D1 => s_RegWrData,
+                                                                        i_D2 => s_MEMALU,
+                                                                        i_D3 => x"00000000",  -- Never Used
+                                                                        o_O  => s_Forward_A
+                                                                        );
 
-    ForwardB_MUX : mux4t1_N
-        port map(
-            i_S  => s_ForwardB_sel,
-            i_D0 => s_EXB,
-            i_D1 => s_RegWrData,
-            i_D2 => s_MEMALU,
-            i_D3 => x"00000000",        -- Never used
-            o_O  => s_Forward_B
-            );
+                                                                ForwardB_MUX : mux4t1_N
+                                                                    port map(
+                                                                        i_S  => s_ForwardB_sel,
+                                                                        i_D0 => s_EXB,
+                                                                        i_D1 => s_RegWrData,
+                                                                        i_D2 => s_MEMALU,
+                                                                        i_D3 => x"00000000",  -- Never used
+                                                                        o_O  => s_Forward_B
+                                                                        );
 
-    instHazardUnit : HazardUnit
-        port map(
-            i_jump_ID   => s_jump,
-            i_branch_ID => s_jump_branch,
-            i_rAddrA   => s_ID_Inst(25 downto 21),
-            i_rAddrB   => s_ID_Inst(20 downto 16),
-            i_wAddr_ID => s_EXrtrd,    
-            i_wAddr_EX => s_MEMrtrd,    
-            i_wE_ID    => s_EXRegWr,    
-            i_wE_EX    => s_MemRegWr,  
-            o_stall => s_stall,
-            o_flush => s_flush
-            );
+                                                                instHazardUnit : HazardUnit
+                                                                    port map(
+                                                                        i_jump_ID   => s_jump,
+                                                                        i_branch_ID => s_jump_branch,
+                                                                        i_rAddrA    => s_ID_Inst(25 downto 21),
+                                                                        i_rAddrB    => s_ID_Inst(20 downto 16),
+                                                                        i_wAddr_ID  => s_EXrtrd,
+                                                                        i_wAddr_EX  => s_MEMrtrd,
+                                                                        i_wE_ID     => s_EXRegWr,
+                                                                        i_wE_EX     => s_MemRegWr,
+                                                                        o_stall     => s_stall,
+                                                                        o_flush     => s_flush
+                                                                        );
 
-    s_we      <= not s_stall;
-    s_toFlush <= s_flush or iRST;
+                                                                s_we      <= not s_stall;
+                                                                s_toFlush <= s_flush or iRST;
 
-end structure;
+                                                           end structure;
