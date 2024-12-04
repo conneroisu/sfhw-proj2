@@ -3,6 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity instruction_decoder is
+    
     port(
         i_Instruction : in  std_logic_vector(31 downto 0);  -- [31-00] 
         o_Opcode      : out std_logic_vector(5 downto 0);   -- [31-26] R J I
@@ -14,6 +15,7 @@ entity instruction_decoder is
         o_Imm         : out std_logic_vector(15 downto 0);  -- [15-00] I
         o_Addr        : out std_logic_vector(25 downto 0)   -- [25-00] I
         );
+    
 end entity instruction_decoder;
 
 architecture rtl of instruction_decoder is
