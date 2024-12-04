@@ -18,34 +18,31 @@ entity EX_MEM is
         i_CLK : in std_logic;
         i_RST : in std_logic;
         i_WE  : in std_logic;           -- Write enable for EX/MEM registers
-
         -- Inputs from ID/EX Stage
         i_PC         : in std_logic_vector(N-1 downto 0);
         i_ALUResult  : in std_logic_vector(N-1 downto 0);
         i_ReadData2  : in std_logic_vector(N-1 downto 0);
         i_RegDstAddr : in std_logic_vector(4 downto 0);  -- Destination register address
         i_Zero       : in std_logic;    -- Zero flag from ALU
-
         -- Control Signals
         i_MemRead  : in std_logic;
         i_MemWrite : in std_logic;
         i_Branch   : in std_logic;
         i_MemtoReg : in std_logic;
         i_RegWrite : in std_logic;
-
         -- Outputs to MEM/WB Stage
         o_ALUResult  : out std_logic_vector(N-1 downto 0);
         o_ReadData2  : out std_logic_vector(N-1 downto 0);
         o_RegDstAddr : out std_logic_vector(4 downto 0);
         o_MemtoReg   : out std_logic;
         o_RegWrite   : out std_logic;
-
         -- Outputs for Memory Stage
         o_MemRead     : out std_logic;
         o_MemWrite    : out std_logic;
         o_BranchAddr  : out std_logic_vector(N-1 downto 0);  -- Branch address for PC update
         o_BranchTaken : out std_logic   -- Indicates if branch is taken
         );
+    
 end entity;
 
 architecture structure of EX_MEM is
