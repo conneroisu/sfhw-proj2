@@ -333,7 +333,7 @@ architecture structure of MIPS_Processor is
         s_jump_branch, s_RegDst, s_memToReg, s_ALUSrc, s_j, s_jr, s_jal,
         s_not_clk, s_signed, s_lui, s_addSub, s_shiftType, s_shiftDir, s_bne, s_beq,
         s_branch, s_jump, s_zero, s_CarryOut, s_stall, s_we, s_flush, s_toFlush,
-        s_muxRegWr, s_muxMemWr,
+        s_muxRegWr, s_muxMemWr, s_internal_CarryOut, s_internal_Overflow,
         s_IDhalt, s_IDMemWr, s_IDRegWr, s_ID_memRD,
         s_EXRegDst, s_EXRegWr, s_EXmemToReg, s_EXMemWr, s_EXMemRd, s_EXALUSrc, s_EXjal, s_EXhalt,
         s_MEMjal, s_MEMmemtoReg, s_MEMhalt, s_MEMRegWr,
@@ -478,10 +478,31 @@ begin
             i_ALUOP    => s_EXALUOp,
             i_shamt    => s_EXImmediate(10 downto 6),
             o_resultF  => s_ALUOut,
-            o_CarryOut => s_CarryOut,
-            o_Overflow => s_Ovfl,
+            -- o_CarryOut => s_CarryOut,
+            -- o_Overflow => s_Ovfl,
+            o_CarryOut => s_internal_CarryOut,
+            o_Overflow => s_internal_Overflow,
             o_zero     => s_zero
             );
+
+    instCarrFlowProc : process(iclk, irst, s_internal_CarryOut, s_internal_Overflow, s_CarryOut, s_Ovfl)
+    begin
+        if irst = '1' then
+            s_CarryOut <= '0';
+            s_Ovfl <= '0';
+        elsif rising_edge(iclk) then
+            if s_internal_CarryOut = '1' then
+                s_CarryOut <= '1';
+            else
+                s_CarryOut <= s_CarryOut;
+            end if;
+            if s_internal_Overflow = '1' then
+                s_Ovfl <= '1';
+            else
+                s_Ovfl <= s_Ovfl;
+            end if;
+        end if;
+    end process;
 
     oALUOut <= s_ALUOut;
 
