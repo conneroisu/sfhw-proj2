@@ -163,7 +163,7 @@ begin
         port map(i_CLK, i_RST, i_WE, i_Read2, o_Read2);
 
     ALUOp_reg : dffg_n
-        generic map (4)
+        generic map (3)
         port map(i_CLK, i_RST, i_WE, i_ALUOp, s_ALUOp);
 
     ALUSrc_reg : dffg_n
@@ -273,15 +273,15 @@ begin
 
     ALU22Mux : mux_NtM
         generic map (
-            INPUT_COUNT => 2,
+            INPUT_COUNT => 3,
             DATA_WIDTH  => 32
             )
         port map (
-            inputs => s_Extended& s_ALUOperand2,
+            inputs => s_Extended & s_PreALUOperand2 & s_Extended,
             Sel    => o_ALUSrc,
             output => s_ALUOperand2
             );
-
+        
     -- RT & RD mux w/ i_RegDst selector
     IDEX_RegisterRd : mux_NtM
         generic map (
