@@ -12,7 +12,7 @@ entity instruction_decoder is
         o_Shamt       : out std_logic_vector(4 downto 0);   -- [10-06] R
         o_Funct       : out std_logic_vector(5 downto 0);   -- [05-00] R
         o_Imm         : out std_logic_vector(15 downto 0);  -- [15-00] I
-        o_Addr        : out std_logic_vector(24 downto 0)   -- [25-00] I
+        o_Addr        : out std_logic_vector(25 downto 0)   -- [25-00] I
         );
 end entity instruction_decoder;
 
