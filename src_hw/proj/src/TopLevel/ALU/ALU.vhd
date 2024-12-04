@@ -197,7 +197,7 @@ begin
         ((i_Data_0(31) xor i_Data_1(31)) and (not s_sum(31) and not i_Data_1(31))) when b"11110",
         '0'                                                                        when others;
 
-    --Overflow depends on whether the instruction is for signed/unsigned operation
+    -- Overflow depends on whether the instruction is for signed/unsigned operation
     o_Overflow <= (s_Overflow and i_ALUCtrl(4));
 end mixed;
 
