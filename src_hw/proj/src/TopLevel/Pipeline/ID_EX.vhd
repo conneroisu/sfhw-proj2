@@ -20,6 +20,8 @@ entity ID_EX is
         i_RST        : in  std_logic;
         i_WE         : in  std_logic;
         i_PC         : in  std_logic_vector(N-1 downto 0);
+        i_PCplus4    : in  std_logic_vector(N-1 downto 0);
+        o_PCplus4    : out std_logic_vector(N-1 downto 0);
         -- Control Signals (From Control Unit) [begin]
         --= Stage Specific Signals [begin]
         --         RegDst  ALUOp  ALUSrc
@@ -106,14 +108,13 @@ architecture structure of ID_EX is
 
     component alu is
         port (
-            CLK        : in  std_logic;
-            i_Data1    : in  std_logic_vector(31 downto 0);  -- 32-bit input data 1
-            i_Data2    : in  std_logic_vector(31 downto 0);  -- 32-bit input data 2
-            i_shamt    : in  std_logic_vector(4 downto 0);  --- 5-bit shift amount
-            i_aluOp    : in  std_logic_vector(3 downto 0);  --- 4-bit ALU operation code
-            o_F        : out std_logic_vector(31 downto 0);  -- 32-bit ALU result
-            o_Overflow : out std_logic;
-            o_Zero     : out std_logic
+            i_ALUCtrl  : in  std_logic_vector(4 downto 0);
+            i_Data0    : in  std_logic_vector(N-1 downto 0);
+            i_Data1    : in  std_logic_vector(N-1 downto 0);
+            i_Shamt    : in  std_logic_vector(4 downto 0);
+            o_ALUOut   : out std_logic_vector(N-1 downto 0);
+            o_Cout     : out std_logic;
+            o_Overflow : out std_logic
             );
     end component;
 
@@ -239,6 +240,10 @@ begin
                  o_Q(0) => o_Branch
                  );
 
+    PCplus4_reg : dffg_n
+        generic map (32)
+        port map(i_CLK, i_RST, i_WE, i_PCplus4, s_PCplus4);
+
     ----------------------------------------------------------------------logic
 
     -- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
@@ -303,14 +308,13 @@ begin
 
     ALUinst : alu
         port map (
-            CLK        => i_CLK,
-            i_Data1    => s_ALUOperand1,
-            i_Data2    => s_ALUOperand2,
-            i_shamt    => s_Shamt,
-            i_aluOp    => s_ALUSel,
-            o_F        => o_ALU,
+            i_Data0    => s_ALUOperand1,
+            i_Data1    => s_ALUOperand2,
+            i_Shamt    => s_Shamt,
+            i_ALUCtrl  => s_ALUSel,
             o_Overflow => s_Overflow,
-            o_Zero     => s_Zero
+            o_Cout     => s_Zero,
+            o_ALUOut   => o_ALU
             );
 
 
@@ -320,4 +324,3 @@ begin
         );
 
 end structure;
-

@@ -20,10 +20,9 @@ entity ALU is
 
     port (
         i_ALUCtrl : in std_logic_vector(4 downto 0);
-        i_Data_0  : in std_logic_vector(N-1 downto 0);
-        i_Data_1  : in std_logic_vector(N-1 downto 0);
-        i_shamt   : in std_logic_vector(4 downto 0);
-
+        i_Data0  : in std_logic_vector(N-1 downto 0);
+        i_Data1  : in std_logic_vector(N-1 downto 0);
+        i_Shamt   : in std_logic_vector(4 downto 0);
         o_ALUOut   : out std_logic_vector(N-1 downto 0);
         o_Cout     : out std_logic;
         o_Overflow : out std_logic
@@ -135,21 +134,21 @@ architecture mixed of ALU is
 begin
     s_nil <= x"CCCCCCCC";
 
-    inverter       : inverter_N generic map (N) port map (i_Data_1, s_nData_1);
-    mux_2t1_addsub : mux2t1_N generic map (N) port map (i_ALUCtrl(2), i_Data_1, s_nData_1, s_AddSub_Data);
-    adder          : ripple_adder generic map (N) port map (i_Data_0, s_AddSub_Data, i_ALUCtrl(2), s_sum, o_Cout);
+    inverter       : inverter_N generic map (N) port map (i_Data1, s_nData_1);
+    mux_2t1_addsub : mux2t1_N generic map (N) port map (i_ALUCtrl(2), i_Data1, s_nData_1, s_AddSub_Data);
+    adder          : ripple_adder generic map (N) port map (i_Data0, s_AddSub_Data, i_ALUCtrl(2), s_sum, o_Cout);
 
     inst_Logic : logic_N
-        port map (i_Data_0, i_Data_1, i_ALUCtrl(1 downto 0), s_and_or);
+        port map (i_Data0, i_Data1, i_ALUCtrl(1 downto 0), s_and_or);
 
     slt_mod : size_filter
-        port map (i_Data_0, i_Data_1, s_slt);
+        port map (i_Data0, i_Data1, s_slt);
 
     barrel_shift : barrel_shifter
         generic map (N => 32)
         port map (
-            i_shamt,
-            i_Data_1,
+            i_Shamt,
+            i_Data1,
             (i_ALUCtrl(0) and i_ALUCtrl(1)),
             i_ALUCtrl(0) xor i_ALUCtrl(1),
             s_bshift_out
@@ -188,13 +187,13 @@ begin
     with i_ALUCtrl select
         -- Addition overflow, if input signs are the same and output different then overflow has occurred
         s_Overflow <= (
-            (i_Data_0(31) and i_Data_1(31) and (not s_sum(31)))
+            (i_Data0(31) and i_Data1(31) and (not s_sum(31)))
             or
-            ((not i_Data_0(31)) and (not i_Data_1(31)) and s_sum(31))) when b"11010",
+            ((not i_Data0(31)) and (not i_Data1(31)) and s_sum(31))) when b"11010",
         -- Subtraction overflow, if input signs are different, and result has same sign of input data 1 then overflow has occurred
-        ((i_Data_0(31) xor i_Data_1(31)) and (s_sum(31) and i_Data_1(31)))
+        ((i_Data0(31) xor i_Data1(31)) and (s_sum(31) and i_Data1(31)))
         or
-        ((i_Data_0(31) xor i_Data_1(31)) and (not s_sum(31) and not i_Data_1(31))) when b"11110",
+        ((i_Data0(31) xor i_Data1(31)) and (not s_sum(31) and not i_Data1(31))) when b"11110",
         '0'                                                                        when others;
 
     -- Overflow depends on whether the instruction is for signed/unsigned operation

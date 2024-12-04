@@ -22,40 +22,59 @@ architecture Behavioral of tb_ID_EX is
     component ID_EX is
         generic(N : integer := 32);
 
-        port (
-            i_CLK        : in  std_logic;
-            i_RST        : in  std_logic;
-            i_WE         : in  std_logic;
-            i_PC         : in  std_logic_vector(N-1 downto 0);
-            i_PCplus4    : in  std_logic_vector(N-1 downto 0);
-            i_RegDst     : in  std_logic;  -- Control Unit Destination Register
-            i_ALUOp      : in  std_logic_vector(3 downto 0);  -- ALU operation from control unit.
-            i_ALUSrc     : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
-            i_MemRead    : in  std_logic;  -- Memory Read control
-            i_MemWrite   : in  std_logic;  -- Memory Write control
-            i_MemtoReg   : in  std_logic;  -- Memory to Register control
-            i_RegWrite   : in  std_logic;  -- Register Write control
-            i_Branch     : in  std_logic;  -- Branch control
-            i_Extended   : in  std_logic_vector(N-1 downto 0);
-            i_Read1      : in  std_logic_vector(N-1 downto 0);
-            i_Read2      : in  std_logic_vector(N-1 downto 0);
-            i_ForwardA   : in  std_logic_vector(1 downto 0);
-            i_ForwardB   : in  std_logic_vector(1 downto 0);
-            i_WriteData  : in  std_logic_vector(N-1 downto 0);  -- Data from the end of writeback stage's mux
-            i_DMem1      : in  std_logic_vector(N-1 downto 0);  -- Data from the first input to the DMem output of ex/mem
-            i_Halt       : in  std_logic_vector(0 downto 0);
-            o_ALU        : out std_logic_vector(N-1 downto 0);
-            o_ALUSrc     : out std_logic_vector(1 downto 0);
-            o_MemRead    : out std_logic;
-            o_MemWrite   : out std_logic;
-            o_MemtoReg   : out std_logic;
-            o_RegWrite   : out std_logic;
-            o_Branch     : out std_logic;
-            o_BranchAddr : out std_logic_vector(N-1 downto 0);
-            o_Read1      : out std_logic_vector(N-1 downto 0);
-            o_Read2      : out std_logic_vector(N-1 downto 0);
-            o_Halt       : out std_logic_vector(0 downto 0)
-            );
+    port (
+        -- Common Stage Signals [begin]
+        i_CLK        : in  std_logic;
+        i_RST        : in  std_logic;
+        i_WE         : in  std_logic;
+        i_PC         : in  std_logic_vector(N-1 downto 0);
+        i_PCplus4    : in  std_logic_vector(N-1 downto 0);
+        o_PCplus4    : out std_logic_vector(N-1 downto 0);
+        -- Control Signals (From Control Unit) [begin]
+        --= Stage Specific Signals [begin]
+        --         RegDst  ALUOp  ALUSrc
+        -- R-Type:   1      10      00
+        -- lw    :   0      00      01
+        -- sw    :   x      00      01
+        -- beq   :   x      01      00
+        i_RegDst     : in  std_logic;   -- Control Unit Destination Register
+        i_ALUOp      : in  std_logic_vector(2 downto 0);  -- ALU operation from control unit.
+        i_ALUSrc     : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
+        i_MemRead    : in  std_logic;   -- Memory Read control
+        i_MemWrite   : in  std_logic;   -- Memory Write control
+        i_MemtoReg   : in  std_logic;   -- Memory to Register control
+        i_RegWrite   : in  std_logic;   -- Register Write control
+        i_Branch     : in  std_logic;   -- Branch control
+        -- Future Stage Signals [begin]
+        -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png
+        o_ALU        : out std_logic_vector(N-1 downto 0);
+        o_ALUSrc     : out std_logic_vector(1 downto 0);
+        o_MemRead    : out std_logic;
+        o_MemWrite   : out std_logic;
+        o_MemtoReg   : out std_logic;
+        o_RegWrite   : out std_logic;
+        o_Branch     : out std_logic;
+        -- Input Signals [begin]
+        --= Register File Signals [begin]
+        i_Read1      : in  std_logic_vector(N-1 downto 0);
+        i_Read2      : in  std_logic_vector(N-1 downto 0);
+        o_Read1      : out std_logic_vector(N-1 downto 0);
+        o_Read2      : out std_logic_vector(N-1 downto 0);
+        i_ForwardA   : in  std_logic_vector(1 downto 0);
+        i_ForwardB   : in  std_logic_vector(1 downto 0);
+        --= Forwarding Signals (sent to Forward Unit) [begin]
+        i_WriteData  : in  std_logic_vector(N-1 downto 0);  -- Data from the end of writeback stage's mux
+        i_DMem1      : in  std_logic_vector(N-1 downto 0);  -- Data from the first input to the DMem output of ex/mem
+        --= Instruction Signals [begin]
+        i_Rs         : in  std_logic_vector(4 downto 0);
+        i_Rt         : in  std_logic_vector(4 downto 0);
+        i_Rd         : in  std_logic_vector(4 downto 0);
+        i_Shamt      : in  std_logic_vector(4 downto 0);
+        i_Funct      : in  std_logic_vector(5 downto 0);
+        i_Imm        : in  std_logic_vector(15 downto 0);
+        i_Extended   : in  std_logic_vector(31 downto 0);
+        o_BranchAddr : out std_logic_vector(31 downto 0)
+        );
 
     end component;
 
@@ -72,7 +91,6 @@ architecture Behavioral of tb_ID_EX is
     signal i_Read1, i_Read2       : std_logic_vector(31 downto 0);
     signal i_ForwardA, i_ForwardB : std_logic_vector(1 downto 0);
     signal i_WriteData, i_DMem1   : std_logic_vector(31 downto 0);
-    signal i_Halt                 : std_logic_vector(0 downto 0);
     signal i_MemRead, i_MemWrite  : std_logic;
     signal i_MemtoReg, i_RegWrite : std_logic;
     signal i_Branch               : std_logic;
@@ -88,7 +106,6 @@ architecture Behavioral of tb_ID_EX is
     signal o_BranchAddr : std_logic_vector(31 downto 0);
     signal o_Read1      : std_logic_vector(31 downto 0);
     signal o_Read2      : std_logic_vector(31 downto 0);
-    signal o_Halt       : std_logic_vector(0 downto 0);
 
 
     -- Add signals for expected values
@@ -180,7 +197,6 @@ begin
             i_ForwardB   => i_ForwardB,
             i_WriteData  => i_WriteData,
             i_DMem1      => i_DMem1,
-            i_Halt       => i_Halt,
             o_ALU        => o_ALU,
             o_ALUSrc     => o_ALUSrc,
             o_MemRead    => o_MemRead,
@@ -190,8 +206,7 @@ begin
             o_Branch     => o_Branch,
             o_Read1      => o_Read1,
             o_Read2      => o_Read2,
-            o_BranchAddr => o_BranchAddr,
-            o_Halt       => o_Halt
+            o_BranchAddr => o_BranchAddr
             );
 
     p_tb : process is
@@ -226,7 +241,6 @@ begin
         i_ForwardB  <= "00";
         i_WriteData <= x"00000000";
         i_DMem1     <= x"00000000";
-        i_Halt      <= "0";
 
         -- Initialize expected signals
         s_expected_alu        <= x"00000000";
