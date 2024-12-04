@@ -12,6 +12,7 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
 
 entity HazardUnit is
+    
     port (
         i_IFID_rs            : in  std_logic_vector(4 downto 0);
         i_IFID_rt            : in  std_logic_vector(4 downto 0);
@@ -28,6 +29,7 @@ entity HazardUnit is
         o_EXMEM_squash       : out std_logic;
         o_PC_pause           : out std_logic
         );
+
 end HazardUnit;
 
 architecture mixed of HazardUnit is
