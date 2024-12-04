@@ -23,12 +23,6 @@ entity ID_EX is
         i_PCplus4    : in  std_logic_vector(N-1 downto 0);
         o_PCplus4    : out std_logic_vector(N-1 downto 0);
         -- Control Signals (From Control Unit) [begin]
-        --= Stage Specific Signals [begin]
-        --         RegDst  ALUOp  ALUSrc
-        -- R-Type:   1      10      00
-        -- lw    :   0      00      01
-        -- sw    :   x      00      01
-        -- beq   :   x      01      00
         i_RegDst     : in  std_logic;   -- Control Unit Destination Register
         i_ALUOp      : in  std_logic_vector(2 downto 0);  -- ALU operation from control unit.
         i_ALUSrc     : in  std_logic_vector(1 downto 0);  -- ALU source from control unit.
@@ -38,7 +32,6 @@ entity ID_EX is
         i_RegWrite   : in  std_logic;   -- Register Write control
         i_Branch     : in  std_logic;   -- Branch control
         -- Future Stage Signals [begin]
-        -- see: https://private-user-images.githubusercontent.com/88785126/384028866-8e8d5e84-ca22-462e-8b85-ea1c00c43e8f.png
         o_ALU        : out std_logic_vector(N-1 downto 0);
         o_ALUSrc     : out std_logic_vector(1 downto 0);
         o_MemRead    : out std_logic;
@@ -53,15 +46,6 @@ entity ID_EX is
         o_Read1      : out std_logic_vector(N-1 downto 0);
         o_Read2      : out std_logic_vector(N-1 downto 0);
         -- Forward Unit Signals [begin]
-        --= Forwarded Signals (received from Forward Unit) [begin]
-        -- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
-        -- MuxInputs    -> {Source} -> {Explanation}
-        -- ForwardA=00  -> ID/EX    -> operand from registerfile
-        -- ForwardA=10  -> EX/MEM   -> operand forwarded from prior alu result
-        -- ForwardA=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
-        -- ForwardB=00  -> ID/EX    -> operand from registerfile
-        -- ForwardB=10  -> EX/MEM   -> operand forwarded from prior alu result
-        -- ForwardB=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
         i_ForwardA   : in  std_logic_vector(1 downto 0);
         i_ForwardB   : in  std_logic_vector(1 downto 0);
         --= Forwarding Signals (sent to Forward Unit) [begin]
@@ -80,6 +64,21 @@ entity ID_EX is
 
 end entity;
 
+--= Forwarded Signals (received from Forward Unit) [begin]
+-- ForwardA & ForwardB determine 1st & 2nd alu operands respectively
+-- MuxInputs    -> {Source} -> {Explanation}
+-- ForwardA=00  -> ID/EX    -> operand from registerfile
+-- ForwardA=10  -> EX/MEM   -> operand forwarded from prior alu result
+-- ForwardA=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
+-- ForwardB=00  -> ID/EX    -> operand from registerfile
+-- ForwardB=10  -> EX/MEM   -> operand forwarded from prior alu result
+-- ForwardB=01  -> MEM/WB   -> operand forwarded from dmem or earlier alu result
+--= Stage Specific Signals [begin]
+--         RegDst  ALUOp  ALUSrc
+-- R-Type:   1      10      00
+-- lw    :   0      00      01
+-- sw    :   x      00      01
+-- beq   :   x      01      00
 architecture structure of ID_EX is
 
     component dffg_n is
@@ -173,7 +172,7 @@ begin
 
     PCP4_reg : dffg_n                   -- output of adder, output pc+4
         generic map (32)
-        port map(i_Clk, i_RST, i_WE, s_PCplus4, s_PCplus4);
+        port map(i_Clk, i_RST, i_WE, i_PCplus4, o_PCplus4);
 
     SignExtend_reg : dffg_n
         generic map (32)
@@ -239,10 +238,6 @@ begin
                  i_D(0) => i_Branch,
                  o_Q(0) => o_Branch
                  );
-
-    PCplus4_reg : dffg_n
-        generic map (32)
-        port map(i_CLK, i_RST, i_WE, i_PCplus4, s_PCplus4);
 
     ----------------------------------------------------------------------logic
 
@@ -320,7 +315,7 @@ begin
 
     -- Add 2x shifted extended value to PCplus4
     o_BranchAddr <= std_logic_vector(
-        unsigned(std_logic_vector(shift_left(unsigned(i_Extended), 2))) + unsigned(s_PCplus4)
+        unsigned(std_logic_vector(shift_left(unsigned(i_Extended), 2))) + unsigned(o_PCplus4)
         );
 
 end structure;
