@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 
 entity instruction_decoder is
     port(
-        i_Instruction : in std_logic_vector(31 downto 0);  -- [31-00] 
+        i_Instruction : in  std_logic_vector(31 downto 0);  -- [31-00] 
         o_Opcode      : out std_logic_vector(5 downto 0);   -- [31-26] R J I
         o_Rs          : out std_logic_vector(4 downto 0);   -- [25-21] R I
         o_Rt          : out std_logic_vector(4 downto 0);   -- [20-16] R I
@@ -12,7 +12,7 @@ entity instruction_decoder is
         o_Shamt       : out std_logic_vector(4 downto 0);   -- [10-06] R
         o_Funct       : out std_logic_vector(5 downto 0);   -- [05-00] R
         o_Imm         : out std_logic_vector(15 downto 0);  -- [15-00] I
-        o_Addr        : out std_logic_vector(24 downto 0)  -- [25-00] I
+        o_Addr        : out std_logic_vector(25 downto 0)   -- [25-00] I
         );
 end entity instruction_decoder;
 
