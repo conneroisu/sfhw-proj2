@@ -40,15 +40,14 @@ architecture structure of MIPS_Processor is
     signal s_Ovfl : std_logic;
 
     component mem is
-        generic (
-            ADDR_WIDTH : integer;
-            DATA_WIDTH : integer);
+        generic (ADDR_WIDTH, DATA_WIDTH : integer);
         port (
             clk  : in  std_logic;
             addr : in  std_logic_vector((ADDR_WIDTH - 1) downto 0);
             data : in  std_logic_vector((DATA_WIDTH - 1) downto 0);
             we   : in  std_logic := '1';
-            q    : out std_logic_vector((DATA_WIDTH - 1) downto 0));
+            q    : out std_logic_vector((DATA_WIDTH - 1) downto 0)
+            );
     end component;
 
     component MIPS_regfile is
@@ -208,11 +207,12 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component MIPS_extender is
-        port (
-            i_sign : in  std_logic;  --determines if the value must be sign or zero extended
-            i_in   : in  std_logic_vector(15 downto 0);  --value to be extended
-            o_O    : out std_logic_vector(31 downto 0));
+    component extender16t32 is
+        port(
+            i_I : in  std_logic_vector(15 downto 0);  -- 16 bit immediate
+            i_C : in  std_logic;        -- signed extender or unsigned
+            o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended immediate
+            );
     end component;
 
     component mux2t1_N is
@@ -452,11 +452,11 @@ begin
             o_jump_branch => s_jump_branch
             );
 
-    SignExtend : MIPS_extender
+    SignExtend : extender16t32
         port map(
-            i_sign => s_signed,
-            i_in   => s_ID_Inst(15 downto 0),
-            o_O    => s_immediate
+            i_C => s_signed,
+            i_I => s_ID_Inst(15 downto 0),
+            o_O => s_immediate
             );
 
     immediateMUX : mux2t1_N
