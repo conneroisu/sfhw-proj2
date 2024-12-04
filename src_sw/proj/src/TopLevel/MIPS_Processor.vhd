@@ -16,22 +16,17 @@ entity MIPS_Processor is
 end MIPS_Processor;
 
 architecture structure of MIPS_Processor is
-    -- Required data memory signals
     signal s_DMemWr       : std_logic;
     signal s_DMemAddr     : std_logic_vector(N - 1 downto 0);
     signal s_DMemData     : std_logic_vector(N - 1 downto 0);
     signal s_DMemOut      : std_logic_vector(N - 1 downto 0);
-    -- Required register file signals 
     signal s_RegWr        : std_logic;
     signal s_RegWrAddr    : std_logic_vector(4 downto 0);
     signal s_RegWrData    : std_logic_vector(N - 1 downto 0);
-    -- Required instruction memory signals
     signal s_IMemAddr     : std_logic_vector(N - 1 downto 0);  -- Do not assign this signal, assign to s_NextInstAddr instead
     signal s_NextInstAddr : std_logic_vector(N - 1 downto 0);
     signal s_Inst         : std_logic_vector(N - 1 downto 0);
-    -- Required halt signal -- for simulation
     signal s_Halt         : std_logic;
-    -- Required overflow signal -- for overflow exception detection
     signal s_Ovfl         : std_logic;
 
     component mem is
@@ -324,7 +319,7 @@ begin
     s_RegWr     <= s_WBRegWr;
     s_RegWrAddr <= s_WBrtrd;
 
-    instRegFile : RegisterFile
+    instRegisterFile : RegisterFile
         port map(
             i_wD  => s_RegWrData,
             i_wA  => s_RegWrAddr,
@@ -337,7 +332,7 @@ begin
             o_d2  => s_RegB
             );
 
-    rtrdMUX : mux2t1_N
+    instRtRdMux2t1_5 : mux2t1_N
         generic map(N => 5)
         port map(
             i_S  => s_EXRegDst,
@@ -346,7 +341,7 @@ begin
             o_O  => s_rtrd
             );
 
-    writeMUX : mux2t1_N
+    instExWriteMux2t1_5 : mux2t1_N
         generic map(N => 5)
         port map(
             i_S  => s_EXjal,
@@ -389,7 +384,7 @@ begin
             o_Q   => s_NextInstAddr
             );
 
-    PCRESET : mux2t1_N
+    instRSTPC : mux2t1_N
         generic map(N => 32)
         port map(
             i_S  => iRST,
@@ -397,7 +392,8 @@ begin
             i_D1 => x"00400000",
             o_O  => s_PCR
             );
-    NEXTPC : mux2t1_N
+
+    instNXTPC : mux2t1_N
         generic map(N => 32)
         port map(
             i_S  => s_jump_branch,
@@ -406,7 +402,7 @@ begin
             o_O  => s_nextPC
             );
 
-    Fetch : FetchUnit
+    instFetch : FetchUnit
         port map(
             i_PC4         => s_ID_PC4,
             i_branch_addr => s_immediate,
@@ -422,14 +418,14 @@ begin
             o_jump_branch => s_jump_branch
             );
 
-    SignExtend : extender16t32
+    instSignExtender: extender16t32
         port map(
             i_C => s_signed,
             i_I => s_ID_Inst(15 downto 0),
             o_O => s_immediate
             );
 
-    mainALU : ALU
+    instALU : ALU
         generic map(N => 32)
         port map(
             i_A        => s_A,
@@ -463,7 +459,7 @@ begin
 
     oALUOut <= s_ALUOut;
 
-    memtoreg : mux2t1_N
+    instMemToRegMux : mux2t1_N
         generic map(N => 32)
         port map(
             i_S  => s_WBmemToReg,
@@ -502,7 +498,7 @@ begin
     instIDEX : ID_EX
         port map(
             i_CLK          => iCLK,
-            i_RST          => '0',
+            i_RST          => iRST,
             i_PC4          => s_ID_PC4,
             i_readA        => s_RegA,
             i_readB        => s_RegB,
