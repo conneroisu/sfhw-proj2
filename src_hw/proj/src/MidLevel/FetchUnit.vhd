@@ -31,7 +31,7 @@ architecture structural of FetchUnit is
             o_O  : out std_logic_vector(N - 1 downto 0));
     end component;
 
-    component Barrel_Shifter is
+    component BarrelShifter is
         port (
             i_data             : in  std_logic_vector(N - 1 downto 0);
             i_logic_arithmetic : in  std_logic;  -- 0 for logical, 1 for arithmetic (sign bit)
@@ -85,7 +85,7 @@ begin
     s_bne_branch <= s_NOTzero xor i_bne;
 
     --Shift the branch address by 2
-    Branch_Shifter : Barrel_Shifter
+    instBranchShifter : BarrelShifter
         port map(
             i_data             => i_branch_addr,
             i_logic_arithmetic => '0',      --always logical shift
@@ -94,7 +94,7 @@ begin
             o_Out              => s_branch_addr_shifted
             );
 
-    PC_Branch_Adder : Full_Adder_N
+    instPCBranchAdder : Full_Adder_N
         port map(
             i_C => '0',                 --no carry
             i_A => i_PC4,
@@ -102,7 +102,7 @@ begin
             o_S => s_PC_branch
             );
 
-    Jump_Address_Shift : Barrel_Shifter
+    instJumpAddressShift : BarrelShifter
         port map(
             i_data             => i_jump_addr,
             i_logic_arithmetic => '0',      --always logical shift

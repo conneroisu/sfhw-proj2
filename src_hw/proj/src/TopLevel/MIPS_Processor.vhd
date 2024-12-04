@@ -478,8 +478,6 @@ begin
             i_ALUOP    => s_EXALUOp,
             i_shamt    => s_EXImmediate(10 downto 6),
             o_resultF  => s_ALUOut,
-            -- o_CarryOut => s_CarryOut,
-            -- o_Overflow => s_Ovfl,
             o_CarryOut => s_internal_CarryOut,
             o_Overflow => s_internal_Overflow,
             o_zero     => s_zero

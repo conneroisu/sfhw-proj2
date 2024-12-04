@@ -190,7 +190,7 @@ begin
         end case;
     end process;
 
-    --selects shamt or 16(used for lui)
+    -- selects shamt or 16(used for lui)
     luiMUX : mux2t1_N
         generic map(N => 5)
         port map(
