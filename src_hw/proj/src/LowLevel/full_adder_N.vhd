@@ -26,21 +26,21 @@ architecture structural of Full_Adder_N is
             o_C : out std_logic);
     end component;
 
-    signal carry : std_logic_vector(N downto 0);
+    signal s_carry : std_logic_vector(N downto 0);
 begin
 
-    carry(0)   <= i_C;
-    o_C        <= carry(N);
-    o_Overflow <= carry(N) xor carry(N - 1);
+    s_carry(0)   <= i_C;
+    o_C        <= s_carry(N);
+    o_Overflow <= s_carry(N) xor s_carry(N - 1);
 
 
     G_NBit_FullAdder : for j in 0 to N - 1 generate
         FullAdderI : Full_Adder port map(
-            i_C => carry(j),            -- previous out carry = new in carry
+            i_C => s_carry(j),            -- previous out carry = new in carry
             i_A => i_A(j),  -- ith instance's data 0 input = jth data 0 input.
             i_B => i_B(j),  -- ith instance's data 1 input = jth data 1 input.
             o_S => o_S(j),  -- ith instance's data output = jth data output.
-            o_C => carry(j + 1)  -- ith instance's data output = jth data output.
+            o_C => s_carry(j + 1)  -- ith instance's data output = jth data output.
             );
     end generate G_NBit_FullAdder;
 
