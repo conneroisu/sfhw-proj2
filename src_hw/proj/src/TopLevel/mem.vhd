@@ -1,10 +1,3 @@
--- <header>
--- Author(s): Conner Ohnesorge
--- Name: 
--- Notes:
---      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
--- </header>
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
