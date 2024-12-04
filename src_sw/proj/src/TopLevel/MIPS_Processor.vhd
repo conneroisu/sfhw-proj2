@@ -350,7 +350,7 @@ begin
             o_O  => s_EXrtrd
             );
 
-    instControl : ControlUnit
+    instControlUnit : ControlUnit
         port map(
             i_opCode    => s_ID_Inst(31 downto 26),
             i_funct     => s_ID_Inst(5 downto 0),
@@ -477,7 +477,7 @@ begin
             o_O  => s_RegWrData
             );
 
-    PC4Add : Full_Adder_N
+    instPC4Adder : Full_Adder_N
         port map(
             i_A => s_NextInstAddr,
             i_B => x"00000004",
