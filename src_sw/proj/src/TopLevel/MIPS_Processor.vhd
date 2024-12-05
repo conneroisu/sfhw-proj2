@@ -244,9 +244,9 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    signal s_ALUOp : std_logic_vector(3 downto 0);
+    signal s_ALUOp, s_EXALUOp : std_logic_vector(3 downto 0);
 
-    signal s_EXrt, s_EXrd, s_EXrtrd    : std_logic_vector(4 downto 0);
+    signal s_EXrt, s_EXrd, s_EXrtrd     : std_logic_vector(4 downto 0);
     signal s_rtrd, s_MEMrtrd, s_WBrtrd : std_logic_vector(4 downto 0);
 
     signal s_RegA,
@@ -443,7 +443,7 @@ begin
         port map(
             i_A        => s_EXA,
             i_B        => s_ALUB,
-            i_ALUOP    => s_ALUOp,
+            i_ALUOP    => s_EXALUOp,
             i_shamt    => s_EXImmediate(10 downto 6),
             o_resultF  => s_ALUOut,
             o_CarryOut => s_internal_CarryOut,
@@ -537,7 +537,7 @@ begin
             o_memToReg => s_EXmemToReg,
             o_MemWrite => s_EXMemWr,
             o_ALUSrc   => s_EXALUSrc,
-            o_ALUOp    => s_ALUOp,
+            o_ALUOp    => s_EXALUOp,
             o_jal      => s_EXjal,
             o_halt     => s_EXhalt
             );
