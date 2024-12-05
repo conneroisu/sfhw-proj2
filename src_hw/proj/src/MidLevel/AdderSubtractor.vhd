@@ -46,15 +46,16 @@ architecture structural of AdderSubtractor is
             );
     end component;
 
-    signal s_notB   : std_logic_vector(N - 1 downto 0);
-    signal s_muxedB : std_logic_vector(N - 1 downto 0);
+    signal s_NotB   : std_logic_vector(N - 1 downto 0);
+    signal s_MuxedB : std_logic_vector(N - 1 downto 0);
+    
 begin
 
     instOnesComps : comp1_N
         generic map(N => 32)
         port map(
             i_D0 => i_B,
-            o_O  => s_notB
+            o_O  => s_NotB
             );
 
     instMux2t1s : mux2t1_N
@@ -62,15 +63,15 @@ begin
         port map(
             i_S  => nAdd_Sub,
             i_D0 => i_B,
-            i_D1 => s_notB,
-            o_O  => s_muxedB
+            i_D1 => s_NotB,
+            o_O  => s_MuxedB
             );
 
     instFullAdders : Full_Adder_N
         generic map(N => 32)
         port map(
             i_A        => i_A,
-            i_B        => s_muxedB,
+            i_B        => s_MuxedB,
             i_C        => nAdd_Sub,
             o_S        => o_S,
             o_C        => o_C,
