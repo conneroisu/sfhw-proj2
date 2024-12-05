@@ -269,7 +269,7 @@ architecture structure of MIPS_Processor is
         s_Jump,
         s_Zero,
         s_CarryOut,
-        s_internal_CarryOut,
+        s_InternalCarryOut,
         s_InternalOverflow,
         s_IDhalt,
         s_IDMemWr,
@@ -304,9 +304,11 @@ architecture structure of MIPS_Processor is
         s_ID_Inst,
         s_ID_PC4,
         s_EXA,
-        s_EXB, s_EXImmediate,
+        s_EXB, 
+        s_EXImmediate,
         s_ALUOut,
-        s_MEMALU, s_WBALU,
+        s_MEMALU, 
+        s_WBALU,
         s_WBMEMOut : std_logic_vector(31 downto 0);
 
 begin
@@ -447,18 +449,18 @@ begin
             i_ALUOP    => s_EXALUOp,
             i_shamt    => s_EXImmediate(10 downto 6),
             o_resultF  => s_ALUOut,
-            o_CarryOut => s_internal_CarryOut,
+            o_CarryOut => s_InternalCarryOut,
             o_Overflow => s_InternalOverflow,
             o_zero     => s_Zero
             );
 
-    instCarrFlowProc : process(iclk, irst, s_internal_CarryOut, s_InternalOverflow, s_CarryOut, s_Ovfl)
+    instCarrFlowProc : process(iclk, irst, s_InternalCarryOut, s_InternalOverflow, s_CarryOut, s_Ovfl)
     begin
         if irst = '1' then
             s_CarryOut <= '0';
             s_Ovfl     <= '0';
         elsif rising_edge(iclk) then
-            if s_internal_CarryOut = '1' then
+            if s_InternalCarryOut = '1' then
                 s_CarryOut <= '1';
             else
                 s_CarryOut <= s_CarryOut;
