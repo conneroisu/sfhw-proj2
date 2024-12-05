@@ -37,8 +37,8 @@ architecture mixed of ALU is
             i_data             : in  std_logic_vector(N - 1 downto 0);
             i_logic_arithmetic : in  std_logic;  -- 0 for logical, 1 for arithmetic (sign bit)
             i_left_right       : in  std_logic;  -- 0 for shift left, 1 for shift right
-            i_shamt            : in  std_logic_vector(4 downto 0);  -- Shift amount.
-            o_Out              : out std_logic_vector(N - 1 downto 0)  -- Output of the shifter
+            i_shamt            : in  std_logic_vector(4 downto 0); 
+            o_Out              : out std_logic_vector(N - 1 downto 0)
             );
     end component;
 
