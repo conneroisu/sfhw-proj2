@@ -283,7 +283,7 @@ architecture structure of MIPS_Processor is
         s_EXhalt,
         s_MEMjal,
         s_MEMMemToReg,
-        s_MEMhalt,
+        s_MEMHalt,
         s_MEMRegWr,
         s_WBjal,
         s_WBMemToReg,
@@ -563,8 +563,8 @@ begin
             o_WrAddr   => s_MEMrtrd,
             o_MemWr    => s_DMemWr,
             o_MemtoReg => s_MEMMemToReg,
-            o_Halt     => s_MEMhalt,
-            o_RegWr    => s_MemRegWr,
+            o_Halt     => s_MEMHalt,
+            o_RegWr    => s_MEMRegWr,
             o_jal      => s_MEMjal,
             o_PC4      => s_MEM_PC4
             );
