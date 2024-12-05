@@ -20,7 +20,7 @@ end ALU;
 architecture mixed of ALU is
 
     component AdderSubtractor is
-        generic (N : integer := 32);  -- Generic of type integer for input/output data width. Default value is 32.
+        generic (N : integer := 32);
         port (
             nAdd_Sub : in  std_logic;
             i_A      : in  std_logic_vector(N - 1 downto 0);
@@ -32,7 +32,7 @@ architecture mixed of ALU is
     end component;
 
     component BarrelShifter is
-        generic (N : integer := 32);  -- Generic of type integer for input/output data width. Default value is 32.
+        generic (N : integer := 32);
         port (
             i_data             : in  std_logic_vector(N - 1 downto 0);
             i_logic_arithmetic : in  std_logic;  -- 0 for logical, 1 for arithmetic (sign bit)
@@ -101,7 +101,7 @@ architecture mixed of ALU is
     signal s_shamt  : std_logic_vector(4 downto 0);
     signal s_select : std_logic_vector(2 downto 0);  --final mux select
 begin
-  -- A single combinational process to handle all signals derived from i_ALUOp
+    -- A single combinational process to handle all signals derived from i_ALUOp
     process(i_ALUOp)
     begin
         -- Default values to avoid latches
@@ -114,71 +114,71 @@ begin
         s_select           <= "000";
 
         case i_ALUOp is
-            when "1110" =>  -- beq
+            when "1110" =>              -- beq
                 s_nAdd_Sub <= '1';
                 s_unsigned <= '1';
                 s_select   <= "000";
 
-            when "1101" =>  -- bne
+            when "1101" =>              -- bne
                 s_nAdd_Sub <= '1';
                 s_bne      <= '1';
                 s_unsigned <= '1';
                 s_select   <= "000";
 
-            when "0001" =>  -- addu
+            when "0001" =>              -- addu
                 s_unsigned <= '0';
                 s_select   <= "000";
 
-            when "0011" =>  -- subu
+            when "0011" =>              -- subu
                 s_nAdd_Sub <= '1';
                 s_unsigned <= '0';
                 s_select   <= "000";
 
-            when "0010" =>  -- add
+            when "0010" =>              -- add
                 s_unsigned <= '1';
                 s_select   <= "000";
 
-            when "1111" =>  -- sub
+            when "1111" =>              -- sub
                 s_nAdd_Sub <= '1';
                 s_unsigned <= '1';
                 s_select   <= "000";
 
-            when "0100" =>  -- and
+            when "0100" =>              -- and
                 s_unsigned <= '1';
                 s_select   <= "011";
 
-            when "0101" =>  -- or
+            when "0101" =>              -- or
                 s_unsigned <= '1';
                 s_select   <= "010";
 
-            when "0110" =>  -- xor
+            when "0110" =>              -- xor
                 s_unsigned <= '1';
                 s_select   <= "100";
 
-            when "0111" =>  -- nor
+            when "0111" =>              -- nor
                 s_unsigned <= '1';
                 s_select   <= "101";
 
-            when "1001" =>  -- lui
+            when "1001" =>              -- lui
                 s_lui      <= '1';
                 s_unsigned <= '1';
                 s_select   <= "001";
 
-            when "1000" =>  -- slt
+            when "1000" =>              -- slt
                 s_nAdd_Sub <= '1';
                 s_unsigned <= '1';
                 s_select   <= "110";
 
-            when "1010" =>  -- sll
+            when "1010" =>              -- sll
                 s_unsigned <= '1';
                 s_select   <= "001";
 
-            when "1011" =>  -- srl
+            when "1011" =>              -- srl
                 s_unsigned   <= '1';
                 s_left_right <= '1';
                 s_select     <= "001";
 
-            when "1100" =>  -- sra
+            when "1100" =>              -- sra
                 s_unsigned         <= '1';
                 s_left_right       <= '1';
                 s_logic_arithmetic <= '1';
@@ -191,7 +191,7 @@ begin
     end process;
 
     -- selects shamt or 16(used for lui)
-    luiMUX : mux2t1_N
+    instLuiMux : mux2t1_N
         generic map(N => 5)
         port map(
             i_S  => s_lui,
@@ -200,7 +200,7 @@ begin
             o_O  => s_shamt
             );
 
-    instShifter : BarrelShifter
+    instBarrelShifter : BarrelShifter
         port map(
             i_data             => i_B,
             i_shamt            => s_shamt,
