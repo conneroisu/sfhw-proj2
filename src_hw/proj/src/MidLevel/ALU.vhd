@@ -70,16 +70,17 @@ architecture mixed of ALU is
             i_D5 : in  std_logic_vector(31 downto 0);
             i_D6 : in  std_logic_vector(31 downto 0);
             i_D7 : in  std_logic_vector(31 downto 0);
-            o_O  : out std_logic_vector(31 downto 0));
+            o_O  : out std_logic_vector(31 downto 0)
+        );
     end component;
 
-    --computes or, and, xor, and nor
     component logic_N is
         generic(N : integer := 32);
         port (
             i_A                       : in  std_logic_vector(31 downto 0);
             i_B                       : in  std_logic_vector(31 downto 0);
-            o_OR, o_AND, o_XOR, o_NOR : out std_logic_vector(31 downto 0));
+            o_OR, o_AND, o_XOR, o_NOR : out std_logic_vector(31 downto 0)
+        );
     end component;
 
     signal s_Adder_Out,
