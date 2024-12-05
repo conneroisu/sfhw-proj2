@@ -258,10 +258,10 @@ architecture structure of MIPS_Processor is
         s_WBMEMOut, s_trueINST : std_logic_vector(31 downto 0);
 
     signal
-        s_jump_branch, s_RegDst, s_memToReg, s_ALUSrc, s_j, s_jr, s_jal,
-        s_signed, s_lui, s_addSub, s_shiftType, s_shiftDir, s_bne, s_beq,
-        s_branch, s_jump, s_zero, s_CarryOut,
-        s_muxRegWr, s_muxMemWr, s_internal_CarryOut, s_internal_Overflow,
+        s_JumpBranch, s_RegDst, s_memToReg, s_ALUSrc, s_J, s_jr, s_Jal,
+        s_Signed, s_Lui, s_Operator, s_ShiftType, s_ShiftDir, s_Bne, s_Beq,
+        s_Branch, s_Jump, s_Zero, s_CarryOut,
+        s_MuxRegWr, s_muxMemWr, s_internal_CarryOut, s_InternalOverflow,
         s_IDhalt, s_IDMemWr, s_IDRegWr, s_ID_memRD,
         s_EXRegDst, s_EXRegWr, s_EXmemToReg, s_EXMemWr, s_EXMemRd, s_EXALUSrc, s_EXjal, s_EXhalt,
         s_MEMjal, s_MEMmemtoReg, s_MEMhalt, s_MEMRegWr,
@@ -323,18 +323,18 @@ begin
             o_memWrite  => s_IDMemWr,
             o_ALUSrc    => s_ALUSrc,
             o_ALUOp     => s_ALUOp,
-            o_signed    => s_signed,
-            o_addSub    => s_addSub,
-            o_shiftType => s_shiftType,
-            o_shiftDir  => s_shiftDir,
-            o_bne       => s_bne,
-            o_beq       => s_beq,
-            o_j         => s_j,
+            o_signed    => s_Signed,
+            o_addSub    => s_Operator,
+            o_shiftType => s_ShiftType,
+            o_shiftDir  => s_ShiftDir,
+            o_bne       => s_Bne,
+            o_beq       => s_Beq,
+            o_j         => s_J,
             o_jr        => s_jr,
-            o_jal       => s_jal,
-            o_branch    => s_branch,
-            o_jump      => s_jump,
-            o_lui       => s_lui,
+            o_jal       => s_Jal,
+            o_branch    => s_Branch,
+            o_jump      => s_Jump,
+            o_lui       => s_Lui,
             o_halt      => s_IDhalt
             );
 
@@ -359,7 +359,7 @@ begin
     instNXTPC : mux2t1_N
         generic map(N => 32)
         port map(
-            i_S  => s_jump_branch,
+            i_S  => s_JumpBranch,
             i_D0 => s_IF_PC4,
             i_D1 => s_PC,
             o_O  => s_nextPC
@@ -372,18 +372,18 @@ begin
             i_jump_addr   => s_ID_Inst,
             i_jr          => s_RegA,
             i_jr_select   => s_jr,
-            i_branch      => s_branch,
-            i_bne         => s_bne,
+            i_branch      => s_Branch,
+            i_bne         => s_Bne,
             i_A           => s_RegA,
             i_B           => s_RegB,
-            i_jump        => s_jump,
+            i_jump        => s_Jump,
             o_PC          => s_PC,
-            o_jump_branch => s_jump_branch
+            o_jump_branch => s_JumpBranch
             );
 
     instSignExtender : extender16t32
         port map(
-            i_C => s_signed,
+            i_C => s_Signed,
             i_I => s_ID_Inst(15 downto 0),
             o_O => s_immediate
             );
@@ -397,11 +397,11 @@ begin
             i_shamt    => s_EXImmediate(10 downto 6),
             o_resultF  => s_ALUOut,
             o_CarryOut => s_internal_CarryOut,
-            o_Overflow => s_internal_Overflow,
-            o_zero     => s_zero
+            o_Overflow => s_InternalOverflow,
+            o_zero     => s_Zero
             );
 
-    instCarrFlowProc : process(iclk, irst, s_internal_CarryOut, s_internal_Overflow, s_CarryOut, s_Ovfl)
+    instCarrFlowProc : process(iclk, irst, s_internal_CarryOut, s_InternalOverflow, s_CarryOut, s_Ovfl)
     begin
         if irst = '1' then
             s_CarryOut <= '0';
@@ -412,7 +412,7 @@ begin
             else
                 s_CarryOut <= s_CarryOut;
             end if;
-            if s_internal_Overflow = '1' then
+            if s_InternalOverflow = '1' then
                 s_Ovfl <= '1';
             else
                 s_Ovfl <= s_Ovfl;
@@ -469,12 +469,12 @@ begin
             i_RegDst   => s_RegDst,
             i_Rt       => s_ID_Inst(20 downto 16),
             i_Rd       => s_ID_Inst(15 downto 11),
-            i_RegWrite => s_muxRegWr,
+            i_RegWrite => s_MuxRegWr,
             i_memToReg => s_memToReg,
             i_MemWrite => s_muxMemWr,
             i_ALUSrc   => s_ALUSrc,
             i_ALUOp    => s_ALUOp,
-            i_jal      => s_jal,
+            i_jal      => s_Jal,
             i_halt     => s_IDhalt,
             o_PC4      => s_EX_PC4,
             o_readA    => s_EXA,
