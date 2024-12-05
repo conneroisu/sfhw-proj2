@@ -298,7 +298,7 @@ architecture structure of MIPS_Processor is
         s_PC,
         s_PCR,
         s_nextPC,
-        s_immediate,
+        s_Imm,
         s_ALUB,
         s_aluORmem,
         s_ID_Inst,
@@ -412,7 +412,7 @@ begin
     instFetch : FetchUnit
         port map(
             i_PC4         => s_ID_PC4,
-            i_branch_addr => s_immediate,
+            i_branch_addr => s_Imm,
             i_jump_addr   => s_ID_Inst,
             i_jr          => s_RegA,
             i_jr_select   => s_jr,
@@ -429,7 +429,7 @@ begin
         port map(
             i_C => s_Signed,
             i_I => s_ID_Inst(15 downto 0),
-            o_O => s_immediate
+            o_O => s_Imm
             );
 
     immMux : mux2t1_N
@@ -518,7 +518,7 @@ begin
             i_PC4      => s_ID_PC4,
             i_readA    => s_RegA,
             i_readB    => s_RegB,
-            i_ExtImm   => s_immediate,
+            i_ExtImm   => s_Imm,
             i_RegDst   => s_RegDst,
             i_Rt       => s_ID_Inst(20 downto 16),
             i_Rd       => s_ID_Inst(15 downto 11),
@@ -550,22 +550,22 @@ begin
             i_CLK      => iCLK,
             i_RST      => iRST,
             i_ALU      => s_ALUOut,
-            o_ALU      => s_MEMALU,
             i_B        => s_EXB,
-            o_B        => s_DMemData,
             i_WrAddr   => s_EXrtrd,
-            o_WrAddr   => s_MEMrtrd,
             i_MemWr    => s_EXMemWr,
-            o_MemWr    => s_DMemWr,
             i_MemtoReg => s_EXMemToReg,
-            o_MemtoReg => s_MEMMemToReg,
             i_Halt     => s_EXhalt,
-            o_Halt     => s_MEMhalt,
             i_RegWr    => s_EXRegWr,
-            o_RegWr    => s_MemRegWr,
             i_jal      => s_EXjal,
-            o_jal      => s_MEMjal,
             i_PC4      => s_EX_PC4,
+            o_ALU      => s_MEMALU,
+            o_B        => s_DMemData,
+            o_WrAddr   => s_MEMrtrd,
+            o_MemWr    => s_DMemWr,
+            o_MemtoReg => s_MEMMemToReg,
+            o_Halt     => s_MEMhalt,
+            o_RegWr    => s_MemRegWr,
+            o_jal      => s_MEMjal,
             o_PC4      => s_MEM_PC4
             );
 
