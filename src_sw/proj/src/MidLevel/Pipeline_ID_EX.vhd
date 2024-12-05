@@ -2,42 +2,40 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity ID_EX is
+        
         port (
-                i_CLK          : in  std_logic;
-                i_RST          : in  std_logic;
-                i_PC4          : in  std_logic_vector(31 downto 0);
-                i_readA        : in  std_logic_vector(31 downto 0);
-                i_readB        : in  std_logic_vector(31 downto 0);
-                i_signExtImmed : in  std_logic_vector(31 downto 0);
-                i_IDRt         : in  std_logic_vector(4 downto 0);
-                i_IDRD         : in  std_logic_vector(4 downto 0);
-                i_RegDst       : in  std_logic;
-                i_RegWrite     : in  std_logic;
-                i_memToReg     : in  std_logic;
-                i_MemWrite     : in  std_logic;
-                i_ALUSrc       : in  std_logic;
-                i_ALUOp        : in  std_logic_vector(3 downto 0);
-                i_jal          : in  std_logic;
-                i_halt         : in  std_logic;
-                i_RS           : in  std_logic_vector(4 downto 0);
-                i_memRd        : in  std_logic;
-                o_RS           : out std_logic_vector(4 downto 0);
-                o_PC4          : out std_logic_vector(31 downto 0);
-                o_readA        : out std_logic_vector(31 downto 0);
-                o_readB        : out std_logic_vector(31 downto 0);
-                o_signExtImmed : out std_logic_vector(31 downto 0);
-                o_Rt           : out std_logic_vector(4 downto 0); -- inst20_16
-                o_Rd           : out std_logic_vector(4 downto 0); -- inst15_11
-                o_RegDst       : out std_logic;
-                o_RegWrite     : out std_logic;
-                o_memToReg     : out std_logic;
-                o_MemWrite     : out std_logic;
-                o_ALUSrc       : out std_logic;
-                o_ALUOp        : out std_logic_vector(3 downto 0);
-                o_jal          : out std_logic;
-                o_halt         : out std_logic;
-                o_memRd        : out std_logic
+                i_CLK      : in  std_logic;
+                i_RST      : in  std_logic;
+                i_PC4      : in  std_logic_vector(31 downto 0);
+                i_readA    : in  std_logic_vector(31 downto 0);
+                i_readB    : in  std_logic_vector(31 downto 0);
+                i_ExtImm   : in  std_logic_vector(31 downto 0);
+                i_Rt       : in  std_logic_vector(4 downto 0);  -- 20-16
+                i_Rd       : in  std_logic_vector(4 downto 0);  -- 15-11
+                i_RegDst   : in  std_logic;
+                i_RegWrite : in  std_logic;
+                i_memToReg : in  std_logic;
+                i_MemWrite : in  std_logic;
+                i_ALUSrc   : in  std_logic;
+                i_ALUOp    : in  std_logic_vector(3 downto 0);
+                i_jal      : in  std_logic;
+                i_halt     : in  std_logic;
+                o_PC4      : out std_logic_vector(31 downto 0);
+                o_readA    : out std_logic_vector(31 downto 0);
+                o_readB    : out std_logic_vector(31 downto 0);
+                o_ExtImm   : out std_logic_vector(31 downto 0);
+                o_Rt       : out std_logic_vector(4 downto 0);  -- 20-16
+                o_Rd       : out std_logic_vector(4 downto 0);  -- 15-11
+                o_RegDst   : out std_logic;
+                o_RegWrite : out std_logic;
+                o_memToReg : out std_logic;
+                o_MemWrite : out std_logic;
+                o_ALUSrc   : out std_logic;
+                o_ALUOp    : out std_logic_vector(3 downto 0);
+                o_jal      : out std_logic;
+                o_halt     : out std_logic
                 );
+        
 end ID_EX;
 
 architecture structural of ID_EX is
@@ -101,8 +99,8 @@ begin
                         i_CLK => i_CLK,
                         i_RST => i_RST,
                         i_WE  => '1',
-                        i_D   => i_signExtImmed,
-                        o_Q   => o_signExtImmed
+                        i_D   => i_ExtImm,
+                        o_Q   => o_ExtImm
                         );
 
         instRs : dffg_N
@@ -111,18 +109,8 @@ begin
                         i_CLK => i_CLK,
                         i_RST => i_RST,
                         i_WE  => '1',
-                        i_D   => i_RS,
-                        o_Q   => o_RS);
-
-        instRtReg : dffg_N
-                generic map(N => 5)
-                port map(
-                        i_CLK => i_CLK,
-                        i_RST => i_RST,
-                        i_WE  => '1',
-                        i_D   => i_IDRt,
-                        o_Q   => o_Rt
-                        );
+                        i_D   => i_Rt,
+                        o_Q   => o_Rt);
 
         instRdReg : dffg_N
                 generic map(N => 5)
@@ -130,7 +118,7 @@ begin
                         i_CLK => i_CLK,
                         i_RST => i_RST,
                         i_WE  => '1',
-                        i_D   => i_IDRD,
+                        i_D   => i_Rd,
                         o_Q   => o_Rd
                         );
 
@@ -206,15 +194,6 @@ begin
                         i_WE  => '1',
                         i_D   => i_halt,
                         o_Q   => o_halt
-                        );
-
-        instMemoryRd : dffg
-                port map (
-                        i_CLK => i_CLK,
-                        i_RST => i_RST,
-                        i_WE  => '1',
-                        i_D   => i_memRd,
-                        o_Q   => o_memRd
                         );
 
 end structural;

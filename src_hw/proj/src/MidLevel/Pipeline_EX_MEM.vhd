@@ -8,22 +8,22 @@ entity EX_MEM is
         i_RST      : in  std_logic;    
         i_stall    : in  std_logic;     
         i_ALU      : in  std_logic_vector(31 downto 0);
-        o_ALU      : out std_logic_vector(31 downto 0);
         i_B        : in  std_logic_vector(31 downto 0); 
-        o_B        : out std_logic_vector(31 downto 0);  
         i_WrAddr   : in  std_logic_vector(4 downto 0); 
-        o_WrAddr   : out std_logic_vector(4 downto 0);
         i_MemWr    : in  std_logic;  
-        o_MemWr    : out std_logic;   
         i_MemtoReg : in  std_logic;    
-        o_MemtoReg : out std_logic;
         i_Halt     : in  std_logic;     
-        o_Halt     : out std_logic;
         i_RegWr    : in  std_logic;     
-        o_RegWr    : out std_logic;
         i_jal      : in  std_logic;    
-        o_jal      : out std_logic;
         i_PC4      : in  std_logic_vector(31 downto 0);  
+        o_ALU      : out std_logic_vector(31 downto 0);
+        o_B        : out std_logic_vector(31 downto 0);  
+        o_WrAddr   : out std_logic_vector(4 downto 0);
+        o_MemWr    : out std_logic;   
+        o_MemtoReg : out std_logic;
+        o_Halt     : out std_logic;
+        o_RegWr    : out std_logic;
+        o_jal      : out std_logic;
         o_PC4      : out std_logic_vector(31 downto 0)
         );
     
