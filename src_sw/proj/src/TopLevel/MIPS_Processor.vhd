@@ -248,19 +248,6 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component ForwardUnit is
-        port (
-            i_EX_rs     : in  std_logic_vector(4 downto 0);
-            i_EX_rt     : in  std_logic_vector(4 downto 0);
-            i_MEM_rd    : in  std_logic_vector(4 downto 0);
-            i_WB_rd     : in  std_logic_vector(4 downto 0);
-            i_MEM_wb    : in  std_logic;
-            i_WB_wb     : in  std_logic;
-            o_Forward_A : out std_logic_vector(1 downto 0);
-            o_Forward_B : out std_logic_vector(1 downto 0)
-            );
-    end component;
-
     signal s_ALUOp, s_EXALUOp : std_logic_vector(3 downto 0);
 
     signal s_EX_rs, s_EXrt, s_EXrd, s_EXrtrd : std_logic_vector(4 downto 0);
