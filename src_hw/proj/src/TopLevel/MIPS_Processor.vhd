@@ -12,7 +12,8 @@ entity MIPS_Processor is
         iInstLd   : in  std_logic;
         iInstAddr : in  std_logic_vector(N - 1 downto 0);
         iInstExt  : in  std_logic_vector(N - 1 downto 0);
-        oALUOut   : out std_logic_vector(N - 1 downto 0));
+        oALUOut   : out std_logic_vector(N - 1 downto 0)
+    );
 end MIPS_Processor;
 
 architecture structure of MIPS_Processor is
