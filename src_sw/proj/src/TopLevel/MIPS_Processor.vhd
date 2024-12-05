@@ -246,28 +246,9 @@ architecture structure of MIPS_Processor is
 
     signal s_ALUOp, s_EXALUOp : std_logic_vector(3 downto 0);
 
-    signal s_EXrt, s_EXrd, s_EXrtrd     : std_logic_vector(4 downto 0);
-    signal s_rtrd, s_MEMrtrd, s_WBrtrd : std_logic_vector(4 downto 0);
-
-    signal s_RegA,
-        s_RegB,
-        s_IF_PC4,
-        s_EX_PC4,
-        s_MEM_PC4,
-        s_WB_PC4,
-        s_PC,
-        s_PCR,
-        s_nextPC,
-        s_immediate,
-        s_ALUB,
-        s_aluORmem,
-        s_ID_Inst,
-        s_ID_PC4,
-        s_EXA,
-        s_EXB, s_EXImmediate,
-        s_ALUOut,
-        s_MEMALU, s_WBALU,
-        s_WBMEMOut : std_logic_vector(31 downto 0);
+    signal
+        s_EXrt, s_EXrd, s_EXrtrd,
+        s_rtrd, s_MEMrtrd, s_WBrtrd : std_logic_vector(4 downto 0);
 
     signal
         s_JumpBranch,
@@ -295,18 +276,38 @@ architecture structure of MIPS_Processor is
         s_IDRegWr,
         s_EXRegDst,
         s_EXRegWr,
-        s_EXmemToReg,
+        s_EXMemToReg,
         s_EXMemWr,
         s_EXALUSrc,
         s_EXjal,
         s_EXhalt,
         s_MEMjal,
-        s_MEMmemtoReg,
+        s_MEMMemToReg,
         s_MEMhalt,
         s_MEMRegWr,
         s_WBjal,
-        s_WBmemToReg,
+        s_WBMemToReg,
         s_WBRegWr : std_logic;
+
+    signal s_RegA,
+        s_RegB,
+        s_IF_PC4,
+        s_EX_PC4,
+        s_MEM_PC4,
+        s_WB_PC4,
+        s_PC,
+        s_PCR,
+        s_nextPC,
+        s_immediate,
+        s_ALUB,
+        s_aluORmem,
+        s_ID_Inst,
+        s_ID_PC4,
+        s_EXA,
+        s_EXB, s_EXImmediate,
+        s_ALUOut,
+        s_MEMALU, s_WBALU,
+        s_WBMEMOut : std_logic_vector(31 downto 0);
 
 begin
     with iInstLd select
@@ -475,7 +476,7 @@ begin
     instMemToRegMux : mux2t1_N
         generic map(N => 32)
         port map(
-            i_S  => s_WBmemToReg,
+            i_S  => s_WBMemToReg,
             i_D0 => s_WBALU,
             i_D1 => s_WBMEMOut,
             o_O  => s_aluORmem
@@ -534,7 +535,7 @@ begin
             o_Rd       => s_EXrd,
             o_RegDst   => s_EXRegDst,
             o_RegWrite => s_EXRegWr,
-            o_memToReg => s_EXmemToReg,
+            o_memToReg => s_EXMemToReg,
             o_MemWrite => s_EXMemWr,
             o_ALUSrc   => s_EXALUSrc,
             o_ALUOp    => s_EXALUOp,
@@ -554,8 +555,8 @@ begin
             o_WrAddr   => s_MEMrtrd,
             i_MemWr    => s_EXMemWr,
             o_MemWr    => s_DMemWr,
-            i_MemtoReg => s_EXmemToReg,
-            o_MemtoReg => s_MEMmemToReg,
+            i_MemtoReg => s_EXMemToReg,
+            o_MemtoReg => s_MEMMemToReg,
             i_Halt     => s_EXhalt,
             o_Halt     => s_MEMhalt,
             i_RegWr    => s_EXRegWr,
@@ -576,8 +577,8 @@ begin
             o_Mem      => s_WBMEMOut,
             i_WrAddr   => s_MEMrtrd,
             o_WrAddr   => s_WBrtrd,
-            i_MemtoReg => s_MEMmemToReg,
-            o_MemtoReg => s_WBmemToReg,
+            i_MemtoReg => s_MEMMemToReg,
+            o_MemtoReg => s_WBMemToReg,
             i_Halt     => s_MEMHalt,
             o_Halt     => s_Halt,
             i_RegWr    => s_MEMRegWr,
