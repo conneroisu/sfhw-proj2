@@ -15,7 +15,7 @@ end entity mux32t1;
 
 architecture behavior of mux32t1 is
 begin
-    -- Selects the output based on the input select signal
+    
     with i_S select o_O <=
         i_I(0)                             when "00000",
         i_I(01)                            when "00001",  -- when the input select is "00001" the output is "i_I(1)"
