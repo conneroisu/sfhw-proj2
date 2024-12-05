@@ -338,7 +338,7 @@ begin
             o_halt      => s_IDhalt
             );
 
-    PC : dffg_N
+    instPC : dffg_N
         port map(
             i_CLK => iCLK,
             i_RST => '0',
