@@ -2,6 +2,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity ID_EX is
+        
         port (
                 i_CLK          : in  std_logic;
                 i_RST          : in  std_logic;
@@ -39,6 +40,7 @@ entity ID_EX is
                 o_halt         : out std_logic;
                 o_memRd        : out std_logic
                 );
+        
 end ID_EX;
 
 architecture structural of ID_EX is
