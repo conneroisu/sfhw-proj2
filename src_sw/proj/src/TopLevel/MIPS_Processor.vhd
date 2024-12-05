@@ -267,8 +267,7 @@ architecture structure of MIPS_Processor is
         s_EXB, s_EXImmediate,
         s_ALUOut,
         s_MEMALU, s_WBALU,
-        s_WBMEMOut,
-        s_BasedInst : std_logic_vector(31 downto 0);
+        s_WBMEMOut : std_logic_vector(31 downto 0);
 
     signal
         s_JumpBranch,
@@ -505,7 +504,7 @@ begin
             i_CLK         => iCLK,
             i_RST         => iRST,
             i_PC4         => s_IF_PC4,
-            i_instruction => s_BasedInst,
+            i_instruction => s_Inst,
             o_PC4         => s_ID_PC4,
             o_instruction => s_ID_Inst
             );
