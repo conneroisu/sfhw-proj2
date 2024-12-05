@@ -338,7 +338,7 @@ begin
             o_halt      => s_IDhalt
             );
 
-    PC : dffg_N
+    instPC : dffg_N
         port map(
             i_CLK => iCLK,
             i_RST => '0',
@@ -391,7 +391,7 @@ begin
     instALU : ALU
         generic map(N => 32)
         port map(
-            i_A        => s_A,
+            i_A        => s_EXA,
             i_B        => s_ALUB,
             i_ALUOP    => s_EXALUOp,
             i_shamt    => s_EXImmediate(10 downto 6),
