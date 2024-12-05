@@ -388,6 +388,15 @@ begin
             o_O => s_immediate
             );
 
+    immMux : mux2t1_N
+        generic map(N => 32)
+        port map(
+            i_S  => s_EXALUSrc,
+            i_D0 => s_EXB,
+            i_D1 => s_EXImmediate,
+            o_O  => s_ALUB
+            );
+
     instALU : ALU
         generic map(N => 32)
         port map(
