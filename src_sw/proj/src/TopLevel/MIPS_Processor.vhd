@@ -244,15 +244,17 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    signal s_ALUOp, s_EXALUOp : std_logic_vector(3 downto 0);
+    signal s_ALUOp : std_logic_vector(3 downto 0);
 
-    signal s_EX_rs, s_EXrt, s_EXrd, s_EXrtrd : std_logic_vector(4 downto 0);
-    signal s_rtrd, s_MEMrtrd, s_WBrtrd       : std_logic_vector(4 downto 0);
+    signal s_EXrt, s_EXrd, s_EXrtrd    : std_logic_vector(4 downto 0);
+    signal s_rtrd, s_MEMrtrd, s_WBrtrd : std_logic_vector(4 downto 0);
 
     signal s_RegA,
         s_RegB,
         s_IF_PC4,
-        s_EX_PC4, s_MEM_PC4, s_WB_PC4,
+        s_EX_PC4,
+        s_MEM_PC4,
+        s_WB_PC4,
         s_PC,
         s_PCR,
         s_nextPC,
@@ -266,7 +268,7 @@ architecture structure of MIPS_Processor is
         s_ALUOut,
         s_MEMALU, s_WBALU,
         s_WBMEMOut,
-        s_trueINST : std_logic_vector(31 downto 0);
+        s_BasedInst : std_logic_vector(31 downto 0);
 
     signal
         s_JumpBranch,
@@ -287,14 +289,11 @@ architecture structure of MIPS_Processor is
         s_Jump,
         s_Zero,
         s_CarryOut,
-        s_MuxRegWr,
-        s_muxMemWr,
         s_internal_CarryOut,
         s_InternalOverflow,
         s_IDhalt,
         s_IDMemWr,
         s_IDRegWr,
-        s_ID_memRD,
         s_EXRegDst,
         s_EXRegWr,
         s_EXmemToReg,
@@ -446,7 +445,7 @@ begin
         port map(
             i_A        => s_EXA,
             i_B        => s_ALUB,
-            i_ALUOP    => s_EXALUOp,
+            i_ALUOP    => s_ALUOp,
             i_shamt    => s_EXImmediate(10 downto 6),
             o_resultF  => s_ALUOut,
             o_CarryOut => s_internal_CarryOut,
@@ -506,7 +505,7 @@ begin
             i_CLK         => iCLK,
             i_RST         => iRST,
             i_PC4         => s_IF_PC4,
-            i_instruction => s_trueINST,
+            i_instruction => s_BasedInst,
             o_PC4         => s_ID_PC4,
             o_instruction => s_ID_Inst
             );
@@ -522,9 +521,9 @@ begin
             i_RegDst   => s_RegDst,
             i_Rt       => s_ID_Inst(20 downto 16),
             i_Rd       => s_ID_Inst(15 downto 11),
-            i_RegWrite => s_MuxRegWr,
+            i_RegWrite => s_IDMemWr,
             i_memToReg => s_memToReg,
-            i_MemWrite => s_muxMemWr,
+            i_MemWrite => s_IDMemWr,
             i_ALUSrc   => s_ALUSrc,
             i_ALUOp    => s_ALUOp,
             i_jal      => s_Jal,
@@ -540,7 +539,7 @@ begin
             o_memToReg => s_EXmemToReg,
             o_MemWrite => s_EXMemWr,
             o_ALUSrc   => s_EXALUSrc,
-            o_ALUOp    => s_EXALUOp,
+            o_ALUOp    => s_ALUOp,
             o_jal      => s_EXjal,
             o_halt     => s_EXhalt
             );
