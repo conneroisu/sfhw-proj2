@@ -345,7 +345,7 @@ begin
     s_RegWrAddr <= s_WBrtrd;
     s_NotClk    <= not iCLK;
 
-    instRegFile : RegisterFile
+    instRegisterFile : RegisterFile
         port map(
             i_wD  => s_RegWrData,
             i_wA  => s_RegWrAddr,
