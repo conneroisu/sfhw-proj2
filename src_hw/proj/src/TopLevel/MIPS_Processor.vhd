@@ -317,7 +317,7 @@ architecture structure of MIPS_Processor is
         s_ALUOut, s_MEMALU, s_WBALU,
         s_WBMEMOut,
         s_ForwardA, s_ForwardB,
-        s_trueINST : std_logic_vector(31 downto 0);
+        s_BasedInstruction : std_logic_vector(31 downto 0);
 
     signal
         s_JumpBranch, s_RegDst, s_memToReg, s_ALUSrc, s_j, s_Jr, s_Jal,
@@ -526,7 +526,7 @@ begin
             i_S  => s_Flush,
             i_D0 => s_Inst,
             i_D1 => x"00000000",
-            o_O  => s_trueINST
+            o_O  => s_BasedInstruction
             );
 
     instIFID : IF_ID
@@ -535,7 +535,7 @@ begin
             i_RST         => iRST,
             i_stall       => s_Stall,
             i_PC4         => s_IF_PC4,
-            i_instruction => s_trueINST,
+            i_instruction => s_BasedInstruction,
             o_PC4         => s_ID_PC4,
             o_instruction => s_ID_Inst
             );
