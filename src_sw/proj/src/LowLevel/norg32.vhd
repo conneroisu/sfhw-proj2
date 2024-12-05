@@ -7,6 +7,7 @@
 
 library IEEE;
 use IEEE.std_logic_1164.all;
+
 entity norg32 is
     
     port (
