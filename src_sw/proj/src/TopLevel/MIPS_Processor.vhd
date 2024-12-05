@@ -454,12 +454,12 @@ begin
             o_zero     => s_Zero
             );
 
-    instCarrFlowProc : process(iclk, irst, s_InternalCarryOut, s_InternalOverflow, s_CarryOut, s_Ovfl)
+    instCarrFlowProc : process(iCLK, iRST, s_InternalCarryOut, s_InternalOverflow, s_CarryOut, s_Ovfl)
     begin
-        if irst = '1' then
+        if iRST = '1' then
             s_CarryOut <= '0';
             s_Ovfl     <= '0';
-        elsif rising_edge(iclk) then
+        elsif rising_edge(iCLK) then
             if s_InternalCarryOut = '1' then
                 s_CarryOut <= '1';
             else
