@@ -48,7 +48,6 @@ et.log
 .nfs*
 .DS_Store
 **/**/QuartusWork/
-internal/ModelSimContainer/vcom.log
+**/QuartusWork/
 internal/testpy/__pycache__/
 *.pyc
-
