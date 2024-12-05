@@ -4,11 +4,11 @@ use ieee.std_logic_1164.all;
 entity full_adder is
 
     port (
-        i_A   : in  std_logic;         -- Input 0 to be added.
-        i_B   : in  std_logic;         -- Input 1 to be added.
-        i_C  : in  std_logic;         -- Carry in.
-        o_S    : out std_logic;         -- Sum output.
-        o_C : out std_logic          -- Carry out.
+        i_A : in  std_logic;            -- Input 0 to be added.
+        i_B : in  std_logic;            -- Input 1 to be added.
+        i_C : in  std_logic;            -- Carry in.
+        o_S : out std_logic;            -- Sum output.
+        o_C : out std_logic             -- Carry out.
         );
 
 end entity full_adder;

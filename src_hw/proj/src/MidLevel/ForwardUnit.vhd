@@ -23,8 +23,8 @@ architecture mixed of ForwardUnit is
 
 begin
     -- 00: no forward
-    -- 10: EX hazard, take value from MEM state
-    -- 01: MEM hazard, take value from WB state
+    -- 10: EX hazard, value from MEM state
+    -- 01: MEM hazard, value from WB state
 
     process(i_MEM_wb, i_WB_wb, i_EX_rs, i_EX_rt, i_MEM_rd, i_WB_rd)
     begin

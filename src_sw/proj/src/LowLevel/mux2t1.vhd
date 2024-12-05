@@ -11,12 +11,14 @@ use IEEE.numeric_std.all;
 use work.MIPS_types.all;
 
 entity mux2t1 is
+    
     port (
         i_s  : in  std_logic;           -- Select input
         i_d0 : in  std_logic;           -- Data input 0
         i_d1 : in  std_logic;           -- Data input 1
         o_o  : out std_logic            -- Output
         );
+    
 end entity mux2t1;
 
 architecture dataflow of mux2t1 is

@@ -15,10 +15,10 @@ Info: Running Quartus Prime Analysis & Synthesis
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Dec  4 07:11:10 2024
+    Info: Processing started: Wed Dec  4 19:08:11 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off toolflow -c toolflow
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/andg2.vhd
     Info (12022): Found design unit 1: andg2-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/andg2.vhd Line: 22
     Info (12023): Found entity 1: andg2 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/andg2.vhd Line: 12
@@ -107,7 +107,7 @@ Info (12021): Found 2 design units, including 1 entities, in source file /home/c
     Info (12022): Found design unit 1: AdderSubtractor-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/AdderSubtractor.vhd Line: 17
     Info (12023): Found entity 1: AdderSubtractor File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/AdderSubtractor.vhd Line: 4
 Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/BarrelShifter.vhd
-    Info (12022): Found design unit 1: BarrelShifter-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/BarrelShifter.vhd Line: 17
+    Info (12022): Found design unit 1: BarrelShifter-behavioral File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/BarrelShifter.vhd Line: 19
     Info (12023): Found entity 1: BarrelShifter File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/BarrelShifter.vhd Line: 4
 Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ControlUnit.vhd
     Info (12022): Found design unit 1: ControlUnit-behavioral File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ControlUnit.vhd Line: 32
@@ -133,12 +133,12 @@ Info (12021): Found 2 design units, including 1 entities, in source file /home/c
 Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_MEM_WB.vhd
     Info (12022): Found design unit 1: MEM_WB-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_MEM_WB.vhd Line: 30
     Info (12023): Found entity 1: MEM_WB File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_MEM_WB.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd
+    Info (12022): Found design unit 1: RegisterFile-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 29
+    Info (12023): Found entity 1: RegisterFile File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 13
 Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ZeroDetector.vhd
     Info (12022): Found design unit 1: ZeroDetector-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ZeroDetector.vhd Line: 13
     Info (12023): Found entity 1: ZeroDetector File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ZeroDetector.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/register_file.vhd
-    Info (12022): Found design unit 1: register_file-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/register_file.vhd Line: 29
-    Info (12023): Found entity 1: register_file File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/register_file.vhd Line: 13
 Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd
     Info (12022): Found design unit 1: MIPS_Processor-structure File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 18
     Info (12023): Found entity 1: MIPS_Processor File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 7
@@ -146,55 +146,55 @@ Info (12021): Found 2 design units, including 1 entities, in source file /home/c
     Info (12022): Found design unit 1: mem-rtl File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/mem.vhd Line: 22
     Info (12023): Found entity 1: mem File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/mem.vhd Line: 5
 Info (12127): Elaborating entity "MIPS_Processor" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(37): object "s_Halt" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 37
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(333): object "s_j" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 333
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(334): object "s_lui" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 334
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(334): object "s_addSub" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 334
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(334): object "s_shiftType" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 334
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(334): object "s_shiftDir" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 334
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(334): object "s_beq" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 334
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(335): object "s_zero" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 335
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(335): object "s_toFlush" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 335
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(338): object "s_EXMemRd" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 338
-Info (12128): Elaborating entity "mem" for hierarchy "mem:IMem" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 347
-Info (12128): Elaborating entity "register_file" for hierarchy "register_file:instRegFile" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 359
-Info (12128): Elaborating entity "decoder5t32" for hierarchy "register_file:instRegFile|decoder5t32:writedecoder" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/register_file.vhd Line: 68
-Info (12128): Elaborating entity "dffg_n" for hierarchy "register_file:instRegFile|dffg_n:reg0" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/register_file.vhd Line: 76
-Info (12128): Elaborating entity "dffg" for hierarchy "register_file:instRegFile|dffg_n:reg0|dffg:\G1:0:flipflop" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg_n.vhd Line: 40
-Info (12128): Elaborating entity "mux32t1" for hierarchy "register_file:instRegFile|mux32t1:read1" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/register_file.vhd Line: 112
-Info (12128): Elaborating entity "mux2t1_N" for hierarchy "mux2t1_N:rtrdMUX" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 372
-Info (12128): Elaborating entity "mux2t1" for hierarchy "mux2t1_N:rtrdMUX|mux2t1:\G_NBit_MUX:0:MUXI" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1_N.vhd Line: 38
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(29): object "s_Halt" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 29
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(321): object "s_j" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 321
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(322): object "s_Lui" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 322
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(322): object "s_Operator" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 322
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(322): object "s_ShiftType" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 322
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(322): object "s_ShiftDirection" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 322
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(322): object "s_Beq" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 322
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(323): object "s_Zero" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 323
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(323): object "s_ToFlush" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 323
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(326): object "s_EXMemRd" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 326
+Info (12128): Elaborating entity "mem" for hierarchy "mem:IMem" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 334
+Info (12128): Elaborating entity "RegisterFile" for hierarchy "RegisterFile:instRegFile" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 346
+Info (12128): Elaborating entity "decoder5t32" for hierarchy "RegisterFile:instRegFile|decoder5t32:writedecoder" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 68
+Info (12128): Elaborating entity "dffg_n" for hierarchy "RegisterFile:instRegFile|dffg_n:reg0" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 76
+Info (12128): Elaborating entity "dffg" for hierarchy "RegisterFile:instRegFile|dffg_n:reg0|dffg:\G1:0:flipflop" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg_n.vhd Line: 40
+Info (12128): Elaborating entity "mux32t1" for hierarchy "RegisterFile:instRegFile|mux32t1:read1" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 112
+Info (12128): Elaborating entity "mux2t1_N" for hierarchy "mux2t1_N:instRtRdMux2t1_5" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 359
+Info (12128): Elaborating entity "mux2t1" for hierarchy "mux2t1_N:instRtRdMux2t1_5|mux2t1:\G_NBit_MUX:0:MUXI" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1_N.vhd Line: 38
 Info (10041): Inferred latch for "o_o" at mux2t1.vhd(24) File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 24
-Info (12128): Elaborating entity "ControlUnit" for hierarchy "ControlUnit:instControl" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 390
-Info (12128): Elaborating entity "dffg_n" for hierarchy "dffg_n:PC" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 415
-Info (12128): Elaborating entity "mux2t1_N" for hierarchy "mux2t1_N:PCRESET" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 424
-Info (12128): Elaborating entity "FetchUnit" for hierarchy "FetchUnit:Fetch" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 441
+Info (12128): Elaborating entity "ControlUnit" for hierarchy "ControlUnit:instControlUnit" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 377
+Info (12128): Elaborating entity "dffg_n" for hierarchy "dffg_n:instPC" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 402
+Info (12128): Elaborating entity "mux2t1_N" for hierarchy "mux2t1_N:instRSTPC" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 411
+Info (12128): Elaborating entity "FetchUnit" for hierarchy "FetchUnit:Fetch" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 429
 Info (12128): Elaborating entity "ZeroDetector" for hierarchy "FetchUnit:Fetch|ZeroDetector:zero_detector" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 79
 Info (12128): Elaborating entity "org2" for hierarchy "FetchUnit:Fetch|ZeroDetector:zero_detector|org2:\FIRST_OR:0:OR1" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ZeroDetector.vhd Line: 29
 Info (12128): Elaborating entity "BarrelShifter" for hierarchy "FetchUnit:Fetch|BarrelShifter:instBranchShifter" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 88
-Info (12128): Elaborating entity "mux2t1_N" for hierarchy "FetchUnit:Fetch|BarrelShifter:instBranchShifter|mux2t1_N:right_shifter_0" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/BarrelShifter.vhd Line: 61
 Info (12128): Elaborating entity "Full_Adder_N" for hierarchy "FetchUnit:Fetch|Full_Adder_N:instPCBranchAdder" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 97
 Info (12128): Elaborating entity "full_adder" for hierarchy "FetchUnit:Fetch|Full_Adder_N:instPCBranchAdder|full_adder:\G_NBit_FullAdder:0:FullAdderI" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder_N.vhd Line: 38
 Info (12128): Elaborating entity "xorg2" for hierarchy "FetchUnit:Fetch|Full_Adder_N:instPCBranchAdder|full_adder:\G_NBit_FullAdder:0:FullAdderI|xorg2:xor1" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder.vhd Line: 48
 Info (12128): Elaborating entity "andg2" for hierarchy "FetchUnit:Fetch|Full_Adder_N:instPCBranchAdder|full_adder:\G_NBit_FullAdder:0:FullAdderI|andg2:and1" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder.vhd Line: 62
-Info (12128): Elaborating entity "extender16t32" for hierarchy "extender16t32:SignExtend" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 457
-Info (12128): Elaborating entity "ALU" for hierarchy "ALU:mainALU" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 473
-Info (12128): Elaborating entity "AdderSubtractor" for hierarchy "ALU:mainALU|AdderSubtractor:instAdderSub" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 211
-Info (12128): Elaborating entity "comp1_N" for hierarchy "ALU:mainALU|AdderSubtractor:instAdderSub|comp1_N:instOnesComps" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/AdderSubtractor.vhd Line: 53
-Info (12128): Elaborating entity "invg" for hierarchy "ALU:mainALU|AdderSubtractor:instAdderSub|comp1_N:instOnesComps|invg:\G_NBit_Comp1:0:comp1_I" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/comp1_N.vhd Line: 30
-Info (12128): Elaborating entity "logic_N" for hierarchy "ALU:mainALU|logic_N:instLogicGates" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 231
-Info (12128): Elaborating entity "mux8t1_N" for hierarchy "ALU:mainALU|mux8t1_N:instOutputMux" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 251
-Info (12128): Elaborating entity "mux8t1" for hierarchy "ALU:mainALU|mux8t1_N:instOutputMux|mux8t1:\G_NBit_MUX:0:MUXI" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1_N.vhd Line: 41
-Info (12128): Elaborating entity "IF_ID" for hierarchy "IF_ID:instIFID" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 542
-Info (12128): Elaborating entity "ID_EX" for hierarchy "ID_EX:instIDEX" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 571
+Info (12128): Elaborating entity "mux2t1_N" for hierarchy "FetchUnit:Fetch|mux2t1_N:Branch_Select" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 119
+Info (12128): Elaborating entity "extender16t32" for hierarchy "extender16t32:instSignExtend" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 445
+Info (12128): Elaborating entity "ALU" for hierarchy "ALU:instALU" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 461
+Info (12128): Elaborating entity "AdderSubtractor" for hierarchy "ALU:instALU|AdderSubtractor:instAdderSub" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 212
+Info (12128): Elaborating entity "comp1_N" for hierarchy "ALU:instALU|AdderSubtractor:instAdderSub|comp1_N:instOnesComps" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/AdderSubtractor.vhd Line: 54
+Info (12128): Elaborating entity "invg" for hierarchy "ALU:instALU|AdderSubtractor:instAdderSub|comp1_N:instOnesComps|invg:\G_NBit_Comp1:0:comp1_I" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/comp1_N.vhd Line: 30
+Info (12128): Elaborating entity "logic_N" for hierarchy "ALU:instALU|logic_N:instLogicGates" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 232
+Info (12128): Elaborating entity "mux8t1_N" for hierarchy "ALU:instALU|mux8t1_N:instOutputMux" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 253
+Info (12128): Elaborating entity "mux8t1" for hierarchy "ALU:instALU|mux8t1_N:instOutputMux|mux8t1:\G_NBit_MUX:0:MUXI" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1_N.vhd Line: 41
+Info (12128): Elaborating entity "IF_ID" for hierarchy "IF_ID:instIFID" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 530
+Info (12128): Elaborating entity "ID_EX" for hierarchy "ID_EX:instIDEX" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 559
 Info (12128): Elaborating entity "dffg_n" for hierarchy "ID_EX:instIDEX|dffg_n:instRs" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_ID_EX.vhd Line: 112
 Info (12128): Elaborating entity "dffg_n" for hierarchy "ID_EX:instIDEX|dffg_n:instALUOpReg" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_ID_EX.vhd Line: 187
-Info (12128): Elaborating entity "EX_MEM" for hierarchy "EX_MEM:instEXMEM" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 610
-Info (12128): Elaborating entity "MEM_WB" for hierarchy "MEM_WB:instMEMWB" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 635
-Info (12128): Elaborating entity "ForwardUnit" for hierarchy "ForwardUnit:instForwardingUnit" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 658
-Info (12128): Elaborating entity "mux4t1_n" for hierarchy "mux4t1_n:ForwardA_MUX" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 670
-Info (12128): Elaborating entity "mux4t1" for hierarchy "mux4t1_n:ForwardA_MUX|mux4t1:\g_nbit_mux:0:muxi" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1_N.vhd Line: 44
-Info (12128): Elaborating entity "HazardUnit" for hierarchy "HazardUnit:instHazardUnit" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 690
+Info (12128): Elaborating entity "EX_MEM" for hierarchy "EX_MEM:instEXMEM" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 598
+Info (12128): Elaborating entity "MEM_WB" for hierarchy "MEM_WB:instMEMWB" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 623
+Info (12128): Elaborating entity "ForwardUnit" for hierarchy "ForwardUnit:instForwardingUnit" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 646
+Info (12128): Elaborating entity "mux4t1_n" for hierarchy "mux4t1_n:instForwardAMux" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 658
+Info (12128): Elaborating entity "mux4t1" for hierarchy "mux4t1_n:instForwardAMux|mux4t1:\g_nbit_mux:0:muxi" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1_N.vhd Line: 44
+Info (12128): Elaborating entity "HazardUnit" for hierarchy "HazardUnit:instHazardUnit" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 680
 Info (276014): Found 1 instances of uninferred RAM logic
     Info (276007): RAM logic "mem:IMem|ram" is uninferred due to asynchronous read logic File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/mem.vhd Line: 30
 Info (19000): Inferred 1 megafunctions from design logic
@@ -249,16 +249,16 @@ Warning (21074): Design contains 22 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "iInstAddr[29]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
     Warning (15610): No output dependent on input pin "iInstAddr[30]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
     Warning (15610): No output dependent on input pin "iInstAddr[31]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-Info (21057): Implemented 59750 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 59760 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 67 input pins
     Info (21059): Implemented 32 output pins
-    Info (21061): Implemented 59619 logic cells
+    Info (21061): Implemented 59629 logic cells
     Info (21064): Implemented 32 RAM segments
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 34 warnings
-    Info: Peak virtual memory: 1047 megabytes
-    Info: Processing ended: Wed Dec  4 07:12:00 2024
-    Info: Elapsed time: 00:00:50
-    Info: Total CPU time (on all processors): 00:00:55
+    Info: Peak virtual memory: 950 megabytes
+    Info: Processing ended: Wed Dec  4 19:10:12 2024
+    Info: Elapsed time: 00:02:01
+    Info: Total CPU time (on all processors): 00:01:59
 Info: *******************************************************************
 Info: Running Quartus Prime Fitter
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Standard Edition
@@ -276,13 +276,13 @@ Info: Running Quartus Prime Fitter
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Dec  4 07:12:00 2024
+    Info: Processing started: Wed Dec  4 19:10:13 2024
 Info: Command: quartus_fit --read_settings_files=on --write_settings_files=off toolflow -c toolflow
 Info: qfit2_default_script.tcl version: #1
 Info: Project  = toolflow
 Info: Revision = toolflow
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (119006): Selected device EP4CE115F29C7 for design "toolflow"
 Info (21076): High junction temperature operating condition is not set. Assuming a default value of '85'.
 Info (21076): Low junction temperature operating condition is not set. Assuming a default value of '0'.
@@ -317,16 +317,16 @@ Info (176353): Automatically promoted node iCLK~input (placed in PIN J1 (CLK1, D
 Info (176353): Automatically promoted node iRST~input (placed in PIN Y2 (CLK2, DIFFCLK_1p)) File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 11
     Info (176355): Automatically promoted destinations to use location or clock signal Global Clock CLKCTRL_G4
     Info (176356): Following destination nodes may be non-global or may not use global or regional clocks
-        Info (176357): Destination node dffg_n:PC|dffg:\G1:0:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node dffg_n:PC|dffg:\G1:1:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node dffg_n:PC|dffg:\G1:31:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node dffg_n:PC|dffg:\G1:30:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node dffg_n:PC|dffg:\G1:29:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node dffg_n:PC|dffg:\G1:28:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node dffg_n:PC|dffg:\G1:22:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node mux2t1_N:PCRESET|mux2t1:\G_NBit_MUX:6:MUXI|o_o~4 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 18
-        Info (176357): Destination node mux2t1_N:PCRESET|mux2t1:\G_NBit_MUX:7:MUXI|o_o~2 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 18
-        Info (176357): Destination node mux2t1_N:PCRESET|mux2t1:\G_NBit_MUX:2:MUXI|o_o~2 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 18
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:0:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:1:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:22:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:28:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:29:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:30:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:31:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node mux2t1_N:instRSTPC|mux2t1:\G_NBit_MUX:6:MUXI|o_o~3 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 18
+        Info (176357): Destination node mux2t1_N:instRSTPC|mux2t1:\G_NBit_MUX:7:MUXI|o_o~3 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 18
+        Info (176357): Destination node mux2t1_N:instRSTPC|mux2t1:\G_NBit_MUX:2:MUXI|o_o~2 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 18
         Info (176358): Non-global destination nodes limited to 10 nodes
 Info (176233): Starting register packing
 Info (176235): Finished register packing
@@ -344,32 +344,32 @@ Info (176215): I/O bank details before I/O pin placement
         Info (176213): I/O bank number 6 does not use VREF pins and has undetermined VCCIO pins. 1 total pin(s) used --  57 pins available
         Info (176213): I/O bank number 7 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  72 pins available
         Info (176213): I/O bank number 8 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  71 pins available
-Info (171121): Fitter preparation operations ending: elapsed time is 00:00:24
+Info (171121): Fitter preparation operations ending: elapsed time is 00:01:01
 Info (14896): Fitter has disabled Advanced Physical Optimization because it is not supported for the current family.
 Info (170189): Fitter placement preparation operations beginning
-Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:04
+Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:16
 Info (170191): Fitter placement operations beginning
 Info (170137): Fitter placement was successful
-Info (170192): Fitter placement operations ending: elapsed time is 00:00:43
+Info (170192): Fitter placement operations ending: elapsed time is 00:02:29
 Info (170193): Fitter routing operations beginning
 Info (170195): Router estimated average interconnect usage is 14% of the available device resources
-    Info (170196): Router estimated peak interconnect usage is 32% of the available device resources in the region that extends from location X46_Y24 to location X57_Y36
+    Info (170196): Router estimated peak interconnect usage is 31% of the available device resources in the region that extends from location X23_Y24 to location X33_Y36
 Info (170199): The Fitter performed an Auto Fit compilation.  Optimizations were skipped to reduce compilation time.
     Info (170201): Optimizations that may affect the design's routability were skipped
     Info (170200): Optimizations that may affect the design's timing were skipped
-Info (170194): Fitter routing operations ending: elapsed time is 00:00:54
-Info (11888): Total time spent on timing analysis during the Fitter is 17.99 seconds.
+Info (170194): Fitter routing operations ending: elapsed time is 00:02:27
+Info (11888): Total time spent on timing analysis during the Fitter is 51.85 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
-Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:08
+Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:20
 Info (144001): Generated suppressed messages file /home/connero/Documents/sfhw-proj2/src_hw/internal/QuartusWork/output_files/toolflow.fit.smsg
 Info: Quartus Prime Fitter was successful. 0 errors, 3 warnings
-    Info: Peak virtual memory: 2571 megabytes
-    Info: Processing ended: Wed Dec  4 07:14:34 2024
-    Info: Elapsed time: 00:02:34
-    Info: Total CPU time (on all processors): 00:06:07
+    Info: Peak virtual memory: 1991 megabytes
+    Info: Processing ended: Wed Dec  4 19:17:37 2024
+    Info: Elapsed time: 00:07:24
+    Info: Total CPU time (on all processors): 00:12:29
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Standard Edition
@@ -387,13 +387,13 @@ Info: Running Quartus Prime Assembler
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Dec  4 07:14:35 2024
+    Info: Processing started: Wed Dec  4 19:17:38 2024
 Info: Command: quartus_asm --read_settings_files=on --write_settings_files=off toolflow -c toolflow
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 746 megabytes
-    Info: Processing ended: Wed Dec  4 07:14:38 2024
-    Info: Elapsed time: 00:00:03
-    Info: Total CPU time (on all processors): 00:00:03
+    Info: Peak virtual memory: 741 megabytes
+    Info: Processing ended: Wed Dec  4 19:17:45 2024
+    Info: Elapsed time: 00:00:07
+    Info: Total CPU time (on all processors): 00:00:07
