@@ -8,7 +8,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity mux4t1_n is
+entity mux4t1_N is
     generic (
         n : integer := 32  -- Generic of type integer for input/output data width. Default value is 32.
         );
@@ -22,9 +22,9 @@ entity mux4t1_n is
         o_o  : out std_logic_vector(n - 1 downto 0)  -- Output data width is N.
         );
     
-end entity mux4t1_n;
+end entity mux4t1_N;
 
-architecture structural of mux4t1_n is
+architecture structural of mux4t1_N is
 
     component mux4t1 is
         port (

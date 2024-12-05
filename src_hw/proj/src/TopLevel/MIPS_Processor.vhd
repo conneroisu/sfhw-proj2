@@ -70,7 +70,7 @@ architecture structure of MIPS_Processor is
         port (
             i_CLK          : in  std_logic;
             i_RST          : in  std_logic;
-            i_stall        : in  std_logic;
+            i_stall        : in  std_logic;                     --stall control
             i_PC4          : in  std_logic_vector(31 downto 0);
             i_readA        : in  std_logic_vector(31 downto 0);
             i_readB        : in  std_logic_vector(31 downto 0);
@@ -130,28 +130,29 @@ architecture structure of MIPS_Processor is
             o_jal      : out std_logic;
             o_PC4      : out std_logic_vector(31 downto 0)
             );
+
     end component;
 
     component MEM_WB is
         port (
-            i_CLK      : in  std_logic;  -- Clock input
-            i_RST      : in  std_logic;  -- Reset input
-            i_stall    : in  std_logic;  -- Write enable input
-            i_ALU      : in  std_logic_vector(31 downto 0);  -- ALU value input
-            o_ALU      : out std_logic_vector(31 downto 0);  -- ALU value output
-            i_Mem      : in  std_logic_vector(31 downto 0);  --Mem value
-            o_Mem      : out std_logic_vector(31 downto 0);  --Mem value
-            i_WrAddr   : in  std_logic_vector(4 downto 0);  --write address to register file
-            o_WrAddr   : out std_logic_vector(4 downto 0);
-            i_MemtoReg : in  std_logic;  --memory vs alu signal
-            o_MemtoReg : out std_logic;
-            i_Halt     : in  std_logic;  --halt signal
-            o_Halt     : out std_logic;
-            i_RegWr    : in  std_logic;  --write enable for reg file
-            o_RegWr    : out std_logic;
+            i_CLK      : in  std_logic;
+            i_RST      : in  std_logic;
+            i_stall    : in  std_logic;
+            i_ALU      : in  std_logic_vector(31 downto 0);
+            i_Mem      : in  std_logic_vector(31 downto 0);
+            i_WrAddr   : in  std_logic_vector(4 downto 0);
+            i_MemtoReg : in  std_logic;
+            i_Halt     : in  std_logic;
+            i_RegWr    : in  std_logic;
             i_jal      : in  std_logic;
+            i_PC4      : in  std_logic_vector(31 downto 0);
+            o_ALU      : out std_logic_vector(31 downto 0);
+            o_Mem      : out std_logic_vector(31 downto 0);
+            o_WrAddr   : out std_logic_vector(4 downto 0);
+            o_MemtoReg : out std_logic;
+            o_Halt     : out std_logic;
+            o_RegWr    : out std_logic;
             o_jal      : out std_logic;
-            i_PC4      : in  std_logic_vector(31 downto 0);  --pc+4
             o_PC4      : out std_logic_vector(31 downto 0)
             );
     end component;
@@ -341,7 +342,7 @@ begin
     s_DMemAddr  <= s_MEMALU;
     s_RegWr     <= s_WBRegWr;
     s_RegWrAddr <= s_WBrtrd;
-    s_NotClk   <= not iCLK;
+    s_NotClk    <= not iCLK;
 
     instRegFile : RegisterFile
         port map(
