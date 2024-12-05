@@ -106,21 +106,21 @@ architecture structure of MIPS_Processor is
 
     component EX_MEM is
         port (
-            i_CLK      : in  std_logic;  
-            i_RST      : in  std_logic; 
-            i_ALU      : in  std_logic_vector(31 downto 0);  
-            o_ALU      : out std_logic_vector(31 downto 0);  
-            i_B        : in  std_logic_vector(31 downto 0);  
-            o_B        : out std_logic_vector(31 downto 0);  
-            i_WrAddr   : in  std_logic_vector(4 downto 0);  
+            i_CLK      : in  std_logic;
+            i_RST      : in  std_logic;
+            i_ALU      : in  std_logic_vector(31 downto 0);
+            o_ALU      : out std_logic_vector(31 downto 0);
+            i_B        : in  std_logic_vector(31 downto 0);
+            o_B        : out std_logic_vector(31 downto 0);
+            i_WrAddr   : in  std_logic_vector(4 downto 0);
             o_WrAddr   : out std_logic_vector(4 downto 0);
-            i_MemWr    : in  std_logic;  
-            o_MemWr    : out std_logic;  
-            i_MemtoReg : in  std_logic;  
+            i_MemWr    : in  std_logic;
+            o_MemWr    : out std_logic;
+            i_MemtoReg : in  std_logic;
             o_MemtoReg : out std_logic;
-            i_Halt     : in  std_logic;  
+            i_Halt     : in  std_logic;
             o_Halt     : out std_logic;
-            i_RegWr    : in  std_logic;  
+            i_RegWr    : in  std_logic;
             o_RegWr    : out std_logic;
             i_jal      : in  std_logic;
             o_jal      : out std_logic;
@@ -131,18 +131,18 @@ architecture structure of MIPS_Processor is
 
     component MEM_WB is
         port (
-            i_CLK      : in  std_logic; 
-            i_RST      : in  std_logic;  
-            i_ALU      : in  std_logic_vector(31 downto 0); 
-            i_Mem      : in  std_logic_vector(31 downto 0);  
-            i_WrAddr   : in  std_logic_vector(4 downto 0);  
-            i_MemtoReg : in  std_logic; 
-            i_Halt     : in  std_logic; 
-            i_RegWr    : in  std_logic;  
+            i_CLK      : in  std_logic;
+            i_RST      : in  std_logic;
+            i_ALU      : in  std_logic_vector(31 downto 0);
+            i_Mem      : in  std_logic_vector(31 downto 0);
+            i_WrAddr   : in  std_logic_vector(4 downto 0);
+            i_MemtoReg : in  std_logic;
+            i_Halt     : in  std_logic;
+            i_RegWr    : in  std_logic;
             i_jal      : in  std_logic;
-            i_PC4      : in  std_logic_vector(31 downto 0);  
-            o_ALU      : out std_logic_vector(31 downto 0); 
-            o_Mem      : out std_logic_vector(31 downto 0);  
+            i_PC4      : in  std_logic_vector(31 downto 0);
+            o_ALU      : out std_logic_vector(31 downto 0);
+            o_Mem      : out std_logic_vector(31 downto 0);
             o_WrAddr   : out std_logic_vector(4 downto 0);
             o_MemtoReg : out std_logic;
             o_Halt     : out std_logic;
@@ -179,26 +179,26 @@ architecture structure of MIPS_Processor is
 
     component FetchUnit is
         port (
-            i_PC4         : in  std_logic_vector(31 downto 0);  
-            i_branch_addr : in  std_logic_vector(31 downto 0);  
-            i_jump_addr   : in  std_logic_vector(31 downto 0);  
-            i_jr          : in  std_logic_vector(31 downto 0);  
-            i_jr_select   : in  std_logic;  
-            i_branch      : in  std_logic; 
+            i_PC4         : in  std_logic_vector(31 downto 0);
+            i_branch_addr : in  std_logic_vector(31 downto 0);
+            i_jump_addr   : in  std_logic_vector(31 downto 0);
+            i_jr          : in  std_logic_vector(31 downto 0);
+            i_jr_select   : in  std_logic;
+            i_branch      : in  std_logic;
             i_bne         : in  std_logic;
             i_A           : in  std_logic_vector(31 downto 0);
             i_B           : in  std_logic_vector(31 downto 0);
-            i_jump        : in  std_logic;  
+            i_jump        : in  std_logic;
             o_PC          : out std_logic_vector(31 downto 0);
-            o_jump_branch : out std_logic  
+            o_jump_branch : out std_logic
             );
     end component;
 
     component extender16t32 is
         port(
-            i_I : in  std_logic_vector(15 downto 0);  
-            i_C : in  std_logic;        
-            o_O : out std_logic_vector(31 downto 0)  
+            i_I : in  std_logic_vector(15 downto 0);
+            i_C : in  std_logic;
+            o_O : out std_logic_vector(31 downto 0)
             );
     end component;
 
@@ -212,21 +212,12 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component mux2t1 is
-        port (
-            i_S  : in  std_logic;
-            i_D0 : in  std_logic;
-            i_D1 : in  std_logic;
-            o_O  : out std_logic
-            );
-    end component;
-
     component dffg_N is
         port (
-            i_CLK : in  std_logic;                      
-            i_RST : in  std_logic;                      
-            i_WE  : in  std_logic;                      
-            i_D   : in  std_logic_vector(31 downto 0);  
+            i_CLK : in  std_logic;
+            i_RST : in  std_logic;
+            i_WE  : in  std_logic;
+            i_D   : in  std_logic_vector(31 downto 0);
             o_Q   : out std_logic_vector(31 downto 0)
             );
     end component;
@@ -267,17 +258,6 @@ architecture structure of MIPS_Processor is
             i_WB_wb     : in  std_logic;
             o_Forward_A : out std_logic_vector(1 downto 0);
             o_Forward_B : out std_logic_vector(1 downto 0)
-            );
-    end component;
-
-    component mux4t1_N is
-        port (
-            i_S  : in  std_logic_vector(1 downto 0);
-            i_D0 : in  std_logic_vector(N - 1 downto 0);
-            i_D1 : in  std_logic_vector(N - 1 downto 0);
-            i_D2 : in  std_logic_vector(N - 1 downto 0);
-            i_D3 : in  std_logic_vector(N - 1 downto 0);
-            o_O  : out std_logic_vector(N - 1 downto 0)
             );
     end component;
 
@@ -418,7 +398,7 @@ begin
             o_jump_branch => s_jump_branch
             );
 
-    instSignExtender: extender16t32
+    instSignExtender : extender16t32
         port map(
             i_C => s_signed,
             i_I => s_ID_Inst(15 downto 0),
