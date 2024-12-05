@@ -26,6 +26,8 @@ addi  $8,  $0,  8		# Place “8” in $8
 addi  $9,  $0,  9		# Place “9” in $9
 addi  $10, $0,  -8		# Place “10” in $10
 
+lui 	$20, 0x1001        	# Load the upper part of the address of words
+
 add	$11, $1,  $2		# $11 = $1 + $2	 (1+2 = 3)
 addu	$12, $3,  $4		# $12 = $3 + $4	 (3+4 = 7)
 sub 	$13, $11, $5 		# $12 = $11 - $5 (3-5 = -2)
@@ -35,7 +37,7 @@ andi	$16, $5, 1		# $16 = $4 AND 0001 (0101 AND 0001 = 0001 = 1)
 or	$17, $4, $1		# $17 = $4 OR $1 (0101 OR 0001 = 0101 = 5)
 ori	$18, $4, 1		# $18 = $4 OR 1 (0101 OR 0001 = 0101 = 5)
 xor	$19, $7, $5		# $19 = $7 XOR $5 (0111 XOR 0101 = 0010 = 2)
-xori	$20, $7, 4 		# $20 = $7 XOR 4 (0111 XOR 0100 = 0011 = 3)
+xori	$15, $7, 4 		# $20 = $7 XOR 4 (0111 XOR 0100 = 0011 = 3)
 nor	$11, $5, $4		# $11 = $5 NOR $4 (0...0101 NOR 0...0100 = 11111111111111111111111111111011 = -5)
 slt	$12, $2, $3		# if $2 < $3 (it is), set $12 to 1
 slti	$13, $2, 3		# if $2 < $3 (it is), set $13 to 1
@@ -46,8 +48,7 @@ sllv	$17, $1, $2		# shift $1 left $2 times (2), so 0001 becomes 0100 = 4
 srlv	$18, $4, $2		# shift $4 right $2 times (2), so 0100 becomes 0001
 srav	$19, $10, $2		# shift $10 (-8) right $2 times (2) maintaining signage, so -8 becomes -2
 
-##FINISH OR FIX ALL INSTRUCTIONS BELOW THIS
-lui 	$20, 0x1001        	# Load the upper part of the address of words
+##use info from far above lui
 lw  	$11, 0($20)        	# Load word at address $20 + 0 (words[0])
 lh      $12, 2($20)        	# Load halfword at address $20 + 2 (words[1]) (2 bytes)
 lhu     $13, 4($20)        	# Load unsigned halfword at address $20 + 4 (words[2])
