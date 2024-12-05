@@ -467,6 +467,8 @@ begin
             i_readB    => s_RegB,
             i_ExtImm   => s_immediate,
             i_RegDst   => s_RegDst,
+            i_Rt       => s_ID_Inst(20 downto 16),
+            i_Rd       => s_ID_Inst(15 downto 11),
             i_RegWrite => s_muxRegWr,
             i_memToReg => s_memToReg,
             i_MemWrite => s_muxMemWr,
