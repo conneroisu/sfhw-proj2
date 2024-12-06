@@ -31,15 +31,15 @@ architecture structure of MIPS_Processor is
 
     component RegisterFile is
         port (
-            i_CLK   : in  std_logic;
-            i_WriteAddr  : in  std_logic_vector(4 downto 0);
-            i_WriteData  : in  std_logic_vector(31 downto 0);
-            i_WriteEnable  : in  std_logic;
-            i_ReadAddr1  : in  std_logic_vector(4 downto 0);
-            i_ReadAddr2  : in  std_logic_vector(4 downto 0);
-            i_Reset : in  std_logic;
-            o_ReadData1  : out std_logic_vector(31 downto 0);
-            o_ReadData2  : out std_logic_vector(31 downto 0)
+            i_CLK         : in  std_logic;
+            i_WriteAddr   : in  std_logic_vector(4 downto 0);
+            i_WriteData   : in  std_logic_vector(31 downto 0);
+            i_WriteEnable : in  std_logic;
+            i_ReadAddr1   : in  std_logic_vector(4 downto 0);
+            i_ReadAddr2   : in  std_logic_vector(4 downto 0);
+            i_Reset       : in  std_logic;
+            o_ReadData1   : out std_logic_vector(31 downto 0);
+            o_ReadData2   : out std_logic_vector(31 downto 0)
             );
     end component;
 
@@ -56,36 +56,36 @@ architecture structure of MIPS_Processor is
 
     component ID_EX is
         port (
-            i_CLK      : in  std_logic;
-            i_RST      : in  std_logic;
-            i_PC4      : in  std_logic_vector(31 downto 0);
-            i_readA    : in  std_logic_vector(31 downto 0);
-            i_readB    : in  std_logic_vector(31 downto 0);
-            i_ExtImm   : in  std_logic_vector(31 downto 0);
-            i_Rt       : in  std_logic_vector(4 downto 0);  -- 20-16
-            i_Rd       : in  std_logic_vector(4 downto 0);  -- 15-11
-            i_RegDst   : in  std_logic;
-            i_RegWrite : in  std_logic;
-            i_memToReg : in  std_logic;
-            i_MemWrite : in  std_logic;
-            i_ALUSrc   : in  std_logic;
-            i_ALUOp    : in  std_logic_vector(3 downto 0);
-            i_jal      : in  std_logic;
-            i_halt     : in  std_logic;
-            o_PC4      : out std_logic_vector(31 downto 0);
-            o_readA    : out std_logic_vector(31 downto 0);
-            o_readB    : out std_logic_vector(31 downto 0);
-            o_ExtImm   : out std_logic_vector(31 downto 0);
-            o_Rt       : out std_logic_vector(4 downto 0);  -- 20-16
-            o_Rd       : out std_logic_vector(4 downto 0);  -- 15-11
-            o_RegDst   : out std_logic;
-            o_RegWrite : out std_logic;
-            o_memToReg : out std_logic;
-            o_MemWrite : out std_logic;
-            o_ALUSrc   : out std_logic;
-            o_ALUOp    : out std_logic_vector(3 downto 0);
-            o_jal      : out std_logic;
-            o_halt     : out std_logic
+            i_CLK               : in  std_logic;
+            i_Reset               : in  std_logic;
+            i_PC4               : in  std_logic_vector(31 downto 0);
+            i_RegisterFileReadA : in  std_logic_vector(31 downto 0);
+            i_RegisterFileReadB : in  std_logic_vector(31 downto 0);
+            i_ImmediateExtended : in  std_logic_vector(31 downto 0);
+            i_Rt                : in  std_logic_vector(4 downto 0);  -- 20-16
+            i_Rd                : in  std_logic_vector(4 downto 0);  -- 15-11
+            i_RegDst            : in  std_logic;
+            i_RegWrite          : in  std_logic;
+            i_MemToReg          : in  std_logic;
+            i_MemWrite          : in  std_logic;
+            i_ALUSrc            : in  std_logic;
+            i_ALUOp             : in  std_logic_vector(3 downto 0);
+            i_Jal               : in  std_logic;
+            i_Halt              : in  std_logic;
+            o_PC4               : out std_logic_vector(31 downto 0);
+            o_RegisterFileReadA : out std_logic_vector(31 downto 0);
+            o_RegisterFileReadB : out std_logic_vector(31 downto 0);
+            o_ImmediateExtended            : out std_logic_vector(31 downto 0);
+            o_Rt                : out std_logic_vector(4 downto 0);  -- 20-16
+            o_Rd                : out std_logic_vector(4 downto 0);  -- 15-11
+            o_RegDst            : out std_logic;
+            o_RegWrite          : out std_logic;
+            o_MemToReg          : out std_logic;
+            o_MemWrite          : out std_logic;
+            o_ALUSrc            : out std_logic;
+            o_ALUOp             : out std_logic_vector(3 downto 0);
+            o_Jal               : out std_logic;
+            o_Halt              : out std_logic
             );
     end component;
 
@@ -178,7 +178,7 @@ architecture structure of MIPS_Processor is
             o_jump_branch : out std_logic
             );
     end component;
-    
+
     component ControlUnit is
         port (
             i_opCode    : in  std_logic_vector(5 downto 0);
@@ -304,10 +304,10 @@ architecture structure of MIPS_Processor is
         s_ID_Inst,
         s_ID_PC4,
         s_EXA,
-        s_EXB, 
+        s_EXB,
         s_EXImmediate,
         s_ALUOut,
-        s_MEMALU, 
+        s_MEMALU,
         s_WBALU,
         s_WBMEMOut : std_logic_vector(31 downto 0);
 
@@ -328,15 +328,15 @@ begin
 
     instRegisterFile : RegisterFile
         port map(
-            i_WriteData  => s_RegWrData,
-            i_WriteAddr  => s_RegWrAddr,
-            i_WriteEnable  => s_RegWr,
-            i_CLK   => iCLK,
-            i_Reset => iRST,
-            i_ReadAddr1  => s_ID_Inst(25 downto 21),
-            i_ReadAddr2  => s_ID_Inst(20 downto 16),
-            o_ReadData1  => s_RegA,
-            o_ReadData2  => s_RegB
+            i_WriteData   => s_RegWrData,
+            i_WriteAddr   => s_RegWrAddr,
+            i_WriteEnable => s_RegWr,
+            i_CLK         => iCLK,
+            i_Reset       => iRST,
+            i_ReadAddr1   => s_ID_Inst(25 downto 21),
+            i_ReadAddr2   => s_ID_Inst(20 downto 16),
+            o_ReadData1   => s_RegA,
+            o_ReadData2   => s_RegB
             );
 
     instRtRdMux2t1_5 : mux2t1_N
@@ -513,36 +513,36 @@ begin
 
     instIDEX : ID_EX
         port map(
-            i_CLK      => iCLK,
-            i_RST      => iRST,
-            i_PC4      => s_ID_PC4,
-            i_readA    => s_RegA,
-            i_readB    => s_RegB,
-            i_ExtImm   => s_Imm,
-            i_RegDst   => s_RegDst,
-            i_Rt       => s_ID_Inst(20 downto 16),
-            i_Rd       => s_ID_Inst(15 downto 11),
-            i_RegWrite => s_IDRegWr,
-            i_memToReg => s_memToReg,
-            i_MemWrite => s_IDMemWr,
-            i_ALUSrc   => s_ALUSrc,
-            i_ALUOp    => s_ALUOp,
-            i_jal      => s_Jal,
-            i_halt     => s_IDhalt,
-            o_PC4      => s_EX_PC4,
-            o_readA    => s_EXA,
-            o_readB    => s_EXB,
-            o_ExtImm   => s_EXImmediate,
-            o_Rt       => s_EXrt,
-            o_Rd       => s_EXrd,
-            o_RegDst   => s_EXRegDst,
-            o_RegWrite => s_EXRegWr,
-            o_memToReg => s_EXMemToReg,
-            o_MemWrite => s_EXMemWr,
-            o_ALUSrc   => s_EXALUSrc,
-            o_ALUOp    => s_EXALUOp,
-            o_jal      => s_EXjal,
-            o_halt     => s_EXhalt
+            i_CLK               => iCLK,
+            i_Reset               => iRST,
+            i_PC4               => s_ID_PC4,
+            i_RegisterFileReadA => s_RegA,
+            i_RegisterFileReadB => s_RegB,
+            i_ImmediateExtended => s_Imm,
+            i_RegDst            => s_RegDst,
+            i_Rt                => s_ID_Inst(20 downto 16),
+            i_Rd                => s_ID_Inst(15 downto 11),
+            i_RegWrite          => s_IDRegWr,
+            i_MemToReg          => s_memToReg,
+            i_MemWrite          => s_IDMemWr,
+            i_ALUSrc            => s_ALUSrc,
+            i_ALUOp             => s_ALUOp,
+            i_Jal               => s_Jal,
+            i_Halt              => s_IDhalt,
+            o_PC4               => s_EX_PC4,
+            o_RegisterFileReadA => s_EXA,
+            o_RegisterFileReadB => s_EXB,
+            o_ImmediateExtended => s_EXImmediate,
+            o_Rt                => s_EXrt,
+            o_Rd                => s_EXrd,
+            o_RegDst            => s_EXRegDst,
+            o_RegWrite          => s_EXRegWr,
+            o_MemToReg          => s_EXMemToReg,
+            o_MemWrite          => s_EXMemWr,
+            o_ALUSrc            => s_EXALUSrc,
+            o_ALUOp             => s_EXALUOp,
+            o_Jal               => s_EXjal,
+            o_Halt              => s_EXhalt
             );
 
     instEXMEM : EX_MEM
