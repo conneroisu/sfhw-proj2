@@ -199,8 +199,6 @@ architecture structure of MIPS_Processor is
             o_ALUSrc    : out std_logic;
             o_ALUOp     : out std_logic_vector(3 downto 0);
             o_Signed    : out std_logic;
-            o_shiftType : out std_logic;
-            o_shiftDir  : out std_logic;
             o_Bne       : out std_logic;
             o_Beq       : out std_logic;
             o_Jr        : out std_logic;
@@ -310,6 +308,7 @@ architecture structure of MIPS_Processor is
     signal /*  --------------|-FROM-------------|-TO----------------------------------------------------------------------------------------| */
         s_RegisterFileA, /*--| instRegisterFile | instFetchUnit, instIDEX ------------------------------------------------------------------| */
         s_RegisterFileB, /*--| instRegisterFile | instFetchUnit, instIDEX ------------------------------------------------------------------| */
+        s_IDPC4, /*----------| instIFID --------| instFetchUnit, instIDEX ------------------------------------------------------------------| */
         s_IFPC4, /*  --------| instPC4Adder ----| instIFID, instNXTPC ----------------------------------------------------------------------| */
         s_EXPC4, /*  --------| instIDEX --------| instEXMEM, instWBMux ---------------------------------------------------------------------| */
         s_MEMPC4, /*  -------| instEXMEM -------| instMEMWB --------------------------------------------------------------------------------| */
@@ -321,7 +320,6 @@ architecture structure of MIPS_Processor is
         s_ALUB, /*  ---------| instImmMux ------| instALU ----------------------------------------------------------------------------------| */
         s_AluOrMem, /*  -----| instMemToRegMux -| instRegAddrMux ---------------------------------------------------------------------------| */
         s_IDInstruction, /*--| instIFID --------| instRegisterFile, instControlUnit, instFetchUnit, instSignExtend, instIDEX, instHazardUnit| */
-        s_IDPC4, /*----------| instIFID --------| instFetchUnit, instIDEX ------------------------------------------------------------------| */
         s_EXA, /*------------| instIDEX --------| instForwardAMux --------------------------------------------------------------------------| */
         s_EXB, /*------------| instIDEX --------| instForwardBMux --------------------------------------------------------------------------| */
         s_EXImmediate, /*----| instIDEX --------| instImmMux, instALU ----------------------------------------------------------------------| */
@@ -335,14 +333,48 @@ architecture structure of MIPS_Processor is
         : std_logic_vector(31 downto 0);
 
     signal
-        s_JumpBranch, s_RegDst, s_memToReg, s_ALUSrc, s_Jr, s_Jal,
-        s_NotClk, s_Signed, s_Lui, s_ShiftType, s_ShiftDirection, s_Bne, s_Beq,
-        s_Branch, s_Jump, s_Zero, s_CarryOut, s_Stall, s_WE, s_Flush, s_ToFlush,
-        s_muxRegWr, s_muxMemWr, s_internal_CarryOut, s_internal_Overflow,
-        s_IDhalt, s_IDMemWr, s_IDRegWr, s_ID_memRD,
-        s_EXRegDst, s_EXRegWr, s_EXmemToReg, s_EXMemWr, s_EXMemRd, s_EXALUSrc, s_EXjal, s_EXhalt,
-        s_MEMjal, s_MEMmemtoReg, s_MEMhalt, s_MEMRegWr,
-        s_WBjal, s_WBmemToReg, s_WBRegWr : std_logic;
+        s_JumpBranch,
+        s_RegDst,
+        s_memToReg,
+        s_ALUSrc,
+        s_Jr,
+        s_Jal,
+        s_NotClk,
+        s_Signed,
+        s_Lui,
+        s_Bne,
+        s_Beq,
+        s_Branch,
+        s_Jump,
+        s_Zero,
+        s_CarryOut,
+        s_Stall,
+        s_WE,
+        s_Flush,
+        s_ToFlush,
+        s_muxRegWr,
+        s_muxMemWr,
+        s_internal_CarryOut,
+        s_internal_Overflow,
+        s_IDhalt,
+        s_IDMemWr,
+        s_IDRegWr,
+        s_ID_memRD,
+        s_EXRegDst,
+        s_EXRegWr,
+        s_EXmemToReg,
+        s_EXMemWr,
+        s_EXMemRd,
+        s_EXALUSrc,
+        s_EXjal,
+        s_EXhalt,
+        s_MEMjal,
+        s_MEMmemtoReg,
+        s_MEMhalt,
+        s_MEMRegWr,
+        s_WBjal,
+        s_WBmemToReg,
+        s_WBRegWr : std_logic;
 
 begin
     with iInstLd select
@@ -402,8 +434,6 @@ begin
             o_ALUSrc    => s_ALUSrc,
             o_ALUOp     => s_ALUOp,
             o_signed    => s_Signed,
-            o_shiftType => s_ShiftType,
-            o_shiftDir  => s_ShiftDirection,
             o_bne       => s_Bne,
             o_beq       => s_Beq,
             o_jr        => s_Jr,
