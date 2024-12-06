@@ -53,3 +53,5 @@ et.log
 __pycache__/
 *.py[cod]
 vcom.log
+*.cdb
+*.hdb
