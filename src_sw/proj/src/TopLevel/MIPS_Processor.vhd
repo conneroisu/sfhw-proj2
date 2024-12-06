@@ -195,7 +195,6 @@ architecture structure of MIPS_Processor is
             o_shiftDir  : out std_logic;
             o_bne       : out std_logic;
             o_beq       : out std_logic;
-            o_j         : out std_logic;
             o_jr        : out std_logic;
             o_jal       : out std_logic;
             o_branch    : out std_logic;
