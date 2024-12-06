@@ -310,10 +310,10 @@ architecture structure of MIPS_Processor is
     signal
         s_RegisterFileA,  -- consumed: instFetchUnit, instIDEX; produced: instRegisterFile.
         s_RegisterFileB,  -- consumed: instFetchUnit, instIDEX; produced: instRegisterFile.
-        s_IFPC4,                        -- asdf
-        s_EXPC4,
-        s_MEMPC4,
-        s_WBPC4,
+        s_IFPC4,  ---------- consumed: instIFID, instNXTPC    ; produced: instPC4Adder
+        s_EXPC4,  ---------- consumed: instEXMEM, instWBMux   ; produced: instIDEX
+        s_MEMPC4,  --------- consumed: instMEMWB              ; produced: instEXMEM
+        s_WBPC4,  ---------- consumed: instRegAddrMux         ; produced: instMEMWB
         s_PC,
         s_PCR,
         s_nextPC,
@@ -614,22 +614,22 @@ begin
             i_RST      => iRST,
             i_stall    => '0',
             i_ALU      => s_ALUOut,
-            o_ALU      => s_MEMALU,
             i_B        => s_ForwardB,
-            o_B        => s_DMemData,
             i_WrAddr   => s_EXrtrd,
-            o_WrAddr   => s_MEMrtrd,
             i_MemWr    => s_EXMemWr,
-            o_MemWr    => s_DMemWr,
             i_MemtoReg => s_EXmemToReg,
-            o_MemtoReg => s_MEMmemToReg,
             i_Halt     => s_EXhalt,
-            o_Halt     => s_MEMhalt,
             i_RegWr    => s_EXRegWr,
-            o_RegWr    => s_MemRegWr,
             i_Jal      => s_EXjal,
-            o_Jal      => s_MEMjal,
             i_PC4      => s_EXPC4,
+            o_ALU      => s_MEMALU,
+            o_B        => s_DMemData,
+            o_WrAddr   => s_MEMrtrd,
+            o_MemWr    => s_DMemWr,
+            o_MemtoReg => s_MEMmemToReg,
+            o_Halt     => s_MEMhalt,
+            o_RegWr    => s_MemRegWr,
+            o_Jal      => s_MEMjal,
             o_PC4      => s_MEMPC4
             );
 
@@ -639,20 +639,20 @@ begin
             i_RST      => iRST,
             i_stall    => '0',
             i_ALU      => s_MEMALU,
-            o_ALU      => s_WBALU,
             i_Mem      => s_DMemOut,
-            o_Mem      => s_WBMEMOut,
             i_WrAddr   => s_MEMrtrd,
-            o_WrAddr   => s_WBrtrd,
             i_MemtoReg => s_MEMmemToReg,
-            o_MemtoReg => s_WBmemToReg,
             i_Halt     => s_MEMHalt,
-            o_Halt     => s_Halt,
             i_RegWr    => s_MEMRegWr,
-            o_RegWr    => s_WBRegWr,
             i_Jal      => s_MEMjal,
-            o_Jal      => s_WBjal,
             i_PC4      => s_MEMPC4,
+            o_ALU      => s_WBALU,
+            o_Mem      => s_WBMEMOut,
+            o_WrAddr   => s_WBrtrd,
+            o_MemtoReg => s_WBmemToReg,
+            o_Halt     => s_Halt,
+            o_RegWr    => s_WBRegWr,
+            o_Jal      => s_WBjal,
             o_PC4      => s_WBPC4
             );
 
