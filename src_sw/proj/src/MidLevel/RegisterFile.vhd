@@ -13,15 +13,15 @@ use work.mips_types.all;
 entity RegisterFile is
 
     port (
-        clk   : in  std_logic;                      -- Clock input
-        i_wA  : in  std_logic_vector(4 downto 0);   -- Write address input
-        i_wD  : in  std_logic_vector(31 downto 0);  -- Write data input
-        i_wC  : in  std_logic;                      -- Write enable input
-        i_r1  : in  std_logic_vector(4 downto 0);   -- Read address 1 input
-        i_r2  : in  std_logic_vector(4 downto 0);   -- Read address 2 input
-        reset : in  std_logic;                      -- Reset input
-        o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
-        o_d2  : out std_logic_vector(31 downto 0)   -- Read data 2 output
+        i_CLK         : in  std_logic;
+        i_WriteAddr   : in  std_logic_vector(4 downto 0);
+        i_WriteData   : in  std_logic_vector(31 downto 0);
+        i_WriteEnable : in  std_logic;
+        i_ReadAddr1   : in  std_logic_vector(4 downto 0);
+        i_ReadAddr2   : in  std_logic_vector(4 downto 0);
+        i_Reset       : in  std_logic;
+        o_ReadData1   : out std_logic_vector(31 downto 0);
+        o_ReadData2   : out std_logic_vector(31 downto 0)
         );
 
 end entity RegisterFile;
@@ -53,7 +53,7 @@ architecture structural of RegisterFile is
         port(
             i_CLK : in  std_logic;                       -- Clock input
             i_RST : in  std_logic;                       -- Reset input
-            i_WE : in  std_logic;                       -- Write enable input
+            i_WE  : in  std_logic;                       -- Write enable input
             i_D   : in  std_logic_vector(N-1 downto 0);  -- Data input
             o_Q   : out std_logic_vector(N-1 downto 0)   -- Data output
             );
@@ -68,7 +68,7 @@ begin
     writedecoder : component decoder5t32
         port map
         (
-            i_wA,
+            i_WriteAddr,
             s1
             );
 
@@ -76,18 +76,18 @@ begin
     reg0 : component dffg_n
         generic map(N => 32)
         port map(
-            clk,                        -- clock
-            reset,                      -- reset
+            i_CLK,                      -- clock
+            i_Reset,                    -- reset
             '0',                        -- write enable
             x"00000000",                -- write data
             s2(0)                       -- 2d array
             );
 
     -- AND gate to enable write using decoder output
-    andgate : process (s1, i_wC) is
+    andgate : process (s1, i_WriteEnable) is
     begin
         for i in 1 to 31 loop
-            s3(i) <= s1(i) and i_wC;
+            s3(i) <= s1(i) and i_WriteEnable;
         end loop;
 
     end process andgate;
@@ -99,10 +99,10 @@ begin
         regi : component dffg_n
             generic map(N => 32)
             port map(
-                clk,                    -- clock
-                reset,                  -- reset
+                i_CLK,                  -- clock
+                i_Reset,                -- reset
                 s3(i),                  -- write enable
-                i_wD,                   -- write data
+                i_WriteData,            -- write data
                 s2(i)                   -- 2d array
                 );
 
@@ -112,8 +112,8 @@ begin
     read1 : component mux32t1
         port map(
             s2,                         -- 2d array
-            i_r1,                       -- read address 1
-            o_d1                        -- read data 1
+            i_ReadAddr1,                -- read address 1
+            o_ReadData1                 -- read data 1
             );
 
     -- Generate 2 Read Ports
@@ -121,9 +121,8 @@ begin
         port
         map(
             s2,                         -- 2d array
-            i_r2,                       -- read address 2
-            o_d2                        -- read data 2
+            i_ReadAddr2,                -- read address 2
+            o_ReadData2                 -- read data 2
             );
 
 end architecture structural;
-

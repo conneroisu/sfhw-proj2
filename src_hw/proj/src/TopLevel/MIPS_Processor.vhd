@@ -32,15 +32,15 @@ architecture structure of MIPS_Processor is
 
     component RegisterFile is
         port (
-            clk   : in  std_logic;                      -- Clock input
-            i_wA  : in  std_logic_vector(4 downto 0);   -- Write address input
-            i_wD  : in  std_logic_vector(31 downto 0);  -- Write data input
-            i_wC  : in  std_logic;                      -- Write enable input
-            i_r1  : in  std_logic_vector(4 downto 0);   -- Read address 1 input
-            i_r2  : in  std_logic_vector(4 downto 0);   -- Read address 2 input
-            reset : in  std_logic;                      -- Reset input
-            o_d1  : out std_logic_vector(31 downto 0);  -- Read data 1 output
-            o_d2  : out std_logic_vector(31 downto 0)   -- Read data 2 output
+            i_CLK         : in  std_logic;  -- Clock input
+            i_WriteAddr   : in  std_logic_vector(4 downto 0);  -- Write address input
+            i_WriteData   : in  std_logic_vector(31 downto 0);  -- Write data input
+            i_WriteEnable : in  std_logic;  -- Write enable input
+            i_ReadAddr1   : in  std_logic_vector(4 downto 0);  -- Read address 1 input
+            i_ReadAddr2   : in  std_logic_vector(4 downto 0);  -- Read address 2 input
+            i_Reset       : in  std_logic;  -- Reset input
+            o_ReadData1   : out std_logic_vector(31 downto 0);  -- Read data 1 output
+            o_ReadData2   : out std_logic_vector(31 downto 0)  -- Read data 2 output
             );
     end component;
 
@@ -312,18 +312,18 @@ architecture structure of MIPS_Processor is
     signal
         s_RegA,  -- consumed: instFetchUnit, instIDEX; produced: instRegisterFile.
         s_RegB,  -- consumed: instFetchUnit, instIDEX; produced: instRegisterFile.
-        s_IF_PC4, -- asdf
-        s_EX_PC4,
-        s_MEM_PC4,
-        s_WB_PC4,
+        s_IFPC4,                        -- asdf
+        s_EXPC4,
+        s_MEMPC4,
+        s_WBPC4,
         s_PC,
         s_PCR,
         s_nextPC,
         s_immediate,
         s_ALUB,
         s_AluOrMem,
-        s_ID_Inst,
-        s_ID_PC4,
+        s_IDInstruction,
+        s_IDPC4,
         s_EXA,
         s_EXB,
         s_EXImmediate,
@@ -363,15 +363,15 @@ begin
 
     instRegisterFile : RegisterFile
         port map(
-            i_wD  => s_RegWrData,
-            i_wA  => s_RegWrAddr,
-            i_wC  => s_RegWr,
-            clk   => s_NotClk,
-            reset => iRST,
-            i_r1  => s_ID_Inst(25 downto 21),
-            i_r2  => s_ID_Inst(20 downto 16),
-            o_d1  => s_RegA,
-            o_d2  => s_RegB
+            i_WriteData   => s_RegWrData,
+            i_WriteAddr   => s_RegWrAddr,
+            i_WriteEnable => s_RegWr,
+            i_CLK         => s_NotClk,
+            i_Reset       => iRST,
+            i_ReadAddr1   => s_IDInstruction(25 downto 21),
+            i_ReadAddr2   => s_IDInstruction(20 downto 16),
+            o_ReadData1   => s_RegA,
+            o_ReadData2   => s_RegB
             );
 
     instRtRdMux2t1_5 : mux2t1_N
@@ -394,8 +394,8 @@ begin
 
     instControlUnit : ControlUnit
         port map(
-            i_opCode    => s_ID_Inst(31 downto 26),
-            i_funct     => s_ID_Inst(5 downto 0),
+            i_opCode    => s_IDInstruction(31 downto 26),
+            i_funct     => s_IDInstruction(5 downto 0),
             o_RegDst    => s_RegDst,
             o_RegWrite  => s_IDRegWr,
             o_memToReg  => s_memToReg,
@@ -439,16 +439,16 @@ begin
         generic map(N => 32)
         port map(
             i_S  => s_JumpBranch,
-            i_D0 => s_IF_PC4,
+            i_D0 => s_IFPC4,
             i_D1 => s_PC,
             o_O  => s_nextPC
             );
 
     Fetch : FetchUnit
         port map(
-            i_PC4          => s_ID_PC4,
+            i_PC4          => s_IDPC4,
             i_BranchAddr   => s_immediate,
-            i_JumpAddr     => s_ID_Inst,
+            i_JumpAddr     => s_IDInstruction,
             i_Jr           => s_Jr,
             i_Branch       => s_Branch,
             i_Bne          => s_Bne,
@@ -462,7 +462,7 @@ begin
     instSignExtend : extender16t32
         port map(
             i_C => s_Signed,
-            i_I => s_ID_Inst(15 downto 0),
+            i_I => s_IDInstruction(15 downto 0),
             o_O => s_immediate
             );
 
@@ -523,7 +523,7 @@ begin
         port map(
             i_S  => s_WBjal,
             i_D0 => s_AluOrMem,
-            i_D1 => s_WB_PC4,
+            i_D1 => s_WBPC4,
             o_O  => s_RegWrData
             );
 
@@ -532,7 +532,7 @@ begin
             i_A => s_NextInstAddr,
             i_B => x"00000004",
             i_C => '0',
-            o_S => s_IF_PC4
+            o_S => s_IFPC4
             );
 
     branchjumpMUX : mux2t1_N
@@ -549,10 +549,10 @@ begin
             i_CLK         => iCLK,
             i_RST         => iRST,
             i_stall       => s_Stall,
-            i_PC4         => s_IF_PC4,
+            i_PC4         => s_IFPC4,
             i_instruction => s_BasedInstruction,
-            o_PC4         => s_ID_PC4,
-            o_instruction => s_ID_Inst
+            o_PC4         => s_IDPC4,
+            o_instruction => s_IDInstruction
             );
 
     s_ID_memRD <= s_memToReg and not s_IDMemWr;
@@ -578,12 +578,12 @@ begin
             i_CLK          => iCLK,
             i_RST          => '0',
             i_stall        => '0',
-            i_PC4          => s_ID_PC4,
+            i_PC4          => s_IDPC4,
             i_readA        => s_RegA,
             i_readB        => s_RegB,
             i_signExtImmed => s_immediate,
-            i_IDRt         => s_ID_Inst(20 downto 16),
-            i_IDRD         => s_ID_Inst(15 downto 11),
+            i_IDRt         => s_IDInstruction(20 downto 16),
+            i_IDRD         => s_IDInstruction(15 downto 11),
             i_RegDst       => s_RegDst,
             i_RegWrite     => s_muxRegWr,
             i_memToReg     => s_memToReg,
@@ -592,10 +592,10 @@ begin
             i_ALUOp        => s_ALUOp,
             i_jal          => s_Jal,
             i_halt         => s_IDhalt,
-            i_RS           => s_ID_Inst(25 downto 21),
+            i_RS           => s_IDInstruction(25 downto 21),
             i_memRd        => s_ID_memRD,
             o_RS           => s_EX_rs,
-            o_PC4          => s_EX_PC4,
+            o_PC4          => s_EXPC4,
             o_readA        => s_EXA,
             o_readB        => s_EXB,
             o_signExtImmed => s_EXImmediate,
@@ -633,8 +633,8 @@ begin
             o_RegWr    => s_MemRegWr,
             i_jal      => s_EXjal,
             o_jal      => s_MEMjal,
-            i_PC4      => s_EX_PC4,
-            o_PC4      => s_MEM_PC4
+            i_PC4      => s_EXPC4,
+            o_PC4      => s_MEMPC4
             );
 
     instMEMWB : MEM_WB
@@ -656,8 +656,8 @@ begin
             o_RegWr    => s_WBRegWr,
             i_jal      => s_MEMjal,
             o_jal      => s_WBjal,
-            i_PC4      => s_MEM_PC4,
-            o_PC4      => s_WB_PC4
+            i_PC4      => s_MEMPC4,
+            o_PC4      => s_WBPC4
             );
 
     instForwardingUnit : ForwardUnit
@@ -698,8 +698,8 @@ begin
         port map(
             i_jump_ID   => s_Jump,
             i_branch_ID => s_JumpBranch,
-            i_rAddrA    => s_ID_Inst(25 downto 21),
-            i_rAddrB    => s_ID_Inst(20 downto 16),
+            i_rAddrA    => s_IDInstruction(25 downto 21),
+            i_rAddrB    => s_IDInstruction(20 downto 16),
             i_wAddr_ID  => s_EXrtrd,
             i_wAddr_EX  => s_MEMrtrd,
             i_wE_ID     => s_EXRegWr,

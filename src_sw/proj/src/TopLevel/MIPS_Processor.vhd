@@ -29,28 +29,17 @@ architecture structure of MIPS_Processor is
     signal s_Halt         : std_logic;
     signal s_Ovfl         : std_logic;
 
-    component mem is
-        generic (ADDR_WIDTH, DATA_WIDTH : integer);
-        port (
-            clk  : in  std_logic;
-            addr : in  std_logic_vector((ADDR_WIDTH - 1) downto 0);
-            data : in  std_logic_vector((DATA_WIDTH - 1) downto 0);
-            we   : in  std_logic := '1';
-            q    : out std_logic_vector((DATA_WIDTH - 1) downto 0)
-            );
-    end component;
-
     component RegisterFile is
         port (
-            clk   : in  std_logic;
-            i_wA  : in  std_logic_vector(4 downto 0);
-            i_wD  : in  std_logic_vector(31 downto 0);
-            i_wC  : in  std_logic;
-            i_r1  : in  std_logic_vector(4 downto 0);
-            i_r2  : in  std_logic_vector(4 downto 0);
-            reset : in  std_logic;
-            o_d1  : out std_logic_vector(31 downto 0);
-            o_d2  : out std_logic_vector(31 downto 0)
+            i_CLK   : in  std_logic;
+            i_WriteAddr  : in  std_logic_vector(4 downto 0);
+            i_WriteData  : in  std_logic_vector(31 downto 0);
+            i_WriteEnable  : in  std_logic;
+            i_ReadAddr1  : in  std_logic_vector(4 downto 0);
+            i_ReadAddr2  : in  std_logic_vector(4 downto 0);
+            i_Reset : in  std_logic;
+            o_ReadData1  : out std_logic_vector(31 downto 0);
+            o_ReadData2  : out std_logic_vector(31 downto 0)
             );
     end component;
 
@@ -189,6 +178,43 @@ architecture structure of MIPS_Processor is
             o_jump_branch : out std_logic
             );
     end component;
+    
+    component ControlUnit is
+        port (
+            i_opCode    : in  std_logic_vector(5 downto 0);
+            i_funct     : in  std_logic_vector(5 downto 0);
+            o_RegDst    : out std_logic;
+            o_RegWrite  : out std_logic;
+            o_memToReg  : out std_logic;
+            o_memWrite  : out std_logic;
+            o_ALUSrc    : out std_logic;
+            o_ALUOp     : out std_logic_vector(3 downto 0);
+            o_signed    : out std_logic;
+            o_addSub    : out std_logic;
+            o_shiftType : out std_logic;
+            o_shiftDir  : out std_logic;
+            o_bne       : out std_logic;
+            o_beq       : out std_logic;
+            o_j         : out std_logic;
+            o_jr        : out std_logic;
+            o_jal       : out std_logic;
+            o_branch    : out std_logic;
+            o_jump      : out std_logic;
+            o_lui       : out std_logic;
+            o_halt      : out std_logic
+            );
+    end component;
+
+    component mem is
+        generic (ADDR_WIDTH, DATA_WIDTH : integer);
+        port (
+            clk  : in  std_logic;
+            addr : in  std_logic_vector((ADDR_WIDTH - 1) downto 0);
+            data : in  std_logic_vector((DATA_WIDTH - 1) downto 0);
+            we   : in  std_logic := '1';
+            q    : out std_logic_vector((DATA_WIDTH - 1) downto 0)
+            );
+    end component;
 
     component extender16t32 is
         port(
@@ -215,32 +241,6 @@ architecture structure of MIPS_Processor is
             i_WE  : in  std_logic;
             i_D   : in  std_logic_vector(31 downto 0);
             o_Q   : out std_logic_vector(31 downto 0)
-            );
-    end component;
-
-    component ControlUnit is
-        port (
-            i_opCode    : in  std_logic_vector(5 downto 0);
-            i_funct     : in  std_logic_vector(5 downto 0);
-            o_RegDst    : out std_logic;
-            o_RegWrite  : out std_logic;
-            o_memToReg  : out std_logic;
-            o_memWrite  : out std_logic;
-            o_ALUSrc    : out std_logic;
-            o_ALUOp     : out std_logic_vector(3 downto 0);
-            o_signed    : out std_logic;
-            o_addSub    : out std_logic;
-            o_shiftType : out std_logic;
-            o_shiftDir  : out std_logic;
-            o_bne       : out std_logic;
-            o_beq       : out std_logic;
-            o_j         : out std_logic;
-            o_jr        : out std_logic;
-            o_jal       : out std_logic;
-            o_branch    : out std_logic;
-            o_jump      : out std_logic;
-            o_lui       : out std_logic;
-            o_halt      : out std_logic
             );
     end component;
 
@@ -328,15 +328,15 @@ begin
 
     instRegisterFile : RegisterFile
         port map(
-            i_wD  => s_RegWrData,
-            i_wA  => s_RegWrAddr,
-            i_wC  => s_RegWr,
-            clk   => iCLK,
-            reset => iRST,
-            i_r1  => s_ID_Inst(25 downto 21),
-            i_r2  => s_ID_Inst(20 downto 16),
-            o_d1  => s_RegA,
-            o_d2  => s_RegB
+            i_WriteData  => s_RegWrData,
+            i_WriteAddr  => s_RegWrAddr,
+            i_WriteEnable  => s_RegWr,
+            i_CLK   => iCLK,
+            i_Reset => iRST,
+            i_ReadAddr1  => s_ID_Inst(25 downto 21),
+            i_ReadAddr2  => s_ID_Inst(20 downto 16),
+            o_ReadData1  => s_RegA,
+            o_ReadData2  => s_RegB
             );
 
     instRtRdMux2t1_5 : mux2t1_N
