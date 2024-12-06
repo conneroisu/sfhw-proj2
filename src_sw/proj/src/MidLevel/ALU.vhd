@@ -224,7 +224,8 @@ begin
     instZeroDetector : ZeroDetector
         port map(
             i_F    => s_Adder_Out,
-            o_zero => s_zero);
+            o_zero => s_zero
+        );
 
     s_NotZero <= not s_zero;
     o_zero    <= s_NotZero xor s_Bne;
