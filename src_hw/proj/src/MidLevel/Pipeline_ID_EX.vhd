@@ -37,8 +37,7 @@ entity ID_EX is
                 o_ALUSrc            : out std_logic;
                 o_ALUOp             : out std_logic_vector(3 downto 0);
                 o_Jal               : out std_logic;
-                o_Halt              : out std_logic;
-                o_MEMRd             : out std_logic
+                o_Halt              : out std_logic
                 );
 
 end ID_EX;
@@ -212,15 +211,6 @@ begin
                         i_WE  => s_stall,
                         i_D   => i_Halt,
                         o_Q   => o_Halt
-                        );
-
-        instMemoryRd : dffg
-                port map (
-                        i_CLK => i_CLK,
-                        i_RST => i_Reset,
-                        i_WE  => s_stall,
-                        i_D   => i_MEMRd,
-                        o_Q   => o_MEMRd
                         );
 
 end structural;
