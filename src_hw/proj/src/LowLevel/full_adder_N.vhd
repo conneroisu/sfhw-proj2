@@ -40,7 +40,7 @@ begin
             i_A => i_A(j),  -- ith instance's data 0 input = jth data 0 input.
             i_B => i_B(j),  -- ith instance's data 1 input = jth data 1 input.
             o_S => o_S(j),  -- ith instance's data output = jth data output.
-            o_C => s_carry(j + 1)  -- ith instance's data output = jth data output.
+            o_C => s_carry(j + 1)  -- ith instance's data carry = jth data carry.
             );
     end generate G_NBit_FullAdder;
 
