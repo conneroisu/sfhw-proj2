@@ -314,9 +314,9 @@ architecture structure of MIPS_Processor is
         s_EXPC4,  ---------- consumed: instEXMEM, instWBMux   ; produced: instIDEX
         s_MEMPC4,  --------- consumed: instMEMWB              ; produced: instEXMEM
         s_WBPC4,  ---------- consumed: instRegAddrMux         ; produced: instMEMWB
-        s_PC,
-        s_PCR,
-        s_nextPC,
+        s_PC,  ------------- consumed: instNXTPC              ; produced: instFetchUnit
+        s_PCR,  ------------ consumed: instPC                 ; produced: instRSTPC
+        s_nextPC, ---------- consumed: instRSTPC              ; produced: instPC
         s_immediate,
         s_ALUB,
         s_AluOrMem,
@@ -440,7 +440,7 @@ begin
             o_O  => s_nextPC
             );
 
-    Fetch : FetchUnit
+    instFetchUnit : FetchUnit
         port map(
             i_PC4          => s_IDPC4,
             i_BranchAddr   => s_immediate,
