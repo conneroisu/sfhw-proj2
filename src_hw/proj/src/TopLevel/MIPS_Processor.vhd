@@ -30,17 +30,6 @@ architecture structure of MIPS_Processor is
     signal s_Halt         : std_logic;
     signal s_Ovfl         : std_logic;
 
-    component mem is
-        generic (ADDR_WIDTH, DATA_WIDTH : integer);
-        port (
-            clk  : in  std_logic;
-            addr : in  std_logic_vector((ADDR_WIDTH - 1) downto 0);
-            data : in  std_logic_vector((DATA_WIDTH - 1) downto 0);
-            we   : in  std_logic := '1';
-            q    : out std_logic_vector((DATA_WIDTH - 1) downto 0)
-            );
-    end component;
-
     component RegisterFile is
         port (
             clk   : in  std_logic;                      -- Clock input
@@ -200,43 +189,6 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component extender16t32 is
-        port(
-            i_I : in  std_logic_vector(15 downto 0);  -- 16 bit immediate
-            i_C : in  std_logic;        -- signed extender or unsigned
-            o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended immediate
-            );
-    end component;
-
-    component mux2t1_N is
-        generic (N : integer);
-        port (
-            i_S  : in  std_logic;
-            i_D0 : in  std_logic_vector(N - 1 downto 0);
-            i_D1 : in  std_logic_vector(N - 1 downto 0);
-            o_O  : out std_logic_vector(N - 1 downto 0)
-            );
-    end component;
-
-    component mux2t1 is
-        port (
-            i_S  : in  std_logic;
-            i_D0 : in  std_logic;
-            i_D1 : in  std_logic;
-            o_O  : out std_logic
-            );
-    end component;
-
-    component dffg_N is
-        port (
-            i_CLK : in  std_logic;                      -- Clock input
-            i_RST : in  std_logic;                      -- Reset input
-            i_WE  : in  std_logic;                      -- Write enable input
-            i_D   : in  std_logic_vector(31 downto 0);  -- Data value input
-            o_Q   : out std_logic_vector(31 downto 0)
-            );
-    end component;
-
     component ControlUnit is
         port (
             i_opCode    : in  std_logic_vector(5 downto 0);  --MIPS instruction opcode (6 bits wide)
@@ -276,18 +228,6 @@ architecture structure of MIPS_Processor is
             );
     end component;
 
-    component mux4t1_N is
-        generic (N : integer := 32);
-        port (
-            i_S  : in  std_logic_vector(1 downto 0);
-            i_D0 : in  std_logic_vector(N - 1 downto 0);
-            i_D1 : in  std_logic_vector(N - 1 downto 0);
-            i_D2 : in  std_logic_vector(N - 1 downto 0);
-            i_D3 : in  std_logic_vector(N - 1 downto 0);
-            o_O  : out std_logic_vector(N - 1 downto 0)
-            );
-    end component;
-
     component HazardUnit is
         port (
             i_jump_ID   : in  std_logic;  --Control Hazard
@@ -302,6 +242,67 @@ architecture structure of MIPS_Processor is
             o_flush     : out std_logic
             );
     end component;
+
+    component mem is
+        generic (ADDR_WIDTH, DATA_WIDTH : integer);
+        port (
+            clk  : in  std_logic;
+            addr : in  std_logic_vector((ADDR_WIDTH - 1) downto 0);
+            data : in  std_logic_vector((DATA_WIDTH - 1) downto 0);
+            we   : in  std_logic := '1';
+            q    : out std_logic_vector((DATA_WIDTH - 1) downto 0)
+            );
+    end component;
+
+    component extender16t32 is
+        port(
+            i_I : in  std_logic_vector(15 downto 0);  -- 16 bit immediate
+            i_C : in  std_logic;        -- signed extender or unsigned
+            o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended immediate
+            );
+    end component;
+
+    component mux2t1_N is
+        generic (N : integer);
+        port (
+            i_S  : in  std_logic;
+            i_D0 : in  std_logic_vector(N - 1 downto 0);
+            i_D1 : in  std_logic_vector(N - 1 downto 0);
+            o_O  : out std_logic_vector(N - 1 downto 0)
+            );
+    end component;
+
+    component mux2t1 is
+        port (
+            i_S  : in  std_logic;
+            i_D0 : in  std_logic;
+            i_D1 : in  std_logic;
+            o_O  : out std_logic
+            );
+    end component;
+
+    component dffg_N is
+        port (
+            i_CLK : in  std_logic;                      -- Clock input
+            i_RST : in  std_logic;                      -- Reset input
+            i_WE  : in  std_logic;                      -- Write enable input
+            i_D   : in  std_logic_vector(31 downto 0);  -- Data value input
+            o_Q   : out std_logic_vector(31 downto 0)
+            );
+    end component;
+
+    component mux4t1_N is
+        generic (N : integer := 32);
+        port (
+            i_S  : in  std_logic_vector(1 downto 0);
+            i_D0 : in  std_logic_vector(N - 1 downto 0);
+            i_D1 : in  std_logic_vector(N - 1 downto 0);
+            i_D2 : in  std_logic_vector(N - 1 downto 0);
+            i_D3 : in  std_logic_vector(N - 1 downto 0);
+            o_O  : out std_logic_vector(N - 1 downto 0)
+            );
+    end component;
+
 
     signal s_ForwardA_sel, s_ForwardB_sel : std_logic_vector(1 downto 0);
     signal s_ALUOp, s_EXALUOp             : std_logic_vector(3 downto 0);
