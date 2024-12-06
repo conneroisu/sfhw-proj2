@@ -14,7 +14,7 @@ entity EX_MEM is
         i_MemtoReg : in  std_logic;    
         i_Halt     : in  std_logic;     
         i_RegWr    : in  std_logic;     
-        i_jal      : in  std_logic;    
+        i_Jal      : in  std_logic;    
         i_PC4      : in  std_logic_vector(31 downto 0);  
         o_ALU      : out std_logic_vector(31 downto 0);
         o_B        : out std_logic_vector(31 downto 0);  
@@ -23,7 +23,7 @@ entity EX_MEM is
         o_MemtoReg : out std_logic;
         o_Halt     : out std_logic;
         o_RegWr    : out std_logic;
-        o_jal      : out std_logic;
+        o_Jal      : out std_logic;
         o_PC4      : out std_logic_vector(31 downto 0)
         );
     
@@ -115,8 +115,8 @@ begin
             i_CLK => i_CLK,
             i_RST => i_RST,
             i_WE  => s_stall,
-            i_D   => i_jal,
-            o_Q   => o_jal
+            i_D   => i_Jal,
+            o_Q   => o_Jal
             );
 
     G_PC4_reg : for i in 0 to 31 generate

@@ -108,7 +108,7 @@ architecture structure of MIPS_Processor is
             i_MemtoReg : in  std_logic;
             i_Halt     : in  std_logic;
             i_RegWr    : in  std_logic;
-            i_jal      : in  std_logic;
+            i_Jal      : in  std_logic;
             i_PC4      : in  std_logic_vector(31 downto 0);
             o_ALU      : out std_logic_vector(31 downto 0);
             o_B        : out std_logic_vector(31 downto 0);
@@ -117,7 +117,7 @@ architecture structure of MIPS_Processor is
             o_MemtoReg : out std_logic;
             o_Halt     : out std_logic;
             o_RegWr    : out std_logic;
-            o_jal      : out std_logic;
+            o_Jal      : out std_logic;
             o_PC4      : out std_logic_vector(31 downto 0)
             );
 
@@ -629,8 +629,8 @@ begin
             o_Halt     => s_MEMhalt,
             i_RegWr    => s_EXRegWr,
             o_RegWr    => s_MemRegWr,
-            i_jal      => s_EXjal,
-            o_jal      => s_MEMjal,
+            i_Jal      => s_EXjal,
+            o_Jal      => s_MEMjal,
             i_PC4      => s_EXPC4,
             o_PC4      => s_MEMPC4
             );
