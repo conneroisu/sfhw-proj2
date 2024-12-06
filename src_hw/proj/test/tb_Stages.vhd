@@ -354,8 +354,9 @@ begin
     IF_PC4 <= x"33333333";
     S_RST <= '1';
     wait_cycles(1);
-    S_Stall <= '0';
+    S_RST <= '0';
     wait_cycles(1);
+    S_RST <= '1';
     assert ID_PC4 = x"00000000"report "6-1 Test: Reset Malfunction" severity error;
 
 
