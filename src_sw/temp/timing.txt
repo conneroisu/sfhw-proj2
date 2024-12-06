@@ -1,0 +1,67 @@
+
+#
+# CprE 381 toolflow Timing dump
+#
+
+FMax: 52.86mhz Clk Constraint: 20.00ns Slack: 1.08ns
+
+The path is given below
+
+ ===================================================================
+ From Node    : mem:IMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a0~porta_we_reg
+ To Node      : dffg_n:instPC|dffg:\G1:13:flipflop|s_Q
+ Launch Clock : iCLK
+ Latch Clock  : iCLK
+ Data Arrival Path:
+ Total (ns)  Incr (ns)     Type  Element
+ ==========  ========= ==  ====  ===================================
+      0.000      0.000           launch edge time
+      3.465      3.465  R        clock network delay
+      3.728      0.263     uTco  mem:IMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a0~porta_we_reg
+      6.577      2.849 RF  CELL  IMem|ram_rtl_0|auto_generated|ram_block1a0|portadataout[1]
+      7.058      0.481 FF    IC  IMem|ram~50|datab
+      7.414      0.356 FF  CELL  IMem|ram~50|combout
+      8.321      0.907 FF    IC  instRegisterFile|read2|Mux25~2|datab
+      8.746      0.425 FF  CELL  instRegisterFile|read2|Mux25~2|combout
+      9.497      0.751 FF    IC  instRegisterFile|read2|Mux25~3|datad
+      9.647      0.150 FR  CELL  instRegisterFile|read2|Mux25~3|combout
+     10.902      1.255 RR    IC  instRegisterFile|read2|Mux25~4|datad
+     11.057      0.155 RR  CELL  instRegisterFile|read2|Mux25~4|combout
+     11.291      0.234 RR    IC  instRegisterFile|read2|Mux25~5|datab
+     11.700      0.409 RF  CELL  instRegisterFile|read2|Mux25~5|combout
+     11.927      0.227 FF    IC  instRegisterFile|read2|Mux25~8|datad
+     12.052      0.125 FF  CELL  instRegisterFile|read2|Mux25~8|combout
+     14.652      2.600 FF    IC  instRegisterFile|read2|Mux25~19|datad
+     14.777      0.125 FF  CELL  instRegisterFile|read2|Mux25~19|combout
+     15.062      0.285 FF    IC  instFetchUnit|zero_detector|ouput_or|o_f~3|dataa
+     15.491      0.429 FR  CELL  instFetchUnit|zero_detector|ouput_or|o_f~3|combout
+     16.474      0.983 RR    IC  instFetchUnit|zero_detector|ouput_or|o_f~4|datad
+     16.629      0.155 RR  CELL  instFetchUnit|zero_detector|ouput_or|o_f~4|combout
+     16.864      0.235 RR    IC  instFetchUnit|zero_detector|ouput_or|o_f~20|datab
+     17.282      0.418 RR  CELL  instFetchUnit|zero_detector|ouput_or|o_f~20|combout
+     18.146      0.864 RR    IC  instFetchUnit|s_bne_branch|datac
+     18.433      0.287 RR  CELL  instFetchUnit|s_bne_branch|combout
+     18.638      0.205 RR    IC  instFetchUnit|s_toBranch~16|datad
+     18.793      0.155 RR  CELL  instFetchUnit|s_toBranch~16|combout
+     19.220      0.427 RR    IC  instPC|\G1:8:flipflop|s_Q~0|datad
+     19.375      0.155 RR  CELL  instPC|\G1:8:flipflop|s_Q~0|combout
+     20.199      0.824 RR    IC  instRSTPC|\G_NBit_MUX:13:MUXI|o_o~0|datac
+     20.469      0.270 RF  CELL  instRSTPC|\G_NBit_MUX:13:MUXI|o_o~0|combout
+     20.702      0.233 FF    IC  instRSTPC|\G_NBit_MUX:13:MUXI|o_o~1|datac
+     20.983      0.281 FF  CELL  instRSTPC|\G_NBit_MUX:13:MUXI|o_o~1|combout
+     21.406      0.423 FF    IC  instRSTPC|\G_NBit_MUX:13:MUXI|o_o~2|datab
+     21.831      0.425 FF  CELL  instRSTPC|\G_NBit_MUX:13:MUXI|o_o~2|combout
+     21.831      0.000 FF    IC  instPC|\G1:13:flipflop|s_Q|d
+     21.935      0.104 FF  CELL  dffg_n:instPC|dffg:\G1:13:flipflop|s_Q
+ Data Required Path:
+ Total (ns)  Incr (ns)     Type  Element
+ ==========  ========= ==  ====  ===================================
+     20.000     20.000           latch edge time
+     22.986      2.986  R        clock network delay
+     23.018      0.032           clock pessimism removed
+     22.998     -0.020           clock uncertainty
+     23.016      0.018     uTsu  dffg_n:instPC|dffg:\G1:13:flipflop|s_Q
+ Data Arrival Time  :    21.935
+ Data Required Time :    23.016
+ Slack              :     1.081
+ ===================================================================
