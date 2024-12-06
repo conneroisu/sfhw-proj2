@@ -15,11 +15,11 @@ Info: Running Quartus Prime Timing Analyzer
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Dec  4 19:17:46 2024
+    Info: Processing started: Fri Dec  6 14:58:20 2024
 Info: Command: quartus_sta --sdc=toolflow.sdc toolflow --do_report_timing
 Info: qsta_default_script.tcl version: #1
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
 Info (21076): High junction temperature operating condition is not set. Assuming a default value of '85'.
 Info (21076): Low junction temperature operating condition is not set. Assuming a default value of '0'.
 Info (332104): Reading SDC File: 'toolflow.sdc'
@@ -214,7 +214,7 @@ Info (332115): Report Timing: Found 1 setup paths (0 violated).  Worst case slac
     Info (332115): -stdout
 Info (332115): Path #1: Setup slack is 0.932 
     Info (332115): ===================================================================
-    Info (332115): From Node    : RegisterFile:instRegFile|dffg_n:\registerlist:16:regi|dffg:\G1:13:flipflop|s_Q
+    Info (332115): From Node    : RegisterFile:instRegisterFile|dffg_n:\registerlist:16:regi|dffg:\G1:13:flipflop|s_Q
     Info (332115): To Node      : dffg_n:instPC|dffg:\G1:21:flipflop|s_Q
     Info (332115): Launch Clock : iCLK (INVERTED)
     Info (332115): Latch Clock  : iCLK
@@ -223,20 +223,20 @@ Info (332115): Path #1: Setup slack is 0.932
     Info (332115): ==========  ========= ==  ====  ===================================
     Info (332115):     10.000     10.000           launch edge time
     Info (332115):     12.830      2.830  F        clock network delay
-    Info (332115):     13.043      0.213     uTco  RegisterFile:instRegFile|dffg_n:\registerlist:16:regi|dffg:\G1:13:flipflop|s_Q
-    Info (332115):     13.043      0.000 RR  CELL  instRegFile|\registerlist:16:regi|\G1:13:flipflop|s_Q|q
-    Info (332115):     13.275      0.232 RR    IC  instRegFile|read1|Mux18~6|datad
-    Info (332115):     13.419      0.144 RR  CELL  instRegFile|read1|Mux18~6|combout
-    Info (332115):     14.093      0.674 RR    IC  instRegFile|read1|Mux18~7|datad
-    Info (332115):     14.237      0.144 RR  CELL  instRegFile|read1|Mux18~7|combout
-    Info (332115):     14.421      0.184 RR    IC  instRegFile|read1|Mux18~8|datac
-    Info (332115):     14.686      0.265 RR  CELL  instRegFile|read1|Mux18~8|combout
-    Info (332115):     15.498      0.812 RR    IC  instRegFile|read1|Mux18~11|datac
-    Info (332115):     15.763      0.265 RR  CELL  instRegFile|read1|Mux18~11|combout
-    Info (332115):     15.953      0.190 RR    IC  instRegFile|read1|Mux18~16|datad
-    Info (332115):     16.097      0.144 RR  CELL  instRegFile|read1|Mux18~16|combout
-    Info (332115):     17.033      0.936 RR    IC  instRegFile|read1|Mux18~19|datad
-    Info (332115):     17.177      0.144 RR  CELL  instRegFile|read1|Mux18~19|combout
+    Info (332115):     13.043      0.213     uTco  RegisterFile:instRegisterFile|dffg_n:\registerlist:16:regi|dffg:\G1:13:flipflop|s_Q
+    Info (332115):     13.043      0.000 RR  CELL  instRegisterFile|\registerlist:16:regi|\G1:13:flipflop|s_Q|q
+    Info (332115):     13.275      0.232 RR    IC  instRegisterFile|read1|Mux18~6|datad
+    Info (332115):     13.419      0.144 RR  CELL  instRegisterFile|read1|Mux18~6|combout
+    Info (332115):     14.093      0.674 RR    IC  instRegisterFile|read1|Mux18~7|datad
+    Info (332115):     14.237      0.144 RR  CELL  instRegisterFile|read1|Mux18~7|combout
+    Info (332115):     14.421      0.184 RR    IC  instRegisterFile|read1|Mux18~8|datac
+    Info (332115):     14.686      0.265 RR  CELL  instRegisterFile|read1|Mux18~8|combout
+    Info (332115):     15.498      0.812 RR    IC  instRegisterFile|read1|Mux18~11|datac
+    Info (332115):     15.763      0.265 RR  CELL  instRegisterFile|read1|Mux18~11|combout
+    Info (332115):     15.953      0.190 RR    IC  instRegisterFile|read1|Mux18~16|datad
+    Info (332115):     16.097      0.144 RR  CELL  instRegisterFile|read1|Mux18~16|combout
+    Info (332115):     17.033      0.936 RR    IC  instRegisterFile|read1|Mux18~19|datad
+    Info (332115):     17.177      0.144 RR  CELL  instRegisterFile|read1|Mux18~19|combout
     Info (332115):     17.591      0.414 RR    IC  Fetch|zero_detector|ouput_or|o_f~7|dataa
     Info (332115):     17.971      0.380 RR  CELL  Fetch|zero_detector|ouput_or|o_f~7|combout
     Info (332115):     18.190      0.219 RR    IC  Fetch|zero_detector|ouput_or|o_f~9|dataa
@@ -325,7 +325,7 @@ Info (332115): Report Timing: Found 1 setup paths (0 violated).  Worst case slac
     Info (332115): -stdout
 Info (332115): Path #1: Setup slack is 4.635 
     Info (332115): ===================================================================
-    Info (332115): From Node    : RegisterFile:instRegFile|dffg_n:\registerlist:16:regi|dffg:\G1:13:flipflop|s_Q
+    Info (332115): From Node    : RegisterFile:instRegisterFile|dffg_n:\registerlist:16:regi|dffg:\G1:13:flipflop|s_Q
     Info (332115): To Node      : dffg_n:instPC|dffg:\G1:4:flipflop|s_Q
     Info (332115): Launch Clock : iCLK (INVERTED)
     Info (332115): Latch Clock  : iCLK
@@ -334,20 +334,20 @@ Info (332115): Path #1: Setup slack is 4.635
     Info (332115): ==========  ========= ==  ====  ===================================
     Info (332115):     10.000     10.000           launch edge time
     Info (332115):     12.008      2.008  F        clock network delay
-    Info (332115):     12.113      0.105     uTco  RegisterFile:instRegFile|dffg_n:\registerlist:16:regi|dffg:\G1:13:flipflop|s_Q
-    Info (332115):     12.113      0.000 FF  CELL  instRegFile|\registerlist:16:regi|\G1:13:flipflop|s_Q|q
-    Info (332115):     12.266      0.153 FF    IC  instRegFile|read1|Mux18~6|datad
-    Info (332115):     12.329      0.063 FF  CELL  instRegFile|read1|Mux18~6|combout
-    Info (332115):     12.713      0.384 FF    IC  instRegFile|read1|Mux18~7|datad
-    Info (332115):     12.776      0.063 FF  CELL  instRegFile|read1|Mux18~7|combout
-    Info (332115):     12.887      0.111 FF    IC  instRegFile|read1|Mux18~8|datac
-    Info (332115):     13.020      0.133 FF  CELL  instRegFile|read1|Mux18~8|combout
-    Info (332115):     13.456      0.436 FF    IC  instRegFile|read1|Mux18~11|datac
-    Info (332115):     13.589      0.133 FF  CELL  instRegFile|read1|Mux18~11|combout
-    Info (332115):     13.699      0.110 FF    IC  instRegFile|read1|Mux18~16|datad
-    Info (332115):     13.762      0.063 FF  CELL  instRegFile|read1|Mux18~16|combout
-    Info (332115):     14.286      0.524 FF    IC  instRegFile|read1|Mux18~19|datad
-    Info (332115):     14.349      0.063 FF  CELL  instRegFile|read1|Mux18~19|combout
+    Info (332115):     12.113      0.105     uTco  RegisterFile:instRegisterFile|dffg_n:\registerlist:16:regi|dffg:\G1:13:flipflop|s_Q
+    Info (332115):     12.113      0.000 FF  CELL  instRegisterFile|\registerlist:16:regi|\G1:13:flipflop|s_Q|q
+    Info (332115):     12.266      0.153 FF    IC  instRegisterFile|read1|Mux18~6|datad
+    Info (332115):     12.329      0.063 FF  CELL  instRegisterFile|read1|Mux18~6|combout
+    Info (332115):     12.713      0.384 FF    IC  instRegisterFile|read1|Mux18~7|datad
+    Info (332115):     12.776      0.063 FF  CELL  instRegisterFile|read1|Mux18~7|combout
+    Info (332115):     12.887      0.111 FF    IC  instRegisterFile|read1|Mux18~8|datac
+    Info (332115):     13.020      0.133 FF  CELL  instRegisterFile|read1|Mux18~8|combout
+    Info (332115):     13.456      0.436 FF    IC  instRegisterFile|read1|Mux18~11|datac
+    Info (332115):     13.589      0.133 FF  CELL  instRegisterFile|read1|Mux18~11|combout
+    Info (332115):     13.699      0.110 FF    IC  instRegisterFile|read1|Mux18~16|datad
+    Info (332115):     13.762      0.063 FF  CELL  instRegisterFile|read1|Mux18~16|combout
+    Info (332115):     14.286      0.524 FF    IC  instRegisterFile|read1|Mux18~19|datad
+    Info (332115):     14.349      0.063 FF  CELL  instRegisterFile|read1|Mux18~19|combout
     Info (332115):     14.584      0.235 FF    IC  Fetch|zero_detector|ouput_or|o_f~7|dataa
     Info (332115):     14.777      0.193 FF  CELL  Fetch|zero_detector|ouput_or|o_f~7|combout
     Info (332115):     14.914      0.137 FF    IC  Fetch|zero_detector|ouput_or|o_f~9|dataa
@@ -408,7 +408,7 @@ Info (332115): Path #1: Hold slack is 0.096
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime Timing Analyzer was successful. 0 errors, 2 warnings
-    Info: Peak virtual memory: 1297 megabytes
-    Info: Processing ended: Wed Dec  4 19:18:13 2024
-    Info: Elapsed time: 00:00:27
-    Info: Total CPU time (on all processors): 00:00:35
+    Info: Peak virtual memory: 1352 megabytes
+    Info: Processing ended: Fri Dec  6 14:58:32 2024
+    Info: Elapsed time: 00:00:12
+    Info: Total CPU time (on all processors): 00:00:16
