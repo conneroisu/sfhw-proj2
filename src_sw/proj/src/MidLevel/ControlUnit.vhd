@@ -18,7 +18,6 @@ entity ControlUnit is
         o_shiftDir  : out std_logic;
         o_bne       : out std_logic;
         o_beq       : out std_logic;
-        o_j         : out std_logic;
         o_jr        : out std_logic;
         o_jal       : out std_logic;
         o_branch    : out std_logic;
@@ -48,7 +47,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -68,7 +66,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -88,7 +85,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -108,7 +104,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -128,7 +123,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -148,7 +142,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -168,7 +161,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -188,7 +180,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -208,7 +199,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -228,7 +218,6 @@ begin
                 o_addSub    <= '0';
                 o_shiftType <= '0';
                 o_shiftDir  <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -248,7 +237,6 @@ begin
                 o_addSub    <= '0';
                 o_shiftType <= '0';
                 o_shiftDir  <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -262,7 +250,6 @@ begin
                 o_ALUSrc    <= '0';
                 o_ALUOp     <= "1011";
                 o_signed    <= '0';
-                o_j         <= '1';
                 o_jal       <= '0';
                 o_jr        <= '0';
                 o_jump      <= '1';
@@ -282,7 +269,6 @@ begin
                 o_ALUSrc    <= '0';
                 o_ALUOp     <= "1011";
                 o_signed    <= '0';
-                o_j         <= '0';
                 o_jal       <= '1';
                 o_jr        <= '0';
                 o_jump      <= '1';
@@ -308,7 +294,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -328,7 +313,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -350,7 +334,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -370,7 +353,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -390,7 +372,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -410,7 +391,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -430,7 +410,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -450,7 +429,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -470,7 +448,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -490,7 +467,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -510,7 +486,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -530,7 +505,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -550,7 +524,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -570,7 +543,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jr        <= '0';
                 o_jal       <= '0';
                 o_jump      <= '0';
@@ -590,7 +562,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jal       <= '0';
                 o_jr        <= '1';
                 o_jump      <= '1';
@@ -610,7 +581,6 @@ begin
                 o_bne       <= '0';
                 o_beq       <= '0';
                 o_branch    <= '0';
-                o_j         <= '0';
                 o_jal       <= '0';
                 o_jr        <= '0';
                 o_jump      <= '0';
