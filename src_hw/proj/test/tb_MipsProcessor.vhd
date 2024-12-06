@@ -231,9 +231,9 @@ begin
     begin
         while now < 200 ns loop
             clk <= '0';
-            wait for 5 ns;
+            wait for 50 ns;
             clk <= '1';
-            wait for 5 ns;
+            wait for 50 ns;
         end loop;
         wait;
     end process;
@@ -243,14 +243,14 @@ begin
     begin
         -- Initial reset
         rst <= '1';
-        wait for 10 ns;
+        wait for 50 ns;
         rst <= '0';
 
         -- Test 1: Normal pipeline operation
         -- Inject values into IF/ID register
         if_id_pc4_in  <= x"00400000";
         if_id_inst_in <= x"8C010004"; -- lw $1, 4($0)
-        wait for 10 ns;
+        wait for 50 ns;
 
         -- Values should propagate through pipeline
         assert if_id_pc4_out = x"00400000" 
@@ -264,7 +264,7 @@ begin
         if_id_stall <= '1';
         if_id_pc4_in <= x"00400004";
         if_id_inst_in <= x"20020005"; -- addi $2, $0, 5
-        wait for 10 ns;
+        wait for 50 ns;
 
         -- Verify that outputs remain unchanged due to stall
         assert if_id_pc4_out = x"00400000"
@@ -276,7 +276,7 @@ begin
 
         -- Remove stall
         if_id_stall <= '0';
-        wait for 10 ns;
+        wait for 50 ns;
 
         -- Verify outputs update
         assert if_id_pc4_out = x"00400004"
@@ -289,7 +289,7 @@ begin
         -- Additional tests for ID/EX, EX/MEM, and MEM/WB registers
         -- Test initialization of ID/EX register
         id_ex_reset <= '1';
-        wait for 10 ns;
+        wait for 50 ns;
         id_ex_reset <= '0';
 
         -- Test normal operation of ID/EX register
@@ -310,7 +310,7 @@ begin
         id_ex_rs_in <= "00001";
         id_ex_memrd_in <= '1';
 
-        wait for 10 ns;
+        wait for 50 ns;
 
         -- Verify outputs of ID/EX register
         assert id_ex_pc4_in = x"00400008"
