@@ -199,7 +199,6 @@ architecture structure of MIPS_Processor is
             o_ALUSrc    : out std_logic;
             o_ALUOp     : out std_logic_vector(3 downto 0);
             o_signed    : out std_logic;
-            o_addSub    : out std_logic;
             o_shiftType : out std_logic;
             o_shiftDir  : out std_logic;
             o_bne       : out std_logic;
@@ -336,7 +335,7 @@ architecture structure of MIPS_Processor is
 
     signal
         s_JumpBranch, s_RegDst, s_memToReg, s_ALUSrc, s_Jr, s_Jal,
-        s_NotClk, s_Signed, s_Lui, s_Operator, s_ShiftType, s_ShiftDirection, s_Bne, s_Beq,
+        s_NotClk, s_Signed, s_Lui, s_ShiftType, s_ShiftDirection, s_Bne, s_Beq,
         s_Branch, s_Jump, s_Zero, s_CarryOut, s_Stall, s_WE, s_Flush, s_ToFlush,
         s_muxRegWr, s_muxMemWr, s_internal_CarryOut, s_internal_Overflow,
         s_IDhalt, s_IDMemWr, s_IDRegWr, s_ID_memRD,
@@ -402,7 +401,6 @@ begin
             o_ALUSrc    => s_ALUSrc,
             o_ALUOp     => s_ALUOp,
             o_signed    => s_Signed,
-            o_addSub    => s_Operator,
             o_shiftType => s_ShiftType,
             o_shiftDir  => s_ShiftDirection,
             o_bne       => s_Bne,
