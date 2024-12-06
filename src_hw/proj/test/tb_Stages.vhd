@@ -342,9 +342,23 @@ begin
     --assert MEM_PC4 = x"FFFFFFFF"report "4-3 Test: PC4 Not Available WB" severity error;
     assert WB_PC4 = x"FFFFFFFF"report "4-4 Test: PC4 Not Available WB" severity error;
     
-    --Wait 1 Cycle
-    --repeat 3 more times
-    --Assert values available 4 cycles in a row
+    --TEST STALL
+    IF_PC4 <= x"55555555";
+    S_Stall <= '1';
+    wait_cycles(1);
+    S_Stall <= '0';
+    wait_cycles(1);
+    assert ID_PC4 = x"55555555"report "5-1 Test: Stall Malfunction" severity error;
+
+    --TEST RESET
+    IF_PC4 <= x"33333333";
+    S_RST <= '1';
+    wait_cycles(1);
+    S_Stall <= '0';
+    wait_cycles(1);
+    assert ID_PC4 = x"00000000"report "6-1 Test: Reset Malfunction" severity error;
+
+
     wait;
     end process;
 
