@@ -251,7 +251,7 @@ architecture structure of MIPS_Processor is
         s_rtrd, s_MEMrtrd, s_WBrtrd : std_logic_vector(4 downto 0);
 
     signal
-        s_JumpBranch,
+        s_JumpBranch, -- from: instNXTPC to: instFetchUnit
         s_RegDst,
         s_memToReg,
         s_ALUSrc,
@@ -409,7 +409,7 @@ begin
             o_O  => s_nextPC
             );
 
-    instFetch : FetchUnit
+    instFetchUnit : FetchUnit
         port map(
             i_PC4         => s_ID_PC4,
             i_branch_addr => s_Imm,
