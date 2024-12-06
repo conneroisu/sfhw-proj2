@@ -1,6 +1,6 @@
 .data
 .align 2
-vals: .word 25 1 4 10 381 42 100 60 0 12 # address: 0x10010000
+vals: .word 17 38 20 8008 69 420 100 60 0 12 # address: 0x10010000
 vals_length: .word 10                    # address: 0x10010028
 .text
 .globl main
@@ -14,16 +14,8 @@ vals_length: .word 10                    # address: 0x10010028
 # $s6 => &arr[j+1]
 main:
     lui $s1, 0x1001
-	nop
-	nop
-	nop
     lui $s0, 0x1001
-	nop
-	nop
-	nop
     addi $s2, $zero, 0
-	nop
-	nop
 	nop
     ori $s1, $s1, 0x0028
 	nop
@@ -44,24 +36,10 @@ outer_loop_cond:
 	nop
     bne $t1, $zero, outer_loop_body
 	nop
-	nop
-	nop
     j exit_outer_loop
-	nop
-	nop
-	nop
 outer_loop_body:
-	nop
-	nop
-	nop
     add $s4, $zero, $zero
-	nop
-	nop
-	nop
     add $s3, $zero, $zero
-	nop
-	nop
-	nop
 inner_loop_cond:
 	nop
 	nop
@@ -87,9 +65,6 @@ inner_loop_cond:
 	nop
 	nop
 inner_loop_body:
-	nop
-	nop
-	nop
     sll $t0, $s3, 2
 	nop
 	nop
@@ -99,11 +74,7 @@ inner_loop_body:
 	nop
 	nop
     addi $s6, $s5, 4
-	nop
-	nop
-	nop
     lw $t0, 0($s5)
-	nop
 	nop
 	nop
     lw $t1, 0($s6)
@@ -116,48 +87,25 @@ inner_loop_body:
 	nop
     beq $t2, $zero, inner_loop_footer
 	nop
-	nop
-	nop
     sw $t0, 0($s6)
-	nop
-	nop
-	nop
     sw $t1, 0($s5)
-	nop
-	nop
-	nop
     addi $s4, $zero, 1
-	nop
-	nop
-	nop
 inner_loop_footer:
-	nop
-	nop
-	nop
     addi $s3, $s3, 1
 	nop
 	nop
 	nop
     j inner_loop_cond
-	nop
-	nop
-	nop
 exit_inner_loop:
-	nop
-	nop
 	nop
     beq $s4, $zero, exit_outer_loop
 outer_loop_footer:
-	nop
-	nop
 	nop
     addi $s2, $s2, 1
 	nop
 	nop
 	nop
     j outer_loop_cond
-	nop
-	nop
 	nop
 exit_outer_loop:
     j exit
