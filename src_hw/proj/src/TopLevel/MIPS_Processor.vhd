@@ -91,8 +91,7 @@ architecture structure of MIPS_Processor is
             o_ALUSrc            : out std_logic;
             o_ALUOp             : out std_logic_vector(3 downto 0);
             o_Jal               : out std_logic;
-            o_Halt              : out std_logic;
-            o_MEMRd             : out std_logic
+            o_Halt              : out std_logic
             );
     end component;
 
@@ -354,8 +353,8 @@ architecture structure of MIPS_Processor is
         s_ToFlush,
         s_muxRegWr,
         s_muxMemWr,
-        s_internal_CarryOut,
-        s_internal_Overflow,
+        s_InternalCarryOut,
+        s_InternalOverflow,
         s_IDhalt,
         s_IDMemWr,
         s_IDRegWr,
@@ -510,23 +509,23 @@ begin
             i_ALUOP    => s_EXALUOp,
             i_Shamt    => s_EXImmediate(10 downto 6),
             o_Result   => s_ALUOut,
-            o_CarryOut => s_internal_CarryOut,
-            o_Overflow => s_internal_Overflow,
+            o_CarryOut => s_InternalCarryOut,
+            o_Overflow => s_InternalOverflow,
             o_Zero     => s_Zero
             );
 
-    instCarrFlowProc : process(iclk, irst, s_internal_CarryOut, s_internal_Overflow, s_CarryOut, s_Ovfl)
+    instCarrFlowProc : process(iclk, irst, s_InternalCarryOut, s_InternalOverflow, s_CarryOut, s_Ovfl)
     begin
         if irst = '1' then
             s_CarryOut <= '0';
             s_Ovfl     <= '0';
         elsif rising_edge(iclk) then
-            if s_internal_CarryOut = '1' then
+            if s_InternalCarryOut = '1' then
                 s_CarryOut <= '1';
             else
                 s_CarryOut <= s_CarryOut;
             end if;
-            if s_internal_Overflow = '1' then
+            if s_InternalOverflow = '1' then
                 s_Ovfl <= '1';
             else
                 s_Ovfl <= s_Ovfl;
