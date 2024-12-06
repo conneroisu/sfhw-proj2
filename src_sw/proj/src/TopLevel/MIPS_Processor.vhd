@@ -195,7 +195,6 @@ architecture structure of MIPS_Processor is
             o_shiftDir  : out std_logic;
             o_bne       : out std_logic;
             o_beq       : out std_logic;
-            o_j         : out std_logic;
             o_jr        : out std_logic;
             o_jal       : out std_logic;
             o_branch    : out std_logic;
@@ -251,10 +250,10 @@ architecture structure of MIPS_Processor is
         s_rtrd, s_MEMrtrd, s_WBrtrd : std_logic_vector(4 downto 0);
 
     signal
-        s_JumpBranch, -- from: instNXTPC to: instFetchUnit
-        s_RegDst,
-        s_memToReg,
-        s_ALUSrc,
+        s_JumpBranch,                   -- from: instNXTPC; to: instFetchUnit
+        s_RegDst,                       -- from: instControlUnit; to instIDEX
+        s_memToReg,                     -- from: instControlUnit; to instIDEX
+        s_ALUSrc,                       -- from: instControlUnit; to instIDEX
         s_J,
         s_jr,
         s_Jal,
@@ -373,7 +372,6 @@ begin
             o_shiftDir  => s_ShiftDir,
             o_bne       => s_Bne,
             o_beq       => s_Beq,
-            o_j         => s_J,
             o_jr        => s_jr,
             o_jal       => s_Jal,
             o_branch    => s_Branch,
