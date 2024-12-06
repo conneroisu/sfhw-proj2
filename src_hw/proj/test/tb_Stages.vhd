@@ -152,13 +152,10 @@ architecture behavior of tb_stages is
     ID_ALUOp, -- vec 4
     EX_ALUOp: -- vec 4
     STD_LOGIC_VECTOR(3 downto 0);
+    signal S_CLK: std_logic := '0';
+    signal S_RST: std_logic := '0';
+    signal S_Stall : std_logic := '0';
     signal
-    IF_CLK,
-    IF_RST,
-    IF_Stall,
-    ID_CLK,
-    ID_Reset,
-    ID_Stall,
     ID_RegDst,
     ID_RegWrite,
     ID_MemToReg,
@@ -173,9 +170,6 @@ architecture behavior of tb_stages is
     EX_ALUSrc,
     EX_Halt,
     EX_MEMRd,
-    EX_CLK,
-    EX_RST,
-    EX_stall,
     EX_MemWr,
     EX_MemtoReg,
     EX_RegWr,
@@ -185,21 +179,29 @@ architecture behavior of tb_stages is
     MEM_Halt,
     MEM_RegWr,
     MEM_Jal,
-    MEM_CLK,
-    MEM_RST,
-    MEM_stall,
     WB_MemtoReg,
     WB_Halt,
     WB_RegWr,
     WB_Jal
     : std_logic;
+
+    -- Clock period definition
+    constant c_CLK_PERIOD : time := 10 ns;
+
+    -- Helper procedure for clock cycles
+    procedure wait_cycles(n : integer) is
+    begin
+        for i in 1 to n loop
+            wait for c_CLK_PERIOD;
+        end loop;
+    end procedure;
 begin
 
     IF_ID_inst: IF_ID
     port map(
-       i_CLK => IF_CLK,
-       i_RST => IF_RST,
-       i_Stall => IF_Stall,
+       i_CLK => S_CLK,
+       i_RST => S_RST,
+       i_Stall => S_Stall,
        i_PC4 => IF_PC4,
        i_Instruction => IF_Instruction,
        o_PC4 => ID_PC4,
@@ -208,9 +210,9 @@ begin
 
     ID_EX_inst: ID_EX
      port map(
-        i_CLK =>        ID_CLK,
-        i_Reset =>      ID_Reset,
-        i_Stall =>      ID_Stall,
+        i_CLK =>        S_CLK,
+        i_Reset =>      S_RST,
+        i_Stall =>      S_Stall,
         i_PC4 =>        ID_PC4,
         i_RegisterFileReadA =>  ID_RegisterFileReadA,
         i_RegisterFileReadB =>  ID_RegisterFileReadB,
@@ -247,9 +249,9 @@ begin
 
     EX_MEM_inst: EX_MEM
      port map(
-        i_CLK => EX_CLK,
-        i_RST => EX_RST,
-        i_stall => EX_stall,
+        i_CLK => S_CLK,
+        i_RST => S_RST,
+        i_stall => S_Stall,
         i_ALU => EX_ALU,
         i_B => EX_B,
         i_WrAddr => EX_WrAddr,
@@ -272,9 +274,9 @@ begin
 
     MEM_WB_inst: MEM_WB
      port map(
-        i_CLK =>        MEM_CLK,
-        i_RST =>        MEM_RST,
-        i_stall =>      MEM_stall,
+        i_CLK =>        S_CLK,
+        i_RST =>        S_RST,
+        i_stall =>      S_Stall,
         i_ALU =>        MEM_ALU,
         i_Mem =>        MEM_Mem,
         i_WrAddr =>     MEM_WrAddr,
@@ -292,6 +294,59 @@ begin
         o_Jal =>        WB_Jal,
         o_PC4 =>        WB_PC4
     );
+
+    CLK_process : process
+    begin
+        S_CLK <= '0';
+        wait for c_CLK_PERIOD/2;
+        S_CLK <= '1';
+        wait for c_CLK_PERIOD/2;
+    end process;
+
+    STIM_process : process
+    begin
+    -- Initialize Inputs
+    s_RST <= '1';
+    wait_cycles(2);
+    s_RST <= '0';
+    wait_cycles(2);
+    
+    --Test Part 1
+    --Assign input values to IF/ID (maybe can just do pc4?)
+    IF_PC4 <= x"FFFFFFFF";
+    IF_Instruction <= x"FFFFFFFF";
+    wait_cycles(1);
+    assert ID_PC4 = x"FFFFFFFF"report "1-1 PC4 Not Available WB" severity error;
+    --assert EX_PC4 = x"FFFFFFFF"report "1-2 Test: PC4 Not Available WB" severity error;
+    --assert MEM_PC4 = x"FFFFFFFF"report "1-3 Test: PC4 Not Available WB" severity error;
+    --assert WB_PC4 = x"FFFFFFFF"report "1-4 Test: PC4 Not Available WB" severity error;
+
+    IF_PC4 <= x"DDDDDDDD";
+    wait_cycles(1);
+    --assert ID_PC4 = x"FFFFFFFF"report "2-1 Test: PC4 Not Available WB" severity error;
+    assert EX_PC4 = x"FFFFFFFF"report "2-2 Test: PC4 Not Available WB" severity error;
+    --assert MEM_PC4 = x"FFFFFFFF"report "2-3 Test: PC4 Not Available WB" severity error;
+    --assert WB_PC4 = x"FFFFFFFF"report "2-4 Test: PC4 Not Available WB" severity error;
+
+    IF_PC4 <= x"CCCCCCCC";
+    wait_cycles(1);
+    --assert ID_PC4 = x"FFFFFFFF"report "3-1 Test: PC4 Not Available WB" severity error;
+    --assert EX_PC4 = x"FFFFFFFF"report "3-2 Test: PC4 Not Available WB" severity error;
+    assert MEM_PC4 = x"FFFFFFFF"report "3-3 Test: PC4 Not Available WB" severity error;
+    --assert WB_PC4 = x"FFFFFFFF"report "3-4 Test: PC4 Not Available WB" severity error;
+
+    IF_PC4 <= x"AAAAAAAA";
+    wait_cycles(1);
+    --assert ID_PC4 = x"FFFFFFFF"report "4-1 Test: PC4 Not Available WB" severity error;
+    --assert EX_PC4 = x"FFFFFFFF"report "4-2 Test: PC4 Not Available WB" severity error;
+    --assert MEM_PC4 = x"FFFFFFFF"report "4-3 Test: PC4 Not Available WB" severity error;
+    assert WB_PC4 = x"FFFFFFFF"report "4-4 Test: PC4 Not Available WB" severity error;
+    
+    --Wait 1 Cycle
+    --repeat 3 more times
+    --Assert values available 4 cycles in a row
+    wait;
+    end process;
 
 
 end behavior;
