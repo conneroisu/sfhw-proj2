@@ -52,3 +52,4 @@ et.log
 *.pyc
 __pycache__/
 *.py[cod]
+internal/ModelSimContainer/vcom.log
