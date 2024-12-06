@@ -307,31 +307,32 @@ architecture structure of MIPS_Processor is
     signal s_EX_rs, s_EXrt, s_EXrd, s_EXrtrd : std_logic_vector(4 downto 0);
     signal s_rtrd, s_MEMrtrd, s_WBrtrd       : std_logic_vector(4 downto 0);
 
-    signal
-        s_RegisterFileA,  -- consumed: instFetchUnit, instIDEX; produced: instRegisterFile.
-        s_RegisterFileB,  -- consumed: instFetchUnit, instIDEX; produced: instRegisterFile.
-        s_IFPC4,  ---------- consumed: instIFID, instNXTPC    ; produced: instPC4Adder
-        s_EXPC4,  ---------- consumed: instEXMEM, instWBMux   ; produced: instIDEX
-        s_MEMPC4,  --------- consumed: instMEMWB              ; produced: instEXMEM
-        s_WBPC4,  ---------- consumed: instRegAddrMux         ; produced: instMEMWB
-        s_PC,  ------------- consumed: instNXTPC              ; produced: instFetchUnit
-        s_PCR,  ------------ consumed: instPC                 ; produced: instRSTPC
-        s_nextPC, ---------- consumed: instRSTPC              ; produced: instPC
-        s_immediate,
-        s_ALUB,
-        s_AluOrMem,
-        s_IDInstruction,
-        s_IDPC4,
-        s_EXA,
-        s_EXB,
-        s_EXImmediate,
-        s_ALUOut,
-        s_MEMALU,
-        s_WBALU,
-        s_WBMEMOut,
-        s_ForwardA,
-        s_ForwardB,
-        s_BasedInstruction : std_logic_vector(31 downto 0);
+    signal /*  --------------|-FROM-------------|-TO----------------------------------------------------------------------------------------| */
+        s_RegisterFileA, /*--| instRegisterFile | instFetchUnit, instIDEX ------------------------------------------------------------------| */
+        s_RegisterFileB, /*--| instRegisterFile | instFetchUnit, instIDEX ------------------------------------------------------------------| */
+        s_IFPC4, /*  --------| instPC4Adder ----| instIFID, instNXTPC ----------------------------------------------------------------------| */
+        s_EXPC4, /*  --------| instIDEX --------| instEXMEM, instWBMux ---------------------------------------------------------------------| */
+        s_MEMPC4, /*  -------| instEXMEM -------| instMEMWB --------------------------------------------------------------------------------| */
+        s_WBPC4, /*  --------| instMEMWB -------| instRegAddrMux ---------------------------------------------------------------------------| */
+        s_PC, /*  -----------| instFetchUnit ---| instNXTPC --------------------------------------------------------------------------------| */
+        s_PCR, /*  ----------| instRSTPC -------| instPC -----------------------------------------------------------------------------------| */
+        s_nextPC, /*  -------| instPC ----------| instRSTPC --------------------------------------------------------------------------------| */
+        s_immediate, /*  ----| extender16t32 ---| instIDEX, instFetchUnit ------------------------------------------------------------------| */
+        s_ALUB, /*  ---------| instImmMux ------| instALU ----------------------------------------------------------------------------------| */
+        s_AluOrMem, /*  -----| instMemToRegMux -| instRegAddrMux ---------------------------------------------------------------------------| */
+        s_IDInstruction, /*--| instIFID --------| instRegisterFile, instControlUnit, instFetchUnit, instSignExtend, instIDEX, instHazardUnit| */
+        s_IDPC4, /*----------| instIFID --------| instFetchUnit, instIDEX ------------------------------------------------------------------| */
+        s_EXA, /*------------| instIDEX --------| instForwardAMux --------------------------------------------------------------------------| */
+        s_EXB, /*------------| instIDEX --------| instForwardBMux --------------------------------------------------------------------------| */
+        s_EXImmediate, /*----| instIDEX --------| instImmMux, instALU ----------------------------------------------------------------------| */
+        s_ALUOut, /*  -------| instALU ---------| oALUOut, instEXMEM -----------------------------------------------------------------------| */
+        s_MEMALU, /*  -------| instEXMEM -------| s_DMemAddr, instMEMWB, instForwardAMux, instForwardBMux ----------------------------------| */
+        s_WBALU, /*  --------| instMEMWB -------| instMemToRegMux --------------------------------------------------------------------------| */
+        s_WBMEMOut, /*-------| instWBMEM -------| instMemToRegMux --------------------------------------------------------------------------| */
+        s_ForwardA, /*-------| instForwardAMux -| instALU ----------------------------------------------------------------------------------| */
+        s_ForwardB, /*-------| instForwardBMux -| instALU, instEXMEM -----------------------------------------------------------------------| */
+        s_BasedInstruction /*| branchjumpMUX  --| instIFID ---------------------------------------------------------------------------------| */
+        : std_logic_vector(31 downto 0);
 
     signal
         s_JumpBranch, s_RegDst, s_memToReg, s_ALUSrc, s_Jr, s_Jal,
