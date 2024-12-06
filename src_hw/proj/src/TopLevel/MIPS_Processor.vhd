@@ -48,11 +48,11 @@ architecture structure of MIPS_Processor is
         port (
             i_CLK         : in  std_logic;
             i_RST         : in  std_logic;
-            i_stall       : in  std_logic;
+            i_Stall       : in  std_logic;
             i_PC4         : in  std_logic_vector(31 downto 0);
-            i_instruction : in  std_logic_vector(31 downto 0);
+            i_Instruction : in  std_logic_vector(31 downto 0);
             o_PC4         : out std_logic_vector(31 downto 0);
-            o_instruction : out std_logic_vector(31 downto 0)
+            o_Instruction : out std_logic_vector(31 downto 0)
             );
     end component;
 
@@ -548,11 +548,11 @@ begin
         port map(
             i_CLK         => iCLK,
             i_RST         => iRST,
-            i_stall       => s_Stall,
+            i_Stall       => s_Stall,
             i_PC4         => s_IFPC4,
-            i_instruction => s_BasedInstruction,
+            i_Instruction => s_BasedInstruction,
             o_PC4         => s_IDPC4,
-            o_instruction => s_IDInstruction
+            o_Instruction => s_IDInstruction
             );
 
     s_ID_memRD <= s_memToReg and not s_IDMemWr;

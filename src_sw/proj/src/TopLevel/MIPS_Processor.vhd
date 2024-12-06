@@ -48,9 +48,9 @@ architecture structure of MIPS_Processor is
             i_CLK         : in  std_logic;
             i_RST         : in  std_logic;
             i_PC4         : in  std_logic_vector(31 downto 0);
-            i_instruction : in  std_logic_vector(31 downto 0);
+            i_Instruction : in  std_logic_vector(31 downto 0);
             o_PC4         : out std_logic_vector(31 downto 0);
-            o_instruction : out std_logic_vector(31 downto 0)
+            o_Instruction : out std_logic_vector(31 downto 0)
             );
     end component;
 
@@ -506,9 +506,9 @@ begin
             i_CLK         => iCLK,
             i_RST         => iRST,
             i_PC4         => s_IF_PC4,
-            i_instruction => s_Inst,
+            i_Instruction => s_Inst,
             o_PC4         => s_ID_PC4,
-            o_instruction => s_ID_Inst
+            o_Instruction => s_ID_Inst
             );
 
     instIDEX : ID_EX

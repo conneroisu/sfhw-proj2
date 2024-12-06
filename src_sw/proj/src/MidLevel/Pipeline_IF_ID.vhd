@@ -7,9 +7,9 @@ entity IF_ID is
         i_CLK         : in  std_logic;
         i_RST         : in  std_logic;
         i_PC4         : in  std_logic_vector(31 downto 0);
-        i_instruction : in  std_logic_vector(31 downto 0);
+        i_Instruction : in  std_logic_vector(31 downto 0);
         o_PC4         : out std_logic_vector(31 downto 0);
-        o_instruction : out std_logic_vector(31 downto 0)
+        o_Instruction : out std_logic_vector(31 downto 0)
         );
 
 end IF_ID;
@@ -44,7 +44,7 @@ begin
             i_CLK => i_CLK,
             i_RST => i_RST,
             i_WE  => '1',
-            i_D   => i_instruction,
-            o_Q   => o_instruction);
+            i_D   => i_Instruction,
+            o_Q   => o_Instruction);
 
 end structural;

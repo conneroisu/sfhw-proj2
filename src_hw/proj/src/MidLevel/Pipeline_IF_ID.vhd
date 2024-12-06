@@ -6,11 +6,11 @@ entity IF_ID is
     port (
         i_CLK         : in  std_logic;
         i_RST         : in  std_logic;
-        i_stall       : in  std_logic;
+        i_Stall       : in  std_logic;
         i_PC4         : in  std_logic_vector(31 downto 0);
-        i_instruction : in  std_logic_vector(31 downto 0);
+        i_Instruction : in  std_logic_vector(31 downto 0);
         o_PC4         : out std_logic_vector(31 downto 0);
-        o_instruction : out std_logic_vector(31 downto 0)
+        o_Instruction : out std_logic_vector(31 downto 0)
         );
 
 end IF_ID;
@@ -30,7 +30,7 @@ architecture structural of IF_ID is
     signal s_stall : std_logic;
 
 begin
-    s_stall <= not i_stall;
+    s_stall <= not i_Stall;
 
     instPCPlus4Reg : dffg_N
         generic map(N => 32)
@@ -47,7 +47,7 @@ begin
             i_CLK => i_CLK,
             i_RST => i_RST,
             i_WE  => s_stall,
-            i_D   => i_instruction,
-            o_Q   => o_instruction);
+            i_D   => i_Instruction,
+            o_Q   => o_Instruction);
 
 end structural;
