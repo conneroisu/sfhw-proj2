@@ -36,9 +36,8 @@ ltex.dictionary.en-US.txt
 ltex.disabledRules.en-US.txt
 ltex.hiddenFalsePositives.en-US.txt
 transcript
-*/transcript
-*/*/transcript
 output/
+etch**
 etch*
 *.wlf
 et.log
@@ -51,4 +50,5 @@ et.log
 **/internal/ModelSimContainer/vcom.log
 **/internal/testpy/__pycache__/
 *.pyc
-
+__pycache__/
+*.py[cod]
