@@ -9,12 +9,12 @@ entity tb_MipsProcessor is
 end tb_MipsProcessor;
     
 architecture testbench of MIPS_Processor is
-    signal iCLK           : std_logic;
-    signal iRST           : std_logic;
-    signal iInstLd        : std_logic;
-    signal iInstAddr      : std_logic_vector(N - 1 downto 0);
-    signal iInstExt       : std_logic_vector(N - 1 downto 0);
-    signal oALUOut        : std_logic_vector(N - 1 downto 0);
+    signal s_iCLK           : std_logic;
+    signal s_iRST           : std_logic;
+    signal s_iInstLd        : std_logic;
+    signal s_iInstAddr      : std_logic_vector(N - 1 downto 0);
+    signal s_iInstExt       : std_logic_vector(N - 1 downto 0);
+    signal s_oALUOut        : std_logic_vector(N - 1 downto 0);
     signal s_DMemWr       : std_logic;
     signal s_DMemAddr     : std_logic_vector(N - 1 downto 0);
     signal s_DMemData     : std_logic_vector(N - 1 downto 0);
@@ -257,18 +257,6 @@ architecture testbench of MIPS_Processor is
             );
     end component;
 
-    component MIPS_Processor is
-        generic (N : integer := 32);
-        port (
-            iCLK      : in  std_logic;
-            iRST      : in  std_logic;
-            iInstLd   : in  std_logic;
-            iInstAddr : in  std_logic_vector(N - 1 downto 0);
-            iInstExt  : in  std_logic_vector(N - 1 downto 0);
-            oALUOut   : out std_logic_vector(N - 1 downto 0)
-            );
-    end component;
-
     component mux2t1_N is
         generic (N : integer);
         port (
@@ -375,7 +363,7 @@ begin
             i_WriteAddr   => s_RegWrAddr,
             i_WriteEnable => s_RegWr,
             i_CLK         => s_NotClk,
-            i_Reset       => iRST,
+            i_Reset       => s_iRST,
             i_ReadAddr1   => s_IDInstruction(25 downto 21),
             i_ReadAddr2   => s_IDInstruction(20 downto 16),
             o_ReadData1   => s_RegisterFileA,
@@ -425,7 +413,7 @@ begin
 
     instPC : dffg_N
         port map(
-            i_CLK => iCLK,
+            i_CLK => s_iCLK,
             i_RST => '0',
             i_WE  => s_WE,
             i_D   => s_PCR,
@@ -435,7 +423,7 @@ begin
     instRSTPC : mux2t1_N
         generic map(N => 32)
         port map(
-            i_S  => iRST,
+            i_S  => s_iRST,
             i_D0 => s_nextPC,
             i_D1 => x"00400000",
             o_O  => s_PCR
@@ -551,22 +539,10 @@ begin
             o_O  => s_BasedInstruction
             );
 
-
-    mipsProc : MIPS_Processor
-        generic map(N=>32)
-        port map(
-            iCLK      => iCLK,
-            iRST      => iRST,
-            iInstLd   => iInstLd,
-            iInstAddr => iInstAddr,
-            iInstExt  => iInstExt,
-            oALUOut   => oALUOut
-            );
-
     instIFID : IF_ID
         port map(
-            i_CLK         => iCLK,
-            i_RST         => iRST,
+            i_CLK         => s_iCLK,
+            i_RST         => s_iRST,
             i_Stall       => s_Stall,
             i_PC4         => s_IFPC4,
             i_Instruction => s_BasedInstruction,
@@ -594,7 +570,7 @@ begin
 
     instIDEX : ID_EX
         port map(
-            i_CLK               => iCLK,
+            i_CLK               => s_iCLK,
             i_Reset             => '0',
             i_stall             => '0',
             i_PC4               => s_IDPC4,
@@ -633,8 +609,8 @@ begin
 
     instEXMEM : EX_MEM
         port map(
-            i_CLK      => iCLK,
-            i_RST      => iRST,
+            i_CLK      => s_iCLK,
+            i_RST      => s_iRST,
             i_stall    => '0',
             i_ALU      => s_ALUOut,
             o_ALU      => s_MEMALU,
@@ -658,8 +634,8 @@ begin
 
     instMEMWB : MEM_WB
         port map(
-            i_CLK      => iCLK,
-            i_RST      => iRST,
+            i_CLK      => s_iCLK,
+            i_RST      => s_iRST,
             i_stall    => '0',
             i_ALU      => s_MEMALU,
             o_ALU      => s_WBALU,

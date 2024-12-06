@@ -4,6 +4,7 @@ set file "${target}.vhd"
 vcom -2008 -work work ../src/MIPS_types.vhd
 vcom -2008 -work work ../src/LowLevel/*.vhd
 vcom -2008 -work work ../src/MidLevel/*.vhd
+vcom -2008 -work work ../src/TopLevel/*.vhd
 
 
 vcom -2008 -work work $file
