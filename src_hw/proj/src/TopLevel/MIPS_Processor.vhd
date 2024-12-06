@@ -190,25 +190,25 @@ architecture structure of MIPS_Processor is
 
     component ControlUnit is
         port (
-            i_opCode    : in  std_logic_vector(5 downto 0);  --MIPS instruction opcode (6 bits wide)
-            i_funct     : in  std_logic_vector(5 downto 0);  --MIPS instruction function code (6 bits wide) used for R-Type instructions
+            i_OpCode    : in  std_logic_vector(5 downto 0);  --MIPS instruction opcode (6 bits wide)
+            i_Funct     : in  std_logic_vector(5 downto 0);  --MIPS instruction function code (6 bits wide) used for R-Type instructions
             o_RegDst    : out std_logic;
             o_RegWrite  : out std_logic;
-            o_memToReg  : out std_logic;
-            o_memWrite  : out std_logic;
+            o_MemToReg  : out std_logic;
+            o_MemWrite  : out std_logic;
             o_ALUSrc    : out std_logic;
             o_ALUOp     : out std_logic_vector(3 downto 0);
-            o_signed    : out std_logic;
+            o_Signed    : out std_logic;
             o_shiftType : out std_logic;
             o_shiftDir  : out std_logic;
-            o_bne       : out std_logic;
-            o_beq       : out std_logic;
-            o_jr        : out std_logic;
-            o_jal       : out std_logic;
-            o_branch    : out std_logic;
-            o_jump      : out std_logic;
-            o_lui       : out std_logic;
-            o_halt      : out std_logic
+            o_Bne       : out std_logic;
+            o_Beq       : out std_logic;
+            o_Jr        : out std_logic;
+            o_Jal       : out std_logic;
+            o_Branch    : out std_logic;
+            o_Jump      : out std_logic;
+            o_Lui       : out std_logic;
+            o_Halt      : out std_logic
             );
     end component;
 
