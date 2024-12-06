@@ -2,21 +2,20 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity FetchUnit is
-    generic (N : integer := 32);  
-    
+    generic (N : integer := 32);
+
     port (
-        i_PC4         : in  std_logic_vector(N - 1 downto 0);  -- Program counter
-        i_branch_addr : in  std_logic_vector(N - 1 downto 0);  -- potential branch address
-        i_jump_addr   : in  std_logic_vector(N - 1 downto 0);  -- potential jump address
-        i_jr          : in  std_logic_vector(N - 1 downto 0);  -- potential jump register address
-        i_jr_select   : in  std_logic;  -- jump register selector
-        i_branch      : in  std_logic;  -- selects if a branch instruction is active
-        i_bne         : in  std_logic;  -- inverts if bne
-        i_jump        : in  std_logic;  -- selector for j or jal
-        i_A           : in  std_logic_vector(N - 1 downto 0);  -- Reg A value
-        i_B           : in  std_logic_vector(N - 1 downto 0);  -- Reg B value
-        o_PC          : out std_logic_vector(N - 1 downto 0);  -- program counter output
-        o_jump_branch : out std_logic   -- set to 1 if a branch or jump is taken
+        i_PC4          : in  std_logic_vector(N - 1 downto 0);
+        i_BranchAddr   : in  std_logic_vector(N - 1 downto 0);
+        i_JumpAddr     : in  std_logic_vector(N - 1 downto 0);
+        i_A            : in  std_logic_vector(N - 1 downto 0);
+        i_B            : in  std_logic_vector(N - 1 downto 0);
+        i_Jr           : in  std_logic;
+        i_Branch       : in  std_logic;
+        i_Bne          : in  std_logic;
+        i_Jump         : in  std_logic;
+        o_PC           : out std_logic_vector(N - 1 downto 0);
+        o_JumpOrBranch : out std_logic
         );
 
 end FetchUnit;
@@ -33,11 +32,12 @@ architecture structural of FetchUnit is
 
     component BarrelShifter is
         port (
-            i_data             : in  std_logic_vector(N - 1 downto 0);
-            i_logic_arithmetic : in  std_logic;  -- 0 for logical, 1 for arithmetic (sign bit)
-            i_left_right       : in  std_logic;  --0 for shift left, 1 for shift right
-            i_shamt            : in  std_logic_vector(4 downto 0);  --shift amount
-            o_Out              : out std_logic_vector(N - 1 downto 0));  --output of the shifter
+            i_data             : in  std_logic_vector(N-1 downto 0);
+            i_logic_arithmetic : in  std_logic;  -- 0: logical, 1: arithmetic shift
+            i_left_right       : in  std_logic;  -- 0: left shift, 1: right shift
+            i_shamt            : in  std_logic_vector(4 downto 0);
+            o_Out              : out std_logic_vector(N-1 downto 0)
+            );
     end component;
 
     component Full_Adder_N is
@@ -69,7 +69,7 @@ architecture structural of FetchUnit is
     signal s_NOTzero, s_zero     : std_logic;  --inverse of 0 detection
 
 begin
-    process (i_A, i_B)                  --or, and, xor, nor
+    process (i_A, i_B)
     begin
         for i in 0 to 31 loop
             s_XOR(i) <= i_A(i) xor i_B(i);
@@ -79,15 +79,16 @@ begin
     zero_detector : ZeroDetector
         port map(
             i_F    => s_XOR,
-            o_zero => s_zero);
+            o_zero => s_zero
+            );
 
     s_NOTzero    <= not s_zero;
-    s_bne_branch <= s_NOTzero xor i_bne;
+    s_bne_branch <= s_NOTzero xor i_Bne;
 
     --Shift the branch address by 2
     instBranchShifter : BarrelShifter
         port map(
-            i_data             => i_branch_addr,
+            i_data             => i_BranchAddr,
             i_logic_arithmetic => '0',      --always logical shift
             i_left_right       => '0',      --left shift
             i_shamt            => "00010",  --shift left 2
@@ -104,7 +105,7 @@ begin
 
     instJumpAddressShift : BarrelShifter
         port map(
-            i_data             => i_jump_addr,
+            i_data             => i_JumpAddr,
             i_logic_arithmetic => '0',      --always logical shift
             i_left_right       => '0',      --left shift
             i_shamt            => "00010",  --shift left 2
@@ -114,7 +115,7 @@ begin
     --Jump Address
     s_PC_j_addr <= i_PC4(31 downto 28) & s_j_addr_shifted(27 downto 0);
 
-    s_toBranch <= i_branch and s_bne_branch;
+    s_toBranch <= i_Branch and s_bne_branch;
 
     Branch_Select : mux2t1_N
         port map(
@@ -126,7 +127,7 @@ begin
 
     Jump_Select : mux2t1_N
         port map(
-            i_S  => i_jump,
+            i_S  => i_Jump,
             i_D0 => s_PC_or_Branch,
             i_D1 => s_PC_j_addr,
             o_O  => s_PC_or_j
@@ -134,12 +135,12 @@ begin
 
     JR_Select : mux2t1_N
         port map(
-            i_S  => i_jr_select,
+            i_S  => i_Jr,
             i_D0 => s_PC_or_j,
-            i_D1 => i_jr,
+            i_D1 => i_A,
             o_O  => o_PC
             );
 
-    o_jump_branch <= s_toBranch or i_jump;
+    o_JumpOrBranch <= s_toBranch or i_Jump;
 
 end structural;

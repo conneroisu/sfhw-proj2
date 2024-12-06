@@ -13,7 +13,7 @@ entity MIPS_Processor is
         iInstAddr : in  std_logic_vector(N - 1 downto 0);
         iInstExt  : in  std_logic_vector(N - 1 downto 0);
         oALUOut   : out std_logic_vector(N - 1 downto 0)
-    );
+        );
 end MIPS_Processor;
 
 architecture structure of MIPS_Processor is
@@ -174,18 +174,17 @@ architecture structure of MIPS_Processor is
 
     component FetchUnit is
         port (
-            i_PC4         : in  std_logic_vector(31 downto 0);  --Program counter
-            i_branch_addr : in  std_logic_vector(31 downto 0);  --potential branch address
-            i_jump_addr   : in  std_logic_vector(31 downto 0);  --potential jump address
-            i_jr          : in  std_logic_vector(31 downto 0);  --potential jump register address
-            i_jr_select   : in  std_logic;  --selector for jump register
-            i_branch      : in  std_logic;  --selects if a branch instruction is active
-            i_bne         : in  std_logic;
-            i_A           : in  std_logic_vector(31 downto 0);
-            i_B           : in  std_logic_vector(31 downto 0);
-            i_jump        : in  std_logic;  --selector for j or jal
-            o_PC          : out std_logic_vector(31 downto 0);
-            o_jump_branch : out std_logic   --signals if PC must change
+            i_PC4          : in  std_logic_vector(N - 1 downto 0);
+            i_BranchAddr   : in  std_logic_vector(N - 1 downto 0);
+            i_JumpAddr     : in  std_logic_vector(N - 1 downto 0);
+            i_A            : in  std_logic_vector(N - 1 downto 0);
+            i_B            : in  std_logic_vector(N - 1 downto 0);
+            i_Jr           : in  std_logic;
+            i_Branch       : in  std_logic;
+            i_Bne          : in  std_logic;
+            i_Jump         : in  std_logic;
+            o_PC           : out std_logic_vector(N - 1 downto 0);
+            o_JumpOrBranch : out std_logic
             );
     end component;
 
@@ -310,14 +309,30 @@ architecture structure of MIPS_Processor is
     signal s_EX_rs, s_EXrt, s_EXrd, s_EXrtrd : std_logic_vector(4 downto 0);
     signal s_rtrd, s_MEMrtrd, s_WBrtrd       : std_logic_vector(4 downto 0);
 
-    signal s_RegA, s_RegB,
-        s_IF_PC4, s_EX_PC4, s_MEM_PC4, s_WB_PC4,
-        s_PC, s_PCR, s_nextPC, s_immediate, s_ALUB, s_AluOrMem,
-        s_ID_Inst, s_ID_PC4,
-        s_EXA, s_EXB, s_EXImmediate,
-        s_ALUOut, s_MEMALU, s_WBALU,
+    signal
+        s_RegA,  -- consumed: instFetchUnit, instIDEX; produced: instRegisterFile.
+        s_RegB,  -- consumed: instFetchUnit, instIDEX; produced: instRegisterFile.
+        s_IF_PC4, -- asdf
+        s_EX_PC4,
+        s_MEM_PC4,
+        s_WB_PC4,
+        s_PC,
+        s_PCR,
+        s_nextPC,
+        s_immediate,
+        s_ALUB,
+        s_AluOrMem,
+        s_ID_Inst,
+        s_ID_PC4,
+        s_EXA,
+        s_EXB,
+        s_EXImmediate,
+        s_ALUOut,
+        s_MEMALU,
+        s_WBALU,
         s_WBMEMOut,
-        s_ForwardA, s_ForwardB,
+        s_ForwardA,
+        s_ForwardB,
         s_BasedInstruction : std_logic_vector(31 downto 0);
 
     signal
@@ -431,18 +446,17 @@ begin
 
     Fetch : FetchUnit
         port map(
-            i_PC4         => s_ID_PC4,
-            i_branch_addr => s_immediate,
-            i_jump_addr   => s_ID_Inst,
-            i_jr          => s_RegA,
-            i_jr_select   => s_Jr,
-            i_branch      => s_Branch,
-            i_bne         => s_Bne,
-            i_A           => s_RegA,
-            i_B           => s_RegB,
-            i_jump        => s_Jump,
-            o_PC          => s_PC,
-            o_jump_branch => s_JumpBranch
+            i_PC4          => s_ID_PC4,
+            i_BranchAddr   => s_immediate,
+            i_JumpAddr     => s_ID_Inst,
+            i_Jr           => s_Jr,
+            i_Branch       => s_Branch,
+            i_Bne          => s_Bne,
+            i_A            => s_RegA,
+            i_B            => s_RegB,
+            i_Jump         => s_Jump,
+            o_PC           => s_PC,
+            o_JumpOrBranch => s_JumpBranch
             );
 
     instSignExtend : extender16t32
