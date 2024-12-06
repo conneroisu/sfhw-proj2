@@ -1,15 +1,9 @@
-#! /bin/bash
-
-#@brief This script provides a basic runner for the 381 Toolflow
-#
-#@author Braedon Giblin <bgiblin@iastate.edu>
-#@date 2022.02.10
-#
+#!/bin/bash
 
 PYTHON3_VDI=/usr/local/mentor/calibre/bin/python3
 PYTHON3_LAB=/bin/python3
 
-red='\033[0;31m'
+RED='\033[0;31m'
 GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
 BLUE='\033[0;34m'
@@ -61,15 +55,15 @@ elif [ "$1" == "submit" ]; then
         echo -e "${RED}Please make sure your project exists at ./proj/ ${NC}"
         exit 1
     fi
-    if [ ! -n "$(ls -A proj/src/*.vhd 2>/dev/null )" ]; then
+    if [ -z "$(ls -A proj/src/*.vhd 2>/dev/null )" ]; then
         echo -e "${RED}Missing proj/src diretory (or no vhd files present)${NC}"
         exit 1
     fi
-    if [ ! -n "$(ls -A proj/mips/*.s 2>/dev/null)" ]; then
+    if [ -z "$(ls -A proj/mips/*.s 2>/dev/null)" ]; then
         echo -e "${RED}Missing proj/mips diretory (or no s files present)${NC}"
         exit 1
     fi
-    if [ ! -n "$(ls -A proj/test/*.vhd 2>/dev/null)" ]; then
+    if [ -z "$(ls -A proj/test/*.vhd 2>/dev/null)" ]; then
         echo -e "${RED}Missing proj/test diretory (or no vhd files present)${NC}"
         exit 1
     fi
