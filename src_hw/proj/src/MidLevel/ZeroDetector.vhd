@@ -66,5 +66,4 @@ begin
         o_F => o_zero      -- output is the OR tree of the input i_F
         );
 
-
 end structural;
