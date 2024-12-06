@@ -33,7 +33,7 @@ lui 	$20, 0x1001        	# Load the upper part of the address of words
 
 add	$11, $1,  $2		# $11 = $1 + $2	 (1+2 = 3)
 addu	$12, $3,  $4		# $12 = $3 + $4	 (3+4 = 7)
-sub 	$13, $11, $5 		# $12 = $11 - $5 (3-5 = -2)
+sub 	$13, $11, $5 		# $12 = $11 - $5 (3-5 = -2) HAZARD DETECTED HERE, HOPEFULLY A STALL IS ADDED
 subu	$14, $12, $6		# $14 = $12 - $6 (7-6 = 1)
 and	$15, $5, $1		# $15 = $4 AND $1 (0101 AND 0001 = 0001 = 1)
 andi	$16, $5, 1		# $16 = $4 AND 0001 (0101 AND 0001 = 0001 = 1)
