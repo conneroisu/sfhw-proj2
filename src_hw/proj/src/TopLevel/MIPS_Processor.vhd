@@ -311,7 +311,7 @@ architecture structure of MIPS_Processor is
 
     signal s_RegA, s_RegB,
         s_IF_PC4, s_EX_PC4, s_MEM_PC4, s_WB_PC4,
-        s_PC, s_PCR, s_nextPC, s_immediate, s_ALUB, s_aluORmem,
+        s_PC, s_PCR, s_nextPC, s_immediate, s_ALUB, s_AluOrMem,
         s_ID_Inst, s_ID_PC4,
         s_EXA, s_EXB, s_EXImmediate,
         s_ALUOut, s_MEMALU, s_WBALU,
@@ -500,14 +500,14 @@ begin
             i_S  => s_WBmemToReg,
             i_D0 => s_WBALU,
             i_D1 => s_WBMEMOut,
-            o_O  => s_aluORmem
+            o_O  => s_AluOrMem
             );
 
     instRegAddrMux : mux2t1_N
         generic map(N => 32)
         port map(
             i_S  => s_WBjal,
-            i_D0 => s_aluORmem,
+            i_D0 => s_AluOrMem,
             i_D1 => s_WB_PC4,
             o_O  => s_RegWrData
             );
