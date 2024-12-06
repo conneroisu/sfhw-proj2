@@ -57,7 +57,7 @@ architecture structure of MIPS_Processor is
     component ID_EX is
         port (
             i_CLK               : in  std_logic;
-            i_Reset               : in  std_logic;
+            i_Reset             : in  std_logic;
             i_PC4               : in  std_logic_vector(31 downto 0);
             i_RegisterFileReadA : in  std_logic_vector(31 downto 0);
             i_RegisterFileReadB : in  std_logic_vector(31 downto 0);
@@ -75,7 +75,7 @@ architecture structure of MIPS_Processor is
             o_PC4               : out std_logic_vector(31 downto 0);
             o_RegisterFileReadA : out std_logic_vector(31 downto 0);
             o_RegisterFileReadB : out std_logic_vector(31 downto 0);
-            o_ImmediateExtended            : out std_logic_vector(31 downto 0);
+            o_ImmediateExtended : out std_logic_vector(31 downto 0);
             o_Rt                : out std_logic_vector(4 downto 0);  -- 20-16
             o_Rd                : out std_logic_vector(4 downto 0);  -- 15-11
             o_RegDst            : out std_logic;
@@ -514,7 +514,7 @@ begin
     instIDEX : ID_EX
         port map(
             i_CLK               => iCLK,
-            i_Reset               => iRST,
+            i_Reset             => iRST,
             i_PC4               => s_ID_PC4,
             i_RegisterFileReadA => s_RegA,
             i_RegisterFileReadB => s_RegB,
