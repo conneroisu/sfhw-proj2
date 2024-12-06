@@ -635,8 +635,7 @@ begin
             o_ALUSrc            => s_EXALUSrc,
             o_ALUOp             => s_EXALUOp,
             o_Jal               => s_EXjal,
-            o_Halt              => s_EXhalt,
-            o_MEMRd             => s_EXMemRd
+            o_Halt              => s_EXhalt
             );
 
     instEXMEM : EX_MEM
