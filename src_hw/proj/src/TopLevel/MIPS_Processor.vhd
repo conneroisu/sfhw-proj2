@@ -153,11 +153,11 @@ architecture structure of MIPS_Processor is
             i_A        : in  std_logic_vector(N - 1 downto 0);
             i_B        : in  std_logic_vector(N - 1 downto 0);
             i_ALUOP    : in  std_logic_vector(3 downto 0);
-            i_shamt    : in  std_logic_vector(4 downto 0);
-            o_resultF  : out std_logic_vector(N - 1 downto 0);
+            i_Shamt    : in  std_logic_vector(4 downto 0);
+            o_Result   : out std_logic_vector(N - 1 downto 0);
             o_CarryOut : out std_logic;
             o_Overflow : out std_logic;
-            o_zero     : out std_logic
+            o_Zero     : out std_logic
             );
     end component;
 
@@ -479,11 +479,11 @@ begin
             i_A        => s_ForwardA,
             i_B        => s_ALUB,
             i_ALUOP    => s_EXALUOp,
-            i_shamt    => s_EXImmediate(10 downto 6),
-            o_resultF  => s_ALUOut,
+            i_Shamt    => s_EXImmediate(10 downto 6),
+            o_Result   => s_ALUOut,
             o_CarryOut => s_internal_CarryOut,
             o_Overflow => s_internal_Overflow,
-            o_zero     => s_Zero
+            o_Zero     => s_Zero
             );
 
     instCarrFlowProc : process(iclk, irst, s_internal_CarryOut, s_internal_Overflow, s_CarryOut, s_Ovfl)

@@ -8,11 +8,11 @@ entity ALU is
         i_A        : in  std_logic_vector(N - 1 downto 0);
         i_B        : in  std_logic_vector(N - 1 downto 0);
         i_ALUOP    : in  std_logic_vector(3 downto 0);
-        i_shamt    : in  std_logic_vector(4 downto 0);
-        o_resultF  : out std_logic_vector(N - 1 downto 0);
+        i_Shamt    : in  std_logic_vector(4 downto 0);
+        o_Result  : out std_logic_vector(N - 1 downto 0);
         o_CarryOut : out std_logic;
         o_Overflow : out std_logic;
-        o_zero     : out std_logic
+        o_Zero     : out std_logic
         );
 
 end ALU;
@@ -196,7 +196,7 @@ begin
         generic map(N => 5)
         port map(
             i_S  => s_Lui,
-            i_D0 => i_shamt,
+            i_D0 => i_Shamt,
             i_D1 => "10000",
             o_O  => s_Shamt
             );
@@ -227,7 +227,7 @@ begin
             o_zero => s_zero);
 
     s_NotZero <= not s_zero;
-    o_zero    <= s_NotZero xor s_Bne;
+    o_Zero    <= s_NotZero xor s_Bne;
 
     instLogicGates : logic_N
         generic map(N => 32)
@@ -261,7 +261,7 @@ begin
             i_D5 => s_NOR,
             i_D6 => s_set,
             i_D7 => x"00000000",
-            o_O  => o_resultF
+            o_O  => o_Result
             );
 
 end mixed;
