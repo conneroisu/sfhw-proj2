@@ -9,7 +9,7 @@
 PYTHON3_VDI=/usr/local/mentor/calibre/bin/python3
 PYTHON3_LAB=/bin/python3
 
-red='\033[0;31m'
+RED='\033[0;31m'
 GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
 BLUE='\033[0;34m'
