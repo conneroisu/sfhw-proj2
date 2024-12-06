@@ -26,7 +26,6 @@ architecture structural of IF_ID is
             o_Q   : out std_logic_vector(N - 1 downto 0));
     end component;
 
-
 begin
 
     instPCPlus4Reg : dffg_N
