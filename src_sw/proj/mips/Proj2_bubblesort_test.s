@@ -41,9 +41,6 @@ outer_loop_body:
     add $s4, $zero, $zero
     add $s3, $zero, $zero
 inner_loop_cond:
-	nop
-	nop
-	nop
     sub  $t0, $s1, $s2
 	nop
 	nop
