@@ -1,9 +1,9 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T17:29:27-06:00 updated-register_file.vhd-from-src_sw-to-src_hw
---      Conner Ohnesorge 2024-12-01T12:27:41-06:00 rename-the-fetch-dir-to-pc
+--      connerohnesorge 2024-12-06T07:20:56-06:00 Ensure-style-guidelines-are-followed-with-registerfile-and-update-it-s-interface-in-the-processor
+--      Conner Ohnesorge 2024-12-04T07:52:56-06:00 update-register-file-name
 -- </header>
 
 library ieee;
@@ -126,3 +126,4 @@ begin
             );
 
 end architecture structural;
+

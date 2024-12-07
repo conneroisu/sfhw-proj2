@@ -1,8 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T14:04:08-06:00 add-test-bench-and-refactor-branch-unit-to-fit-style-guide
+--      connerohnesorge 2024-12-04T17:54:25-06:00 update-names-of-testbenches-for-pipeline-stages
 -- </header>
 
 library IEEE;

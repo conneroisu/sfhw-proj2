@@ -1,3 +1,11 @@
+-- <header>
+-- Author(s): connerohnesorge, Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      connerohnesorge 2024-12-04T18:04:15-06:00 ensure-AdderSubtractor-fits-styleguide
+--      Conner Ohnesorge 2024-12-04T05:35:09-06:00 move-and-rename-addersubtractor-to-midlevel
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -48,7 +56,7 @@ architecture structural of AdderSubtractor is
 
     signal s_NotB   : std_logic_vector(N - 1 downto 0);
     signal s_MuxedB : std_logic_vector(N - 1 downto 0);
-    
+
 begin
 
     instOnesComps : comp1_N
@@ -79,3 +87,4 @@ begin
             );
 
 end structural;
+

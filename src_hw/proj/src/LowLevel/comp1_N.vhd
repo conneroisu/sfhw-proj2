@@ -2,6 +2,7 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      Conner Ohnesorge 2024-12-04T05:22:59-06:00 make-ones-comp-fit-style-guide
 --      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
@@ -9,19 +10,19 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 entity comp1_N is
     generic(N : integer := 32);
-    
+
     port(
         i_D0 : in  std_logic_vector(N-1 downto 0);  -- Input data 0.
         o_O  : out std_logic_vector(N-1 downto 0)   -- Output data.
         );
-    
+
 end comp1_N;
 
 architecture structural of comp1_N is
     component invg is
         port(
-            i_A : in  std_logic;                    -- Input data.
-            o_F : out std_logic                     -- Output data.
+            i_A : in  std_logic;        -- Input data.
+            o_F : out std_logic         -- Output data.
             );
     end component;
 begin
@@ -35,3 +36,4 @@ begin
             );
     end generate G_NBit_Comp1;
 end structural;
+

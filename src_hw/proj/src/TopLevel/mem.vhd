@@ -1,3 +1,12 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-03T22:29:51-06:00 latest
+--      Conner Ohnesorge 2024-12-03T22:29:42-06:00 fix-spacing-of-mem
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
+-- </header>
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -43,3 +52,4 @@ begin
     q <= ram(to_integer(unsigned(addr)));
 
 end rtl;
+

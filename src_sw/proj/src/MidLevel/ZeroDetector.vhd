@@ -1,13 +1,20 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-04T07:44:46-06:00 updated-the-software-pipeline-to-use-the-simplified-contgrol-flow
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity ZeroDetector is
-    
+
     port(
         i_F    : in  std_logic_vector(31 downto 0);
         o_zero : out std_logic
         );
-    
+
 end ZeroDetector;
 
 architecture structural of ZeroDetector is
@@ -68,3 +75,4 @@ begin
 
 
 end structural;
+

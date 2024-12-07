@@ -1,3 +1,12 @@
+-- <header>
+-- Author(s): connerohnesorge, Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      connerohnesorge 2024-12-06T07:09:52-06:00 remove-doubly-passed-in-signal-to-FetchUnit
+--      Conner Ohnesorge 2024-12-04T07:10:31-06:00 fix-renamed-barrel-shift-instantiation
+--      Conner Ohnesorge 2024-12-04T00:49:07-06:00 latest
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -144,3 +153,4 @@ begin
     o_JumpOrBranch <= s_toBranch or i_Jump;
 
 end structural;
+

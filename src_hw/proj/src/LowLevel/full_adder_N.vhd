@@ -1,3 +1,14 @@
+-- <header>
+-- Author(s): connerohnesorge, Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      connerohnesorge 2024-12-06T05:11:10-06:00 better-commehnt-for-full_adder_N
+--      Conner Ohnesorge 2024-12-04T06:03:50-06:00 remove-8t32-extender-and-remove-useless-comment-in-full_adder_N
+--      Conner Ohnesorge 2024-12-04T05:44:12-06:00 fully-fit-style-guide-in-full_adder_N
+--      Conner Ohnesorge 2024-12-04T05:43:02-06:00 better-spacing-for-the-full-adder-generic-N
+--      Conner Ohnesorge 2024-12-03T22:08:36-06:00 save-progress
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -45,3 +56,4 @@ begin
     end generate G_NBit_FullAdder;
 
 end structural;
+

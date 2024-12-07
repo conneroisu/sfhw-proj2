@@ -1,32 +1,41 @@
+-- <header>
+-- Author(s): Conner Ohnesorge, connerohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-06T10:58:38-06:00 ensure-codestyle-adherence
+--      connerohnesorge 2024-12-04T20:56:05-06:00 finish-presentation-of-pipeline-stages-in-both-hardware-and-software-implementations-and-make-sure-adherence-to-styleguide
+--      Conner Ohnesorge 2024-12-04T00:49:07-06:00 latest
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity EX_MEM is
 
     port (
-        i_CLK      : in  std_logic;   
-        i_RST      : in  std_logic;    
-        i_stall    : in  std_logic;     
+        i_CLK      : in  std_logic;
+        i_RST      : in  std_logic;
+        i_stall    : in  std_logic;
         i_ALU      : in  std_logic_vector(31 downto 0);
-        i_B        : in  std_logic_vector(31 downto 0); 
-        i_WrAddr   : in  std_logic_vector(4 downto 0); 
-        i_MemWr    : in  std_logic;  
-        i_MemtoReg : in  std_logic;    
-        i_Halt     : in  std_logic;     
-        i_RegWr    : in  std_logic;     
-        i_Jal      : in  std_logic;    
-        i_PC4      : in  std_logic_vector(31 downto 0);  
+        i_B        : in  std_logic_vector(31 downto 0);
+        i_WrAddr   : in  std_logic_vector(4 downto 0);
+        i_MemWr    : in  std_logic;
+        i_MemtoReg : in  std_logic;
+        i_Halt     : in  std_logic;
+        i_RegWr    : in  std_logic;
+        i_Jal      : in  std_logic;
+        i_PC4      : in  std_logic_vector(31 downto 0);
         o_ALU      : out std_logic_vector(31 downto 0);
-        o_B        : out std_logic_vector(31 downto 0);  
+        o_B        : out std_logic_vector(31 downto 0);
         o_WrAddr   : out std_logic_vector(4 downto 0);
-        o_MemWr    : out std_logic;   
+        o_MemWr    : out std_logic;
         o_MemtoReg : out std_logic;
         o_Halt     : out std_logic;
         o_RegWr    : out std_logic;
         o_Jal      : out std_logic;
         o_PC4      : out std_logic_vector(31 downto 0)
         );
-    
+
 end EX_MEM;
 
 architecture structural of EX_MEM is
@@ -130,3 +139,4 @@ begin
     end generate G_PC4_reg;
 
 end structural;
+

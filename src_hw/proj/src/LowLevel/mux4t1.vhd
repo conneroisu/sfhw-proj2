@@ -1,9 +1,17 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-03T22:08:36-06:00 save-progress
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
+-- </header>
+
 library ieee;
 use ieee.std_logic_1164.all;
 
 entity mux4t1 is
     port (
-        i_s  : in  std_logic_vector(1 downto 0);  
+        i_s  : in  std_logic_vector(1 downto 0);
         i_d0 : in  std_logic;
         i_d1 : in  std_logic;
         i_d2 : in  std_logic;

@@ -1,8 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T16:50:44-06:00 update-test-bench-for-register-file
+--      connerohnesorge 2024-12-04T18:02:05-06:00 renamed-testbench-for-register-file
 -- </header>
 
 library ieee;

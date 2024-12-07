@@ -1,3 +1,14 @@
+-- <header>
+-- Author(s): connerohnesorge, Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      connerohnesorge 2024-12-04T21:37:29-06:00 remove-unnecessary-comments
+--      Conner Ohnesorge 2024-12-04T07:44:46-06:00 updated-the-software-pipeline-to-use-the-simplified-contgrol-flow
+--      Conner Ohnesorge 2024-12-01T16:12:51-06:00 make-mux32t1-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -15,7 +26,7 @@ end entity mux32t1;
 
 architecture behavior of mux32t1 is
 begin
-    
+
     with i_S select o_O <=
         i_I(0)                             when "00000",
         i_I(01)                            when "00001",  -- when the input select is "00001" the output is "i_I(1)"

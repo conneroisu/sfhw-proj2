@@ -1,8 +1,12 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
+--      connerohnesorge 2024-12-04T21:37:06-06:00 fix-name-capitialization-fo-mux4t1_N
+--      Conner Ohnesorge 2024-12-04T07:44:46-06:00 updated-the-software-pipeline-to-use-the-simplified-contgrol-flow
+--      Conner Ohnesorge 2024-12-01T16:13:52-06:00 make-mux4t1_N-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library ieee;
@@ -12,7 +16,7 @@ entity mux4t1_N is
     generic (
         n : integer := 32  -- Generic of type integer for input/output data width. Default value is 32.
         );
-    
+
     port (
         i_s  : in  std_logic_vector(1 downto 0);  -- Select input width is 2 (1 bit for each input data width bit
         i_d0 : in  std_logic_vector(n - 1 downto 0);  -- Input data width is N.
@@ -21,7 +25,7 @@ entity mux4t1_N is
         i_d3 : in  std_logic_vector(n - 1 downto 0);  -- Input data width is N.
         o_o  : out std_logic_vector(n - 1 downto 0)  -- Output data width is N.
         );
-    
+
 end entity mux4t1_N;
 
 architecture structural of mux4t1_N is

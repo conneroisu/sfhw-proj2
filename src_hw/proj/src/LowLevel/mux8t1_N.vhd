@@ -1,9 +1,16 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-03T22:08:36-06:00 save-progress
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity mux8t1_N is
-    generic (N : integer := 32);  
-    
+    generic (N : integer := 32);
+
     port (
         i_S  : in  std_logic_vector(2 downto 0);
         i_D0 : in  std_logic_vector(N - 1 downto 0);
@@ -15,7 +22,7 @@ entity mux8t1_N is
         i_D6 : in  std_logic_vector(N - 1 downto 0);
         i_D7 : in  std_logic_vector(N - 1 downto 0);
         o_O  : out std_logic_vector(N - 1 downto 0)
-    );
+        );
 
 end mux8t1_N;
 
@@ -52,3 +59,4 @@ begin
     end generate G_NBit_MUX;
 
 end structural;
+

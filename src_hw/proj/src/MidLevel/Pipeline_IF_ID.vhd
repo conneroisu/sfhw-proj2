@@ -1,3 +1,11 @@
+-- <header>
+-- Author(s): connerohnesorge, Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      connerohnesorge 2024-12-06T07:22:29-06:00 update-IFID-stage-to-better-fit-style-guide
+--      Conner Ohnesorge 2024-12-04T00:49:07-06:00 latest
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -51,3 +59,4 @@ begin
             o_Q   => o_Instruction);
 
 end structural;
+
