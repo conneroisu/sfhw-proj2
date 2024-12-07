@@ -550,7 +550,7 @@ begin
         port map(
             i_CLK         => iCLK,
             i_RST         => iRST,
-            i_Stall       => s_Stall,
+            i_Stall       => '0',
             i_PC4         => s_IFPC4,
             i_Instruction => s_BasedInstruction,
             o_PC4         => s_IDPC4,
@@ -561,7 +561,7 @@ begin
 
     instWBMux : mux2t1
         port map(
-            i_S  => s_Stall,
+            i_S  => '0',
             i_D0 => s_IDRegWr,
             i_D1 => '0',
             o_O  => s_muxRegWr
@@ -569,7 +569,7 @@ begin
 
     instMEMRdMUX : mux2t1
         port map(
-            i_S  => s_Stall,
+            i_S  => '0',
             i_D0 => s_IDMemWr,
             i_D1 => '0',
             o_O  => s_MuxMemWr
@@ -579,7 +579,7 @@ begin
         port map(
             i_CLK               => iCLK,
             i_Reset             => iRST,
-            i_stall             => s_Stall,
+            i_stall             => '0',
             i_PC4               => s_IDPC4,
             i_RegisterFileReadA => s_RegisterFileA,
             i_RegisterFileReadB => s_RegisterFileB,
@@ -617,7 +617,7 @@ begin
         port map(
             i_CLK      => iCLK,
             i_RST      => iRST,
-            i_stall    => s_Stall,
+            i_stall    => '0',
             i_ALU      => s_ALUOut,
             i_B        => s_ForwardB,
             i_WrAddr   => s_EXrtrd,
@@ -642,7 +642,7 @@ begin
         port map(
             i_CLK      => iCLK,
             i_RST      => iRST,
-            i_stall    => s_Stall,
+            i_stall    => '0',
             i_ALU      => s_MEMALU,
             i_Mem      => s_DMemOut,
             i_WrAddr   => s_MEMrtrd,
