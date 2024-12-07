@@ -1,13 +1,21 @@
+-- <header>
+-- Author(s): connerohnesorge, Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      connerohnesorge 2024-12-05T22:38:28-06:00 better-readibility-in-BarrelShifter-and-ZeroDetector
+--      Conner Ohnesorge 2024-12-04T00:49:07-06:00 latest
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity ZeroDetector is
-    
+
     port(
         i_F    : in  std_logic_vector(31 downto 0);
         o_zero : out std_logic
         );
-    
+
 end ZeroDetector;
 
 architecture structural of ZeroDetector is
@@ -67,3 +75,4 @@ begin
         );
 
 end structural;
+

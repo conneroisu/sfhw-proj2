@@ -1,3 +1,12 @@
+-- <header>
+-- Author(s): aidanfoss
+-- Name: 
+-- Notes:
+--      aidanfoss 2024-12-06T13:14:53-06:00 started-tb_fullHardware
+--      aidanfoss 2024-12-06T13:17:26-06:00 renaming-for-convention
+--      aidanfoss 2024-12-06T13:14:53-06:00 started-tb_fullHardware
+-- </header>
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -7,7 +16,7 @@ entity tb_FullHardware is
     generic
         (
             gclk_hper : time := 50 ns
-        );
+            );
 end entity tb_FullHardware;
 
 architecture structure of tb_FullHardware is
@@ -24,258 +33,258 @@ architecture structure of tb_FullHardware is
     signal s_Halt         : std_logic;
     signal s_Ovfl         : std_logic;
 
-        component MIPS_Processor is
-            generic (N : integer := DATA_WIDTH);
-            port (
-                iCLK      : in  std_logic;
-                iRST      : in  std_logic;
-                iInstLd   : in  std_logic;
-                iInstAddr : in  std_logic_vector(N - 1 downto 0);
-                iInstExt  : in  std_logic_vector(N - 1 downto 0);
-                oALUOut   : out std_logic_vector(N - 1 downto 0)
-                );
-        end component;
-    
-        component RegisterFile is
-            port (
-                i_CLK         : in  std_logic;  -- Clock input
-                i_WriteAddr   : in  std_logic_vector(4 downto 0);  -- Write address input
-                i_WriteData   : in  std_logic_vector(31 downto 0);  -- Write data input
-                i_WriteEnable : in  std_logic;  -- Write enable input
-                i_ReadAddr1   : in  std_logic_vector(4 downto 0);  -- Read address 1 input
-                i_ReadAddr2   : in  std_logic_vector(4 downto 0);  -- Read address 2 input
-                i_Reset       : in  std_logic;  -- Reset input
-                o_ReadData1   : out std_logic_vector(31 downto 0);  -- Read data 1 output
-                o_ReadData2   : out std_logic_vector(31 downto 0)  -- Read data 2 output
-                );
-        end component;
-    
-        component IF_ID is
-            port (
-                i_CLK         : in  std_logic;
-                i_RST         : in  std_logic;
-                i_Stall       : in  std_logic;
-                i_PC4         : in  std_logic_vector(31 downto 0);
-                i_Instruction : in  std_logic_vector(31 downto 0);
-                o_PC4         : out std_logic_vector(31 downto 0);
-                o_Instruction : out std_logic_vector(31 downto 0)
-                );
-        end component;
-    
-        component ID_EX is
-            port (
-                i_CLK               : in  std_logic;
-                i_Reset             : in  std_logic;
-                i_Stall             : in  std_logic;
-                i_PC4               : in  std_logic_vector(31 downto 0);
-                i_RegisterFileReadA : in  std_logic_vector(31 downto 0);
-                i_RegisterFileReadB : in  std_logic_vector(31 downto 0);
-                i_ImmediateExtended : in  std_logic_vector(31 downto 0);
-                i_IDRt              : in  std_logic_vector(4 downto 0);
-                i_IDRd              : in  std_logic_vector(4 downto 0);
-                i_RegDst            : in  std_logic;
-                i_RegWrite          : in  std_logic;
-                i_MemToReg          : in  std_logic;
-                i_MemWrite          : in  std_logic;
-                i_ALUSrc            : in  std_logic;
-                i_ALUOp             : in  std_logic_vector(3 downto 0);
-                i_Jal               : in  std_logic;
-                i_Halt              : in  std_logic;
-                i_RS                : in  std_logic_vector(4 downto 0);
-                i_MEMRd             : in  std_logic;
-                o_RS                : out std_logic_vector(4 downto 0);
-                o_PC4               : out std_logic_vector(31 downto 0);
-                o_RegisterFileReadA : out std_logic_vector(31 downto 0);
-                o_RegisterFileReadB : out std_logic_vector(31 downto 0);
-                o_ImmediateExtended : out std_logic_vector(31 downto 0);
-                o_Rt                : out std_logic_vector(4 downto 0);  -- [20-16]
-                o_Rd                : out std_logic_vector(4 downto 0);  -- [15-11]
-                o_RegDst            : out std_logic;
-                o_RegWrite          : out std_logic;
-                o_memToReg          : out std_logic;
-                o_MemWrite          : out std_logic;
-                o_ALUSrc            : out std_logic;
-                o_ALUOp             : out std_logic_vector(3 downto 0);
-                o_Jal               : out std_logic;
-                o_Halt              : out std_logic;
-                o_MEMRd             : out std_logic
-                );
-        end component;
-    
-        component EX_MEM is
-            port (
-                i_CLK      : in  std_logic;
-                i_RST      : in  std_logic;
-                i_stall    : in  std_logic;
-                i_ALU      : in  std_logic_vector(31 downto 0);
-                i_B        : in  std_logic_vector(31 downto 0);
-                i_WrAddr   : in  std_logic_vector(4 downto 0);
-                i_MemWr    : in  std_logic;
-                i_MemtoReg : in  std_logic;
-                i_Halt     : in  std_logic;
-                i_RegWr    : in  std_logic;
-                i_jal      : in  std_logic;
-                i_PC4      : in  std_logic_vector(31 downto 0);
-                o_ALU      : out std_logic_vector(31 downto 0);
-                o_B        : out std_logic_vector(31 downto 0);
-                o_WrAddr   : out std_logic_vector(4 downto 0);
-                o_MemWr    : out std_logic;
-                o_MemtoReg : out std_logic;
-                o_Halt     : out std_logic;
-                o_RegWr    : out std_logic;
-                o_jal      : out std_logic;
-                o_PC4      : out std_logic_vector(31 downto 0)
-                );
-    
-        end component;
-    
-        component MEM_WB is
-            port (
-                i_CLK      : in  std_logic;
-                i_RST      : in  std_logic;
-                i_stall    : in  std_logic;
-                i_ALU      : in  std_logic_vector(31 downto 0);
-                i_Mem      : in  std_logic_vector(31 downto 0);
-                i_WrAddr   : in  std_logic_vector(4 downto 0);
-                i_MemtoReg : in  std_logic;
-                i_Halt     : in  std_logic;
-                i_RegWr    : in  std_logic;
-                i_jal      : in  std_logic;
-                i_PC4      : in  std_logic_vector(31 downto 0);
-                o_ALU      : out std_logic_vector(31 downto 0);
-                o_Mem      : out std_logic_vector(31 downto 0);
-                o_WrAddr   : out std_logic_vector(4 downto 0);
-                o_MemtoReg : out std_logic;
-                o_Halt     : out std_logic;
-                o_RegWr    : out std_logic;
-                o_jal      : out std_logic;
-                o_PC4      : out std_logic_vector(31 downto 0)
-                );
-        end component;
-    
-        component ALU is
-            generic (N : integer := 32);
-            port (
-                i_A        : in  std_logic_vector(N - 1 downto 0);
-                i_B        : in  std_logic_vector(N - 1 downto 0);
-                i_ALUOP    : in  std_logic_vector(3 downto 0);
-                i_shamt    : in  std_logic_vector(4 downto 0);
-                o_resultF  : out std_logic_vector(N - 1 downto 0);
-                o_CarryOut : out std_logic;
-                o_Overflow : out std_logic;
-                o_zero     : out std_logic
-                );
-        end component;
-    
-        component Full_Adder_N is
-            port (
-                i_A        : in  std_logic_vector(N - 1 downto 0);
-                i_B        : in  std_logic_vector(N - 1 downto 0);
-                i_C        : in  std_logic;
-                o_S        : out std_logic_vector(N - 1 downto 0);
-                o_C        : out std_logic;
-                o_Overflow : out std_logic
-                );
-        end component;
-    
-        component FetchUnit is
-            port (
-                i_PC4          : in  std_logic_vector(N - 1 downto 0);
-                i_BranchAddr   : in  std_logic_vector(N - 1 downto 0);
-                i_JumpAddr     : in  std_logic_vector(N - 1 downto 0);
-                i_A            : in  std_logic_vector(N - 1 downto 0);
-                i_B            : in  std_logic_vector(N - 1 downto 0);
-                i_Jr           : in  std_logic;
-                i_Branch       : in  std_logic;
-                i_Bne          : in  std_logic;
-                i_Jump         : in  std_logic;
-                o_PC           : out std_logic_vector(N - 1 downto 0);
-                o_JumpOrBranch : out std_logic
-                );
-        end component;
-    
-        component ControlUnit is
-            port (
-                i_opCode    : in  std_logic_vector(5 downto 0);  --MIPS instruction opcode (6 bits wide)
-                i_funct     : in  std_logic_vector(5 downto 0);  --MIPS instruction function code (6 bits wide) used for R-Type instructions
-                o_RegDst    : out std_logic;
-                o_RegWrite  : out std_logic;
-                o_memToReg  : out std_logic;
-                o_memWrite  : out std_logic;
-                o_ALUSrc    : out std_logic;
-                o_ALUOp     : out std_logic_vector(3 downto 0);
-                o_signed    : out std_logic;
-                o_addSub    : out std_logic;
-                o_shiftType : out std_logic;
-                o_shiftDir  : out std_logic;
-                o_bne       : out std_logic;
-                o_beq       : out std_logic;
-                o_jr        : out std_logic;
-                o_jal       : out std_logic;
-                o_branch    : out std_logic;
-                o_jump      : out std_logic;
-                o_lui       : out std_logic;
-                o_halt      : out std_logic
-                );
-        end component;
-    
-        component ForwardUnit is
-            port (
-                i_EX_rs     : in  std_logic_vector(4 downto 0);
-                i_EX_rt     : in  std_logic_vector(4 downto 0);
-                i_MEM_rd    : in  std_logic_vector(4 downto 0);
-                i_WB_rd     : in  std_logic_vector(4 downto 0);
-                i_MEM_wb    : in  std_logic;
-                i_WB_wb     : in  std_logic;
-                o_Forward_A : out std_logic_vector(1 downto 0);
-                o_Forward_B : out std_logic_vector(1 downto 0)
-                );
-        end component;
-    
-        component HazardUnit is
-            port (
-                i_jump_ID   : in  std_logic;  --Control Hazard
-                i_branch_ID : in  std_logic;  --Control Hazard
-                i_rAddrA    : in  std_logic_vector(4 downto 0);  --Data Hazard
-                i_rAddrB    : in  std_logic_vector(4 downto 0);  --Data Hazard
-                i_wAddr_ID  : in  std_logic_vector(4 downto 0);  -- Write Address for ID
-                i_wAddr_EX  : in  std_logic_vector(4 downto 0);  -- Write Address for MEM
-                i_wE_ID     : in  std_logic;  -- Write enable for ID
-                i_wE_EX     : in  std_logic;  -- Write enable for MEM
-                o_stall     : out std_logic;
-                o_flush     : out std_logic
-                );
-        end component;
-    
-        component mem is
-            generic (ADDR_WIDTH, DATA_WIDTH : integer);
-            port (
-                clk  : in  std_logic;
-                addr : in  std_logic_vector((ADDR_WIDTH - 1) downto 0);
-                data : in  std_logic_vector((DATA_WIDTH - 1) downto 0);
-                we   : in  std_logic := '1';
-                q    : out std_logic_vector((DATA_WIDTH - 1) downto 0)
-                );
-        end component;
-    
-        component extender16t32 is
-            port(
-                i_I : in  std_logic_vector(15 downto 0);  -- 16 bit immediate
-                i_C : in  std_logic;        -- signed extender or unsigned
-                o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended immediate
-                );
-        end component;
-    
-        component mux2t1_N is
-            generic (N : integer);
-            port (
-                i_S  : in  std_logic;
-                i_D0 : in  std_logic_vector(N - 1 downto 0);
-                i_D1 : in  std_logic_vector(N - 1 downto 0);
-                o_O  : out std_logic_vector(N - 1 downto 0)
-                );
+    component MIPS_Processor is
+        generic (N : integer := DATA_WIDTH);
+        port (
+            iCLK      : in  std_logic;
+            iRST      : in  std_logic;
+            iInstLd   : in  std_logic;
+            iInstAddr : in  std_logic_vector(N - 1 downto 0);
+            iInstExt  : in  std_logic_vector(N - 1 downto 0);
+            oALUOut   : out std_logic_vector(N - 1 downto 0)
+            );
+    end component;
+
+    component RegisterFile is
+        port (
+            i_CLK         : in  std_logic;  -- Clock input
+            i_WriteAddr   : in  std_logic_vector(4 downto 0);  -- Write address input
+            i_WriteData   : in  std_logic_vector(31 downto 0);  -- Write data input
+            i_WriteEnable : in  std_logic;  -- Write enable input
+            i_ReadAddr1   : in  std_logic_vector(4 downto 0);  -- Read address 1 input
+            i_ReadAddr2   : in  std_logic_vector(4 downto 0);  -- Read address 2 input
+            i_Reset       : in  std_logic;  -- Reset input
+            o_ReadData1   : out std_logic_vector(31 downto 0);  -- Read data 1 output
+            o_ReadData2   : out std_logic_vector(31 downto 0)  -- Read data 2 output
+            );
+    end component;
+
+    component IF_ID is
+        port (
+            i_CLK         : in  std_logic;
+            i_RST         : in  std_logic;
+            i_Stall       : in  std_logic;
+            i_PC4         : in  std_logic_vector(31 downto 0);
+            i_Instruction : in  std_logic_vector(31 downto 0);
+            o_PC4         : out std_logic_vector(31 downto 0);
+            o_Instruction : out std_logic_vector(31 downto 0)
+            );
+    end component;
+
+    component ID_EX is
+        port (
+            i_CLK               : in  std_logic;
+            i_Reset             : in  std_logic;
+            i_Stall             : in  std_logic;
+            i_PC4               : in  std_logic_vector(31 downto 0);
+            i_RegisterFileReadA : in  std_logic_vector(31 downto 0);
+            i_RegisterFileReadB : in  std_logic_vector(31 downto 0);
+            i_ImmediateExtended : in  std_logic_vector(31 downto 0);
+            i_IDRt              : in  std_logic_vector(4 downto 0);
+            i_IDRd              : in  std_logic_vector(4 downto 0);
+            i_RegDst            : in  std_logic;
+            i_RegWrite          : in  std_logic;
+            i_MemToReg          : in  std_logic;
+            i_MemWrite          : in  std_logic;
+            i_ALUSrc            : in  std_logic;
+            i_ALUOp             : in  std_logic_vector(3 downto 0);
+            i_Jal               : in  std_logic;
+            i_Halt              : in  std_logic;
+            i_RS                : in  std_logic_vector(4 downto 0);
+            i_MEMRd             : in  std_logic;
+            o_RS                : out std_logic_vector(4 downto 0);
+            o_PC4               : out std_logic_vector(31 downto 0);
+            o_RegisterFileReadA : out std_logic_vector(31 downto 0);
+            o_RegisterFileReadB : out std_logic_vector(31 downto 0);
+            o_ImmediateExtended : out std_logic_vector(31 downto 0);
+            o_Rt                : out std_logic_vector(4 downto 0);  -- [20-16]
+            o_Rd                : out std_logic_vector(4 downto 0);  -- [15-11]
+            o_RegDst            : out std_logic;
+            o_RegWrite          : out std_logic;
+            o_memToReg          : out std_logic;
+            o_MemWrite          : out std_logic;
+            o_ALUSrc            : out std_logic;
+            o_ALUOp             : out std_logic_vector(3 downto 0);
+            o_Jal               : out std_logic;
+            o_Halt              : out std_logic;
+            o_MEMRd             : out std_logic
+            );
+    end component;
+
+    component EX_MEM is
+        port (
+            i_CLK      : in  std_logic;
+            i_RST      : in  std_logic;
+            i_stall    : in  std_logic;
+            i_ALU      : in  std_logic_vector(31 downto 0);
+            i_B        : in  std_logic_vector(31 downto 0);
+            i_WrAddr   : in  std_logic_vector(4 downto 0);
+            i_MemWr    : in  std_logic;
+            i_MemtoReg : in  std_logic;
+            i_Halt     : in  std_logic;
+            i_RegWr    : in  std_logic;
+            i_jal      : in  std_logic;
+            i_PC4      : in  std_logic_vector(31 downto 0);
+            o_ALU      : out std_logic_vector(31 downto 0);
+            o_B        : out std_logic_vector(31 downto 0);
+            o_WrAddr   : out std_logic_vector(4 downto 0);
+            o_MemWr    : out std_logic;
+            o_MemtoReg : out std_logic;
+            o_Halt     : out std_logic;
+            o_RegWr    : out std_logic;
+            o_jal      : out std_logic;
+            o_PC4      : out std_logic_vector(31 downto 0)
+            );
+
+    end component;
+
+    component MEM_WB is
+        port (
+            i_CLK      : in  std_logic;
+            i_RST      : in  std_logic;
+            i_stall    : in  std_logic;
+            i_ALU      : in  std_logic_vector(31 downto 0);
+            i_Mem      : in  std_logic_vector(31 downto 0);
+            i_WrAddr   : in  std_logic_vector(4 downto 0);
+            i_MemtoReg : in  std_logic;
+            i_Halt     : in  std_logic;
+            i_RegWr    : in  std_logic;
+            i_jal      : in  std_logic;
+            i_PC4      : in  std_logic_vector(31 downto 0);
+            o_ALU      : out std_logic_vector(31 downto 0);
+            o_Mem      : out std_logic_vector(31 downto 0);
+            o_WrAddr   : out std_logic_vector(4 downto 0);
+            o_MemtoReg : out std_logic;
+            o_Halt     : out std_logic;
+            o_RegWr    : out std_logic;
+            o_jal      : out std_logic;
+            o_PC4      : out std_logic_vector(31 downto 0)
+            );
+    end component;
+
+    component ALU is
+        generic (N : integer := 32);
+        port (
+            i_A        : in  std_logic_vector(N - 1 downto 0);
+            i_B        : in  std_logic_vector(N - 1 downto 0);
+            i_ALUOP    : in  std_logic_vector(3 downto 0);
+            i_shamt    : in  std_logic_vector(4 downto 0);
+            o_resultF  : out std_logic_vector(N - 1 downto 0);
+            o_CarryOut : out std_logic;
+            o_Overflow : out std_logic;
+            o_zero     : out std_logic
+            );
+    end component;
+
+    component Full_Adder_N is
+        port (
+            i_A        : in  std_logic_vector(N - 1 downto 0);
+            i_B        : in  std_logic_vector(N - 1 downto 0);
+            i_C        : in  std_logic;
+            o_S        : out std_logic_vector(N - 1 downto 0);
+            o_C        : out std_logic;
+            o_Overflow : out std_logic
+            );
+    end component;
+
+    component FetchUnit is
+        port (
+            i_PC4          : in  std_logic_vector(N - 1 downto 0);
+            i_BranchAddr   : in  std_logic_vector(N - 1 downto 0);
+            i_JumpAddr     : in  std_logic_vector(N - 1 downto 0);
+            i_A            : in  std_logic_vector(N - 1 downto 0);
+            i_B            : in  std_logic_vector(N - 1 downto 0);
+            i_Jr           : in  std_logic;
+            i_Branch       : in  std_logic;
+            i_Bne          : in  std_logic;
+            i_Jump         : in  std_logic;
+            o_PC           : out std_logic_vector(N - 1 downto 0);
+            o_JumpOrBranch : out std_logic
+            );
+    end component;
+
+    component ControlUnit is
+        port (
+            i_opCode    : in  std_logic_vector(5 downto 0);  --MIPS instruction opcode (6 bits wide)
+            i_funct     : in  std_logic_vector(5 downto 0);  --MIPS instruction function code (6 bits wide) used for R-Type instructions
+            o_RegDst    : out std_logic;
+            o_RegWrite  : out std_logic;
+            o_memToReg  : out std_logic;
+            o_memWrite  : out std_logic;
+            o_ALUSrc    : out std_logic;
+            o_ALUOp     : out std_logic_vector(3 downto 0);
+            o_signed    : out std_logic;
+            o_addSub    : out std_logic;
+            o_shiftType : out std_logic;
+            o_shiftDir  : out std_logic;
+            o_bne       : out std_logic;
+            o_beq       : out std_logic;
+            o_jr        : out std_logic;
+            o_jal       : out std_logic;
+            o_branch    : out std_logic;
+            o_jump      : out std_logic;
+            o_lui       : out std_logic;
+            o_halt      : out std_logic
+            );
+    end component;
+
+    component ForwardUnit is
+        port (
+            i_EX_rs     : in  std_logic_vector(4 downto 0);
+            i_EX_rt     : in  std_logic_vector(4 downto 0);
+            i_MEM_rd    : in  std_logic_vector(4 downto 0);
+            i_WB_rd     : in  std_logic_vector(4 downto 0);
+            i_MEM_wb    : in  std_logic;
+            i_WB_wb     : in  std_logic;
             o_Forward_A : out std_logic_vector(1 downto 0);
             o_Forward_B : out std_logic_vector(1 downto 0)
+            );
+    end component;
+
+    component HazardUnit is
+        port (
+            i_jump_ID   : in  std_logic;  --Control Hazard
+            i_branch_ID : in  std_logic;  --Control Hazard
+            i_rAddrA    : in  std_logic_vector(4 downto 0);  --Data Hazard
+            i_rAddrB    : in  std_logic_vector(4 downto 0);  --Data Hazard
+            i_wAddr_ID  : in  std_logic_vector(4 downto 0);  -- Write Address for ID
+            i_wAddr_EX  : in  std_logic_vector(4 downto 0);  -- Write Address for MEM
+            i_wE_ID     : in  std_logic;  -- Write enable for ID
+            i_wE_EX     : in  std_logic;  -- Write enable for MEM
+            o_stall     : out std_logic;
+            o_flush     : out std_logic
+            );
+    end component;
+
+    component mem is
+        generic (ADDR_WIDTH, DATA_WIDTH : integer);
+        port (
+            clk  : in  std_logic;
+            addr : in  std_logic_vector((ADDR_WIDTH - 1) downto 0);
+            data : in  std_logic_vector((DATA_WIDTH - 1) downto 0);
+            we   : in  std_logic := '1';
+            q    : out std_logic_vector((DATA_WIDTH - 1) downto 0)
+            );
+    end component;
+
+    component extender16t32 is
+        port(
+            i_I : in  std_logic_vector(15 downto 0);  -- 16 bit immediate
+            i_C : in  std_logic;        -- signed extender or unsigned
+            o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended immediate
+            );
+    end component;
+
+    component mux2t1_N is
+        generic (N : integer);
+        port (
+            i_S  : in  std_logic;
+            i_D0 : in  std_logic_vector(N - 1 downto 0);
+            i_D1 : in  std_logic_vector(N - 1 downto 0);
+            o_O  : out std_logic_vector(N - 1 downto 0)
+            );
+        o_Forward_A : out std_logic_vector(1 downto 0);
+        o_Forward_B : out std_logic_vector(1 downto 0)
             );
     end component;
 
@@ -415,14 +424,14 @@ begin
 
     instProcessor : MIPS_Processor
         generic (N : integer := DATA_WIDTH);
-        port map(
-            iCLK      
-            iRST      
-            iInstLd   
-            iInstAddr 
-            iInstExt  
-            oALUOut   
-            );
+    port map(
+        iCLK
+        iRST
+        iInstLd
+        iInstAddr
+        iInstExt
+        oALUOut
+        );
 
     instRegisterFile : RegisterFile
         port map(
@@ -522,19 +531,19 @@ begin
             );
 
     instSignExtend : extender16t32
-        port map(        iCLK      : in  std_logic;
-        iRST      : in  std_logic;
-        iInstLd   : in  std_logic;
-        iInstAddr : in  std_logic_vector(N - 1 downto 0);
-        iInstExt  : in  std_logic_vector(N - 1 downto 0);
-        oALUOut   : out std_logic_vector(N - 1 downto 0)
-            i_ALUOP    => s_EXALUOp,
-            i_shamt    => s_EXImmediate(10 downto 6),
-            o_resultF  => s_ALUOut,
-            o_CarryOut => s_internal_CarryOut,
-            o_Overflow => s_internal_Overflow,
-            o_zero     => s_Zero
-            );
+        port map(iCLK      : in  std_logic;
+                 iRST      : in  std_logic;
+                 iInstLd   : in  std_logic;
+                 iInstAddr : in  std_logic_vector(N - 1 downto 0);
+                 iInstExt  : in  std_logic_vector(N - 1 downto 0);
+                 oALUOut   : out std_logic_vector(N - 1 downto 0)
+                 i_ALUOP    => s_EXALUOp,
+                 i_shamt    => s_EXImmediate(10 downto 6),
+                 o_resultF  => s_ALUOut,
+                 o_CarryOut => s_internal_CarryOut,
+                 o_Overflow => s_internal_Overflow,
+                 o_zero     => s_Zero
+                 );
 
     instCarrFlowProc : process(iclk, irst, s_internal_CarryOut, s_internal_Overflow, s_CarryOut, s_Ovfl)
     begin
@@ -760,3 +769,4 @@ begin
     s_ToFlush <= s_Flush or iRST;
 
 end structure;
+

@@ -1,3 +1,11 @@
+-- <header>
+-- Author(s): connerohnesorge, Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      connerohnesorge 2024-12-04T18:07:19-06:00 simplify-forwardunit-comment
+--      Conner Ohnesorge 2024-12-04T00:49:07-06:00 latest
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -31,7 +39,7 @@ begin
 
         o_Forward_A <= "00";
         o_Forward_B <= "00";
-        
+
         --case 1: 
         if i_WB_wb = '1' and i_WB_rd = i_EX_rs and i_WB_rd /= "00000" then
             o_Forward_A <= "01";
@@ -50,6 +58,7 @@ begin
         if i_MEM_wb = '1' and i_MEM_rd = i_EX_rt and i_MEM_rd /= "00000" then
             o_Forward_B <= "10";
         end if;
-        
+
     end process;
 end mixed;
+

@@ -1,3 +1,11 @@
+-- <header>
+-- Author(s): connerohnesorge, Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      connerohnesorge 2024-12-04T20:56:05-06:00 finish-presentation-of-pipeline-stages-in-both-hardware-and-software-implementations-and-make-sure-adherence-to-styleguide
+--      Conner Ohnesorge 2024-12-04T07:44:46-06:00 updated-the-software-pipeline-to-use-the-simplified-contgrol-flow
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -117,3 +125,4 @@ begin
     end generate G_PC4_reg;
 
 end structural;
+

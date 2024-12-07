@@ -1,3 +1,78 @@
+-- <header>
+-- Author(s): Conner Ohnesorge, connerohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-06T18:45:55-06:00 latest
+--      Conner Ohnesorge 2024-12-06T18:43:09-06:00 putback
+--      Conner Ohnesorge 2024-12-06T18:40:53-06:00 remove-shiftType
+--      Conner Ohnesorge 2024-12-06T18:39:36-06:00 put-back
+--      Conner Ohnesorge 2024-12-06T18:38:05-06:00 latest
+--      Conner Ohnesorge 2024-12-06T18:36:46-06:00 latest
+--      Conner Ohnesorge 2024-12-06T18:35:45-06:00 fix-missing
+--      Conner Ohnesorge 2024-12-06T18:34:10-06:00 latest
+--      Conner Ohnesorge 2024-12-06T18:25:58-06:00 latest
+--      Conner Ohnesorge 2024-12-06T18:22:08-06:00 removed-unused-signals-and-added-comment-table-for-std_logic-signals
+--      Conner Ohnesorge 2024-12-06T17:43:11-06:00 implify-signal-names
+--      Conner Ohnesorge 2024-12-06T17:41:17-06:00 latest
+--      Conner Ohnesorge 2024-12-06T17:41:01-06:00 remove-unused-signals
+--      Conner Ohnesorge 2024-12-06T17:29:46-06:00 finished-32-bit-signals-comment-table
+--      Conner Ohnesorge 2024-12-06T16:30:20-06:00 added-even-more-consumed-produced-signals-comments
+--      Conner Ohnesorge 2024-12-06T16:26:20-06:00 dded-more-consumed-and-produced-signals-comments
+--      Conner Ohnesorge 2024-12-06T11:13:04-06:00 ensure-complience-with-styleguide-for-ControlUnit
+--      Conner Ohnesorge 2024-12-06T11:09:43-06:00 remove-unused-signal
+--      Conner Ohnesorge 2024-12-06T11:04:08-06:00 ensure-adherence-to-coding-style-in-ALU
+--      Conner Ohnesorge 2024-12-06T11:02:18-06:00 ensure-adherence-to-coding-style-for-Pipeline_MEM_WB
+--      Conner Ohnesorge 2024-12-06T10:58:38-06:00 ensure-codestyle-adherence
+--      connerohnesorge 2024-12-06T08:26:15-06:00 remove-s_j-from-MIPS_Processor-and-o_J-from-ControlUnit
+--      connerohnesorge 2024-12-06T08:12:54-06:00 Update-ID_EX-to-be-compatible-with-the-style-guide
+--      connerohnesorge 2024-12-06T07:22:29-06:00 update-IFID-stage-to-better-fit-style-guide
+--      connerohnesorge 2024-12-06T07:20:56-06:00 Ensure-style-guidelines-are-followed-with-registerfile-and-update-it-s-interface-in-the-processor
+--      connerohnesorge 2024-12-06T07:09:52-06:00 remove-doubly-passed-in-signal-to-FetchUnit
+--      connerohnesorge 2024-12-06T05:10:07-06:00 better-component-hierarchy
+--      connerohnesorge 2024-12-05T22:44:28-06:00 better-name-AluOrMem-signal
+--      connerohnesorge 2024-12-05T08:56:15-06:00 rename-true-instruction-signal-name
+--      connero 2024-12-05T08:15:06-06:00 Merge-pull-request-89-from-conneroisu-ConnerOhnesorge
+--      Conner Ohnesorge 2024-12-05T08:10:41-06:00 update-register-file-instance-name
+--      connerohnesorge 2024-12-04T23:20:24-06:00 add-new-line-in-port-map
+--      connerohnesorge 2024-12-04T20:56:05-06:00 finish-presentation-of-pipeline-stages-in-both-hardware-and-software-implementations-and-make-sure-adherence-to-styleguide
+--      connerohnesorge 2024-12-04T18:19:40-06:00 finish-cleaning-up-signal-names-in-harware-implementation
+--      connerohnesorge 2024-12-04T17:45:56-06:00 even-better-instancen-names-for-the-hardware-implementation
+--      connerohnesorge 2024-12-04T17:15:31-06:00 Organize-EXMEM-ports
+--      Conner Ohnesorge 2024-12-04T07:52:56-06:00 update-register-file-name
+--      Conner Ohnesorge 2024-12-04T07:44:46-06:00 updated-the-software-pipeline-to-use-the-simplified-contgrol-flow
+--      Conner Ohnesorge 2024-12-04T07:19:40-06:00 more-clear-names-for-outputs-of-rt-and-rd
+--      Conner Ohnesorge 2024-12-04T07:10:31-06:00 fix-renamed-barrel-shift-instantiation
+--      Conner Ohnesorge 2024-12-04T06:52:09-06:00 fix-cobinational-spikes-from-alu-in-MIPS_Processor
+--      Conner Ohnesorge 2024-12-04T05:13:48-06:00 optimizat-control-unit-for-performance
+--      Conner Ohnesorge 2024-12-04T05:11:39-06:00 fix-the-captialization-of-s_WBMemOut
+--      Conner Ohnesorge 2024-12-04T05:08:52-06:00 remove-unused-signal
+--      Conner Ohnesorge 2024-12-04T00:49:07-06:00 latest
+--      Conner Ohnesorge 2024-12-03T23:27:02-06:00 fix-register-file-declaration-in-MIPS_Processor.vhd
+--      Conner Ohnesorge 2024-12-03T22:44:31-06:00 fix-type-in-extender16t32-ports
+--      Conner Ohnesorge 2024-12-03T22:40:49-06:00 fixed-duplicate-mux2t1
+--      Conner Ohnesorge 2024-12-03T22:26:29-06:00 better-spacing-as-per-style-guide
+--      Conner Ohnesorge 2024-12-03T22:20:11-06:00 minimized-signal-declarations-of-MIPS_Processor
+--      Conner Ohnesorge 2024-12-03T22:08:36-06:00 save-progress
+--      Conner Ohnesorge 2024-12-02T15:00:49-06:00 added-missing-signals-for-each-stage-of-the-pipeline
+--      Conner Ohnesorge 2024-12-01T22:55:31-06:00 add-daniels-changes
+--      Conner Ohnesorge 2024-12-01T22:07:38-06:00 remove-forward-unit-todo
+--      Conner Ohnesorge 2024-12-01T22:07:21-06:00 add-branch-and-forward-unit
+--      Conner Ohnesorge 2024-12-01T21:53:08-06:00 rename-plus-four-adder
+--      Conner Ohnesorge 2024-12-01T21:52:12-06:00 congegate-todos
+--      Conner Ohnesorge 2024-12-01T21:46:13-06:00 simplify-port-map-of-program-counter
+--      Conner Ohnesorge 2024-12-01T21:45:18-06:00 simplify-given-imem-and-dmem-ports
+--      Conner Ohnesorge 2024-12-01T21:44:40-06:00 added-program-counter
+--      Conner Ohnesorge 2024-12-01T21:42:22-06:00 futher-clean-up
+--      Conner Ohnesorge 2024-12-01T21:41:58-06:00 clean-up
+--      Conner Ohnesorge 2024-12-01T21:40:05-06:00 add-adderSubtractor-component-and-pc-plus-four-adder
+--      Conner Ohnesorge 2024-12-01T21:35:46-06:00 move-todos-to-top-of-file
+--      Conner Ohnesorge 2024-12-01T21:31:02-06:00 added-MEM_WB-to-MIPS_Processor
+--      Conner Ohnesorge 2024-12-01T21:05:54-06:00 remove-halt-from-ID_EX-declaration
+--      Conner Ohnesorge 2024-12-01T21:02:53-06:00 remove-halt-signals-from-id_ex
+--      Conner Ohnesorge 2024-12-01T14:49:11-06:00 added-branch-unit-declaration-to-processor
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -307,8 +382,8 @@ architecture structure of MIPS_Processor is
     signal s_rtrd, s_MEMrtrd, s_WBrtrd       : std_logic_vector(4 downto 0);
 
     signal /*  --------------|-FROM-------------|-TO----------------------------------------------------------------------------------------| */
-        s_RegisterFileA, /*--| instRegisterFile | instFetchUnit, instIDEX ------------------------------------------------------------------| */
-        s_RegisterFileB, /*--| instRegisterFile | instFetchUnit, instIDEX ------------------------------------------------------------------| */
+        s_RegisterFileA, /*  --| instRegisterFile | instFetchUnit, instIDEX ------------------------------------------------------------------| */
+        s_RegisterFileB, /*  --| instRegisterFile | instFetchUnit, instIDEX ------------------------------------------------------------------| */
         s_IFPC4, /*  --------| instPC4Adder ----| instIFID, instNXTPC ----------------------------------------------------------------------| */
         s_EXPC4, /*  --------| instIDEX --------| instEXMEM, instWBMux ---------------------------------------------------------------------| */
         s_MEMPC4, /*  -------| instEXMEM -------| instMEMWB --------------------------------------------------------------------------------| */
@@ -319,63 +394,63 @@ architecture structure of MIPS_Processor is
         s_immediate, /*  ----| extender16t32 ---| instIDEX, instFetchUnit ------------------------------------------------------------------| */
         s_ALUB, /*  ---------| instImmMux ------| instALU ----------------------------------------------------------------------------------| */
         s_AluOrMem, /*  -----| instMemToRegMux -| instRegAddrMux ---------------------------------------------------------------------------| */
-        s_IDInstruction, /*--| instIFID --------| instRegisterFile, instControlUnit, instFetchUnit, instSignExtend, instIDEX, instHazardUnit| */
-        s_IDPC4, /*----------| instIFID --------| instFetchUnit, instIDEX ------------------------------------------------------------------| */
-        s_EXA, /*------------| instIDEX --------| instForwardAMux --------------------------------------------------------------------------| */
-        s_EXB, /*------------| instIDEX --------| instForwardBMux --------------------------------------------------------------------------| */
-        s_EXImmediate, /*----| instIDEX --------| instImmMux, instALU ----------------------------------------------------------------------| */
+        s_IDInstruction, /*  --| instIFID --------| instRegisterFile, instControlUnit, instFetchUnit, instSignExtend, instIDEX, instHazardUnit| */
+        s_IDPC4, /*  ----------| instIFID --------| instFetchUnit, instIDEX ------------------------------------------------------------------| */
+        s_EXA, /*  ------------| instIDEX --------| instForwardAMux --------------------------------------------------------------------------| */
+        s_EXB, /*  ------------| instIDEX --------| instForwardBMux --------------------------------------------------------------------------| */
+        s_EXImmediate, /*  ----| instIDEX --------| instImmMux, instALU ----------------------------------------------------------------------| */
         s_ALUOut, /*  -------| instALU ---------| oALUOut, instEXMEM -----------------------------------------------------------------------| */
         s_MEMALU, /*  -------| instEXMEM -------| s_DMemAddr, instMEMWB, instForwardAMux, instForwardBMux ----------------------------------| */
         s_WBALU, /*  --------| instMEMWB -------| instMemToRegMux --------------------------------------------------------------------------| */
-        s_WBMEMOut, /*-------| instWBMEM -------| instMemToRegMux --------------------------------------------------------------------------| */
-        s_ForwardA, /*-------| instForwardAMux -| instALU ----------------------------------------------------------------------------------| */
-        s_ForwardB, /*-------| instForwardBMux -| instALU, instEXMEM -----------------------------------------------------------------------| */
+        s_WBMEMOut, /*  -------| instWBMEM -------| instMemToRegMux --------------------------------------------------------------------------| */
+        s_ForwardA, /*  -------| instForwardAMux -| instALU ----------------------------------------------------------------------------------| */
+        s_ForwardB, /*  -------| instForwardBMux -| instALU, instEXMEM -----------------------------------------------------------------------| */
         s_BasedInstruction /*| branchjumpMUX  --| instIFID ---------------------------------------------------------------------------------| */
         : std_logic_vector(31 downto 0);
 
     signal /*  ---------------|-FROM-------------------------------------------------------------------|*/
-        s_JumpBranch, /*------|-instFetchunit---|-instNXTPC, instHazardUnit----------------------------|*/
-        s_RegDst, /*----------|-instControlUnit-|-instIDEX---------------------------------------------|*/
-        s_memToReg, /*--------|-instControlUnit-|------------------------------------------------------|*/
-        s_ALUSrc, /*----------|-instControlUnit-|-instIDEX---------------------------------------------|*/
-        s_Jr, /*--------------|-instControlUnit-|-instFetchUnit----------------------------------------|*/
-        s_Jal, /*-------------|-instControlUnit-|-instIDEX---------------------------------------------|*/
-        s_NotClk, /*----------|-iCLK------------|-instRegisterFile-------------------------------------|*/
-        s_Signed, /*----------|-instControlUnit-|-instSignExtend---------------------------------------|*/
-        s_Bne, /*-------------|-instControlUnit-|-instFetchUnit----------------------------------------|*/
-        s_Branch, /*----------|-instFetchUnit---|-instControlUnit--------------------------------------|*/
-        s_Jump, /*------------|-instControlUnit-|-instFetchUnit, instHazardUnit------------------------|*/
-        s_WE, /*--------------|-s_Stall---------|-instPC-----------------------------------------------|*/
-        s_Stall, /*-----------|-instHazardUnit--|-instIFID, instWBMux, instMEMRdMUX, s_WE--------------|*/
-        s_Flush, /*-----------|-instHazardUnit--|-s_ToFlush--------------------------------------------|*/
-        s_ToFlush, /*---------|-----------------|------------------------------------------------------|*/
-        s_muxRegWr, /*--------|-instWBMux-------|-instIDEX---------------------------------------------|*/
-        s_MuxMemWr, /*--------|-instMEMRdMUX----|-instIDEX---------------------------------------------|*/
-        s_CarryOut, /*--------|-instALU---------|------------------------------------------------------|*/
-        s_InternalOverflow, /*|-----------------|------------------------------------------------------|*/
-        s_IDhalt, /*----------|-----------------|------------------------------------------------------|*/
-        s_IDMemWr, /*---------|-----------------|------------------------------------------------------|*/
-        s_IDRegWr, /*---------|-----------------|------------------------------------------------------|*/
-        s_ID_memRD, /*--------|-----------------|------------------------------------------------------|*/
-        s_EXRegDst, /*--------|-----------------|------------------------------------------------------|*/
-        s_EXRegWr, /*---------|-----------------|------------------------------------------------------|*/
-        s_EXmemToReg, /*------|-----------------|------------------------------------------------------|*/
-        s_EXMemWr, /*---------|-----------------|------------------------------------------------------|*/
-        s_EXMemRd, /*---------|-----------------|------------------------------------------------------|*/
-        s_EXALUSrc, /*--------|-----------------|------------------------------------------------------|*/
-        s_EXjal, /*-----------|-----------------|------------------------------------------------------|*/
-        s_EXhalt, /*----------|-instIDEX--------|-instEXMEM--------------------------------------------|*/
-        s_MEMjal, /*----------|-instEXMEM-------|-instMEMWB--------------------------------------------|*/
-        s_MEMMemToReg, /*-----|-instEXMEM-------|-instMEMWB--------------------------------------------|*/
-        s_MEMhalt, /*---------|-instEXMEM-------|-instMEMWB--------------------------------------------|*/
-        s_MEMRegWr, /*--------|-instEXMEM-------|------------------------------------------------------|*/
-        s_WBjal, /*-----------|-----------------|------------------------------------------------------|*/
-        s_WBmemToReg, /*------|-instMEMWB-------|-instMemToRegMux--------------------------------------|*/
-        s_WBRegWr, /*---------|-----------------|-instForwardingUnit-----------------------------------|*/
-        s_Zero, /*------------|-----------------|------------------------------------------------------|*/
-        s_ShiftType, /*-------|-instControlUnit-|-<optimized-away>-------------------------------------|*/
-        s_Lui, /*-------------|-instControlUnit-|-<optimized-away>-------------------------------------|*/
-        s_Beq, /*-------------|-instControlUnit-|-<optimized-away>-------------------------------------|*/
+        s_JumpBranch, /*  ------|-instFetchunit---|-instNXTPC, instHazardUnit----------------------------|*/
+        s_RegDst, /*  ----------|-instControlUnit-|-instIDEX---------------------------------------------|*/
+        s_memToReg, /*  --------|-instControlUnit-|------------------------------------------------------|*/
+        s_ALUSrc, /*  ----------|-instControlUnit-|-instIDEX---------------------------------------------|*/
+        s_Jr, /*  --------------|-instControlUnit-|-instFetchUnit----------------------------------------|*/
+        s_Jal, /*  -------------|-instControlUnit-|-instIDEX---------------------------------------------|*/
+        s_NotClk, /*  ----------|-iCLK------------|-instRegisterFile-------------------------------------|*/
+        s_Signed, /*  ----------|-instControlUnit-|-instSignExtend---------------------------------------|*/
+        s_Bne, /*  -------------|-instControlUnit-|-instFetchUnit----------------------------------------|*/
+        s_Branch, /*  ----------|-instFetchUnit---|-instControlUnit--------------------------------------|*/
+        s_Jump, /*  ------------|-instControlUnit-|-instFetchUnit, instHazardUnit------------------------|*/
+        s_WE, /*  --------------|-s_Stall---------|-instPC-----------------------------------------------|*/
+        s_Stall, /*  -----------|-instHazardUnit--|-instIFID, instWBMux, instMEMRdMUX, s_WE--------------|*/
+        s_Flush, /*  -----------|-instHazardUnit--|-s_ToFlush--------------------------------------------|*/
+        s_ToFlush, /*  ---------|-----------------|------------------------------------------------------|*/
+        s_muxRegWr, /*  --------|-instWBMux-------|-instIDEX---------------------------------------------|*/
+        s_MuxMemWr, /*  --------|-instMEMRdMUX----|-instIDEX---------------------------------------------|*/
+        s_CarryOut, /*  --------|-instALU---------|------------------------------------------------------|*/
+        s_InternalOverflow, /*|  -----------------|------------------------------------------------------|*/
+        s_IDhalt, /*  ----------|-----------------|------------------------------------------------------|*/
+        s_IDMemWr, /*  ---------|-----------------|------------------------------------------------------|*/
+        s_IDRegWr, /*  ---------|-----------------|------------------------------------------------------|*/
+        s_ID_memRD, /*  --------|-----------------|------------------------------------------------------|*/
+        s_EXRegDst, /*  --------|-----------------|------------------------------------------------------|*/
+        s_EXRegWr, /*  ---------|-----------------|------------------------------------------------------|*/
+        s_EXmemToReg, /*  ------|-----------------|------------------------------------------------------|*/
+        s_EXMemWr, /*  ---------|-----------------|------------------------------------------------------|*/
+        s_EXMemRd, /*  ---------|-----------------|------------------------------------------------------|*/
+        s_EXALUSrc, /*  --------|-----------------|------------------------------------------------------|*/
+        s_EXjal, /*  -----------|-----------------|------------------------------------------------------|*/
+        s_EXhalt, /*  ----------|-instIDEX--------|-instEXMEM--------------------------------------------|*/
+        s_MEMjal, /*  ----------|-instEXMEM-------|-instMEMWB--------------------------------------------|*/
+        s_MEMMemToReg, /*  -----|-instEXMEM-------|-instMEMWB--------------------------------------------|*/
+        s_MEMhalt, /*  ---------|-instEXMEM-------|-instMEMWB--------------------------------------------|*/
+        s_MEMRegWr, /*  --------|-instEXMEM-------|------------------------------------------------------|*/
+        s_WBjal, /*  -----------|-----------------|------------------------------------------------------|*/
+        s_WBmemToReg, /*  ------|-instMEMWB-------|-instMemToRegMux--------------------------------------|*/
+        s_WBRegWr, /*  ---------|-----------------|-instForwardingUnit-----------------------------------|*/
+        s_Zero, /*  ------------|-----------------|------------------------------------------------------|*/
+        s_ShiftType, /*  -------|-instControlUnit-|-<optimized-away>-------------------------------------|*/
+        s_Lui, /*  -------------|-instControlUnit-|-<optimized-away>-------------------------------------|*/
+        s_Beq, /*  -------------|-instControlUnit-|-<optimized-away>-------------------------------------|*/
         s_internal_CarryOut,
         s_internal_Overflow
         : std_logic;
@@ -744,3 +819,4 @@ begin
     s_ToFlush <= s_Flush or iRST;
 
 end structure;
+

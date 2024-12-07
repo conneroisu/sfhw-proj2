@@ -1,3 +1,12 @@
+-- <header>
+-- Author(s): Conner Ohnesorge, connerohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-06T14:34:38-06:00 remove-empty-new-line
+--      connerohnesorge 2024-12-06T07:22:29-06:00 update-IFID-stage-to-better-fit-style-guide
+--      Conner Ohnesorge 2024-12-04T07:44:46-06:00 updated-the-software-pipeline-to-use-the-simplified-contgrol-flow
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -47,3 +56,4 @@ begin
             o_Q   => o_Instruction);
 
 end structural;
+

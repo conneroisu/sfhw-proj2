@@ -1,3 +1,11 @@
+-- <header>
+-- Author(s): connerohnesorge, Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      connerohnesorge 2024-12-04T18:06:41-06:00 better-spacing-in-hazardunit-and-make-sure-it-follows-styleguide
+--      Conner Ohnesorge 2024-12-04T00:49:07-06:00 latest
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -59,3 +67,4 @@ begin
         end if;
     end process;
 end mixed;
+

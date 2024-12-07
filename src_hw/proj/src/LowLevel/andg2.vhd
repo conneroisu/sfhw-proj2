@@ -2,6 +2,7 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      Conner Ohnesorge 2024-12-03T18:28:28-06:00 make-andg2-fit-style-guide
 --      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
@@ -21,5 +22,6 @@ end andg2;
 
 architecture dataflow of andg2 is
 begin
-    o_F <= i_A and i_B;       -- simple dataflow implementation of an AND gate
+    o_F <= i_A and i_B;  -- simple dataflow implementation of an AND gate
 end dataflow;
+

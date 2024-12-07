@@ -2,6 +2,7 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      Conner Ohnesorge 2024-12-04T05:44:44-06:00 fit-styleguide-for-inverter_N
 --      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
@@ -27,9 +28,10 @@ architecture structural of inverter_N is
     end component;
 
 begin
-    
+
     g_nbit_inverter : for i in 0 to N-1 generate
         INVERTER_N : invg port map (i_Data(i), o_Data(i));
     end generate g_nbit_inverter;
 
 end structural;
+
