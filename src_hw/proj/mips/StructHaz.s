@@ -8,6 +8,11 @@ main:
 
     lw $2, 0($0)           # Load value from array[0]
     addi $3, $2, 5         # Perform an operation with the loaded value
+<<<<<<< HEAD
+=======
+nop
+nop
+>>>>>>> ef04ee4 (fix)
     sw $1, 4($0)           # Store 100 to array[1]
     addi $4, $1, 10        # Another addi instruction around sw
 
