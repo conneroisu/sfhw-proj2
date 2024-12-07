@@ -1,19 +1,16 @@
+# Structural Hazard Test Example with Data Initialization
+
 .data
-array: .word 10, 20, 30, 40
+array:  .word 10, 20, 30, 40  # Initialize an array in memory with some values
 
 .text
 main:
-    addi $0, $zero, 0       # Initialize base address index to 0
-    addi $1, $zero, 100     # Initialize data value to 100
+    la $a0, array          # Load the address of the array into $a0
+    lw $t0, 0($a0)         # Load the first word (10) from the array into $t0
+    sw $t1, 4($a0)         # Store the value from $t1 into the second word of the array
+    add $t4, $t2, $t3      # Add $t2 and $t3, storing the result in $t4
+    sub $t7, $t6, $t5      # Subtract $t5 from $t6, storing the result in $t7
 
-    lw $2, 0($0)           # Load value from array[0]
-    addi $3, $2, 5         # Perform an operation with the loaded value
-<<<<<<< HEAD
-=======
-nop
-nop
->>>>>>> ef04ee4 (fix)
-    sw $1, 4($0)           # Store 100 to array[1]
-    addi $4, $1, 10        # Another addi instruction around sw
-
-    halt                     # End program
+    # End of the program
+    li $v0, 10             # Exit syscall
+    syscall
