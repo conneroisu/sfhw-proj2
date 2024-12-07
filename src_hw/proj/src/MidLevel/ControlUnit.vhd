@@ -14,7 +14,6 @@ entity ControlUnit is
         o_ALUOp     : out std_logic_vector(3 downto 0);
         o_Signed    : out std_logic;
         o_shiftType : out std_logic;
-        o_shiftDir  : out std_logic;
         o_Bne       : out std_logic;
         o_Beq       : out std_logic;
         o_Jr        : out std_logic;
@@ -41,7 +40,6 @@ begin
                 o_ALUOp     <= "0010";
                 o_Signed    <= '1';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -59,7 +57,6 @@ begin
                 o_ALUOp     <= "0001";
                 o_Signed    <= '1';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -77,7 +74,6 @@ begin
                 o_ALUOp     <= "0100";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -95,7 +91,6 @@ begin
                 o_ALUOp     <= "1001";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '1';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -113,7 +108,6 @@ begin
                 o_ALUOp     <= "0010";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -131,7 +125,6 @@ begin
                 o_ALUOp     <= "0110";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -149,7 +142,6 @@ begin
                 o_ALUOp     <= "0101";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -167,7 +159,6 @@ begin
                 o_ALUOp     <= "1000";
                 o_Signed    <= '1';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -185,7 +176,6 @@ begin
                 o_ALUOp     <= "0010";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -206,7 +196,6 @@ begin
                 o_Beq       <= '1';
                 o_Branch    <= '1';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Jr        <= '0';
                 o_Jal       <= '0';
                 o_Jump      <= '0';
@@ -224,7 +213,6 @@ begin
                 o_Beq       <= '0';
                 o_Branch    <= '1';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Jr        <= '0';
                 o_Jal       <= '0';
                 o_Jump      <= '0';
@@ -242,7 +230,6 @@ begin
                 o_Jr        <= '0';
                 o_Jump      <= '1';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -260,7 +247,6 @@ begin
                 o_Jr        <= '0';
                 o_Jump      <= '1';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -275,7 +261,6 @@ begin
                 o_ALUOp     <= "0000";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -293,7 +278,6 @@ begin
                 o_ALUOp     <= "0000";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -313,7 +297,6 @@ begin
                 o_ALUOp     <= "0010";
                 o_Signed    <= '1';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -331,7 +314,6 @@ begin
                 o_ALUOp     <= "0001";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -349,7 +331,6 @@ begin
                 o_ALUOp     <= "0100";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -367,7 +348,6 @@ begin
                 o_ALUOp     <= "0111";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -385,7 +365,6 @@ begin
                 o_ALUOp     <= "0110";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -403,7 +382,6 @@ begin
                 o_ALUOp     <= "0101";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -421,7 +399,6 @@ begin
                 o_ALUOp     <= "1000";
                 o_Signed    <= '1';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -439,7 +416,6 @@ begin
                 o_ALUOp     <= "1010";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '1';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -457,7 +433,6 @@ begin
                 o_ALUOp     <= "1011";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -475,7 +450,6 @@ begin
                 o_ALUOp     <= "1100";
                 o_Signed    <= '0';
                 o_shiftType <= '1';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -493,7 +467,6 @@ begin
                 o_ALUOp     <= "1111";
                 o_Signed    <= '1';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -511,7 +484,6 @@ begin
                 o_ALUOp     <= "0011";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -529,7 +501,6 @@ begin
                 o_ALUOp     <= "1011";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
@@ -547,7 +518,6 @@ begin
                 o_ALUOp     <= "0000";
                 o_Signed    <= '0';
                 o_shiftType <= '0';
-                o_shiftDir  <= '0';
                 o_Bne       <= '0';
                 o_Beq       <= '0';
                 o_Branch    <= '0';
