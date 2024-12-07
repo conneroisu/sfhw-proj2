@@ -189,23 +189,22 @@ architecture structure of MIPS_Processor is
 
     component ControlUnit is
         port (
-            i_OpCode    : in  std_logic_vector(5 downto 0);  --MIPS instruction opcode (6 bits wide)
-            i_Funct     : in  std_logic_vector(5 downto 0);  --MIPS instruction function code (6 bits wide) used for R-Type instructions
-            o_RegDst    : out std_logic;
-            o_RegWrite  : out std_logic;
-            o_MemToReg  : out std_logic;
-            o_MemWrite  : out std_logic;
-            o_ALUSrc    : out std_logic;
-            o_ALUOp     : out std_logic_vector(3 downto 0);
-            o_Signed    : out std_logic;
-            o_Bne       : out std_logic;
-            o_Beq       : out std_logic;
-            o_Jr        : out std_logic;
-            o_Jal       : out std_logic;
-            o_Branch    : out std_logic;
-            o_Jump      : out std_logic;
-            o_Lui       : out std_logic;
-            o_Halt      : out std_logic
+            i_OpCode   : in  std_logic_vector(5 downto 0);  --MIPS instruction opcode (6 bits wide)
+            i_Funct    : in  std_logic_vector(5 downto 0);  --MIPS instruction function code (6 bits wide) used for R-Type instructions
+            o_RegDst   : out std_logic;
+            o_RegWrite : out std_logic;
+            o_MemToReg : out std_logic;
+            o_MemWrite : out std_logic;
+            o_ALUSrc   : out std_logic;
+            o_ALUOp    : out std_logic_vector(3 downto 0);
+            o_Signed   : out std_logic;
+            o_Bne      : out std_logic;
+            o_Beq      : out std_logic;
+            o_Jr       : out std_logic;
+            o_Jal      : out std_logic;
+            o_Branch   : out std_logic;
+            o_Jump     : out std_logic;
+            o_Halt     : out std_logic
             );
     end component;
 
@@ -331,49 +330,47 @@ architecture structure of MIPS_Processor is
         s_BasedInstruction /*| branchjumpMUX  --| instIFID ---------------------------------------------------------------------------------| */
         : std_logic_vector(31 downto 0);
 
-    signal
-        s_JumpBranch,
-        s_RegDst,
-        s_memToReg,
-        s_ALUSrc,
-        s_Jr,
-        s_Jal,
-        s_NotClk,
-        s_Signed,
-        s_Lui,
-        s_Bne,
-        s_Beq,
-        s_Branch,
-        s_Jump,
-        s_Zero,
-        s_CarryOut,
-        s_Stall,
-        s_WE,
-        s_Flush,
-        s_ToFlush,
-        s_muxRegWr,
-        s_muxMemWr,
-        s_InternalCarryOut,
-        s_InternalOverflow,
-        s_IDhalt,
-        s_IDMemWr,
-        s_IDRegWr,
-        s_ID_memRD,
-        s_EXRegDst,
-        s_EXRegWr,
-        s_EXmemToReg,
-        s_EXMemWr,
-        s_EXMemRd,
-        s_EXALUSrc,
-        s_EXjal,
-        s_EXhalt,
-        s_MEMjal,
-        s_MEMmemtoReg,
-        s_MEMhalt,
-        s_MEMRegWr,
-        s_WBjal,
-        s_WBmemToReg,
-        s_WBRegWr : std_logic;
+    signal /*  ---------------|-FROM-------------------------------------------------------------------|*/
+        s_JumpBranch, /*------|-instFetchunit---|-instNXTPC, instHazardUnit----------------------------|*/
+        s_RegDst, /*----------|-instControlUnit-|-instIDEX---------------------------------------------|*/
+        s_memToReg, /*--------|-instControlUnit-|------------------------------------------------------|*/
+        s_ALUSrc, /*----------|-instControlUnit-|-instIDEX---------------------------------------------|*/
+        s_Jr, /*--------------|-instControlUnit-|-instFetchUnit----------------------------------------|*/
+        s_Jal, /*-------------|-instControlUnit-|-instIDEX---------------------------------------------|*/
+        s_NotClk, /*----------|-iCLK------------|-instRegisterFile-------------------------------------|*/
+        s_Signed, /*----------|-instControlUnit-|-instSignExtend---------------------------------------|*/
+        s_Bne, /*-------------|-instControlUnit-|-instFetchUnit----------------------------------------|*/
+        s_Branch, /*----------|-instFetchUnit---|-instControlUnit--------------------------------------|*/
+        s_Jump, /*------------|-instControlUnit-|-instFetchUnit, instHazardUnit------------------------|*/
+        s_WE, /*--------------|-s_Stall---------|-instPC-----------------------------------------------|*/
+        s_Stall, /*-----------|-instHazardUnit--|-instIFID, instWBMux, instMEMRdMUX, s_WE--------------|*/
+        s_Flush, /*-----------|-instHazardUnit--|-s_ToFlush--------------------------------------------|*/
+        s_ToFlush, /*---------|-----------------|------------------------------------------------------|*/
+        s_muxRegWr, /*--------|-instWBMux-------|-instIDEX---------------------------------------------|*/
+        s_MuxMemWr, /*--------|-instMEMRdMUX----|-instIDEX---------------------------------------------|*/
+        s_CarryOut, /*--------|-instALU---------|------------------------------------------------------|*/
+        s_InternalOverflow, /*|-----------------|------------------------------------------------------|*/
+        s_IDhalt, /*----------|-----------------|------------------------------------------------------|*/
+        s_IDMemWr, /*---------|-----------------|------------------------------------------------------|*/
+        s_IDRegWr, /*---------|-----------------|------------------------------------------------------|*/
+        s_ID_memRD, /*--------|-----------------|------------------------------------------------------|*/
+        s_EXRegDst, /*--------|-----------------|------------------------------------------------------|*/
+        s_EXRegWr, /*---------|-----------------|------------------------------------------------------|*/
+        s_EXmemToReg, /*------|-----------------|------------------------------------------------------|*/
+        s_EXMemWr, /*---------|-----------------|------------------------------------------------------|*/
+        s_EXMemRd, /*---------|-----------------|------------------------------------------------------|*/
+        s_EXALUSrc, /*--------|-----------------|------------------------------------------------------|*/
+        s_EXjal, /*-----------|-----------------|------------------------------------------------------|*/
+        s_EXhalt, /*----------|-instIDEX--------|-instEXMEM--------------------------------------------|*/
+        s_MEMjal, /*----------|-instEXMEM-------|-instMEMWB--------------------------------------------|*/
+        s_MEMMemToReg, /*-----|-instEXMEM-------|-instMEMWB--------------------------------------------|*/
+        s_MEMhalt, /*---------|-instEXMEM-------|-instMEMWB--------------------------------------------|*/
+        s_MEMRegWr, /*--------|-instEXMEM-------|------------------------------------------------------|*/
+        s_WBjal, /*-----------|-----------------|------------------------------------------------------|*/
+        s_WBmemToReg, /*------|-instMEMWB-------|-instMemToRegMux--------------------------------------|*/
+        s_WBRegWr, /*---------|-----------------|-instForwardingUnit-----------------------------------|*/
+        s_Zero /*-------------|-----------------|------------------------------------------------------|*/
+        : std_logic;
 
 begin
     with iInstLd select
@@ -424,23 +421,21 @@ begin
 
     instControlUnit : ControlUnit
         port map(
-            i_opCode    => s_IDInstruction(31 downto 26),
-            i_funct     => s_IDInstruction(5 downto 0),
-            o_RegDst    => s_RegDst,
-            o_RegWrite  => s_IDRegWr,
-            o_memToReg  => s_memToReg,
-            o_memWrite  => s_IDMemWr,
-            o_ALUSrc    => s_ALUSrc,
-            o_ALUOp     => s_ALUOp,
-            o_signed    => s_Signed,
-            o_bne       => s_Bne,
-            o_beq       => s_Beq,
-            o_jr        => s_Jr,
-            o_jal       => s_Jal,
-            o_branch    => s_Branch,
-            o_jump      => s_Jump,
-            o_lui       => s_Lui,
-            o_halt      => s_IDhalt
+            i_opCode   => s_IDInstruction(31 downto 26),
+            i_funct    => s_IDInstruction(5 downto 0),
+            o_RegDst   => s_RegDst,
+            o_RegWrite => s_IDRegWr,
+            o_memToReg => s_memToReg,
+            o_memWrite => s_IDMemWr,
+            o_ALUSrc   => s_ALUSrc,
+            o_ALUOp    => s_ALUOp,
+            o_signed   => s_Signed,
+            o_bne      => s_Bne,
+            o_jr       => s_Jr,
+            o_jal      => s_Jal,
+            o_branch   => s_Branch,
+            o_jump     => s_Jump,
+            o_halt     => s_IDhalt
             );
 
     instPC : dffg_N
@@ -509,29 +504,10 @@ begin
             i_ALUOP    => s_EXALUOp,
             i_Shamt    => s_EXImmediate(10 downto 6),
             o_Result   => s_ALUOut,
-            o_CarryOut => s_InternalCarryOut,
+            o_CarryOut => s_CarryOut,
             o_Overflow => s_InternalOverflow,
             o_Zero     => s_Zero
             );
-
-    instCarrFlowProc : process(iclk, irst, s_InternalCarryOut, s_InternalOverflow, s_CarryOut, s_Ovfl)
-    begin
-        if irst = '1' then
-            s_CarryOut <= '0';
-            s_Ovfl     <= '0';
-        elsif rising_edge(iclk) then
-            if s_InternalCarryOut = '1' then
-                s_CarryOut <= '1';
-            else
-                s_CarryOut <= s_CarryOut;
-            end if;
-            if s_InternalOverflow = '1' then
-                s_Ovfl <= '1';
-            else
-                s_Ovfl <= s_Ovfl;
-            end if;
-        end if;
-    end process;
 
     oALUOut <= s_ALUOut;
 
@@ -596,14 +572,14 @@ begin
             i_S  => s_Stall,
             i_D0 => s_IDMemWr,
             i_D1 => '0',
-            o_O  => s_muxMemWr
+            o_O  => s_MuxMemWr
             );
 
     instIDEX : ID_EX
         port map(
             i_CLK               => iCLK,
-            i_Reset             => '0',
-            i_stall             => '0',
+            i_Reset             => iRST,
+            i_stall             => s_Stall,
             i_PC4               => s_IDPC4,
             i_RegisterFileReadA => s_RegisterFileA,
             i_RegisterFileReadB => s_RegisterFileB,
@@ -613,7 +589,7 @@ begin
             i_RegDst            => s_RegDst,
             i_RegWrite          => s_muxRegWr,
             i_MemToReg          => s_memToReg,
-            i_MemWrite          => s_muxMemWr,
+            i_MemWrite          => s_MuxMemWr,
             i_ALUSrc            => s_ALUSrc,
             i_ALUOp             => s_ALUOp,
             i_Jal               => s_Jal,
@@ -641,7 +617,7 @@ begin
         port map(
             i_CLK      => iCLK,
             i_RST      => iRST,
-            i_stall    => '0',
+            i_stall    => s_Stall,
             i_ALU      => s_ALUOut,
             i_B        => s_ForwardB,
             i_WrAddr   => s_EXrtrd,
@@ -655,7 +631,7 @@ begin
             o_B        => s_DMemData,
             o_WrAddr   => s_MEMrtrd,
             o_MemWr    => s_DMemWr,
-            o_MemtoReg => s_MEMmemToReg,
+            o_MemtoReg => s_MEMMemToReg,
             o_Halt     => s_MEMhalt,
             o_RegWr    => s_MemRegWr,
             o_Jal      => s_MEMjal,
@@ -666,11 +642,11 @@ begin
         port map(
             i_CLK      => iCLK,
             i_RST      => iRST,
-            i_stall    => '0',
+            i_stall    => s_Stall,
             i_ALU      => s_MEMALU,
             i_Mem      => s_DMemOut,
             i_WrAddr   => s_MEMrtrd,
-            i_MemtoReg => s_MEMmemToReg,
+            i_MemtoReg => s_MEMMemToReg,
             i_Halt     => s_MEMHalt,
             i_RegWr    => s_MEMRegWr,
             i_Jal      => s_MEMjal,
