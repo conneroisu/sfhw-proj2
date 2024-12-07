@@ -1,8 +1,26 @@
+-- <header>
+-- Author(s): Conner Ohnesorge, connerohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-06T18:43:09-06:00 putback
+--      Conner Ohnesorge 2024-12-06T18:40:53-06:00 remove-shiftType
+--      Conner Ohnesorge 2024-12-06T18:39:36-06:00 put-back
+--      Conner Ohnesorge 2024-12-06T18:38:05-06:00 latest
+--      Conner Ohnesorge 2024-12-06T18:34:10-06:00 latest
+--      Conner Ohnesorge 2024-12-06T18:22:08-06:00 removed-unused-signals-and-added-comment-table-for-std_logic-signals
+--      Conner Ohnesorge 2024-12-06T17:41:01-06:00 remove-unused-signals
+--      Conner Ohnesorge 2024-12-06T11:13:04-06:00 ensure-complience-with-styleguide-for-ControlUnit
+--      Conner Ohnesorge 2024-12-06T11:09:43-06:00 remove-unused-signal
+--      connerohnesorge 2024-12-06T08:26:15-06:00 remove-s_j-from-MIPS_Processor-and-o_J-from-ControlUnit
+--      Conner Ohnesorge 2024-12-04T05:13:48-06:00 optimizat-control-unit-for-performance
+--      Conner Ohnesorge 2024-12-04T00:49:07-06:00 latest
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity ControlUnit is
-    
+
     port (
         i_OpCode    : in  std_logic_vector(5 downto 0);  --MIPS instruction opcode (6 bits wide)
         i_Funct     : in  std_logic_vector(5 downto 0);  --MIPS instruction function code (6 bits wide) used for R-Type instructions
@@ -23,7 +41,7 @@ entity ControlUnit is
         o_Lui       : out std_logic;
         o_Halt      : out std_logic
         );
-    
+
 end ControlUnit;
 
 architecture behavioral of ControlUnit is
@@ -530,3 +548,4 @@ begin
         end if;
     end process;
 end behavioral;
+

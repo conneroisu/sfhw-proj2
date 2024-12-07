@@ -1,3 +1,14 @@
+-- <header>
+-- Author(s): connerohnesorge, Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      connerohnesorge 2024-12-04T19:25:25-06:00 formate-full_adder.vhd
+--      Conner Ohnesorge 2024-12-04T00:49:07-06:00 latest
+--      Conner Ohnesorge 2024-12-03T22:08:36-06:00 save-progress
+--      Conner Ohnesorge 2024-12-03T19:04:36-06:00 make-full-adder-fit-style-guide
+--      Conner Ohnesorge 2024-12-03T19:03:40-06:00 fix-name-of-full-adder
+-- </header>
+
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -81,3 +92,4 @@ begin
             );
 
 end architecture structural;
+

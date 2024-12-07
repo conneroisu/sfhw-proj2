@@ -1,8 +1,11 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
+--      connerohnesorge 2024-12-04T21:41:14-06:00 remove-unnecesary-comment-on-inverter_N
+--      Conner Ohnesorge 2024-12-04T07:44:46-06:00 updated-the-software-pipeline-to-use-the-simplified-contgrol-flow
+--      Conner Ohnesorge 2024-12-01T16:15:35-06:00 make-inverter_N-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
 -- </header>
 
 library IEEE;
@@ -33,3 +36,4 @@ begin
     end generate g_nbit_inverter;
 
 end structural;
+

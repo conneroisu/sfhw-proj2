@@ -1,9 +1,17 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-06T14:30:54-06:00 update-fetch-unit-comment
+--      Conner Ohnesorge 2024-12-04T07:44:46-06:00 updated-the-software-pipeline-to-use-the-simplified-contgrol-flow
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity FetchUnit is
-    generic (N : integer := 32);  
-    
+    generic (N : integer := 32);
+
     port (
         i_PC4         : in  std_logic_vector(N - 1 downto 0);  -- Program counter
         i_branch_addr : in  std_logic_vector(N - 1 downto 0);  -- potential branch address
@@ -16,7 +24,7 @@ entity FetchUnit is
         i_A           : in  std_logic_vector(N - 1 downto 0);  -- Reg A value
         i_B           : in  std_logic_vector(N - 1 downto 0);  -- Reg B value
         o_PC          : out std_logic_vector(N - 1 downto 0);  -- program counter output
-        o_jump_branch : out std_logic   -- set to 1 if a branch or jump is taken
+        o_jump_branch : out std_logic  -- set to 1 if a branch or jump is taken
         );
 
 end FetchUnit;
@@ -143,3 +151,4 @@ begin
     o_jump_branch <= s_toBranch or i_jump;
 
 end structural;
+

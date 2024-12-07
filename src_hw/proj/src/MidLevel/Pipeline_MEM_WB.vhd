@@ -1,3 +1,12 @@
+-- <header>
+-- Author(s): Conner Ohnesorge, connerohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-06T11:02:18-06:00 ensure-adherence-to-coding-style-for-Pipeline_MEM_WB
+--      connerohnesorge 2024-12-04T20:56:05-06:00 finish-presentation-of-pipeline-stages-in-both-hardware-and-software-implementations-and-make-sure-adherence-to-styleguide
+--      Conner Ohnesorge 2024-12-04T00:49:07-06:00 latest
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -120,3 +129,4 @@ begin
     end generate G_PC4_reg;
 
 end structural;
+

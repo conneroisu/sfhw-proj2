@@ -1,3 +1,11 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-03T23:27:02-06:00 fix-register-file-declaration-in-MIPS_Processor.vhd
+--      Conner Ohnesorge 2024-12-03T22:08:36-06:00 save-progress
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -80,3 +88,4 @@ begin
            "00000000000000000000000000000000";
 
 end behavioral;
+

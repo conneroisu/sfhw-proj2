@@ -2,6 +2,7 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      Conner Ohnesorge 2024-12-04T00:49:07-06:00 latest
 --      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
@@ -13,7 +14,7 @@ entity dffg_n is
     port(
         i_CLK : in  std_logic;                       -- Clock input
         i_RST : in  std_logic;                       -- Reset input
-        i_WE : in  std_logic;                       -- Write enable input
+        i_WE  : in  std_logic;                       -- Write enable input
         i_D   : in  std_logic_vector(N-1 downto 0);  -- Data input
         o_Q   : out std_logic_vector(N-1 downto 0)   -- Data output
         );
@@ -40,7 +41,7 @@ begin
         flipflop : dffg
             port map(i_CLK => i_CLK,    -- Clock input
                      i_RST => i_RST,    -- Reset input
-                     i_WE  => i_WE,    -- Write enable input
+                     i_WE  => i_WE,     -- Write enable input
                      i_D   => i_D(i),   -- Data input
                      o_Q   => o_Q(i)    -- Data output
                      );

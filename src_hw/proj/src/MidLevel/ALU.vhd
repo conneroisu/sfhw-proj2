@@ -1,3 +1,18 @@
+-- <header>
+-- Author(s): Conner Ohnesorge, connerohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-06T14:52:45-06:00 better-formating-on-ALUS
+--      Conner Ohnesorge 2024-12-06T11:04:08-06:00 ensure-adherence-to-coding-style-in-ALU
+--      connerohnesorge 2024-12-04T18:11:46-06:00 improve-alu-readability-and-formatting-of-complex-logic
+--      connerohnesorge 2024-12-04T18:02:28-06:00 ensure-alu-fits-styleguide
+--      connerohnesorge 2024-12-04T18:01:55-06:00 better-instance-names-in-alu
+--      Conner Ohnesorge 2024-12-04T07:10:31-06:00 fix-renamed-barrel-shift-instantiation
+--      Conner Ohnesorge 2024-12-04T06:40:31-06:00 latest
+--      Conner Ohnesorge 2024-12-04T05:37:20-06:00 more-appropriate-name-for-barrel-shifter-in-the-midlevel
+--      Conner Ohnesorge 2024-12-04T05:35:09-06:00 move-and-rename-addersubtractor-to-midlevel
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -9,7 +24,7 @@ entity ALU is
         i_B        : in  std_logic_vector(N - 1 downto 0);
         i_ALUOP    : in  std_logic_vector(3 downto 0);
         i_Shamt    : in  std_logic_vector(4 downto 0);
-        o_Result  : out std_logic_vector(N - 1 downto 0);
+        o_Result   : out std_logic_vector(N - 1 downto 0);
         o_CarryOut : out std_logic;
         o_Overflow : out std_logic;
         o_Zero     : out std_logic
@@ -111,76 +126,76 @@ begin
         s_ShiftDirection <= '0';
         s_ShiftType      <= '0';
         s_Bne            <= '0';
-        s_ShiftUnsigned       <= '1';
+        s_ShiftUnsigned  <= '1';
         s_Select         <= "000";
 
         case i_ALUOp is
             when "1110" =>              -- beq
-                s_Operator <= '1';
+                s_Operator      <= '1';
                 s_ShiftUnsigned <= '1';
-                s_Select   <= "000";
+                s_Select        <= "000";
 
             when "1101" =>              -- bne
-                s_Operator <= '1';
-                s_Bne      <= '1';
+                s_Operator      <= '1';
+                s_Bne           <= '1';
                 s_ShiftUnsigned <= '1';
-                s_Select   <= "000";
+                s_Select        <= "000";
 
             when "0001" =>              -- addu
                 s_ShiftUnsigned <= '0';
-                s_Select   <= "000";
+                s_Select        <= "000";
 
             when "0011" =>              -- subu
-                s_Operator <= '1';
+                s_Operator      <= '1';
                 s_ShiftUnsigned <= '0';
-                s_Select   <= "000";
+                s_Select        <= "000";
 
             when "0010" =>              -- add
                 s_ShiftUnsigned <= '1';
-                s_Select   <= "000";
+                s_Select        <= "000";
 
             when "1111" =>              -- sub
-                s_Operator <= '1';
+                s_Operator      <= '1';
                 s_ShiftUnsigned <= '1';
-                s_Select   <= "000";
+                s_Select        <= "000";
 
             when "0100" =>              -- and
                 s_ShiftUnsigned <= '1';
-                s_Select   <= "011";
+                s_Select        <= "011";
 
             when "0101" =>              -- or
                 s_ShiftUnsigned <= '1';
-                s_Select   <= "010";
+                s_Select        <= "010";
 
             when "0110" =>              -- xor
                 s_ShiftUnsigned <= '1';
-                s_Select   <= "100";
+                s_Select        <= "100";
 
             when "0111" =>              -- nor
                 s_ShiftUnsigned <= '1';
-                s_Select   <= "101";
+                s_Select        <= "101";
 
             when "1001" =>              -- lui
-                s_Lui      <= '1';
+                s_Lui           <= '1';
                 s_ShiftUnsigned <= '1';
-                s_Select   <= "001";
+                s_Select        <= "001";
 
             when "1000" =>              -- slt
-                s_Operator <= '1';
+                s_Operator      <= '1';
                 s_ShiftUnsigned <= '1';
-                s_Select   <= "110";
+                s_Select        <= "110";
 
             when "1010" =>              -- sll
                 s_ShiftUnsigned <= '1';
-                s_Select   <= "001";
+                s_Select        <= "001";
 
             when "1011" =>              -- srl
-                s_ShiftUnsigned       <= '1';
+                s_ShiftUnsigned  <= '1';
                 s_ShiftDirection <= '1';
                 s_Select         <= "001";
 
             when "1100" =>              -- sra
-                s_ShiftUnsigned       <= '1';
+                s_ShiftUnsigned  <= '1';
                 s_ShiftDirection <= '1';
                 s_ShiftType      <= '1';
                 s_Select         <= "001";
@@ -225,7 +240,7 @@ begin
         port map(
             i_F    => s_Adder_Out,
             o_zero => s_zero
-        );
+            );
 
     s_NotZero <= not s_zero;
     o_Zero    <= s_NotZero xor s_Bne;
@@ -266,3 +281,4 @@ begin
             );
 
 end mixed;
+

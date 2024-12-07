@@ -1,8 +1,16 @@
+-- <header>
+-- Author(s): connerohnesorge, Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      connerohnesorge 2024-12-06T08:26:15-06:00 remove-s_j-from-MIPS_Processor-and-o_J-from-ControlUnit
+--      Conner Ohnesorge 2024-12-04T07:44:46-06:00 updated-the-software-pipeline-to-use-the-simplified-contgrol-flow
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity ControlUnit is
-    
+
     port (
         i_opCode    : in  std_logic_vector(5 downto 0);  --MIPS instruction opcode (6 bits wide)
         i_funct     : in  std_logic_vector(5 downto 0);  --MIPS instruction function code (6 bits wide) used for R-Type instructions
@@ -25,7 +33,7 @@ entity ControlUnit is
         o_lui       : out std_logic;
         o_halt      : out std_logic
         );
-    
+
 end ControlUnit;
 
 architecture behavioral of ControlUnit is
@@ -590,3 +598,4 @@ begin
         end if;
     end process;
 end behavioral;
+

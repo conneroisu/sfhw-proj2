@@ -2,7 +2,10 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
+--      Conner Ohnesorge 2024-12-04T07:44:46-06:00 updated-the-software-pipeline-to-use-the-simplified-contgrol-flow
+--      Conner Ohnesorge 2024-12-01T16:18:22-06:00 make-andg32-fit-styleguide
+--      Conner Ohnesorge 2024-12-01T15:20:49-06:00 update-low-level-components
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
 -- </header>
 
 library IEEE;

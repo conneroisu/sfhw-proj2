@@ -1,3 +1,10 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-03T22:08:36-06:00 save-progress
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -30,3 +37,4 @@ begin
            i_D7 when (i_S = "111") else
            '0';
 end dataflow;
+

@@ -1,3 +1,10 @@
+-- <header>
+-- Author(s): Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      Conner Ohnesorge 2024-12-04T06:40:31-06:00 latest
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -323,3 +330,4 @@ begin
     end process;
 
 end behavior;
+

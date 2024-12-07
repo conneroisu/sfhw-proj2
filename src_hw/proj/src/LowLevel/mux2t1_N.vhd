@@ -2,6 +2,7 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      Conner Ohnesorge 2024-12-04T05:46:16-06:00 make-mux2t1_N-fit-style-guide
 --      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
@@ -43,3 +44,4 @@ begin
             );
     end generate G_NBit_MUX;
 end structural;
+

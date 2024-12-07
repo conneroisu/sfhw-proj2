@@ -1,3 +1,63 @@
+-- <header>
+-- Author(s): connerohnesorge, Conner Ohnesorge
+-- Name: 
+-- Notes:
+--      connerohnesorge 2024-12-06T08:29:51-06:00 fix-bug-type-remove-j-from-coontol
+--      connerohnesorge 2024-12-06T08:26:15-06:00 remove-s_j-from-MIPS_Processor-and-o_J-from-ControlUnit
+--      connerohnesorge 2024-12-06T08:18:53-06:00 Rename-instance-of-Fetch-Unit-and-add-comment-for-first-signal
+--      connerohnesorge 2024-12-06T08:15:04-06:00 format
+--      connerohnesorge 2024-12-06T08:12:54-06:00 Update-ID_EX-to-be-compatible-with-the-style-guide
+--      connerohnesorge 2024-12-06T07:22:29-06:00 update-IFID-stage-to-better-fit-style-guide
+--      connerohnesorge 2024-12-06T07:20:56-06:00 Ensure-style-guidelines-are-followed-with-registerfile-and-update-it-s-interface-in-the-processor
+--      connerohnesorge 2024-12-05T14:43:05-06:00 fix-signal-capitalization
+--      connerohnesorge 2024-12-05T14:41:21-06:00 fix-typo-in-signal-name
+--      connerohnesorge 2024-12-05T14:07:26-06:00 latest
+--      connerohnesorge 2024-12-05T13:58:41-06:00 latest
+--      connerohnesorge 2024-12-05T13:40:34-06:00 removed-unused-signal
+--      connerohnesorge 2024-12-05T09:18:15-06:00 fix-alu-op-signal-feeding-through-stages
+--      connerohnesorge 2024-12-05T09:05:45-06:00 fix-missing-mixed-up-signals-for-stages
+--      connerohnesorge 2024-12-05T08:58:27-06:00 fix-type-in-instr-signal
+--      connerohnesorge 2024-12-05T08:51:46-06:00 fix-unused-signals
+--      Conner Ohnesorge 2024-12-05T08:36:22-06:00 expand-signals-in-softare-implementation
+--      connero 2024-12-05T08:29:28-06:00 Merge-pull-request-90-from-conneroisu-ConnerOhnesorge
+--      Conner Ohnesorge 2024-12-05T08:27:11-06:00 fixed-EXB-signal
+--      Conner Ohnesorge 2024-12-05T08:22:49-06:00 fix-bug-with-accidentically-removed-immediate-mux-before-alu
+--      Conner Ohnesorge 2024-12-05T08:20:43-06:00 fix-unassigned-value-to-s_EXA-to-alu
+--      connerohnesorge 2024-12-04T23:19:07-06:00 make-sure-to-align-with-styleguided
+--      connerohnesorge 2024-12-04T23:18:16-06:00 clean-up-signals-for-debugging-of-the-software-pipeline
+--      connerohnesorge 2024-12-04T20:58:27-06:00 fix-no-signal-to-rt-and-rd-for-id_ex
+--      connerohnesorge 2024-12-04T20:56:05-06:00 finish-presentation-of-pipeline-stages-in-both-hardware-and-software-implementations-and-make-sure-adherence-to-styleguide
+--      connerohnesorge 2024-12-04T19:43:18-06:00 remove-more-unused-components
+--      connerohnesorge 2024-12-04T19:42:50-06:00 remove-unused-components-from-software-implementation
+--      connerohnesorge 2024-12-04T17:49:24-06:00 remove-testing-bash-files
+--      connerohnesorge 2024-12-04T17:36:32-06:00 better-naming-for-instances
+--      Conner Ohnesorge 2024-12-04T07:52:01-06:00 update-register-file-name
+--      Conner Ohnesorge 2024-12-04T07:50:05-06:00 removed-unnessary-comments-in-MIPS_Processor.vhd-for-the-software
+--      Conner Ohnesorge 2024-12-04T07:44:46-06:00 updated-the-software-pipeline-to-use-the-simplified-contgrol-flow
+--      Conner Ohnesorge 2024-12-01T20:51:19-06:00 fix-s_EX_lui_val-length
+--      Conner Ohnesorge 2024-12-01T20:42:11-06:00 test-others-0-on-s_ex_lui_val-length-assignment
+--      Conner Ohnesorge 2024-12-01T20:39:31-06:00 remove-src_sf-and-update-.gitignore
+--      Conner Ohnesorge 2024-12-01T19:50:46-06:00 latest
+--      Conner Ohnesorge 2024-12-01T19:44:01-06:00 latest
+--      Conner Ohnesorge 2024-12-01T19:34:36-06:00 latest
+--      Conner Ohnesorge 2024-12-01T19:30:32-06:00 fix-name-of-alu_control
+--      Conner Ohnesorge 2024-12-01T19:28:10-06:00 test
+--      Conner Ohnesorge 2024-12-01T19:26:22-06:00 fix-spacing
+--      Conner Ohnesorge 2024-12-01T19:22:45-06:00 fix-signal-lui-s-width
+--      Conner Ohnesorge 2024-12-01T19:21:02-06:00 add-missing-signals
+--      Conner Ohnesorge 2024-12-01T19:20:09-06:00 latest
+--      Conner Ohnesorge 2024-12-01T19:18:16-06:00 fix-register-file-instantiation
+--      Conner Ohnesorge 2024-12-01T19:10:17-06:00 fix-signal-name
+--      Conner Ohnesorge 2024-12-01T17:41:03-06:00 fix-signal-lenght-for-lui
+--      Conner Ohnesorge 2024-12-01T17:40:00-06:00 fix-undeclared-signal
+--      Conner Ohnesorge 2024-12-01T16:35:33-06:00 fix-program-counter-declaration-and-style-guide-adhereance
+--      Conner Ohnesorge 2024-12-01T16:08:37-06:00 fix-formatting-and-some-logic-of-software-MIPS_Processor
+--      Conner Ohnesorge 2024-12-01T15:44:54-06:00 make-register_file-adhere-to-style-guidelines-and-fix-declaration-in
+--      Conner Ohnesorge 2024-12-01T15:41:34-06:00 move-barrelShifter-to-MidLevel-in-software-processor
+--      Conner Ohnesorge 2024-11-29T14:46:12-06:00 pdate-control-unit-ports-to-better-fit-style-guide
+--      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
+-- </header>
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -590,3 +650,4 @@ begin
             );
 
 end structure;
+
