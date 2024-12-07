@@ -15,10 +15,10 @@ Info: Running Quartus Prime Analysis & Synthesis
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Fri Dec  6 14:47:34 2024
+    Info: Processing started: Fri Dec  6 20:48:31 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off toolflow -c toolflow
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_sw/proj/src/LowLevel/andg2.vhd
     Info (12022): Found design unit 1: andg2-dataflow File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/LowLevel/andg2.vhd Line: 22
     Info (12023): Found entity 1: andg2 File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/LowLevel/andg2.vhd Line: 12
@@ -110,7 +110,7 @@ Info (12021): Found 2 design units, including 1 entities, in source file /home/c
     Info (12022): Found design unit 1: BarrelShifter-behavioral File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/BarrelShifter.vhd Line: 19
     Info (12023): Found entity 1: BarrelShifter File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/BarrelShifter.vhd Line: 4
 Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/ControlUnit.vhd
-    Info (12022): Found design unit 1: ControlUnit-behavioral File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/ControlUnit.vhd Line: 30
+    Info (12022): Found design unit 1: ControlUnit-behavioral File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/ControlUnit.vhd Line: 31
     Info (12023): Found entity 1: ControlUnit File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/ControlUnit.vhd Line: 4
 Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/FetchUnit.vhd
     Info (12022): Found design unit 1: FetchUnit-structural File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/FetchUnit.vhd Line: 24
@@ -141,24 +141,25 @@ Info (12021): Found 2 design units, including 1 entities, in source file /home/c
     Info (12023): Found entity 1: mem File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/mem.vhd Line: 5
 Info (12127): Elaborating entity "MIPS_Processor" for the top level hierarchy
 Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(29): object "s_Halt" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 29
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(260): object "s_Lui" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 260
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(261): object "s_ShiftType" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 261
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(262): object "s_ShiftDir" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 262
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(264): object "s_Beq" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 264
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(267): object "s_Zero" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 267
-Info (12128): Elaborating entity "mem" for hierarchy "mem:IMem" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 315
-Info (12128): Elaborating entity "RegisterFile" for hierarchy "RegisterFile:instRegisterFile" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 326
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(261): object "s_Lui" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 261
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(262): object "s_Operator" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 262
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(263): object "s_ShiftType" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 263
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(264): object "s_ShiftDir" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 264
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(266): object "s_Beq" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 266
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(269): object "s_Zero" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 269
+Info (12128): Elaborating entity "mem" for hierarchy "mem:IMem" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 317
+Info (12128): Elaborating entity "RegisterFile" for hierarchy "RegisterFile:instRegisterFile" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 328
 Info (12128): Elaborating entity "decoder5t32" for hierarchy "RegisterFile:instRegisterFile|decoder5t32:writedecoder" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/RegisterFile.vhd Line: 68
 Info (12128): Elaborating entity "dffg_n" for hierarchy "RegisterFile:instRegisterFile|dffg_n:reg0" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/RegisterFile.vhd Line: 76
 Info (12128): Elaborating entity "dffg" for hierarchy "RegisterFile:instRegisterFile|dffg_n:reg0|dffg:\G1:0:flipflop" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/LowLevel/dffg_n.vhd Line: 40
 Info (12128): Elaborating entity "mux32t1" for hierarchy "RegisterFile:instRegisterFile|mux32t1:read1" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/RegisterFile.vhd Line: 112
-Info (12128): Elaborating entity "mux2t1_N" for hierarchy "mux2t1_N:instRtRdMux2t1_5" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 339
+Info (12128): Elaborating entity "mux2t1_N" for hierarchy "mux2t1_N:instRtRdMux2t1_5" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 341
 Info (12128): Elaborating entity "mux2t1" for hierarchy "mux2t1_N:instRtRdMux2t1_5|mux2t1:\G_NBit_MUX:0:MUXI" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/LowLevel/mux2t1_N.vhd Line: 38
 Info (10041): Inferred latch for "o_o" at mux2t1.vhd(26) File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/LowLevel/mux2t1.vhd Line: 26
-Info (12128): Elaborating entity "ControlUnit" for hierarchy "ControlUnit:instControlUnit" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 357
-Info (12128): Elaborating entity "dffg_n" for hierarchy "dffg_n:instPC" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 380
-Info (12128): Elaborating entity "mux2t1_N" for hierarchy "mux2t1_N:instRSTPC" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 389
-Info (12128): Elaborating entity "FetchUnit" for hierarchy "FetchUnit:instFetchUnit" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 407
+Info (12128): Elaborating entity "ControlUnit" for hierarchy "ControlUnit:instControlUnit" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 359
+Info (12128): Elaborating entity "dffg_n" for hierarchy "dffg_n:instPC" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 383
+Info (12128): Elaborating entity "mux2t1_N" for hierarchy "mux2t1_N:instRSTPC" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 392
+Info (12128): Elaborating entity "FetchUnit" for hierarchy "FetchUnit:instFetchUnit" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 410
 Info (12128): Elaborating entity "ZeroDetector" for hierarchy "FetchUnit:instFetchUnit|ZeroDetector:zero_detector" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/FetchUnit.vhd Line: 79
 Info (12128): Elaborating entity "org2" for hierarchy "FetchUnit:instFetchUnit|ZeroDetector:zero_detector|org2:\FIRST_OR:0:OR1" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/ZeroDetector.vhd Line: 29
 Info (12128): Elaborating entity "BarrelShifter" for hierarchy "FetchUnit:instFetchUnit|BarrelShifter:instBranchShifter" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/FetchUnit.vhd Line: 88
@@ -167,20 +168,20 @@ Info (12128): Elaborating entity "full_adder" for hierarchy "FetchUnit:instFetch
 Info (12128): Elaborating entity "xorg2" for hierarchy "FetchUnit:instFetchUnit|Full_Adder_N:instPCBranchAdder|full_adder:\G_NBit_FullAdder:0:FullAdderI|xorg2:xor1" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/LowLevel/full_adder.vhd Line: 48
 Info (12128): Elaborating entity "andg2" for hierarchy "FetchUnit:instFetchUnit|Full_Adder_N:instPCBranchAdder|full_adder:\G_NBit_FullAdder:0:FullAdderI|andg2:and1" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/LowLevel/full_adder.vhd Line: 62
 Info (12128): Elaborating entity "mux2t1_N" for hierarchy "FetchUnit:instFetchUnit|mux2t1_N:Branch_Select" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/FetchUnit.vhd Line: 119
-Info (12128): Elaborating entity "extender16t32" for hierarchy "extender16t32:instSignExtender" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 423
-Info (12128): Elaborating entity "ALU" for hierarchy "ALU:instALU" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 439
+Info (12128): Elaborating entity "extender16t32" for hierarchy "extender16t32:instSignExtender" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 426
+Info (12128): Elaborating entity "ALU" for hierarchy "ALU:instALU" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 442
 Info (12128): Elaborating entity "AdderSubtractor" for hierarchy "ALU:instALU|AdderSubtractor:instAdderSub" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/ALU.vhd Line: 212
 Info (12128): Elaborating entity "comp1_N" for hierarchy "ALU:instALU|AdderSubtractor:instAdderSub|comp1_N:instOnesComps" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/AdderSubtractor.vhd Line: 53
 Info (12128): Elaborating entity "invg" for hierarchy "ALU:instALU|AdderSubtractor:instAdderSub|comp1_N:instOnesComps|invg:\G_NBit_Comp1:0:comp1_I" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/LowLevel/comp1_N.vhd Line: 30
-Info (12128): Elaborating entity "logic_N" for hierarchy "ALU:instALU|logic_N:instLogicGates" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/ALU.vhd Line: 232
-Info (12128): Elaborating entity "mux8t1_N" for hierarchy "ALU:instALU|mux8t1_N:instOutputMux" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/ALU.vhd Line: 253
+Info (12128): Elaborating entity "logic_N" for hierarchy "ALU:instALU|logic_N:instLogicGates" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/ALU.vhd Line: 233
+Info (12128): Elaborating entity "mux8t1_N" for hierarchy "ALU:instALU|mux8t1_N:instOutputMux" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/ALU.vhd Line: 254
 Info (12128): Elaborating entity "mux8t1" for hierarchy "ALU:instALU|mux8t1_N:instOutputMux|mux8t1:\G_NBit_MUX:0:MUXI" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/LowLevel/mux8t1_N.vhd Line: 41
-Info (12128): Elaborating entity "IF_ID" for hierarchy "IF_ID:instIFID" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 499
-Info (12128): Elaborating entity "ID_EX" for hierarchy "ID_EX:instIDEX" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 509
+Info (12128): Elaborating entity "IF_ID" for hierarchy "IF_ID:instIFID" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 502
+Info (12128): Elaborating entity "ID_EX" for hierarchy "ID_EX:instIDEX" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 512
 Info (12128): Elaborating entity "dffg_n" for hierarchy "ID_EX:instIDEX|dffg_n:instRs" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/Pipeline_ID_EX.vhd Line: 106
 Info (12128): Elaborating entity "dffg_n" for hierarchy "ID_EX:instIDEX|dffg_n:instALUOpReg" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/MidLevel/Pipeline_ID_EX.vhd Line: 171
-Info (12128): Elaborating entity "EX_MEM" for hierarchy "EX_MEM:instEXMEM" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 543
-Info (12128): Elaborating entity "MEM_WB" for hierarchy "MEM_WB:instMEMWB" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 567
+Info (12128): Elaborating entity "EX_MEM" for hierarchy "EX_MEM:instEXMEM" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 546
+Info (12128): Elaborating entity "MEM_WB" for hierarchy "MEM_WB:instMEMWB" File: /home/connero/Documents/sfhw-proj2/src_sw/proj/src/TopLevel/MIPS_Processor.vhd Line: 570
 Info (19000): Inferred 3 megafunctions from design logic
     Info (276029): Inferred altsyncram megafunction from the following design logic: "mem:IMem|ram_rtl_0" 
         Info (286033): Parameter OPERATION_MODE set to SINGLE_PORT
@@ -272,11 +273,11 @@ Info (21057): Implemented 3813 device resources after synthesis - the final reso
     Info (21059): Implemented 32 output pins
     Info (21061): Implemented 3616 logic cells
     Info (21064): Implemented 98 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 30 warnings
-    Info: Peak virtual memory: 816 megabytes
-    Info: Processing ended: Fri Dec  6 14:47:49 2024
-    Info: Elapsed time: 00:00:15
-    Info: Total CPU time (on all processors): 00:00:19
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 31 warnings
+    Info: Peak virtual memory: 725 megabytes
+    Info: Processing ended: Fri Dec  6 20:49:02 2024
+    Info: Elapsed time: 00:00:31
+    Info: Total CPU time (on all processors): 00:00:34
 Info: *******************************************************************
 Info: Running Quartus Prime Fitter
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Standard Edition
@@ -294,13 +295,13 @@ Info: Running Quartus Prime Fitter
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Fri Dec  6 14:47:50 2024
+    Info: Processing started: Fri Dec  6 20:49:03 2024
 Info: Command: quartus_fit --read_settings_files=on --write_settings_files=off toolflow -c toolflow
 Info: qfit2_default_script.tcl version: #1
 Info: Project  = toolflow
 Info: Revision = toolflow
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (119006): Selected device EP4CE115F29C7 for design "toolflow"
 Info (21076): High junction temperature operating condition is not set. Assuming a default value of '85'.
 Info (21076): Low junction temperature operating condition is not set. Assuming a default value of '0'.
@@ -362,32 +363,32 @@ Info (176215): I/O bank details before I/O pin placement
         Info (176213): I/O bank number 6 does not use VREF pins and has undetermined VCCIO pins. 1 total pin(s) used --  57 pins available
         Info (176213): I/O bank number 7 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  72 pins available
         Info (176213): I/O bank number 8 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  71 pins available
-Info (171121): Fitter preparation operations ending: elapsed time is 00:00:02
+Info (171121): Fitter preparation operations ending: elapsed time is 00:00:04
 Info (14896): Fitter has disabled Advanced Physical Optimization because it is not supported for the current family.
 Info (170189): Fitter placement preparation operations beginning
-Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:00
+Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:01
 Info (170191): Fitter placement operations beginning
 Info (170137): Fitter placement was successful
-Info (170192): Fitter placement operations ending: elapsed time is 00:00:02
+Info (170192): Fitter placement operations ending: elapsed time is 00:00:06
 Info (170193): Fitter routing operations beginning
 Info (170195): Router estimated average interconnect usage is 1% of the available device resources
     Info (170196): Router estimated peak interconnect usage is 15% of the available device resources in the region that extends from location X58_Y24 to location X68_Y36
 Info (170199): The Fitter performed an Auto Fit compilation.  Optimizations were skipped to reduce compilation time.
     Info (170201): Optimizations that may affect the design's routability were skipped
     Info (170200): Optimizations that may affect the design's timing were skipped
-Info (170194): Fitter routing operations ending: elapsed time is 00:00:02
-Info (11888): Total time spent on timing analysis during the Fitter is 0.45 seconds.
+Info (170194): Fitter routing operations ending: elapsed time is 00:00:04
+Info (11888): Total time spent on timing analysis during the Fitter is 1.13 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
-Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:01
+Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:02
 Info (144001): Generated suppressed messages file /home/connero/Documents/sfhw-proj2/src_sw/internal/QuartusWork/output_files/toolflow.fit.smsg
 Info: Quartus Prime Fitter was successful. 0 errors, 3 warnings
-    Info: Peak virtual memory: 2072 megabytes
-    Info: Processing ended: Fri Dec  6 14:48:02 2024
-    Info: Elapsed time: 00:00:12
-    Info: Total CPU time (on all processors): 00:00:22
+    Info: Peak virtual memory: 1459 megabytes
+    Info: Processing ended: Fri Dec  6 20:49:32 2024
+    Info: Elapsed time: 00:00:29
+    Info: Total CPU time (on all processors): 00:00:39
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Standard Edition
@@ -405,13 +406,13 @@ Info: Running Quartus Prime Assembler
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Fri Dec  6 14:48:03 2024
+    Info: Processing started: Fri Dec  6 20:49:33 2024
 Info: Command: quartus_asm --read_settings_files=on --write_settings_files=off toolflow -c toolflow
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 628 megabytes
-    Info: Processing ended: Fri Dec  6 14:48:05 2024
-    Info: Elapsed time: 00:00:02
-    Info: Total CPU time (on all processors): 00:00:02
+    Info: Peak virtual memory: 632 megabytes
+    Info: Processing ended: Fri Dec  6 20:49:37 2024
+    Info: Elapsed time: 00:00:04
+    Info: Total CPU time (on all processors): 00:00:04
