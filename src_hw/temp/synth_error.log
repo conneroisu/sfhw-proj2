@@ -15,188 +15,185 @@ Info: Running Quartus Prime Analysis & Synthesis
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Dec  4 19:08:11 2024
+    Info: Processing started: Fri Dec  6 20:22:31 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off toolflow -c toolflow
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/andg2.vhd
-    Info (12022): Found design unit 1: andg2-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/andg2.vhd Line: 22
-    Info (12023): Found entity 1: andg2 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/andg2.vhd Line: 12
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/andg32.vhd
-    Info (12022): Found design unit 1: andg32-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/andg32.vhd Line: 18
-    Info (12023): Found entity 1: andg32 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/andg32.vhd Line: 10
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/comp1_N.vhd
-    Info (12022): Found design unit 1: comp1_N-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/comp1_N.vhd Line: 20
-    Info (12023): Found entity 1: comp1_N File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/comp1_N.vhd Line: 10
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/decoder_5t32.vhd
-    Info (12022): Found design unit 1: decoder5t32-mixed File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/decoder_5t32.vhd Line: 19
-    Info (12023): Found entity 1: decoder5t32 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/decoder_5t32.vhd Line: 12
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd
-    Info (12022): Found design unit 1: dffg-mixed File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 21
-    Info (12023): Found entity 1: dffg File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 12
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg_n.vhd
-    Info (12022): Found design unit 1: dffg_n-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg_n.vhd Line: 23
-    Info (12023): Found entity 1: dffg_n File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg_n.vhd Line: 11
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/extender16t32.vhd
-    Info (12022): Found design unit 1: extender16t32-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/extender16t32.vhd Line: 23
-    Info (12023): Found entity 1: extender16t32 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/extender16t32.vhd Line: 13
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder.vhd
-    Info (12022): Found design unit 1: full_adder-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder.vhd Line: 16
-    Info (12023): Found entity 1: full_adder File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder_N.vhd
-    Info (12022): Found design unit 1: Full_Adder_N-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder_N.vhd Line: 18
-    Info (12023): Found entity 1: Full_Adder_N File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder_N.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/inverter_N.vhd
-    Info (12022): Found design unit 1: inverter_N-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/inverter_N.vhd Line: 21
-    Info (12023): Found entity 1: inverter_N File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/inverter_N.vhd Line: 11
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/invg.vhd
-    Info (12022): Found design unit 1: invg-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/invg.vhd Line: 22
-    Info (12023): Found entity 1: invg File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/invg.vhd Line: 13
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/logic_N.vhd
-    Info (12022): Found design unit 1: logic_N-looped File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/logic_N.vhd Line: 22
-    Info (12023): Found entity 1: logic_N File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/logic_N.vhd Line: 11
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd
-    Info (12022): Found design unit 1: mux2t1-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 22
-    Info (12023): Found entity 1: mux2t1 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 13
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1_N.vhd
-    Info (12022): Found design unit 1: mux2t1_N-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1_N.vhd Line: 27
-    Info (12023): Found entity 1: mux2t1_N File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1_N.vhd Line: 13
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux32t1.vhd
-    Info (12022): Found design unit 1: mux32t1-behavior File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux32t1.vhd Line: 16
-    Info (12023): Found entity 1: mux32t1 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux32t1.vhd Line: 6
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux32t1_N.vhd
-    Info (12022): Found design unit 1: mux32t1_N-behavioral File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux32t1_N.vhd Line: 46
-    Info (12023): Found entity 1: mux32t1_N File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux32t1_N.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1.vhd
-    Info (12022): Found design unit 1: mux4t1-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1.vhd Line: 15
-    Info (12023): Found entity 1: mux4t1 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1_N.vhd
-    Info (12022): Found design unit 1: mux4t1_n-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1_N.vhd Line: 27
-    Info (12023): Found entity 1: mux4t1_n File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1_N.vhd Line: 11
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1.vhd
-    Info (12022): Found design unit 1: mux8t1-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1.vhd Line: 21
-    Info (12023): Found entity 1: mux8t1 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1_N.vhd
-    Info (12022): Found design unit 1: mux8t1_N-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1_N.vhd Line: 22
-    Info (12023): Found entity 1: mux8t1_N File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1_N.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/nandg32.vhd
-    Info (12022): Found design unit 1: nandg32-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/nandg32.vhd Line: 15
-    Info (12023): Found entity 1: nandg32 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/nandg32.vhd Line: 10
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/norg32.vhd
-    Info (12022): Found design unit 1: norg32-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/norg32.vhd Line: 16
-    Info (12023): Found entity 1: norg32 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/norg32.vhd Line: 10
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/org2.vhd
-    Info (12022): Found design unit 1: org2-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/org2.vhd Line: 18
-    Info (12023): Found entity 1: org2 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/org2.vhd Line: 11
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/org32.vhd
-    Info (12022): Found design unit 1: org32-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/org32.vhd Line: 16
-    Info (12023): Found entity 1: org32 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/org32.vhd Line: 10
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/xorg2.vhd
-    Info (12022): Found design unit 1: xorg2-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/xorg2.vhd Line: 18
-    Info (12023): Found entity 1: xorg2 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/xorg2.vhd Line: 11
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/xorg32.vhd
-    Info (12022): Found design unit 1: xorg32-dataflow File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/xorg32.vhd Line: 18
-    Info (12023): Found entity 1: xorg32 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/xorg32.vhd Line: 11
-Info (12021): Found 2 design units, including 0 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MIPS_types.vhd
-    Info (12022): Found design unit 1: MIPS_types File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MIPS_types.vhd Line: 12
-    Info (12022): Found design unit 2: MIPS_types-body File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MIPS_types.vhd Line: 38
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd
-    Info (12022): Found design unit 1: ALU-mixed File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 20
-    Info (12023): Found entity 1: ALU File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/AdderSubtractor.vhd
-    Info (12022): Found design unit 1: AdderSubtractor-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/AdderSubtractor.vhd Line: 17
-    Info (12023): Found entity 1: AdderSubtractor File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/AdderSubtractor.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/BarrelShifter.vhd
-    Info (12022): Found design unit 1: BarrelShifter-behavioral File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/BarrelShifter.vhd Line: 19
-    Info (12023): Found entity 1: BarrelShifter File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/BarrelShifter.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ControlUnit.vhd
-    Info (12022): Found design unit 1: ControlUnit-behavioral File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ControlUnit.vhd Line: 32
-    Info (12023): Found entity 1: ControlUnit File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ControlUnit.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd
-    Info (12022): Found design unit 1: FetchUnit-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 24
-    Info (12023): Found entity 1: FetchUnit File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ForwardUnit.vhd
-    Info (12022): Found design unit 1: ForwardUnit-mixed File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ForwardUnit.vhd Line: 22
-    Info (12023): Found entity 1: ForwardUnit File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ForwardUnit.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/HazardUnit.vhd
-    Info (12022): Found design unit 1: HazardUnit-mixed File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/HazardUnit.vhd Line: 21
-    Info (12023): Found entity 1: HazardUnit File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/HazardUnit.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_EX_MEM.vhd
-    Info (12022): Found design unit 1: EX_MEM-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_EX_MEM.vhd Line: 32
-    Info (12023): Found entity 1: EX_MEM File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_EX_MEM.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_ID_EX.vhd
-    Info (12022): Found design unit 1: ID_EX-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_ID_EX.vhd Line: 44
-    Info (12023): Found entity 1: ID_EX File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_ID_EX.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_IF_ID.vhd
-    Info (12022): Found design unit 1: IF_ID-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_IF_ID.vhd Line: 18
-    Info (12023): Found entity 1: IF_ID File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_IF_ID.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_MEM_WB.vhd
-    Info (12022): Found design unit 1: MEM_WB-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_MEM_WB.vhd Line: 30
-    Info (12023): Found entity 1: MEM_WB File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_MEM_WB.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd
-    Info (12022): Found design unit 1: RegisterFile-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 29
-    Info (12023): Found entity 1: RegisterFile File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 13
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ZeroDetector.vhd
-    Info (12022): Found design unit 1: ZeroDetector-structural File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ZeroDetector.vhd Line: 13
-    Info (12023): Found entity 1: ZeroDetector File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ZeroDetector.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd
-    Info (12022): Found design unit 1: MIPS_Processor-structure File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 18
-    Info (12023): Found entity 1: MIPS_Processor File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 7
-Info (12021): Found 2 design units, including 1 entities, in source file /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/mem.vhd
-    Info (12022): Found design unit 1: mem-rtl File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/mem.vhd Line: 22
-    Info (12023): Found entity 1: mem File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/mem.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/andg2.vhd
+    Info (12022): Found design unit 1: andg2-dataflow File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/andg2.vhd Line: 22
+    Info (12023): Found entity 1: andg2 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/andg2.vhd Line: 12
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/andg32.vhd
+    Info (12022): Found design unit 1: andg32-dataflow File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/andg32.vhd Line: 18
+    Info (12023): Found entity 1: andg32 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/andg32.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/comp1_N.vhd
+    Info (12022): Found design unit 1: comp1_N-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/comp1_N.vhd Line: 20
+    Info (12023): Found entity 1: comp1_N File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/comp1_N.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/decoder_5t32.vhd
+    Info (12022): Found design unit 1: decoder5t32-mixed File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/decoder_5t32.vhd Line: 19
+    Info (12023): Found entity 1: decoder5t32 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/decoder_5t32.vhd Line: 12
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd
+    Info (12022): Found design unit 1: dffg-mixed File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 21
+    Info (12023): Found entity 1: dffg File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 12
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg_n.vhd
+    Info (12022): Found design unit 1: dffg_n-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg_n.vhd Line: 23
+    Info (12023): Found entity 1: dffg_n File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg_n.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/extender16t32.vhd
+    Info (12022): Found design unit 1: extender16t32-dataflow File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/extender16t32.vhd Line: 23
+    Info (12023): Found entity 1: extender16t32 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/extender16t32.vhd Line: 13
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder.vhd
+    Info (12022): Found design unit 1: full_adder-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder.vhd Line: 16
+    Info (12023): Found entity 1: full_adder File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder_N.vhd
+    Info (12022): Found design unit 1: Full_Adder_N-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder_N.vhd Line: 18
+    Info (12023): Found entity 1: Full_Adder_N File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder_N.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/inverter_N.vhd
+    Info (12022): Found design unit 1: inverter_N-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/inverter_N.vhd Line: 21
+    Info (12023): Found entity 1: inverter_N File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/inverter_N.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/invg.vhd
+    Info (12022): Found design unit 1: invg-dataflow File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/invg.vhd Line: 22
+    Info (12023): Found entity 1: invg File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/invg.vhd Line: 13
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/logic_N.vhd
+    Info (12022): Found design unit 1: logic_N-looped File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/logic_N.vhd Line: 22
+    Info (12023): Found entity 1: logic_N File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/logic_N.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd
+    Info (12022): Found design unit 1: mux2t1-dataflow File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 22
+    Info (12023): Found entity 1: mux2t1 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 13
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1_N.vhd
+    Info (12022): Found design unit 1: mux2t1_N-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1_N.vhd Line: 27
+    Info (12023): Found entity 1: mux2t1_N File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1_N.vhd Line: 13
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux32t1.vhd
+    Info (12022): Found design unit 1: mux32t1-behavior File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux32t1.vhd Line: 16
+    Info (12023): Found entity 1: mux32t1 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux32t1.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux32t1_N.vhd
+    Info (12022): Found design unit 1: mux32t1_N-behavioral File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux32t1_N.vhd Line: 46
+    Info (12023): Found entity 1: mux32t1_N File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux32t1_N.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1.vhd
+    Info (12022): Found design unit 1: mux4t1-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1.vhd Line: 15
+    Info (12023): Found entity 1: mux4t1 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1_N.vhd
+    Info (12022): Found design unit 1: mux4t1_n-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1_N.vhd Line: 27
+    Info (12023): Found entity 1: mux4t1_n File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1_N.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1.vhd
+    Info (12022): Found design unit 1: mux8t1-dataflow File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1.vhd Line: 21
+    Info (12023): Found entity 1: mux8t1 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1_N.vhd
+    Info (12022): Found design unit 1: mux8t1_N-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1_N.vhd Line: 22
+    Info (12023): Found entity 1: mux8t1_N File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1_N.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/nandg32.vhd
+    Info (12022): Found design unit 1: nandg32-dataflow File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/nandg32.vhd Line: 15
+    Info (12023): Found entity 1: nandg32 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/nandg32.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/norg32.vhd
+    Info (12022): Found design unit 1: norg32-dataflow File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/norg32.vhd Line: 16
+    Info (12023): Found entity 1: norg32 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/norg32.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/org2.vhd
+    Info (12022): Found design unit 1: org2-dataflow File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/org2.vhd Line: 18
+    Info (12023): Found entity 1: org2 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/org2.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/org32.vhd
+    Info (12022): Found design unit 1: org32-dataflow File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/org32.vhd Line: 16
+    Info (12023): Found entity 1: org32 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/org32.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/xorg2.vhd
+    Info (12022): Found design unit 1: xorg2-dataflow File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/xorg2.vhd Line: 18
+    Info (12023): Found entity 1: xorg2 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/xorg2.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/xorg32.vhd
+    Info (12022): Found design unit 1: xorg32-dataflow File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/xorg32.vhd Line: 18
+    Info (12023): Found entity 1: xorg32 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/xorg32.vhd Line: 11
+Info (12021): Found 2 design units, including 0 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MIPS_types.vhd
+    Info (12022): Found design unit 1: MIPS_types File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MIPS_types.vhd Line: 12
+    Info (12022): Found design unit 2: MIPS_types-body File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MIPS_types.vhd Line: 38
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd
+    Info (12022): Found design unit 1: ALU-mixed File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 20
+    Info (12023): Found entity 1: ALU File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/AdderSubtractor.vhd
+    Info (12022): Found design unit 1: AdderSubtractor-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/AdderSubtractor.vhd Line: 17
+    Info (12023): Found entity 1: AdderSubtractor File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/AdderSubtractor.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/BarrelShifter.vhd
+    Info (12022): Found design unit 1: BarrelShifter-behavioral File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/BarrelShifter.vhd Line: 17
+    Info (12023): Found entity 1: BarrelShifter File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/BarrelShifter.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ControlUnit.vhd
+    Info (12022): Found design unit 1: ControlUnit-behavioral File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ControlUnit.vhd Line: 29
+    Info (12023): Found entity 1: ControlUnit File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ControlUnit.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd
+    Info (12022): Found design unit 1: FetchUnit-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 23
+    Info (12023): Found entity 1: FetchUnit File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ForwardUnit.vhd
+    Info (12022): Found design unit 1: ForwardUnit-mixed File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ForwardUnit.vhd Line: 22
+    Info (12023): Found entity 1: ForwardUnit File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ForwardUnit.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/HazardUnit.vhd
+    Info (12022): Found design unit 1: HazardUnit-mixed File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/HazardUnit.vhd Line: 21
+    Info (12023): Found entity 1: HazardUnit File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/HazardUnit.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_EX_MEM.vhd
+    Info (12022): Found design unit 1: EX_MEM-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_EX_MEM.vhd Line: 32
+    Info (12023): Found entity 1: EX_MEM File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_EX_MEM.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_ID_EX.vhd
+    Info (12022): Found design unit 1: ID_EX-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_ID_EX.vhd Line: 46
+    Info (12023): Found entity 1: ID_EX File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_ID_EX.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_IF_ID.vhd
+    Info (12022): Found design unit 1: IF_ID-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_IF_ID.vhd Line: 18
+    Info (12023): Found entity 1: IF_ID File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_IF_ID.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_MEM_WB.vhd
+    Info (12022): Found design unit 1: MEM_WB-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_MEM_WB.vhd Line: 30
+    Info (12023): Found entity 1: MEM_WB File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_MEM_WB.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd
+    Info (12022): Found design unit 1: RegisterFile-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 29
+    Info (12023): Found entity 1: RegisterFile File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 13
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ZeroDetector.vhd
+    Info (12022): Found design unit 1: ZeroDetector-structural File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ZeroDetector.vhd Line: 13
+    Info (12023): Found entity 1: ZeroDetector File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ZeroDetector.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd
+    Info (12022): Found design unit 1: MIPS_Processor-structure File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 19
+    Info (12023): Found entity 1: MIPS_Processor File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/mem.vhd
+    Info (12022): Found design unit 1: mem-rtl File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/mem.vhd Line: 22
+    Info (12023): Found entity 1: mem File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/mem.vhd Line: 5
 Info (12127): Elaborating entity "MIPS_Processor" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(29): object "s_Halt" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 29
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(321): object "s_j" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 321
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(322): object "s_Lui" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 322
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(322): object "s_Operator" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 322
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(322): object "s_ShiftType" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 322
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(322): object "s_ShiftDirection" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 322
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(322): object "s_Beq" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 322
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(323): object "s_Zero" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 323
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(323): object "s_ToFlush" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 323
-Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(326): object "s_EXMemRd" assigned a value but never read File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 326
-Info (12128): Elaborating entity "mem" for hierarchy "mem:IMem" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 334
-Info (12128): Elaborating entity "RegisterFile" for hierarchy "RegisterFile:instRegFile" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 346
-Info (12128): Elaborating entity "decoder5t32" for hierarchy "RegisterFile:instRegFile|decoder5t32:writedecoder" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 68
-Info (12128): Elaborating entity "dffg_n" for hierarchy "RegisterFile:instRegFile|dffg_n:reg0" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 76
-Info (12128): Elaborating entity "dffg" for hierarchy "RegisterFile:instRegFile|dffg_n:reg0|dffg:\G1:0:flipflop" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg_n.vhd Line: 40
-Info (12128): Elaborating entity "mux32t1" for hierarchy "RegisterFile:instRegFile|mux32t1:read1" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 112
-Info (12128): Elaborating entity "mux2t1_N" for hierarchy "mux2t1_N:instRtRdMux2t1_5" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 359
-Info (12128): Elaborating entity "mux2t1" for hierarchy "mux2t1_N:instRtRdMux2t1_5|mux2t1:\G_NBit_MUX:0:MUXI" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1_N.vhd Line: 38
-Info (10041): Inferred latch for "o_o" at mux2t1.vhd(24) File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 24
-Info (12128): Elaborating entity "ControlUnit" for hierarchy "ControlUnit:instControlUnit" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 377
-Info (12128): Elaborating entity "dffg_n" for hierarchy "dffg_n:instPC" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 402
-Info (12128): Elaborating entity "mux2t1_N" for hierarchy "mux2t1_N:instRSTPC" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 411
-Info (12128): Elaborating entity "FetchUnit" for hierarchy "FetchUnit:Fetch" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 429
-Info (12128): Elaborating entity "ZeroDetector" for hierarchy "FetchUnit:Fetch|ZeroDetector:zero_detector" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 79
-Info (12128): Elaborating entity "org2" for hierarchy "FetchUnit:Fetch|ZeroDetector:zero_detector|org2:\FIRST_OR:0:OR1" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ZeroDetector.vhd Line: 29
-Info (12128): Elaborating entity "BarrelShifter" for hierarchy "FetchUnit:Fetch|BarrelShifter:instBranchShifter" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 88
-Info (12128): Elaborating entity "Full_Adder_N" for hierarchy "FetchUnit:Fetch|Full_Adder_N:instPCBranchAdder" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 97
-Info (12128): Elaborating entity "full_adder" for hierarchy "FetchUnit:Fetch|Full_Adder_N:instPCBranchAdder|full_adder:\G_NBit_FullAdder:0:FullAdderI" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder_N.vhd Line: 38
-Info (12128): Elaborating entity "xorg2" for hierarchy "FetchUnit:Fetch|Full_Adder_N:instPCBranchAdder|full_adder:\G_NBit_FullAdder:0:FullAdderI|xorg2:xor1" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder.vhd Line: 48
-Info (12128): Elaborating entity "andg2" for hierarchy "FetchUnit:Fetch|Full_Adder_N:instPCBranchAdder|full_adder:\G_NBit_FullAdder:0:FullAdderI|andg2:and1" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder.vhd Line: 62
-Info (12128): Elaborating entity "mux2t1_N" for hierarchy "FetchUnit:Fetch|mux2t1_N:Branch_Select" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 119
-Info (12128): Elaborating entity "extender16t32" for hierarchy "extender16t32:instSignExtend" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 445
-Info (12128): Elaborating entity "ALU" for hierarchy "ALU:instALU" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 461
-Info (12128): Elaborating entity "AdderSubtractor" for hierarchy "ALU:instALU|AdderSubtractor:instAdderSub" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 212
-Info (12128): Elaborating entity "comp1_N" for hierarchy "ALU:instALU|AdderSubtractor:instAdderSub|comp1_N:instOnesComps" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/AdderSubtractor.vhd Line: 54
-Info (12128): Elaborating entity "invg" for hierarchy "ALU:instALU|AdderSubtractor:instAdderSub|comp1_N:instOnesComps|invg:\G_NBit_Comp1:0:comp1_I" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/comp1_N.vhd Line: 30
-Info (12128): Elaborating entity "logic_N" for hierarchy "ALU:instALU|logic_N:instLogicGates" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 232
-Info (12128): Elaborating entity "mux8t1_N" for hierarchy "ALU:instALU|mux8t1_N:instOutputMux" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 253
-Info (12128): Elaborating entity "mux8t1" for hierarchy "ALU:instALU|mux8t1_N:instOutputMux|mux8t1:\G_NBit_MUX:0:MUXI" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1_N.vhd Line: 41
-Info (12128): Elaborating entity "IF_ID" for hierarchy "IF_ID:instIFID" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 530
-Info (12128): Elaborating entity "ID_EX" for hierarchy "ID_EX:instIDEX" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 559
-Info (12128): Elaborating entity "dffg_n" for hierarchy "ID_EX:instIDEX|dffg_n:instRs" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_ID_EX.vhd Line: 112
-Info (12128): Elaborating entity "dffg_n" for hierarchy "ID_EX:instIDEX|dffg_n:instALUOpReg" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_ID_EX.vhd Line: 187
-Info (12128): Elaborating entity "EX_MEM" for hierarchy "EX_MEM:instEXMEM" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 598
-Info (12128): Elaborating entity "MEM_WB" for hierarchy "MEM_WB:instMEMWB" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 623
-Info (12128): Elaborating entity "ForwardUnit" for hierarchy "ForwardUnit:instForwardingUnit" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 646
-Info (12128): Elaborating entity "mux4t1_n" for hierarchy "mux4t1_n:instForwardAMux" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 658
-Info (12128): Elaborating entity "mux4t1" for hierarchy "mux4t1_n:instForwardAMux|mux4t1:\g_nbit_mux:0:muxi" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1_N.vhd Line: 44
-Info (12128): Elaborating entity "HazardUnit" for hierarchy "HazardUnit:instHazardUnit" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 680
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(30): object "s_Halt" assigned a value but never read File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 30
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(351): object "s_ToFlush" assigned a value but never read File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 351
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(364): object "s_EXMemRd" assigned a value but never read File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 364
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(375): object "s_Zero" assigned a value but never read File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 375
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(376): object "s_ShiftType" assigned a value but never read File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 376
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(377): object "s_Lui" assigned a value but never read File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 377
+Warning (10036): Verilog HDL or VHDL warning at MIPS_Processor.vhd(378): object "s_Beq" assigned a value but never read File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 378
+Info (12128): Elaborating entity "mem" for hierarchy "mem:IMem" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 387
+Info (12128): Elaborating entity "RegisterFile" for hierarchy "RegisterFile:instRegisterFile" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 399
+Info (12128): Elaborating entity "decoder5t32" for hierarchy "RegisterFile:instRegisterFile|decoder5t32:writedecoder" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 68
+Info (12128): Elaborating entity "dffg_n" for hierarchy "RegisterFile:instRegisterFile|dffg_n:reg0" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 76
+Info (12128): Elaborating entity "dffg" for hierarchy "RegisterFile:instRegisterFile|dffg_n:reg0|dffg:\G1:0:flipflop" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg_n.vhd Line: 40
+Info (12128): Elaborating entity "mux32t1" for hierarchy "RegisterFile:instRegisterFile|mux32t1:read1" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/RegisterFile.vhd Line: 112
+Info (12128): Elaborating entity "mux2t1_N" for hierarchy "mux2t1_N:instRtRdMux2t1_5" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 412
+Info (12128): Elaborating entity "mux2t1" for hierarchy "mux2t1_N:instRtRdMux2t1_5|mux2t1:\G_NBit_MUX:0:MUXI" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1_N.vhd Line: 38
+Info (10041): Inferred latch for "o_o" at mux2t1.vhd(24) File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 24
+Info (12128): Elaborating entity "ControlUnit" for hierarchy "ControlUnit:instControlUnit" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 430
+Info (12128): Elaborating entity "dffg_n" for hierarchy "dffg_n:instPC" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 452
+Info (12128): Elaborating entity "mux2t1_N" for hierarchy "mux2t1_N:instRSTPC" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 461
+Info (12128): Elaborating entity "FetchUnit" for hierarchy "FetchUnit:instFetchUnit" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 479
+Info (12128): Elaborating entity "ZeroDetector" for hierarchy "FetchUnit:instFetchUnit|ZeroDetector:zero_detector" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 79
+Info (12128): Elaborating entity "org2" for hierarchy "FetchUnit:instFetchUnit|ZeroDetector:zero_detector|org2:\FIRST_OR:0:OR1" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ZeroDetector.vhd Line: 29
+Info (12128): Elaborating entity "BarrelShifter" for hierarchy "FetchUnit:instFetchUnit|BarrelShifter:instBranchShifter" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 89
+Info (12128): Elaborating entity "Full_Adder_N" for hierarchy "FetchUnit:instFetchUnit|Full_Adder_N:instPCBranchAdder" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 98
+Info (12128): Elaborating entity "full_adder" for hierarchy "FetchUnit:instFetchUnit|Full_Adder_N:instPCBranchAdder|full_adder:\G_NBit_FullAdder:0:FullAdderI" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder_N.vhd Line: 38
+Info (12128): Elaborating entity "xorg2" for hierarchy "FetchUnit:instFetchUnit|Full_Adder_N:instPCBranchAdder|full_adder:\G_NBit_FullAdder:0:FullAdderI|xorg2:xor1" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder.vhd Line: 48
+Info (12128): Elaborating entity "andg2" for hierarchy "FetchUnit:instFetchUnit|Full_Adder_N:instPCBranchAdder|full_adder:\G_NBit_FullAdder:0:FullAdderI|andg2:and1" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/full_adder.vhd Line: 62
+Info (12128): Elaborating entity "mux2t1_N" for hierarchy "FetchUnit:instFetchUnit|mux2t1_N:Branch_Select" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/FetchUnit.vhd Line: 120
+Info (12128): Elaborating entity "extender16t32" for hierarchy "extender16t32:instSignExtend" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 494
+Info (12128): Elaborating entity "ALU" for hierarchy "ALU:instALU" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 510
+Info (12128): Elaborating entity "AdderSubtractor" for hierarchy "ALU:instALU|AdderSubtractor:instAdderSub" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 212
+Info (12128): Elaborating entity "comp1_N" for hierarchy "ALU:instALU|AdderSubtractor:instAdderSub|comp1_N:instOnesComps" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/AdderSubtractor.vhd Line: 54
+Info (12128): Elaborating entity "invg" for hierarchy "ALU:instALU|AdderSubtractor:instAdderSub|comp1_N:instOnesComps|invg:\G_NBit_Comp1:0:comp1_I" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/comp1_N.vhd Line: 30
+Info (12128): Elaborating entity "logic_N" for hierarchy "ALU:instALU|logic_N:instLogicGates" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 233
+Info (12128): Elaborating entity "mux8t1_N" for hierarchy "ALU:instALU|mux8t1_N:instOutputMux" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/ALU.vhd Line: 254
+Info (12128): Elaborating entity "mux8t1" for hierarchy "ALU:instALU|mux8t1_N:instOutputMux|mux8t1:\G_NBit_MUX:0:MUXI" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux8t1_N.vhd Line: 41
+Info (12128): Elaborating entity "IF_ID" for hierarchy "IF_ID:instIFID" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 579
+Info (12128): Elaborating entity "ID_EX" for hierarchy "ID_EX:instIDEX" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 608
+Info (12128): Elaborating entity "dffg_n" for hierarchy "ID_EX:instIDEX|dffg_n:instRs" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_ID_EX.vhd Line: 114
+Info (12128): Elaborating entity "dffg_n" for hierarchy "ID_EX:instIDEX|dffg_n:instALUOpReg" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/MidLevel/Pipeline_ID_EX.vhd Line: 189
+Info (12128): Elaborating entity "EX_MEM" for hierarchy "EX_MEM:instEXMEM" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 647
+Info (12128): Elaborating entity "MEM_WB" for hierarchy "MEM_WB:instMEMWB" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 672
+Info (12128): Elaborating entity "ForwardUnit" for hierarchy "ForwardUnit:instForwardingUnit" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 695
+Info (12128): Elaborating entity "mux4t1_n" for hierarchy "mux4t1_n:instForwardAMux" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 707
+Info (12128): Elaborating entity "mux4t1" for hierarchy "mux4t1_n:instForwardAMux|mux4t1:\g_nbit_mux:0:muxi" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux4t1_N.vhd Line: 44
+Info (12128): Elaborating entity "HazardUnit" for hierarchy "HazardUnit:instHazardUnit" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 729
 Info (276014): Found 1 instances of uninferred RAM logic
-    Info (276007): RAM logic "mem:IMem|ram" is uninferred due to asynchronous read logic File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/mem.vhd Line: 30
+    Info (276007): RAM logic "mem:IMem|ram" is uninferred due to asynchronous read logic File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/mem.vhd Line: 30
 Info (19000): Inferred 1 megafunctions from design logic
     Info (276029): Inferred altsyncram megafunction from the following design logic: "mem:DMem|ram_rtl_0" 
         Info (286033): Parameter OPERATION_MODE set to SINGLE_PORT
@@ -222,43 +219,43 @@ Info (12133): Instantiated megafunction "mem:DMem|altsyncram:ram_rtl_0" with the
     Info (12134): Parameter "INDATA_ACLR_A" = "NONE"
     Info (12134): Parameter "WRCONTROL_ACLR_A" = "NONE"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_eg81.tdf
-    Info (12023): Found entity 1: altsyncram_eg81 File: /home/connero/Documents/sfhw-proj2/src_hw/internal/QuartusWork/db/altsyncram_eg81.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_eg81 File: /home/awfoss/sfhw-proj2/src_hw/internal/QuartusWork/db/altsyncram_eg81.tdf Line: 28
 Info (286030): Timing-Driven Synthesis is running
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
 Warning (21074): Design contains 22 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "iInstAddr[0]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[1]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[12]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[13]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[14]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[15]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[16]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[17]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[18]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[19]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[20]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[21]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[22]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[23]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[24]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[25]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[26]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[27]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[28]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[29]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[30]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
-    Warning (15610): No output dependent on input pin "iInstAddr[31]" File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[0]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[1]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[12]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[13]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[14]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[15]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[16]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[17]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[18]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[19]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[20]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[21]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[22]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[23]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[24]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[25]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[26]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[27]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[28]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[29]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[30]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
+    Warning (15610): No output dependent on input pin "iInstAddr[31]" File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 13
 Info (21057): Implemented 59760 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 67 input pins
     Info (21059): Implemented 32 output pins
     Info (21061): Implemented 59629 logic cells
     Info (21064): Implemented 32 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 34 warnings
-    Info: Peak virtual memory: 950 megabytes
-    Info: Processing ended: Wed Dec  4 19:10:12 2024
-    Info: Elapsed time: 00:02:01
-    Info: Total CPU time (on all processors): 00:01:59
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 31 warnings
+    Info: Peak virtual memory: 949 megabytes
+    Info: Processing ended: Fri Dec  6 20:24:25 2024
+    Info: Elapsed time: 00:01:54
+    Info: Total CPU time (on all processors): 00:01:57
 Info: *******************************************************************
 Info: Running Quartus Prime Fitter
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Standard Edition
@@ -276,7 +273,7 @@ Info: Running Quartus Prime Fitter
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Dec  4 19:10:13 2024
+    Info: Processing started: Fri Dec  6 20:24:26 2024
 Info: Command: quartus_fit --read_settings_files=on --write_settings_files=off toolflow -c toolflow
 Info: qfit2_default_script.tcl version: #1
 Info: Project  = toolflow
@@ -312,21 +309,21 @@ Info (332111): Found 1 clocks
     Info (332111):   Period   Clock Name
     Info (332111): ======== ============
     Info (332111):   20.000         iCLK
-Info (176353): Automatically promoted node iCLK~input (placed in PIN J1 (CLK1, DIFFCLK_0n)) File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 10
+Info (176353): Automatically promoted node iCLK~input (placed in PIN J1 (CLK1, DIFFCLK_0n)) File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 10
     Info (176355): Automatically promoted destinations to use location or clock signal Global Clock CLKCTRL_G2
-Info (176353): Automatically promoted node iRST~input (placed in PIN Y2 (CLK2, DIFFCLK_1p)) File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 11
+Info (176353): Automatically promoted node iRST~input (placed in PIN Y2 (CLK2, DIFFCLK_1p)) File: /home/awfoss/sfhw-proj2/src_hw/proj/src/TopLevel/MIPS_Processor.vhd Line: 11
     Info (176355): Automatically promoted destinations to use location or clock signal Global Clock CLKCTRL_G4
     Info (176356): Following destination nodes may be non-global or may not use global or regional clocks
-        Info (176357): Destination node dffg_n:instPC|dffg:\G1:0:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node dffg_n:instPC|dffg:\G1:1:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node dffg_n:instPC|dffg:\G1:22:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node dffg_n:instPC|dffg:\G1:28:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node dffg_n:instPC|dffg:\G1:29:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node dffg_n:instPC|dffg:\G1:30:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node dffg_n:instPC|dffg:\G1:31:flipflop|s_Q File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
-        Info (176357): Destination node mux2t1_N:instRSTPC|mux2t1:\G_NBit_MUX:6:MUXI|o_o~3 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 18
-        Info (176357): Destination node mux2t1_N:instRSTPC|mux2t1:\G_NBit_MUX:7:MUXI|o_o~3 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 18
-        Info (176357): Destination node mux2t1_N:instRSTPC|mux2t1:\G_NBit_MUX:2:MUXI|o_o~2 File: /home/connero/Documents/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 18
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:0:flipflop|s_Q File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:1:flipflop|s_Q File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:22:flipflop|s_Q File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:28:flipflop|s_Q File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:29:flipflop|s_Q File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:30:flipflop|s_Q File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node dffg_n:instPC|dffg:\G1:31:flipflop|s_Q File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/dffg.vhd Line: 36
+        Info (176357): Destination node mux2t1_N:instRSTPC|mux2t1:\G_NBit_MUX:6:MUXI|o_o~3 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 18
+        Info (176357): Destination node mux2t1_N:instRSTPC|mux2t1:\G_NBit_MUX:7:MUXI|o_o~3 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 18
+        Info (176357): Destination node mux2t1_N:instRSTPC|mux2t1:\G_NBit_MUX:2:MUXI|o_o~2 File: /home/awfoss/sfhw-proj2/src_hw/proj/src/LowLevel/mux2t1.vhd Line: 18
         Info (176358): Non-global destination nodes limited to 10 nodes
 Info (176233): Starting register packing
 Info (176235): Finished register packing
@@ -344,32 +341,32 @@ Info (176215): I/O bank details before I/O pin placement
         Info (176213): I/O bank number 6 does not use VREF pins and has undetermined VCCIO pins. 1 total pin(s) used --  57 pins available
         Info (176213): I/O bank number 7 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  72 pins available
         Info (176213): I/O bank number 8 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  71 pins available
-Info (171121): Fitter preparation operations ending: elapsed time is 00:01:01
+Info (171121): Fitter preparation operations ending: elapsed time is 00:01:00
 Info (14896): Fitter has disabled Advanced Physical Optimization because it is not supported for the current family.
 Info (170189): Fitter placement preparation operations beginning
 Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:16
 Info (170191): Fitter placement operations beginning
 Info (170137): Fitter placement was successful
-Info (170192): Fitter placement operations ending: elapsed time is 00:02:29
+Info (170192): Fitter placement operations ending: elapsed time is 00:02:27
 Info (170193): Fitter routing operations beginning
 Info (170195): Router estimated average interconnect usage is 14% of the available device resources
     Info (170196): Router estimated peak interconnect usage is 31% of the available device resources in the region that extends from location X23_Y24 to location X33_Y36
 Info (170199): The Fitter performed an Auto Fit compilation.  Optimizations were skipped to reduce compilation time.
     Info (170201): Optimizations that may affect the design's routability were skipped
     Info (170200): Optimizations that may affect the design's timing were skipped
-Info (170194): Fitter routing operations ending: elapsed time is 00:02:27
-Info (11888): Total time spent on timing analysis during the Fitter is 51.85 seconds.
+Info (170194): Fitter routing operations ending: elapsed time is 00:02:35
+Info (11888): Total time spent on timing analysis during the Fitter is 51.76 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
-Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:20
-Info (144001): Generated suppressed messages file /home/connero/Documents/sfhw-proj2/src_hw/internal/QuartusWork/output_files/toolflow.fit.smsg
+Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:21
+Info (144001): Generated suppressed messages file /home/awfoss/sfhw-proj2/src_hw/internal/QuartusWork/output_files/toolflow.fit.smsg
 Info: Quartus Prime Fitter was successful. 0 errors, 3 warnings
-    Info: Peak virtual memory: 1991 megabytes
-    Info: Processing ended: Wed Dec  4 19:17:37 2024
-    Info: Elapsed time: 00:07:24
-    Info: Total CPU time (on all processors): 00:12:29
+    Info: Peak virtual memory: 1993 megabytes
+    Info: Processing ended: Fri Dec  6 20:31:56 2024
+    Info: Elapsed time: 00:07:30
+    Info: Total CPU time (on all processors): 00:12:36
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Standard Edition
@@ -387,13 +384,13 @@ Info: Running Quartus Prime Assembler
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Dec  4 19:17:38 2024
+    Info: Processing started: Fri Dec  6 20:31:57 2024
 Info: Command: quartus_asm --read_settings_files=on --write_settings_files=off toolflow -c toolflow
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 741 megabytes
-    Info: Processing ended: Wed Dec  4 19:17:45 2024
+    Info: Peak virtual memory: 745 megabytes
+    Info: Processing ended: Fri Dec  6 20:32:04 2024
     Info: Elapsed time: 00:00:07
     Info: Total CPU time (on all processors): 00:00:07
