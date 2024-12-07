@@ -1,7 +1,9 @@
-MOVE FILES FROM THE ROOT OF THE REPO here
+# src_hw
 
-Make sure you commit and save any changes prior to running the script, but
-Should be able to just run the script in this directory from this directory
+## Introduction
+This is the an implementation of the hardware scheduled multicycle MIPS processor in VHDL.
+
+## Directory Structure
 
 Signals that help with instruction decoding/execution
 
