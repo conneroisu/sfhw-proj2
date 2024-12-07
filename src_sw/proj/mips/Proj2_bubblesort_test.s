@@ -4,14 +4,6 @@ vals: .word 17 38 20 8008 69 420 100 60 0 12 # address: 0x10010000
 vals_length: .word 10                    # address: 0x10010028
 .text
 .globl main
-# vars
-# $s0 => *vals
-# $s1 => vals_length
-# $s2 => i
-# $s3 => j
-# $s4 => swapped
-# $s5 => &arr[j]
-# $s6 => &arr[j+1]
 main:
     lui $s1, 0x1001
     lui $s0, 0x1001
