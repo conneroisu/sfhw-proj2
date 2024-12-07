@@ -374,6 +374,8 @@ architecture structure of MIPS_Processor is
         s_WBRegWr, /*---------|-----------------|-instForwardingUnit-----------------------------------|*/
         s_Zero, /*-------------|-----------------|------------------------------------------------------|*/
         s_ShiftType,
+        s_Lui,
+        s_Beq,
         s_internal_CarryOut,
         s_internal_Overflow
         : std_logic;
