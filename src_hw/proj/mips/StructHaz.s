@@ -1,6 +1,6 @@
-.text
+.ex
 main:
-    lw $t1, 0($t2)   
-    sw $t1, 4($t3)      
-    add $t4, $t1, $t5  
-    halt
+    lw $1, 0($2)   
+    sw $1, 4($3)      
+    add $4, $1, $5  
+    hal
