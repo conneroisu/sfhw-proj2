@@ -9,27 +9,6 @@ ORANGE='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-# Check if the user has passed a PYTHON var
-if [ -z ${python3+x} ]; then
-    if [ -f "$PYTHON3_VDI" ]; then
-        PYTHON=$PYTHON3_VDI
-        echo "Using VDI Python Environment"
-    elif [ -f "$PYTHON3_LAB" ]; then
-        PYTHON=$PYTHON3_LAB
-        echo "Using LAB Python Environment"
-    else
-        echo -e "${RED}Python Missing... Try running this with PYTHON=path/to/python3 ./381_tf.sh${NC}"
-        exit 1
-    fi
-else
-    if [ -f "$PYTHON" ]; then
-        echo "Using $PYTHON"
-    else
-        echo -e "${RED}Provided Python path $PYTHON does not exists ${NC}"
-        exit 1
-    fi
-fi
-
 if [ "$1" == "new" ]; then
     if [ -d "proj" ]; then
         echo -e "${RED}Projet already exists, trying moving your extiing project using the 'mov' *nix command${NC}"
