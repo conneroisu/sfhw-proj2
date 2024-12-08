@@ -70,4 +70,6 @@ run 1120
 
 To run tests, run the following command from the `test/` directory of the processor:
 
+```bash
+./381_tf.sh test {path to assembly test file}
 ```
