@@ -2,6 +2,7 @@
 -- Author(s): Conner Ohnesorge, connerohnesorge
 -- Name: 
 -- Notes:
+--      Conner Ohnesorge 2024-12-07T17:08:05-06:00 fixed-messed-up-formatting
 --      Conner Ohnesorge 2024-12-06T18:45:55-06:00 latest
 --      Conner Ohnesorge 2024-12-06T18:43:09-06:00 putback
 --      Conner Ohnesorge 2024-12-06T18:40:53-06:00 remove-shiftType
@@ -382,8 +383,8 @@ architecture structure of MIPS_Processor is
     signal s_rtrd, s_MEMrtrd, s_WBrtrd       : std_logic_vector(4 downto 0);
 
     signal /*  --------------|-FROM-------------|-TO----------------------------------------------------------------------------------------| */
-        s_RegisterFileA, /*  | instRegisterFile | instFetchUnit, instIDEX ------------------------------------------------------------------| */
-        s_RegisterFileB, /*  | instRegisterFile | instFetchUnit, instIDEX ------------------------------------------------------------------| */
+        s_RegisterFileA, /* | instRegisterFile | instFetchUnit, instIDEX  ------------------------------------------------------------------| */
+        s_RegisterFileB, /* | instRegisterFile | instFetchUnit, instIDEX  ------------------------------------------------------------------| */
         s_IFPC4, /*  --------| instPC4Adder ----| instIFID, instNXTPC ----------------------------------------------------------------------| */
         s_EXPC4, /*  --------| instIDEX --------| instEXMEM, instWBMux ---------------------------------------------------------------------| */
         s_MEMPC4, /*  -------| instEXMEM -------| instMEMWB --------------------------------------------------------------------------------| */
@@ -394,7 +395,7 @@ architecture structure of MIPS_Processor is
         s_immediate, /*  ----| extender16t32 ---| instIDEX, instFetchUnit ------------------------------------------------------------------| */
         s_ALUB, /*  ---------| instImmMux ------| instALU ----------------------------------------------------------------------------------| */
         s_AluOrMem, /*  -----| instMemToRegMux -| instRegAddrMux ---------------------------------------------------------------------------| */
-        s_IDInstruction, /*  | instIFID --------| instRegisterFile, instControlUnit, instFetchUnit, instSignExtend, instIDEX, instHazardUnit| */
+        s_IDInstruction, /* | instIFID  --------| instRegisterFile, instControlUnit, instFetchUnit, instSignExtend, instIDEX, instHazardUnit| */
         s_IDPC4, /*  --------| instIFID --------| instFetchUnit, instIDEX ------------------------------------------------------------------| */
         s_EXA, /*  ----------| instIDEX --------| instForwardAMux --------------------------------------------------------------------------| */
         s_EXB, /*  ----------| instIDEX --------| instForwardBMux --------------------------------------------------------------------------| */
