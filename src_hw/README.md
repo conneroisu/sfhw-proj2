@@ -4,6 +4,8 @@
 
 This is the an implementation of the hardware scheduled multicycle MIPS processor in VHDL.
 
+![diagram](DIAGRAM.png)
+
 ## Directory Structure
 
 ```bash

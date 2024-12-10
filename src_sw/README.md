@@ -1,7 +1,10 @@
 # Software Pipelined MIPS Processor
 
 ## Introduction
+
 This directory contains the software pipelined MIPS processor implementation.
+
+![diagram](DIAGRAM.png)
 
 ## Directory Structure
 
