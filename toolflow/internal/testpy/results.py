@@ -1,28 +1,24 @@
-""" Results object container.
-
-Author: Braedon Giblin <bgiblin@iastate.edu>
-Date: 2022.09.01
-"""
+import pathlib
 
 class Results:
-    asm_path = None
+    asm_path: str|None = None
 
-    mars_pass = False
-    mars_compile_errs = []
-    mars_sim_errs = []
+    mars_pass: bool = False
+    mars_compile_errs: list[str] = []
+    mars_sim_errs: list[str] = []
 
-    modelsim_pass = False
-    modelsim_errs = []
+    modelsim_pass: bool = False
+    modelsim_errs: list[str] = []
 
-    compare_pass = False
-    compare_errs = []
+    compare_pass: bool = False
+    compare_errs: list[str] = []
 
-    mars_inst = 1
-    proc_cycles = 0
+    mars_inst: int = 1
+    proc_cycles: int = 0
 
-    dest_path = ""
+    dest_path: str = ""
 
-    def __init__(self, asm_path ):
+    def __init__(self, asm_path: str):
         """ Inits new results class.
         """
         self.asm_path = asm_path

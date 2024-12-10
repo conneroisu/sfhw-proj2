@@ -78,13 +78,13 @@ def log_exception():
     ''' Writes the last exception thrown to the error log file'''
     
     with open('temp/errors.log','a') as f:
-        f.write(f'\nException caught at {datetime.datetime.now()}:\n')
+        _ = f.write(f'\nException caught at {datetime.datetime.now()}:\n')
         traceback.print_exc(file=f)
 
 if __name__ == '__main__':
     try:
         parser = argparse.ArgumentParser()
-        parser.add_argument('-c', '--config', help='Which config to use. Default=Lab', default="Lab")
+        _ = parser.add_argument('-c', '--config', help='Which config to use. Default=Lab', default="Lab")
         args = parser.parse_args()
         main(args)
     except KeyboardInterrupt: #exit gracefully since this is common

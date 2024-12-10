@@ -1,9 +1,3 @@
-"""Writes feedback from runs.
-
-Author:
-    Braedon Giblin <bgiblin@iastate.edu>
-"""
-
 from results import Results
 
 class bcolors:
@@ -31,14 +25,16 @@ class Output_Writer():
         print(' Assembly file                |  Mars  | Questasim | Test Passed |  CPI  | Results Directory')
         print('------------------------------+--------+-----------+-------------+-------+------------------')
 
-    def print(self, result):
+    def print(self, result: Results):
+        """Prints the results of a test.
 
+        Args:
+            result: the result of a test
+        """
         mars = PASS_TEXT if result.mars_pass else FAIL_TEXT
         modelsim = PASS_TEXT if result.modelsim_pass else FAIL_TEXT
         passed = PASS_TEXT if result.compare_pass else FAIL_TEXT
-
         cpi = result.proc_cycles /  result.mars_inst 
-
         if self.summary:
             print(f' {str(result.asm_path)[-28:]:28} |  {mars}  |   {modelsim}    |    {passed}     | {cpi:5.03} | {str(result.dest_path)}')
         else:
