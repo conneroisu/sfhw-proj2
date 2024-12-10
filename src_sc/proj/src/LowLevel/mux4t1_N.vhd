@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-10T09:22:24-06:00 assert-that-all-of-the-single-cycle-implementation-fits-styleguide
 --      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
@@ -12,7 +13,7 @@ entity mux4t1_n is
     generic (
         n : integer := 32  -- Generic of type integer for input/output data width. Default value is 32.
         );
-    
+
     port (
         i_s  : in  std_logic_vector(1 downto 0);  -- Select input width is 2 (1 bit for each input data width bit
         i_d0 : in  std_logic_vector(n - 1 downto 0);  -- Input data width is N.
@@ -21,7 +22,7 @@ entity mux4t1_n is
         i_d3 : in  std_logic_vector(n - 1 downto 0);  -- Input data width is N.
         o_o  : out std_logic_vector(n - 1 downto 0)  -- Output data width is N.
         );
-    
+
 end entity mux4t1_n;
 
 architecture structural of mux4t1_n is

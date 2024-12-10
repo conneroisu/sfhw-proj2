@@ -1,21 +1,22 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-10T09:22:24-06:00 assert-that-all-of-the-single-cycle-implementation-fits-styleguide
 --      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 entity control_unit is
-    
+
     port
         (
             i_opcode    : in  std_logic_vector(5 downto 0);  -- determines Non-R-type instruction type
             i_funct     : in  std_logic_vector(5 downto 0);  -- determines R-type instruction type
             o_Ctrl_Unit : out std_logic_vector(20 downto 0)  -- output control signals
             );
-        
+
 end control_unit;
 
 architecture dataflow of control_unit is

@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-10T09:22:24-06:00 assert-that-all-of-the-single-cycle-implementation-fits-styleguide
 --      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
@@ -10,13 +11,13 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use work.MIPS_types.all;
 entity mux32t1 is
-    
+
     port (
-        i_I : in  TwoDArray;            -- Data value input
+        i_I : in  TwoDArray;                     -- Data value input
         i_S : in  std_logic_vector(4 downto 0);  -- Select signal input
         o_O : out std_logic_vector(31 downto 0)  -- Data value output
         );
-    
+
 end entity mux32t1;
 
 architecture behavior of mux32t1 is

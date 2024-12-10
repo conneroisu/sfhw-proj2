@@ -1,9 +1,10 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-01T16:27:54-06:00 update-fix-barrel_shifter-declarations
---      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
+--	connerohnesorge 2024-12-10T09:22:24-06:00 assert-that-all-of-the-single-cycle-implementation-fits-styleguide
+--	Conner Ohnesorge 2024-12-01T16:27:54-06:00 update-fix-barrel_shifter-declarations
+--	Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
 library IEEE;

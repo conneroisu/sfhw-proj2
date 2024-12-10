@@ -1,8 +1,7 @@
 -- <header>
--- Author(s): Conner Ohnesorge, connerohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-12-06T17:40:40-06:00 remove-unused-processor-ouput
 --      connerohnesorge 2024-12-06T08:12:54-06:00 Update-ID_EX-to-be-compatible-with-the-style-guide
 --      connerohnesorge 2024-12-04T21:39:35-06:00 mkae-Pipeline_ID_EX-fit-styleguide
 --      Conner Ohnesorge 2024-12-04T07:19:40-06:00 more-clear-names-for-outputs-of-rt-and-rd
