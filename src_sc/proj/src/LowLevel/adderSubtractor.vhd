@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-10T09:22:24-06:00 assert-that-all-of-the-single-cycle-implementation-fits-styleguide
 --      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
@@ -13,17 +14,17 @@ entity adderSubtractor is
     generic (
         N : integer := 32  -- Generic of type integer for input/output data width. Default value is 32.
         );
-    
+
     port (
         nAdd_Sub   : in  std_logic;
-        i_A        : in  std_logic_vector(N - 1 downto 0);     -- Input A
-        i_B        : in  std_logic_vector(N - 1 downto 0);     -- Input B
+        i_A        : in  std_logic_vector(N - 1 downto 0);  -- Input A
+        i_B        : in  std_logic_vector(N - 1 downto 0);  -- Input B
         i_S        : in  std_logic;  -- selects between signed or unsigned operations (signed = 1)
-        o_Y        : out std_logic_vector(N - 1 downto 0);     -- Output Y
+        o_Y        : out std_logic_vector(N - 1 downto 0);  -- Output Y
         o_Cout     : out std_logic;     -- Carry out
         o_Overflow : out std_logic      -- Overflow Indicator
         );
-    
+
 end entity adderSubtractor;
 
 architecture structural of adderSubtractor is
@@ -112,7 +113,7 @@ begin
             i_d1 => s3,
             o_o  => s4
             );
-    c(0) <= nadd_sub;      --does 2s complement for signed subtraction only
+    c(0) <= nadd_sub;    --does 2s complement for signed subtraction only
     g_fulladder : for i in 0 to N - 1 generate  -- create 32 full adders in parallel
         fulladderlist : component fulladder
             port map(

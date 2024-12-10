@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-10T09:22:24-06:00 assert-that-all-of-the-single-cycle-implementation-fits-styleguide
 --      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
@@ -9,13 +10,13 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity extender8t32 is
-    
+
     port(
         i_I : in  std_logic_vector(7 downto 0);  -- byte value
         i_C : in  std_logic;                     -- signed extender or unsigned
         o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended value
         );
-    
+
 end extender8t32;
 
 architecture dataflow of extender8t32 is

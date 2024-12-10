@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-10T09:22:24-06:00 assert-that-all-of-the-single-cycle-implementation-fits-styleguide
 --      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
@@ -10,7 +11,7 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity dffg is
-    
+
     port (
         i_CLK : in  std_logic;          -- Clock input
         i_RST : in  std_logic;          -- Reset input
@@ -18,7 +19,7 @@ entity dffg is
         i_D   : in  std_logic;          -- Data value input
         o_Q   : out std_logic           -- Data value output
         );
-    
+
 end dffg;
 
 architecture mixed of dffg is

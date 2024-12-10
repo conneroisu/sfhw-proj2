@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-10T09:22:24-06:00 assert-that-all-of-the-single-cycle-implementation-fits-styleguide
 --      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
@@ -12,7 +13,7 @@ entity dffg_n is
     generic (
         n : integer := 32
         );
-    
+
     port (
         i_clk : in  std_logic;                         -- Clock Input
         i_rst : in  std_logic;                         -- Reset Input
@@ -20,7 +21,7 @@ entity dffg_n is
         i_d   : in  std_logic_vector(n - 1 downto 0);  -- Data Value input
         o_q   : out std_logic_vector(n - 1 downto 0)   -- Data Value output
         );
-    
+
 end entity dffg_n;
 
 architecture mixed of dffg_n is

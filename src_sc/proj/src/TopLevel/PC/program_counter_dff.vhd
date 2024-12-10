@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-10T09:22:24-06:00 assert-that-all-of-the-single-cycle-implementation-fits-styleguide
 --      Conner Ohnesorge 2024-12-01T12:27:41-06:00 rename-the-fetch-dir-to-pc
 -- </header>
 
@@ -17,7 +18,7 @@ entity program_counter_dff is
         i_D        : in  std_logic;     -- Data value input
         o_Q        : out std_logic      -- Data value output
         );
-    
+
 end program_counter_dff;
 
 architecture mixed of program_counter_dff is
@@ -32,7 +33,7 @@ begin
     process (i_CLK, i_RST)
     begin
         if (i_RST = '1') then
-            s_Q <= i_RST_data;       -- Use "(others => '0')" for N-bit values
+            s_Q <= i_RST_data;  -- Use "(others => '0')" for N-bit values
         elsif (rising_edge(i_CLK)) then
             s_Q <= i_D;
         end if;

@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-10T09:22:24-06:00 assert-that-all-of-the-single-cycle-implementation-fits-styleguide
 --      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
@@ -12,7 +13,7 @@ use work.MIPS_types.all;
 entity barrelShifter is
     generic
         (N : integer := 32);
-    
+
     port
         (
             i_data        : in  std_logic_vector(N - 1 downto 0);
@@ -21,7 +22,7 @@ entity barrelShifter is
             i_shiftType   : in  std_logic;  --0 for logicical shift, 1 for arithmetic shift
             o_O           : out std_logic_vector(N - 1 downto 0)  --shifted output
             );
-        
+
 end barrelShifter;
 
 architecture structure of barrelShifter is

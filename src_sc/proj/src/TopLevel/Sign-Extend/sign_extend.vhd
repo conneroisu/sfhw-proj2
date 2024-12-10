@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-10T09:22:24-06:00 assert-that-all-of-the-single-cycle-implementation-fits-styleguide
 --      Conner Ohnesorge 2024-11-21T11:05:34-06:00 added-old-single-cycle-processor-and-added-documentation-for-the
 -- </header>
 
@@ -11,12 +12,12 @@ use IEEE.STD_LOGIC_ARITH.all;
 use IEEE.STD_LOGIC_UNSIGNED.all;
 
 entity SignExtend is
-    
+
     port (
-        in_signal  : in  std_logic_vector(15 downto 0);       -- 16-bit input
-        out_signal : out std_logic_vector(31 downto 0)        -- 32-bit output
+        in_signal  : in  std_logic_vector(15 downto 0);  -- 16-bit input
+        out_signal : out std_logic_vector(31 downto 0)   -- 32-bit output
         );
-    
+
 end SignExtend;
 
 architecture Behavioral of SignExtend is
