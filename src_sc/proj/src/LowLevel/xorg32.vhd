@@ -8,13 +8,17 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+
 entity xorg32 is
+    
     port (
         i_A : in  std_logic_vector(31 downto 0);  -- input A
         i_B : in  std_logic_vector(31 downto 0);  -- input B
         o_F : out std_logic_vector(31 downto 0)   -- output F
         );
+    
 end xorg32;
+
 architecture dataflow of xorg32 is
 begin
     G1 : for i in 0 to 31 generate

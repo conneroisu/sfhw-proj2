@@ -12,6 +12,7 @@ entity dffg_n is
     generic (
         n : integer := 32
         );
+    
     port (
         i_clk : in  std_logic;                         -- Clock Input
         i_rst : in  std_logic;                         -- Reset Input
@@ -19,6 +20,7 @@ entity dffg_n is
         i_d   : in  std_logic_vector(n - 1 downto 0);  -- Data Value input
         o_q   : out std_logic_vector(n - 1 downto 0)   -- Data Value output
         );
+    
 end entity dffg_n;
 
 architecture mixed of dffg_n is

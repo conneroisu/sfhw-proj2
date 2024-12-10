@@ -12,6 +12,7 @@ use IEEE.numeric_std.all;
 use work.MIPS_Types.all;
 -- Entity declaration of the ALU
 entity alu is
+    
     port
         (
             CLK        : in  std_logic;      -- Clock signal
@@ -23,7 +24,9 @@ entity alu is
             o_Overflow : out std_logic;      -- Overflow flag
             o_Zero     : out std_logic  -- Zero flag
             );
+        
 end alu;
+
 architecture structural of alu is
     component adderSubtractor is
         generic

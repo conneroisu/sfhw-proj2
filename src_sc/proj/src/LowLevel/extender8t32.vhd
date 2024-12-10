@@ -9,11 +9,13 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity extender8t32 is
+    
     port(
         i_I : in  std_logic_vector(7 downto 0);  -- byte value
         i_C : in  std_logic;                     -- signed extender or unsigned
         o_O : out std_logic_vector(31 downto 0)  -- 32 bit extended value
         );
+    
 end extender8t32;
 
 architecture dataflow of extender8t32 is

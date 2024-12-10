@@ -9,18 +9,21 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use work.MIPS_types.all;
+
 entity mux2t1_N is
     generic (
         N : integer := 32
         );
+    
     port (
         i_S  : in  std_logic;           -- Select input.
         i_D0 : in  std_logic_vector(N - 1 downto 0);  -- Input data width is N.
         i_D1 : in  std_logic_vector(N - 1 downto 0);  -- Input data width is N.
         o_O  : out std_logic_vector(N - 1 downto 0)  -- Output data width is N.
         );
+    
 end mux2t1_N;
--- Architecture Declaration.
+
 architecture structural of mux2t1_N is
     component mux2t1 is
         port (

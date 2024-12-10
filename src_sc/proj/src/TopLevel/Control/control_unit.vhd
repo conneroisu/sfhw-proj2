@@ -8,14 +8,16 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 entity control_unit is
+    
     port
         (
             i_opcode    : in  std_logic_vector(5 downto 0);  -- determines Non-R-type instruction type
             i_funct     : in  std_logic_vector(5 downto 0);  -- determines R-type instruction type
             o_Ctrl_Unit : out std_logic_vector(20 downto 0)  -- output control signals
             );
+        
 end control_unit;
--- architecture declaration of control_unit
+
 architecture dataflow of control_unit is
     signal s_RTYPE_funct : std_logic_vector(20 downto 0);  -- if its an R-type instruction, use the R-type funct code
 begin

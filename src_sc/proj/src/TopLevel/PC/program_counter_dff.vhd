@@ -7,7 +7,9 @@
 
 library IEEE;
 use IEEE.std_logic_1164.all;
+
 entity program_counter_dff is
+
     port(
         i_CLK      : in  std_logic;     -- Clock input
         i_RST      : in  std_logic;     -- Reset input
@@ -15,7 +17,9 @@ entity program_counter_dff is
         i_D        : in  std_logic;     -- Data value input
         o_Q        : out std_logic      -- Data value output
         );
+    
 end program_counter_dff;
+
 architecture mixed of program_counter_dff is
     signal s_Q : std_logic;             -- Output of the FF
 begin

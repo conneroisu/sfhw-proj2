@@ -8,9 +8,11 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use work.MIPS_types.all;
+
 entity barrelShifter is
     generic
         (N : integer := 32);
+    
     port
         (
             i_data        : in  std_logic_vector(N - 1 downto 0);
@@ -19,7 +21,9 @@ entity barrelShifter is
             i_shiftType   : in  std_logic;  --0 for logicical shift, 1 for arithmetic shift
             o_O           : out std_logic_vector(N - 1 downto 0)  --shifted output
             );
+        
 end barrelShifter;
+
 architecture structure of barrelShifter is
 
     component mux2t1_N
