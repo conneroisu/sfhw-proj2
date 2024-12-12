@@ -10,6 +10,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use work.MIPS_types.all;
+
 entity adderSubtractor is
     generic (
         N : integer := 32  -- Generic of type integer for input/output data width. Default value is 32.
@@ -38,7 +39,7 @@ architecture structural of adderSubtractor is
                               o_o  : out std_logic_vector(N - 1 downto 0)
                               );
     end component;
-    component comp1_N is generic (
+    component complementor1_N is generic (
         N : integer := 32
         );
                          port (
@@ -84,7 +85,7 @@ architecture structural of adderSubtractor is
     signal s1, s2, s3, s4 : std_logic_vector(n - 1 downto 0);  -- Signals for the 2nd input and the output of the 2nd input.
 begin
     -- Invert the 2nd input and output it in wire s1. (used for signed operations)
-    inverter : component comp1_N
+    inverter : component complementor1_N
         port map(
             i_D0 => i_b,
             o_O  => s1
