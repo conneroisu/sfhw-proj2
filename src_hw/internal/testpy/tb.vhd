@@ -2,7 +2,8 @@
 -- Author(s): Conner Ohnesorge
 -- Name: 
 -- Notes:
---      Conner Ohnesorge 2024-11-21T09:00:59-06:00 added-start-of-sf-pipeline-folder
+--      Conner Ohnesorge 2024-12-12T16:40:32-06:00 fixed-toolflow-issues-and-ran-syth-on-emore-time-to-ensure-most-up-to-date-results
+--      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 
 library IEEE;
