@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 PYTHON3_VDI=/usr/local/mentor/calibre/bin/python3
 PYTHON3_LAB=/bin/python3
@@ -8,6 +8,27 @@ GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
+
+# Check if the user has passed a PYTHON var
+if [ -z ${python3+x} ]; then
+    if [ -f "$PYTHON3_VDI" ]; then
+        PYTHON=$PYTHON3_VDI
+        echo "Using VDI Python Environment"
+    elif [ -f "$PYTHON3_LAB" ]; then
+        PYTHON=$PYTHON3_LAB
+        echo "Using LAB Python Environment"
+    else
+        echo -e "${RED}Python Missing... Try running this with PYTHON=path/to/python3 ./381_tf.sh${NC}"
+        exit 1
+    fi
+else
+    if [ -f "$PYTHON" ]; then
+        echo "Using $PYTHON"
+    else
+        echo -e "${RED}Provided Python path $PYTHON does not exists ${NC}"
+        exit 1
+    fi
+fi
 
 if [ "$1" == "new" ]; then
     if [ -d "proj" ]; then
@@ -34,15 +55,15 @@ elif [ "$1" == "submit" ]; then
         echo -e "${RED}Please make sure your project exists at ./proj/ ${NC}"
         exit 1
     fi
-    if [ -z "$(ls -A proj/src/*.vhd 2>/dev/null )" ]; then
+    if [ ! -n "$(ls -A proj/src/*.vhd 2>/dev/null )" ]; then
         echo -e "${RED}Missing proj/src diretory (or no vhd files present)${NC}"
         exit 1
     fi
-    if [ -z "$(ls -A proj/mips/*.s 2>/dev/null)" ]; then
+    if [ ! -n "$(ls -A proj/mips/*.s 2>/dev/null)" ]; then
         echo -e "${RED}Missing proj/mips diretory (or no s files present)${NC}"
         exit 1
     fi
-    if [ -z "$(ls -A proj/test/*.vhd 2>/dev/null)" ]; then
+    if [ ! -n "$(ls -A proj/test/*.vhd 2>/dev/null)" ]; then
         echo -e "${RED}Missing proj/test diretory (or no vhd files present)${NC}"
         exit 1
     fi

@@ -1,188 +1,200 @@
-.data
-    array: .space 400    # Space for 100 integers
-    size:  .word  10     # Size of array
+        .data
+array:  .word 7, 2, 5, 3, 1, 8, 6, 4   # The array to sort
+n:      .word 8                        # Array length
 
-.text
-.globl main
-
+        .text
+        .globl main
 main:
-    # Initialize registers for array loading
-    lui $t0, 0x1001     # Load upper immediate for array address
-    li  $t1, 0          # Counter
-    li  $t2, 10         # Array size
+        # Load address of array into $s0
+        lui     $s0, %hi(array)
+        ori     $s0, $s0, %lo(array)
 
-    # Load sample values into array
-    sw   $zero, 0($t0)   # array[0] = 0
-    addi $t3, $zero, 9
-    sw   $t3, 4($t0)     # array[1] = 9
-    addi $t3, $zero, 8
-    sw   $t3, 8($t0)     # array[2] = 8
-    addi $t3, $zero, 7
-    sw   $t3, 12($t0)    # array[3] = 7
-    addi $t3, $zero, 6
-    sw   $t3, 16($t0)    # array[4] = 6
-    addi $t3, $zero, 5
-    sw   $t3, 20($t0)    # array[5] = 5
-    addi $t3, $zero, 4
-    sw   $t3, 24($t0)    # array[6] = 4
-    addi $t3, $zero, 3
-    sw   $t3, 28($t0)    # array[7] = 3
-    addi $t3, $zero, 2
-    sw   $t3, 32($t0)    # array[8] = 2
-    addi $t3, $zero, 1
-    sw   $t3, 36($t0)    # array[9] = 1
+        # Load n into $s1
+        lui     $t0, %hi(n)
+        ori     $t0, $t0, %lo(n)
+        lw      $s1, 0($t0)
 
-    # Call mergeSort
-    add  $a0, $t0, $zero  # First argument: array address
-    add  $a1, $zero, $zero # Second argument: left = 0
-    addi $a2, $t2, -1     # Third argument: right = size-1
-    jal  mergeSort
+        # left = 0
+        addu    $a0, $zero, $zero
+        # right = n - 1
+        addu    $a1, $s1, $zero
+        addi    $a1, $a1, -1
 
-    # Exit program
-    li   $v0, 10
-    syscall
+        jal     mergesort
 
-mergeSort:
-    # Save return address and registers
-    addi $sp, $sp, -16
-    sw   $ra, 0($sp)
-    sw   $s0, 4($sp)
-    sw   $s1, 8($sp)
-    sw   $s2, 12($sp)
+done:
+        j       done    # Infinite loop to end
 
-    # Check if left < right
-    slt  $t0, $a1, $a2
-    beq  $t0, $zero, mergeSortReturn
+####################################################
+# mergesort(int left, int right)
+# if left < right:
+#    mid = (left+right)/2
+#    mergesort(left, mid)
+#    mergesort(mid+1, right)
+#    merge(left, mid, right)
+####################################################
 
-    # Calculate mid = (left + right)/2
-    add  $s0, $a1, $a2    # left + right
-    srl  $s0, $s0, 1      # Divide by 2
+mergesort:
+        # Stack frame: 32 bytes
+        # [sp+28] = ra
+        # [sp+24] = s0
+        # [sp+20] = s1
+        # [sp+16] = left
+        # [sp+12] = right
+        addi    $sp, $sp, -32
+        sw      $ra, 28($sp)
+        sw      $s0, 24($sp)
+        sw      $s1, 20($sp)
+        sw      $a0, 16($sp)
+        sw      $a1, 12($sp)
 
-    # Save arguments
-    add  $s1, $a1, $zero  # Save left
-    add  $s2, $a2, $zero  # Save right
+        lw      $t0, 16($sp)  # left
+        lw      $t1, 12($sp)  # right
 
-    # First recursive call: mergeSort(arr, left, mid)
-    add  $a2, $s0, $zero  # Set right = mid
-    jal  mergeSort
+        # if (left < right)?
+        slt     $t2, $t0, $t1
+        beq     $t2, $zero, m_end
 
-    # Second recursive call: mergeSort(arr, mid+1, right)
-    addi $a1, $s0, 1      # Set left = mid + 1
-    add  $a2, $s2, $zero  # Restore right
-    jal  mergeSort
+        # mid = (left+right)/2
+        addu    $t3, $t0, $t1
+        sra     $t3, $t3, 1
 
-    # Merge the sorted halves
-    add  $a1, $s1, $zero  # Restore left
-    add  $a2, $s2, $zero  # right is already restored
-    add  $a3, $s0, $zero  # Pass mid as third argument
-    jal  merge
+        # mergesort(left, mid)
+        addu    $a0, $t0, $zero
+        addu    $a1, $t3, $zero
+        jal     mergesort
 
-mergeSortReturn:
-    # Restore registers and return
-    lw   $ra, 0($sp)
-    lw   $s0, 4($sp)
-    lw   $s1, 8($sp)
-    lw   $s2, 12($sp)
-    addi $sp, $sp, 16
-    jr   $ra
+        # mergesort(mid+1, right)
+        addi    $t4, $t3, 1
+        addu    $a0, $t4, $zero
+        addu    $a1, $t1, $zero
+        jal     mergesort
+
+        # merge(left, mid, right)
+        addu    $a0, $t0, $zero
+        addu    $a1, $t3, $zero
+        addu    $a2, $t1, $zero
+        jal     merge
+
+m_end:
+        lw      $ra, 28($sp)
+        lw      $s0, 24($sp)
+        lw      $s1, 20($sp)
+        addi    $sp, $sp, 32
+        jr      $ra
+
+####################################################
+# merge(int left, int mid, int right)
+#
+# Uses a temporary buffer B on the stack to hold merged
+# elements, then copies them back to A.
+# i = left, j = mid+1
+# For k from left to right:
+#   if j>right or (i<=mid and A[i]<=A[j]):
+#       B[k]=A[i]; i++
+#     else:
+#       B[k]=A[j]; j++
+# Copy B[left..right] back to A.
+####################################################
 
 merge:
-    # Save registers
-    addi $sp, $sp, -40
-    sw   $ra, 0($sp)
-    sw   $s0, 4($sp)    # Original array address
-    sw   $s1, 8($sp)    # Left index for left subarray
-    sw   $s2, 12($sp)   # Right index for right subarray
-    sw   $s3, 16($sp)   # Index for merged array
-    sw   $s4, 20($sp)   # Left array end
-    sw   $s5, 24($sp)   # Right array end
-    sw   $s6, 28($sp)   # Temporary storage
-    sw   $s7, 32($sp)   # Temporary storage
-    sw   $t0, 36($sp)   # Temporary array address
+        # Stack frame: 64 bytes
+        # [sp+60] = ra
+        # [sp+56] = s0
+        # [sp+52] = s1
+        # [sp+48] = left
+        # [sp+44] = mid
+        # [sp+40] = right
+        # The remaining space will be used for B.
+        addi    $sp, $sp, -64
+        sw      $ra, 60($sp)
+        sw      $s0, 56($sp)
+        sw      $s1, 52($sp)
+        sw      $a0, 48($sp)
+        sw      $a1, 44($sp)
+        sw      $a2, 40($sp)
 
-    # Initialize variables
-    add  $s0, $a0, $zero  # Save array address
-    add  $s1, $a1, $zero  # i = left
-    addi $s2, $a3, 1     # j = mid + 1
-    add  $s3, $a1, $zero  # k = left
-    add  $s4, $a3, $zero  # leftEnd = mid
-    add  $s5, $a2, $zero  # rightEnd = right
+        lw      $t0, 48($sp)  # left
+        lw      $t1, 44($sp)  # mid
+        lw      $t2, 40($sp)  # right
 
-mergeLoop:
-    # Check if either subarray is exhausted
-    slt  $t0, $s4, $s1    # Check if left subarray is exhausted
-    bne  $t0, $zero, copyRight
-    slt  $t0, $s5, $s2    # Check if right subarray is exhausted
-    bne  $t0, $zero, copyLeft
+        addi    $t3, $t1, 1   # j = mid+1
+        addu    $t4, $t0, $zero  # i = left
+        addu    $t6, $t0, $zero  # k = left start
 
-    # Compare elements from both subarrays
-    sll  $t1, $s1, 2      # Calculate offset for left element
-    add  $t1, $s0, $t1
-    lw   $t2, 0($t1)      # Load left element
-    sll  $t3, $s2, 2      # Calculate offset for right element
-    add  $t3, $s0, $t3
-    lw   $t4, 0($t3)      # Load right element
+m_loop_k:
+        # if k > right break
+        # Check if right < k
+        slt     $t7, $t2, $t6
+        bne     $t7, $zero, m_copy_back
 
-    # Compare and copy smaller element
-    slt  $t0, $t4, $t2    # if right < left
-    bne  $t0, $zero, copyRightElement
+        # Check if j > right?
+        slt     $t8, $t2, $t3
+        bne     $t8, $zero, use_i  # If j>right, must take from i
 
-copyLeftElement:
-    sll  $t5, $s3, 2      # Calculate destination offset
-    add  $t5, $s0, $t5
-    sw   $t2, 0($t5)      # Store element
-    addi $s1, $s1, 1      # Increment left index
-    addi $s3, $s3, 1      # Increment destination index
-    j    mergeLoop
+        # Check if i > mid?
+        slt     $t9, $t1, $t4
+        bne     $t9, $zero, use_j  # If i>mid, must take j
+        # A[i] <= A[j]?
+        # Load A[i]
+        # Originally used $t10, $t11; now using $v0, $v1
+        sll     $v0, $t4, 2
+        addu    $v0, $v0, $s0
+        lw      $v1, 0($v0)
 
-copyRightElement:
-    sll  $t5, $s3, 2      # Calculate destination offset
-    add  $t5, $s0, $t5
-    sw   $t4, 0($t5)      # Store element
-    addi $s2, $s2, 1      # Increment right index
-    addi $s3, $s3, 1      # Increment destination index
-    j    mergeLoop
+        # Load A[j]
+        # Originally used $t12, $t13; now using $a3, $a2
+        sll     $a3, $t3, 2
+        addu    $a3, $a3, $s0
+        lw      $a2, 0($a3)
 
-copyLeft:
-    # Copy remaining elements from left subarray
-    slt  $t0, $s4, $s1    # Check if left subarray is exhausted
-    bne  $t0, $zero, mergeEnd
-    sll  $t1, $s1, 2
-    add  $t1, $s0, $t1
-    lw   $t2, 0($t1)
-    sll  $t3, $s3, 2
-    add  $t3, $s0, $t3
-    sw   $t2, 0($t3)
-    addi $s1, $s1, 1
-    addi $s3, $s3, 1
-    j    copyLeft
+        # slt $t14, $t11, $t13 => now slt $s2, $v1, $a2
+        slt     $s2, $v1, $a2
+        bne     $s2, $zero, use_i
+        # If equal, also use i
+        beq     $v1, $a2, use_i
 
-copyRight:
-    # Copy remaining elements from right subarray
-    slt  $t0, $s5, $s2    # Check if right subarray is exhausted
-    bne  $t0, $zero, mergeEnd
-    sll  $t1, $s2, 2
-    add  $t1, $s0, $t1
-    lw   $t2, 0($t1)
-    sll  $t3, $s3, 2
-    add  $t3, $s0, $t3
-    sw   $t2, 0($t3)
-    addi $s2, $s2, 1
-    addi $s3, $s3, 1
-    j    copyRight
+use_j:
+        # B[k] = A[j]
+        # Originally used $t15, $t16, $t17; now $s3, $s4, $s5
+        sub     $s3, $t6, $t0
+        sll     $s3, $s3, 2
+        addu    $s4, $sp, $s3
+        lw      $s5, 0($a3)
+        sw      $s5, 0($s4)
+        addi    $t3, $t3, 1
+        j       cont_k
 
-mergeEnd:
-    # Restore registers and return
-    lw   $ra, 0($sp)
-    lw   $s0, 4($sp)
-    lw   $s1, 8($sp)
-    lw   $s2, 12($sp)
-    lw   $s3, 16($sp)
-    lw   $s4, 20($sp)
-    lw   $s5, 24($sp)
-    lw   $s6, 28($sp)
-    lw   $s7, 32($sp)
-    lw   $t0, 36($sp)
-    addi $sp, $sp, 40
-    jr   $ra
-    halt
+use_i:
+        # B[k] = A[i]
+        # Same register mapping as above
+        sub     $s3, $t6, $t0
+        sll     $s3, $s3, 2
+        addu    $s4, $sp, $s3
+        lw      $s5, 0($v0)
+        sw      $s5, 0($s4)
+        addi    $t4, $t4, 1
+
+cont_k:
+        addi    $t6, $t6, 1
+        j       m_loop_k
+
+m_copy_back:
+        # Copy B[left..right] back to A
+        # Originally used $t15, $t16, $t17, $t18; now using $s3, $s4, $s5, $s6
+        addu    $t6, $t0, $zero
+c_loop:
+        slt     $t7, $t2, $t6
+        bne     $t7, $zero, m_end_merge
+
+        sub     $s3, $t6, $t0
+        sll     $s3, $s3, 2
+        addu    $s4, $sp, $s3
+        lw      $s5, 0($s4)
+
+        sll     $s6, $t6, 2
+        addu    $s6, $s6, $s0
+        sw      $s5, 0($s6)
+
+        addi    $t6, $t6, 1
+        j       c_loop
