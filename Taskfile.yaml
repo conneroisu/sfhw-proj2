@@ -12,6 +12,10 @@ tasks:
     cmds:
       - echo "{{.GREETING}}"
     silent: true
+  git-reset:
+    cmds:
+      - git stash
+      - git pull
   sc-test:
     cmds:
       - cd ./src_sc/ && ./381_tf.sh test ./proj/mips/*.s
