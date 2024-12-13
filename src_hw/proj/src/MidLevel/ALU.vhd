@@ -20,6 +20,7 @@ entity ALU is
     generic (N : integer := 32);
 
     port (
+        i_CLK      : in  std_logic;
         i_A        : in  std_logic_vector(N - 1 downto 0);
         i_B        : in  std_logic_vector(N - 1 downto 0);
         i_ALUOP    : in  std_logic_vector(3 downto 0);
@@ -37,6 +38,7 @@ architecture mixed of ALU is
     component AdderSubtractor is
         generic (N : integer := 32);
         port (
+            i_CLK    : in  std_logic;
             nAdd_Sub : in  std_logic;
             i_A      : in  std_logic_vector(N - 1 downto 0);
             i_B      : in  std_logic_vector(N - 1 downto 0);
@@ -227,6 +229,7 @@ begin
     instAdderSub : AdderSubtractor
         generic map(N => 32)
         port map(
+            i_CLK    => i_CLK,
             nAdd_Sub => s_Operator,
             i_A      => i_A,
             i_B      => i_B,

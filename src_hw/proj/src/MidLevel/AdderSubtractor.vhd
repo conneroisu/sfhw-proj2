@@ -13,6 +13,7 @@ entity AdderSubtractor is
     generic (N : integer := 32);
 
     port (
+    i_CLK    : in  std_logic;
         nAdd_Sub  : in  std_logic;
         i_A       : in  std_logic_vector(N - 1 downto 0);
         i_B       : in  std_logic_vector(N - 1 downto 0);
@@ -27,6 +28,7 @@ architecture structural of AdderSubtractor is
     component full_adder_N is
         generic (N : integer := 32);
         port (
+            i_CLK    : in  std_logic;
             i_A        : in  std_logic_vector(N - 1 downto 0);
             i_B        : in  std_logic_vector(N - 1 downto 0);
             i_C        : in  std_logic;
