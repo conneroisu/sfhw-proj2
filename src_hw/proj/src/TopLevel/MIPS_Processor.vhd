@@ -234,6 +234,7 @@ architecture structure of MIPS_Processor is
 
     component Full_Adder_N is
         port (
+            i_CLK    : in  std_logic;
             i_A        : in  std_logic_vector(N - 1 downto 0);
             i_B        : in  std_logic_vector(N - 1 downto 0);
             i_C        : in  std_logic;
@@ -632,6 +633,7 @@ begin
 
     instPC4Adder : Full_Adder_N
         port map(
+            i_CLK    => iCLK,
             i_A => s_NextInstAddr,
             i_B => x"00000004",
             i_C => '0',
