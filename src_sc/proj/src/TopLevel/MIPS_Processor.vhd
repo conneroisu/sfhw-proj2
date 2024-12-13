@@ -204,6 +204,7 @@ begin
             o_Q   => s_NextInstAddr     -- Output.
             );
     -- addFour adds 4 to the instruction address.
+    -- TODO: replace with full adder since subtraction is not needed here
     addFour : adderSubtractor
         generic map(N => 32)
         port map(
