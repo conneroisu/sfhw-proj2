@@ -6,6 +6,7 @@ vcom -2008 -work work ../src/MIPS_types.vhd
 vcom -2008 -work work ../src/*.vhd
 
 vcom -2008 -work work ../src/**/*.vhd
+vcom -2008 -work work ../src/**/*.vhd
 
 
 vcom -2008 -work work $file
