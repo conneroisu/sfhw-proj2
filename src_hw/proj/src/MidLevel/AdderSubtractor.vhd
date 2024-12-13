@@ -80,6 +80,7 @@ begin
     instFullAdders : Full_Adder_N
         generic map(N => 32)
         port map(
+            i_CLK    => i_CLK,
             i_A        => i_A,
             i_B        => s_MuxedB,
             i_C        => nAdd_Sub,
