@@ -30,7 +30,7 @@ architecture structural of inverter_N is
 begin
 
     g_nbit_inverter : for i in 0 to N-1 generate
-        INVERTER_N : invg port map (i_Data(i), o_Data(i));
+        I_INVERTER_N : invg port map (i_Data(i), o_Data(i));
     end generate g_nbit_inverter;
 
 end structural;
