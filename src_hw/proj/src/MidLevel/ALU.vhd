@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge, connerohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-13T12:12:48-06:00 styleguide-updates
 --      Conner Ohnesorge 2024-12-06T14:52:45-06:00 better-formating-on-ALUS
 --      Conner Ohnesorge 2024-12-06T11:04:08-06:00 ensure-adherence-to-coding-style-in-ALU
 --      connerohnesorge 2024-12-04T18:11:46-06:00 improve-alu-readability-and-formatting-of-complex-logic

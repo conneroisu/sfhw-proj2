@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-13T12:12:48-06:00 styleguide-updates
 --      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>
 

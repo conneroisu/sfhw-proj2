@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-13T12:21:51-06:00 fix-possible-overshadow-of-inverter_N-in-generate-statement
 --      Conner Ohnesorge 2024-12-04T05:44:44-06:00 fit-styleguide-for-inverter_N
 --      Conner Ohnesorge 2024-12-01T12:19:14-06:00 moved-all-files-into-the-hardware-directory
 -- </header>

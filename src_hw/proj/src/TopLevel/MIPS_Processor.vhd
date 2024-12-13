@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge, connerohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-13T12:24:12-06:00 added-clock-to-adder-for-pc-4
 --      Conner Ohnesorge 2024-12-07T17:08:05-06:00 fixed-messed-up-formatting
 --      Conner Ohnesorge 2024-12-06T18:45:55-06:00 latest
 --      Conner Ohnesorge 2024-12-06T18:43:09-06:00 putback
