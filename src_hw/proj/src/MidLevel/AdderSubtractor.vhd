@@ -2,6 +2,8 @@
 -- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-13T12:22:36-06:00 added-clock-to-adder-subtractor
+--      connerohnesorge 2024-12-13T12:12:48-06:00 styleguide-updates
 --      connerohnesorge 2024-12-04T18:04:15-06:00 ensure-AdderSubtractor-fits-styleguide
 --      Conner Ohnesorge 2024-12-04T05:35:09-06:00 move-and-rename-addersubtractor-to-midlevel
 -- </header>

@@ -2,6 +2,8 @@
 -- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-13T12:22:36-06:00 added-clock-to-adder-subtractor
+--      connerohnesorge 2024-12-13T12:12:48-06:00 styleguide-updates
 --      connerohnesorge 2024-12-06T05:11:10-06:00 better-commehnt-for-full_adder_N
 --      Conner Ohnesorge 2024-12-04T06:03:50-06:00 remove-8t32-extender-and-remove-useless-comment-in-full_adder_N
 --      Conner Ohnesorge 2024-12-04T05:44:12-06:00 fully-fit-style-guide-in-full_adder_N

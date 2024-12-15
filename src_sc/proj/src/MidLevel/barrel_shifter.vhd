@@ -1,7 +1,8 @@
 -- <header>
--- Author(s): Conner Ohnesorge
+-- Author(s): connerohnesorge, Conner Ohnesorge
 -- Name: 
 -- Notes:
+--      connerohnesorge 2024-12-13T13:15:36-06:00 updaate-single-cycle-processor-structure
 --      Conner Ohnesorge 2024-12-01T16:27:54-06:00 update-fix-barrel_shifter-declarations
 --      Conner Ohnesorge 2024-12-01T16:24:07-06:00 update-barrel_shifter-name
 -- </header>
