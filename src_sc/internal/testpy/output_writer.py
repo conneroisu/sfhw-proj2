@@ -1,11 +1,3 @@
-"""Writes feedback from runs.
-
-Author:
-    Braedon Giblin <bgiblin@iastate.edu>
-"""
-
-from results import Results
-
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'

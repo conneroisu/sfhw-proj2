@@ -1,9 +1,3 @@
-"""Mars Interface.
-
-Date:
-    2022.08.24
-"""
-
 import subprocess
 from pathlib import Path
 
