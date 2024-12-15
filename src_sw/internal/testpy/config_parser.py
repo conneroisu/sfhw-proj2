@@ -1,20 +1,3 @@
-""" Parses config files for 381 toolflow.
-
-This parser works by parsing both the internal/.config.ini file and 
-an optional user file "config.ini". The custom ini files consists of or more
-sections. To use these sections, the command line option -c <config> must be passed to
-both the test and synthesis framework.
-
-Author:
-    Braedon Giblin
-
-Date:
-    2022.03.07
-
-File.
-    config_parser.py
-"""
-
 from configparser import ConfigParser
 from collections import namedtuple
 from pathlib import Path
